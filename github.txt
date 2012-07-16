@@ -100,6 +100,13 @@ To push tags to the remote repository:
 git push --tags
 Enter passphrase for key ... :
 
+To remove a tag from the remote repository:
+
+http://nathanhoad.net/how-to-delete-a-remote-git-tag
+
+git tag -d s00
+git push origin :refs/tags/s00
+
 ---------------------------------------------------------------------
 
 Switching from master to spiral
