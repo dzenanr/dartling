@@ -4,12 +4,12 @@ class Type extends Entity<Type> {
   String base;
   int length;
   
-  Domain parentDomain;
+  Domain domain;
   
-  Type(this.parentDomain, String code) {
+  Type(this.domain, String code) {
     super.code = code;
     base = code;
-    parentDomain.childTypes.add(this);
+    domain.types.add(this);
   }
   
 }

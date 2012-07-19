@@ -1,24 +1,23 @@
 
 class Concept extends Entity<Concept> {
-  
+
   bool entry = true;
   bool abstract = false;
   String pluralName;
   String description;
-  
-  Model parentModel;
-  
-  Attributes childAttributes;
-  Neighbors childDestinations; 
-  Neighbors childSources;
-  
-  Concept(this.parentModel, String code) {
+
+  Model model;
+
+  Attributes attributes;
+  Neighbors destinations;
+  Neighbors sources;
+
+  Concept(this.model, String code) {
     super.code = code;
-    parentModel.childConcepts.add(this);
-    childAttributes = new Attributes();
-    childDestinations = new Neighbors();
-    childSources = new Neighbors();
+    model.concepts.add(this);
+    attributes = new Attributes();
+    destinations = new Neighbors();
+    sources = new Neighbors();
   }
-  
+
 }
- 

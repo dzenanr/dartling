@@ -3,13 +3,13 @@ class Entry {
   
   Model model;
   
-  Map<String, Entities> concepts;
+  Map<String, Entities> entryConceptMap;
   
   Entry(this.model) {
-    concepts = new Map<String, Entities>();
+    entryConceptMap = new Map<String, Entities>();
     model.entryConcepts.forEach((c) 
       {var entryEntities = new Entities.of(c);
-      concepts[c.code] = entryEntities;
+      entryConceptMap[c.code] = entryEntities;
       });
   }
   

@@ -1,4 +1,5 @@
 #import('../../unittest/unittest.dart');
+#import('dart:json');
 
 #source('meta/Oid.dart');
 #source('meta/Domain.dart');
@@ -20,18 +21,20 @@
 #source('model/Entities.dart');
 #source('model/Entry.dart');
 
-#source('web/Library.dart');
+#source('web/Catalog.dart');
 #source('web/Category.dart');
 #source('web/Categories.dart');
 #source('web/WebLink.dart');
 #source('web/WebLinks.dart');
 
+#source('transfer/json.dart');
+
 #source('test/entry.dart');
-#source('test/library.dart');
+#source('test/catalog.dart');
 #source('test/unit.dart');
 
 void main() {
   createModelEntry();
-  createWebLibrary();
+  createWebCatalog();
   tests();
 }

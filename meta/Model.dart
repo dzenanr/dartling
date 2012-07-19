@@ -1,20 +1,20 @@
 
 class Model extends Entity<Model> {
-  
+
   String author;
   String description;
-  
-  Domain parentDomain;
-  
-  Concepts childConcepts;
-  
-  Model(this.parentDomain, [String code = 'default']) {
+
+  Domain domain;
+
+  Concepts concepts;
+
+  Model(this.domain, [String code = 'default']) {
     super.code = code;
-    parentDomain.childModels.add(this);
-    childConcepts = new Concepts();
+    domain.models.add(this);
+    concepts = new Concepts();
   }
-  
-  List<Concept> get entryConcepts() => childConcepts.filter((c) => c.entry);
-  
+
+  List<Concept> get entryConcepts() => concepts.filter((c) => c.entry);
+
 }
 

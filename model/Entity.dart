@@ -1,47 +1,44 @@
 
 class Entity<T extends Entity<T>> implements Comparable {
-  
+
   Oid oid;
   String code;
-  
+
   Concept concept;
-  
-  Map<String, Object> attributes;
-  Map<String, Entity> parents;
-  Map<String, Entities> children;
-  
+
+  Map<String, Object> attributeMap;
+  Map<String, Entity> parentMap;
+  Map<String, Entities> childMap;
+
   Entity() {
     oid = new Oid();
-    attributes = new Map<String, Object>();
-    parents = new Map<String, Entity>();
-    children = new Map<String, Entities>();
   }
-  
+
   Entity.of(this.concept) {
     oid = new Oid();
-    attributes = new Map<String, Object>();
-    parents = new Map<String, Entity>();
-    children = new Map<String, Entities>();
-    for (Attribute a in concept.childAttributes) {
+    attributeMap = new Map<String, Object>();
+    parentMap = new Map<String, Entity>();
+    childMap = new Map<String, Entities>();
+    for (Attribute a in concept.attributes) {
       if (a.init != null) {
-        attributes[a.code] = a.init;
+        attributeMap[a.code] = a.init;
       } else if (a.increment != null) {
-        attributes[a.code] = a.increment;
+        attributeMap[a.code] = a.increment;
       } else {
-        attributes[a.code] = null;
+        attributeMap[a.code] = null;
       }
     }
-    for (Neighbor n in concept.childDestinations) {
+    for (Neighbor n in concept.destinations) {
       if (n.child) {
         var entities = new Entities();
         entities.concept = n.destinationConcept;
-        children[n.code] = entities;
+        childMap[n.code] = entities;
       } else {
-        parents[n.code] = null;
+        parentMap[n.code] = null;
       }
     }
   }
-  
+
   /**
    * Compares two entities based on codes. If the result is less than 0 then
    * the first entity is less than the second, if it is equal to 0 they are
@@ -51,7 +48,7 @@ class Entity<T extends Entity<T>> implements Comparable {
   int compareTo(T entity) {
     return code.compareTo(entity.code);
   }
-  
+
   display([bool withOid=false, String s='']) {
     var s2 = s;
     if (concept != null && !concept.entry) {
@@ -64,19 +61,19 @@ class Entity<T extends Entity<T>> implements Comparable {
       print('${s2}oid: $oid');
     }
     print('${s2}code: $code');
-    
-    attributes.forEach((k,v) {
+
+    attributeMap.forEach((k,v) {
       print('${s2}$k: $v');
     });
-    
-    parents.forEach((k,v) {
+
+    parentMap.forEach((k,v) {
       print('${s2}$k: ${v.code}');
     });
-    
-    children.forEach((k,v) {
+
+    childMap.forEach((k,v) {
       print('${s2}$k:');
       v.display(withOid, s2);
     });
   }
-  
+
 }

@@ -1,6 +1,12 @@
 Dartling Schedule
 
+2012-07-19: 
+Added json model from MagicBoxes (transfer/json.dart).
+Updated field names in meta and model.
+Renamed Library to Catalog (web/Catalog).
+Used json in Catalog.
+
+2012-07-13: 
 Started
 
-2012-07-13
 
