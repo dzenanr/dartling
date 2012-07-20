@@ -4,7 +4,7 @@ abstract class Property extends Entity<Property> {
   String min = '0';
   String max = '1';
   bool _id = false;
-  bool updateable = true;
+  bool update = true;
 
   Concept sourceConcept;
 

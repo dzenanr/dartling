@@ -5,7 +5,7 @@ class Attribute extends Property {
   var init;
   int increment;
   int sequence;
-  bool derived = false;
+  bool derive = false;
   bool core = true;
 
   Type type;

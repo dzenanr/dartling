@@ -29,9 +29,9 @@ equals
 equals in content
 entity to string
 core attribute
-derived attribute
+derive attribute
 absorb parent
-updateable property
+update property
 
 2012-07-19: 
 Added json model from MagicBoxes (transfer/json.dart).
