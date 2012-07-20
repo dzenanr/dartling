@@ -16,5 +16,14 @@ class Model extends Entity<Model> {
 
   List<Concept> get entryConcepts() => concepts.filter((c) => c.entry);
 
+  Concept getEntryConcept(String name) {
+    Concept c = concepts.getEntity(name);
+    if (!c.entry) {
+      throw new Exception('$name concept is not entry.');
+    }
+    return c;
+  }
+
+  Concept getConcept(String name) => concepts.getEntity(name);
 }
 

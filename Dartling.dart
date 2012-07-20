@@ -11,7 +11,6 @@
 #source('meta/Concept.dart');
 #source('meta/Concepts.dart');
 #source('meta/Property.dart');
-#source('meta/Properties.dart');
 #source('meta/Attribute.dart');
 #source('meta/Attributes.dart');
 #source('meta/Neighbor.dart');

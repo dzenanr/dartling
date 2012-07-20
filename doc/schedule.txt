@@ -1,5 +1,38 @@
 Dartling Schedule
 
+To do
+
+filter returns Entities (filter source entities)
+get list
+get entity by id (by oid?)
+get random entity?
+copy entities
+sort
+error handling?
+log?
+attribute validations (required, type, length)
+id validation
+add entity cannot violate the max constraint
+add must increment
+remove entity cannot violate the min constraint
+update propagations
+pre & post
+observers
+persistance
+indexes?
+undo?
+
+2012-07-20:
+code is not updateable
+copy entity
+equals
+equals in content
+entity to string
+core attribute
+derived attribute
+absorb parent
+updateable property
+
 2012-07-19: 
 Added json model from MagicBoxes (transfer/json.dart).
 Updated field names in meta and model.

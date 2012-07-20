@@ -5,13 +5,15 @@ class Attribute extends Property {
   var init;
   int increment;
   int sequence;
+  bool derived = false;
+  bool core = true;
 
   Type type;
 
-  Attribute(Concept parentConcept, String code) : super(parentConcept, code) {
-    parentConcept.attributes.add(this);
+  Attribute(Concept sourceConcept, String code) : super(sourceConcept, code) {
+    sourceConcept.attributes.add(this);
     // default type is String
-    type = parentConcept.model.domain.types.getEntity('String');
+    type = sourceConcept.model.domain.getType('String');
   }
 
 }

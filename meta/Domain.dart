@@ -24,6 +24,11 @@ class Domain extends Entity<Domain> {
     assert(types.length == 3);
   }
 
+  Domain getDomain(String name) => domains.getEntity(name);
+
   Model get model() => models.getEntity('default');
 
+  Model getModel(String name) => models.getEntity(name);
+
+  Type getType(String name) => types.getEntity(name);
 }

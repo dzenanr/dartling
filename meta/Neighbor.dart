@@ -4,9 +4,10 @@ class Neighbor extends Property {
   bool internal = true;
   bool inheritance = false;
   bool _child = true;
+  bool absorb = false;
   Neighbor opposite;
 
-  // the source concept is the inherited parent concept
+  // the source concept is inherited from Property
   Concept destinationConcept;
 
   Neighbor(Concept sourceConcept, this.destinationConcept, String code) :
@@ -16,6 +17,7 @@ class Neighbor extends Property {
   }
 
   bool get child() => _child;
+  bool get parent() => !child;
 
   set child(bool c) => maxMany ? _child = true : _child = c;
 

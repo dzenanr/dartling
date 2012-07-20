@@ -9,7 +9,7 @@ class Concept extends Entity<Concept> {
   Model model;
 
   Attributes attributes;
-  Neighbors destinations;
+  Neighbors destinations; // neighbors
   Neighbors sources;
 
   Concept(this.model, String code) {
@@ -20,4 +20,9 @@ class Concept extends Entity<Concept> {
     sources = new Neighbors();
   }
 
+  Attribute getAttribute(String name) => attributes.getEntity(name);
+
+  Neighbor getDestination(String name) => destinations.getEntity(name);
+
+  Neighbor getSource(String name) => sources.getEntity(name);
 }
