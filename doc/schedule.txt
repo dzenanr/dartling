@@ -17,10 +17,27 @@ add must increment
 remove entity cannot violate the min constraint
 update propagations
 pre & post
-observers
+observers (notifications)
 persistance
 indexes?
 undo?
+
+2012-07-21
+_oid
+_attributeMap
+_parentMap
+_childMap
+_entityList
+_entityMap
+Entry -> Entries
+_entryConceptMap
+_concept
+core -> essential
+code does not have to be used; if not used list only
+if code used, it cannot be updated (only once from null to not null)
+  in future, notification may be used to allow for update
+updated: add, contains, getEntity
+
 
 2012-07-20:
 code is not updateable

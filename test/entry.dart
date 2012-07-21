@@ -38,47 +38,45 @@ createModelEntry() {
 
   // Data
 
-  Entry entry = new Entry(model);
-  assert(entry.entryConceptMap.length == 1);
-  Entities categories = entry.entryConceptMap['Category'];
+  Entries entries = new Entries(model);
+  assert(entries.length == 1);
+  Entities categories = entries.getEntry('Category');
   assert(categories.length == 0);
 
   Entity dartCategory = new Entity.of(categoryConcept);
-  assert(dartCategory.attributeMap.length == 1);
   dartCategory.code = 'Dart';
-  dartCategory.attributeMap['description'] = 'Dart Web language.';
+  dartCategory.setAttribute('description', 'Dart Web language.');
   categories.add(dartCategory);
   assert(categories.length == 1);
 
   Entity html5Category = new Entity.of(categoryConcept);
   html5Category.code = 'HTML5';
-  html5Category.attributeMap['description'] =
-      'HTML5 is the ubiquitous platform for the web.';
+  html5Category.setAttribute('description',
+    'HTML5 is the ubiquitous platform for the web.');
   categories.add(html5Category);
 
-  Entities dartWebLinks = dartCategory.childMap['webLinks'];
+  Entities dartWebLinks = dartCategory.getChild('webLinks');
   assert(dartWebLinks.length == 0);
 
   Entity dartHomeWebLink = new Entity.of(webLinkConcept);
-  assert(dartHomeWebLink.attributeMap.length == 2);
   dartHomeWebLink.code = 'Dart Home';
-  dartHomeWebLink.attributeMap['url'] = 'http://www.dartlang.org/';
-  dartHomeWebLink.attributeMap['description'] =
-      'Dart brings structure to web app engineering with a new language, libraries, and tools.';
+  dartHomeWebLink.setAttribute('url', 'http://www.dartlang.org/');
+  dartHomeWebLink.setAttribute('description',
+    'Dart brings structure to web app engineering with a new language, libraries, and tools.');
   dartWebLinks.add(dartHomeWebLink);
   assert(dartWebLinks.length == 1);
-  dartHomeWebLink.parentMap['category'] = dartCategory;
-  assert(dartHomeWebLink.parentMap['category'].code == 'Dart');
+  dartHomeWebLink._parentMap['category'] = dartCategory;
+  assert(dartHomeWebLink.getParent('category').code == 'Dart');
 
   Entity tryDartWebLink = new Entity.of(webLinkConcept);
   tryDartWebLink.code = 'Try Dart';
-  tryDartWebLink.attributeMap['url'] = 'http://try.dartlang.org/';
-  tryDartWebLink.attributeMap['description'] =
-      'Try out the Dart Language from the comfort of your web browser.';
+  tryDartWebLink.setAttribute('url', 'http://try.dartlang.org/');
+  tryDartWebLink.setAttribute('description',
+    'Try out the Dart Language from the comfort of your web browser.');
   dartWebLinks.add(tryDartWebLink);
   assert(dartWebLinks.length == 2);
-  tryDartWebLink.parentMap['category'] = dartCategory;
-  assert(tryDartWebLink.parentMap['category'].code == 'Dart');
+  tryDartWebLink.setParent('category', dartCategory);
+  assert(tryDartWebLink.getParent('category').code == 'Dart');
 
   // Display
   print('');

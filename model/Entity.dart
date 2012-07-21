@@ -1,82 +1,86 @@
 
 class Entity<T extends Entity<T>> implements Comparable {
 
-  Oid oid;
+  Oid _oid;
   String _code;
 
-  Concept concept;
+  Concept _concept;
 
-  Map<String, Object> attributeMap;
-  Map<String, Entity> parentMap;
-  Map<String, Entities> childMap;
+  Map<String, Object> _attributeMap;
+  Map<String, Entity> _parentMap;
+  Map<String, Entities> _childMap;
 
   Entity() {
-    oid = new Oid();
+    _oid = new Oid();
   }
 
-  Entity.of(this.concept) {
-    oid = new Oid();
-    attributeMap = new Map<String, Object>();
-    parentMap = new Map<String, Entity>();
-    childMap = new Map<String, Entities>();
-    for (Attribute a in concept.attributes) {
+  Entity.of(this._concept) {
+    _oid = new Oid();
+    _attributeMap = new Map<String, Object>();
+    _parentMap = new Map<String, Entity>();
+    _childMap = new Map<String, Entities>();
+    for (Attribute a in _concept.attributes) {
       if (a.init != null) {
-        attributeMap[a.code] = a.init;
+        _attributeMap[a.code] = a.init;
       } else if (a.increment != null) {
-        attributeMap[a.code] = a.increment;
+        _attributeMap[a.code] = a.increment;
       } else {
-        attributeMap[a.code] = null;
+        _attributeMap[a.code] = null;
       }
     }
-    for (Neighbor n in concept.destinations) {
+    for (Neighbor n in _concept.destinations) {
       if (n.child) {
         var entities = new Entities();
-        entities.concept = n.destinationConcept;
-        childMap[n.code] = entities;
+        entities._concept = n.destinationConcept;
+        _childMap[n.code] = entities;
       } else {
-        parentMap[n.code] = null;
+        _parentMap[n.code] = null;
       }
     }
   }
 
+  Oid get oid() => _oid;
+
   String get code() => _code;
-  set code(String c) {
-    if (code != null) {
+  set code(String code) {
+    if (_code != null) {
       throw new Exception('Entity code cannot be updated.');
     }
-    if (c == null) {
-      throw new Exception('Entity code cannot be null.');
+    if (code == null) {
+      throw new Exception('Entity code cannot be nullified.');
     }
-    _code = c;
+    _code = code;
   }
 
-  Object getAttribute(String name) => attributeMap[name];
+  Concept get concept() => _concept;
+
+  Object getAttribute(String name) => _attributeMap[name];
   setAttribute(String name, Object value) {
     //Attribute attribute = concept.attributes.getEntity(name);
-    attributeMap[name] = value;
+    _attributeMap[name] = value;
   }
 
-  Entity getParent(String name) => parentMap[name];
-  setParent(String name, Entity entity) => parentMap[name] = entity;
+  Entity getParent(String name) => _parentMap[name];
+  setParent(String name, Entity entity) => _parentMap[name] = entity;
 
-  Entities getChild(String name) => childMap[name];
-  setChild(String name, Entities entities) => childMap[name] = entities;
+  Entities getChild(String name) => _childMap[name];
+  setChild(String name, Entities entities) => _childMap[name] = entities;
 
   /**
    * Copies the entity (oid, code, attributes and neighbors).
    */
   T copy() {
-    T e = new Entity.of(concept);
-    e.oid = oid;
-    e.code = code;
-    for (Attribute a in concept.attributes) {
-      attributeMap[a.code] = getAttribute(a.code);
+    T e = new Entity.of(_concept);
+    e._oid = _oid;
+    e.code = _code;
+    for (Attribute a in _concept.attributes) {
+      e.setAttribute(a.code, _attributeMap[a.code]);
     }
-    for (Neighbor n in concept.destinations) {
+    for (Neighbor n in _concept.destinations) {
       if (n.child) {
-        childMap[n.code] = getChild(n.code);
+        e.setChild(n.code, _childMap[n.code]);
       } else {
-        parentMap[n.code] = getParent(n.code);;
+        e.setParent(n.code, _parentMap[n.code]);
       }
     }
     return e;
@@ -90,7 +94,7 @@ class Entity<T extends Entity<T>> implements Comparable {
   */
   bool equals(other) {
     if (other is T) {
-      if (oid != other.oid) {
+      if (_oid != other.oid) {
         return false;
       }
     } else {
@@ -107,20 +111,20 @@ class Entity<T extends Entity<T>> implements Comparable {
    */
    bool equalsInContent(other) {
      if (other is T) {
-       if (code != other.code) {
+       if (_code != other.code) {
          return false;
        }
-       for (Attribute a in concept.attributes) {
-         if (attributeMap[a.code] != other.getAttribute(a.code)) {
+       for (Attribute a in _concept.attributes) {
+         if (_attributeMap[a.code] != other.getAttribute(a.code)) {
            return false;
          }
        }
-       for (Neighbor n in concept.destinations) {
+       for (Neighbor n in _concept.destinations) {
          if (n.parent) {
-           if (parentMap[n.code] != other.getParent(n.code)) {
+           if (_parentMap[n.code] != other.getParent(n.code)) {
              return false;
            }
-         } else if (childMap[n.code] != other.getChild(n.code)) {
+         } else if (_childMap[n.code] != other.getChild(n.code)) {
            return false;
          }
        }
@@ -137,38 +141,38 @@ class Entity<T extends Entity<T>> implements Comparable {
    * the second.
    */
   int compareTo(T entity) {
-    return code.compareTo(entity.code);
+    return _code.compareTo(entity.code);
   }
 
   /**
    * Returns a string that represents this entity by using oid and code.
    */
   String toString() {
-    return '${oid.toString()} $code';
+    return '${_oid.toString()} $_code';
   }
 
   display([bool withOid=false, String s='']) {
     var s2 = s;
-    if (concept != null && !concept.entry) {
+    if (_concept != null && !_concept.entry) {
       s2 = '$s  ';
     }
     print('${s2}----------');
-    print('${s2}$code');
+    print('${s2}$_code');
     print('${s2}----------');
     if (withOid) {
-      print('${s2}oid: $oid');
+      print('${s2}oid: $_oid');
     }
-    print('${s2}code: $code');
+    print('${s2}code: $_code');
 
-    attributeMap.forEach((k,v) {
+    _attributeMap.forEach((k,v) {
       print('${s2}$k: $v');
     });
 
-    parentMap.forEach((k,v) {
+    _parentMap.forEach((k,v) {
       print('${s2}$k: ${v.code}');
     });
 
-    childMap.forEach((k,v) {
+    _childMap.forEach((k,v) {
       print('${s2}$k:');
       v.display(withOid, s2);
     });

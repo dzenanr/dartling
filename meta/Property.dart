@@ -28,4 +28,5 @@ abstract class Property extends Entity<Property> {
       max = '1';
     }
   }
+
 }

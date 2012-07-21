@@ -1,63 +1,93 @@
 
 class Entities<T extends Entity<T>> implements Iterable<Entity> {
 
-  Concept concept;
+  Concept _concept;
 
-  List<T> entityList;
-  Map<String, T> entityMap;
+  List<T> _entityList;
+  Map<String, T> _entityMap;
 
   Entities() {
-    entityList = new List<T>();
-    entityMap = new Map<String, T>();
+    _entityList = new List<T>();
+    _entityMap = new Map<String, T>();
   }
 
-  Entities.of(this.concept) {
-    entityList = new List<T>();
-    entityMap = new Map<String, T>();
+  Entities.of(this._concept) {
+    _entityList = new List<T>();
+    _entityMap = new Map<String, T>();
   }
 
-  Iterator<T> iterator() => entityList.iterator();
+  Concept get concept() => _concept;
 
-  int get length() => entityList.length;
+  Iterator<T> iterator() => _entityList.iterator();
 
-  bool get isEmpty() => entityList.isEmpty();
+  int get length() => _entityList.length;
+
+  bool get isEmpty() => _entityList.isEmpty();
 
   add(T entity) {
-    if (entity.code == null) {
-      throw new NullPointerException('Entity code cannot be null.');
+    _entityList.add(entity);
+    if (entity.code != null) {
+      if (_entityMap.containsKey(entity.code)) {
+        if (_entityMap[entity.code] != null) {
+          throw new IllegalArgumentException('Entity code must be unique.');
+        }
+      }
+      _entityMap[entity.code] = entity;
     }
-    if (entityMap[entity.code] != null) {
-      throw new IllegalArgumentException('Entity code must be unique.');
-    }
-    entityList.add(entity);
-    entityMap[entity.code] = entity;
   }
 
   bool contains(T entity) {
-    return entityMap.containsKey(entity.code);
+    if (entity.code != null) {
+      if(_entityMap.containsKey(entity.code)) {
+        T element = _entityMap[entity.code];
+        if (element == entity) {
+          return true;
+        }
+      }
+    } else {
+      for (T element in _entityList) {
+        if (element == entity) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   clear() {
-    entityList.clear();
-    entityMap.clear();
+    _entityList.clear();
+    _entityMap.clear();
   }
 
   remove(T entity) {
-    for (T element in entityList) {
+    for (T element in _entityList) {
       if (element == entity) {
-        int index = entityList.indexOf(element, 0);
-        entityList.removeRange(index, 1);
-        entityMap.remove(entity.code);
+        int index = _entityList.indexOf(element, 0);
+        _entityList.removeRange(index, 1);
+        if (entity.code != null) {
+          _entityMap.remove(entity.code);
+        }
       }
     }
   }
 
-  List<T> filter(Function f) => entityList.filter(f);
+  List<T> filter(Function f) => _entityList.filter(f);
 
-  T getEntity(String name) => entityMap[name];
+  T getEntity(String code) {
+    if (_entityMap.containsKey(code)) {
+      return _entityMap[code];
+    } else {
+      for (T element in _entityList) {
+        if (element.code == code) {
+         return element;
+        }
+      }
+      return null;
+    }
+  }
 
   display([bool withOid=false, String s='']) {
-    for (T e in entityList) {
+    for (T e in _entityList) {
       e.display(withOid, s);
     }
   }

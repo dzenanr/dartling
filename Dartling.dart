@@ -18,7 +18,7 @@
 
 #source('model/Entity.dart');
 #source('model/Entities.dart');
-#source('model/Entry.dart');
+#source('model/Entries.dart');
 
 #source('web/Catalog.dart');
 #source('web/Category.dart');

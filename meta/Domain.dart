@@ -28,7 +28,7 @@ class Domain extends Entity<Domain> {
 
   Model get model() => models.getEntity('default');
 
-  Model getModel(String name) => models.getEntity(name);
+  Model getModel(String code) => models.getEntity(code);
 
-  Type getType(String name) => types.getEntity(name);
+  Type getType(String code) => types.getEntity(code);
 }

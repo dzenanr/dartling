@@ -20,9 +20,9 @@ class Concept extends Entity<Concept> {
     sources = new Neighbors();
   }
 
-  Attribute getAttribute(String name) => attributes.getEntity(name);
+  Attribute getAttribute(String code) => attributes.getEntity(code);
 
-  Neighbor getDestination(String name) => destinations.getEntity(name);
+  Neighbor getDestination(String code) => destinations.getEntity(code);
 
-  Neighbor getSource(String name) => sources.getEntity(name);
+  Neighbor getSource(String code) => sources.getEntity(code);
 }

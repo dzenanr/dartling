@@ -16,14 +16,14 @@ class Model extends Entity<Model> {
 
   List<Concept> get entryConcepts() => concepts.filter((c) => c.entry);
 
-  Concept getEntryConcept(String name) {
-    Concept c = concepts.getEntity(name);
-    if (!c.entry) {
-      throw new Exception('$name concept is not entry.');
+  Concept getEntryConcept(String code) {
+    Concept concept = concepts.getEntity(code);
+    if (!concept.entry) {
+      throw new Exception('$code concept is not entry.');
     }
-    return c;
+    return concept;
   }
 
-  Concept getConcept(String name) => concepts.getEntity(name);
+  Concept getConcept(String code) => concepts.getEntity(code);
 }
 
