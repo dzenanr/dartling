@@ -14,7 +14,10 @@
 #source('meta/Attribute.dart');
 #source('meta/Attributes.dart');
 #source('meta/Neighbor.dart');
-#source('meta/Neighbors.dart');
+#source('meta/Parent.dart');
+#source('meta/Parents.dart');
+#source('meta/Child.dart');
+#source('meta/Children.dart');
 
 #source('model/Entity.dart');
 #source('model/Entities.dart');

@@ -53,43 +53,83 @@ Domain fromMagicBoxes(String json) {
       throw new NullPointerException(
         'Line concept is missing for the $box2Name box.');
     }
+
     String box1box2Name = line["box1box2Name"];
-    Neighbor neighbor12 = new Neighbor(concept1, concept2, box1box2Name);
+    String box1box2Min = line["box1box2Min"];
+    String box1box2Max = line["box1box2Max"];
+    bool box1box2Id = line["box1box2Id"];
+
     String box2box1Name = line["box2box1Name"];
-    Neighbor neighbor21 = new Neighbor(concept2, concept1, box2box1Name);
+    String box2box1Min = line["box2box1Min"];
+    String box2box1Max = line["box2box1Max"];
+    bool box2box1Id = line["box2box1Id"];
+
+    bool lineInternal = line["internal"];
+    String lineCategory = line["category"];
+
+    bool d12Child;
+    bool d21Child;
+    bool d12Parent;
+    bool d21Parent;
+
+    if (box1box2Max != '1') {
+      d12Child = true;
+      if (box2box1Max != '1') {
+        d21Child = true;
+      } else {
+        d21Child = false;
+      }
+    } else if (box2box1Max != '1') {
+      d12Child = false;
+      d21Child = true;
+    } else if (box1box2Min == '0') {
+      d12Child = true;
+      d21Child = false;
+    } else if (box2box1Min == '0') {
+      d12Child = false;
+      d21Child = true;
+    } else {
+      d12Child = true;
+      d21Child = false;
+    }
+
+    d12Parent = !d12Child;
+    d21Parent = !d21Child;
+
+    if (d12Child && d21Child) {
+      throw new Exception('$box1Name -- $box2Name line has two children.');
+    }
+    if (d12Parent && d21Parent) {
+      throw new Exception('$box1Name -- $box2Name line has two parents.');
+    }
+
+    Neighbor neighbor12;
+    Neighbor neighbor21;
+
+    if (d12Child && d21Parent) {
+      neighbor12 = new Child(concept1, concept2, box1box2Name);
+      neighbor21 = new Parent(concept2, concept1, box2box1Name);
+    } else if (d12Parent && d21Child) {
+      neighbor12 = new Parent(concept1, concept2, box1box2Name);
+      neighbor21 = new Child(concept2, concept1, box2box1Name);
+    }
+
     neighbor12.opposite = neighbor21;
     neighbor21.opposite = neighbor12;
 
-    String box1box2Min = line["box1box2Min"];
     neighbor12.min = box1box2Min;
-    String box1box2Max = line["box1box2Max"];
     neighbor12.max = box1box2Max;
-    bool box1box2Id = line["box1box2Id"];
     neighbor12.id = box1box2Id;
-    bool lineInternal = line["internal"];
+
+    neighbor21.min = box2box1Min;
+    neighbor21.max = box2box1Max;
+    neighbor21.id = box2box1Id;
+
     neighbor12.internal = lineInternal;
-    String lineCategory = line["category"];
     if (lineCategory == 'inheritance') {
       neighbor12.inheritance = true;
     }
-    if (neighbor12.maxMany && !neighbor21.maxMany) {
-      neighbor12.child = true;
-      neighbor21.child = false;
-    } else if (!neighbor12.maxMany && neighbor21.maxMany) {
-      neighbor12.child = false;
-      neighbor21.child = true;
-    } else if (neighbor12.maxMany && neighbor21.maxMany) {
-      throw new Exception('$box1Name -- $box2Name line has two max of N.');
-    } else if (neighbor12.min.trim() == '0' && neighbor21.min.trim() == '1') {
-      neighbor12.child = true;
-      neighbor21.child = false;
-    } else if (neighbor12.min.trim() == '1' && neighbor21.min.trim() == '0') {
-      neighbor12.child = false;
-      neighbor21.child = true;
-    } else if (neighbor12.min.trim() == '0' && neighbor21.min.trim() == '0') {
-      neighbor12.child = true;
-      neighbor21.child = false;
-    }
   }
+
   return domain;
 }

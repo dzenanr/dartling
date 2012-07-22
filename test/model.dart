@@ -22,19 +22,18 @@ dataTests() {
       new Attribute(webLinkConcept, 'description');
   assert(webLinkConcept.attributes.count == 2);
 
-  Neighbor categoryWebLinksNeighbor =
-      new Neighbor(categoryConcept, webLinkConcept, 'webLinks');
+  Child categoryWebLinksNeighbor =
+      new Child(categoryConcept, webLinkConcept, 'webLinks');
   categoryWebLinksNeighbor.max = 'N';
-  assert(categoryConcept.destinations.count == 1);
-  assert(webLinkConcept.sources.count == 1);
-  Neighbor webLinkCategoryNeighbor =
-      new Neighbor(webLinkConcept, categoryConcept, 'category');
+  Parent webLinkCategoryNeighbor =
+      new Parent(webLinkConcept, categoryConcept, 'category');
   webLinkCategoryNeighbor.id = true;
-  webLinkCategoryNeighbor.child = false;
   categoryWebLinksNeighbor.opposite = webLinkCategoryNeighbor;
   webLinkCategoryNeighbor.opposite = categoryWebLinksNeighbor;
-  assert(webLinkConcept.destinations.count == 1);
-  assert(categoryConcept.sources.count == 1);
+  assert(categoryConcept.destinationChildren.count == 1);
+  assert(webLinkConcept.destinationParents.count == 1);
+  assert(categoryConcept.sourceParents.count == 1);
+  assert(webLinkConcept.sourceChildren.count == 1);
 
   // Data
 
@@ -78,5 +77,5 @@ dataTests() {
   assert(tryDartWebLink.getParent('category').code == 'Dart');
 
   // Display
-  categories.display('Create Model Data', withOid: false);
+  categories.display('Create Model Data', withOid: true);
 }

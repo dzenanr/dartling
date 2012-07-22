@@ -23,7 +23,13 @@ indexes?
 undo?
 actions, transactions?
 
-2012-07-22
+2012-07-22, 12:02
+Neighbor is abstract
+Neighbors deleted
+Parent extends Neighbor
+Child extends Neighbor
+
+2012-07-22, 10:23
 length -> count
 Entries -> Data
 display title

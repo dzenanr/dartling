@@ -86,6 +86,9 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     }
   }
 
+  /**
+  * Displays (prints) a title, then entities.
+  */
   display([String title='Data', bool withOid=true]) {
     if (title != '') {
       print('');

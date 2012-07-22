@@ -19,6 +19,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     _attributeMap = new Map<String, Object>();
     _parentMap = new Map<String, Entity>();
     _childMap = new Map<String, Entities>();
+
     for (Attribute a in _concept.attributes) {
       if (a.init != null) {
         _attributeMap[a.code] = a.init;
@@ -28,14 +29,15 @@ class Entity<T extends Entity<T>> implements Comparable {
         _attributeMap[a.code] = null;
       }
     }
-    for (Neighbor n in _concept.destinations) {
-      if (n.child) {
-        var entities = new Entities();
-        entities._concept = n.destinationConcept;
-        _childMap[n.code] = entities;
-      } else {
-        _parentMap[n.code] = null;
-      }
+
+    for (Parent parent in _concept.destinationParents) {
+      _parentMap[parent.code] = null;
+    }
+
+    for (Child child in _concept.destinationChildren) {
+      var entities = new Entities();
+      entities._concept = child.destinationConcept;
+      _childMap[child.code] = entities;
     }
   }
 
@@ -76,13 +78,15 @@ class Entity<T extends Entity<T>> implements Comparable {
     for (Attribute a in _concept.attributes) {
       e.setAttribute(a.code, _attributeMap[a.code]);
     }
-    for (Neighbor n in _concept.destinations) {
-      if (n.child) {
-        e.setChild(n.code, _childMap[n.code]);
-      } else {
-        e.setParent(n.code, _parentMap[n.code]);
-      }
+
+    for (Parent parent in _concept.destinationParents) {
+      e.setParent(parent.code, _parentMap[parent.code]);
     }
+
+    for (Child child in _concept.destinationChildren) {
+      e.setChild(child.code, _childMap[child.code]);
+    }
+
     return e;
   }
 
@@ -119,12 +123,15 @@ class Entity<T extends Entity<T>> implements Comparable {
            return false;
          }
        }
-       for (Neighbor n in _concept.destinations) {
-         if (n.parent) {
-           if (_parentMap[n.code] != other.getParent(n.code)) {
-             return false;
-           }
-         } else if (_childMap[n.code] != other.getChild(n.code)) {
+
+       for (Parent parent in _concept.destinationParents) {
+         if (_parentMap[parent.code] != other.getParent(parent.code)) {
+           return false;
+         }
+       }
+
+       for (Child child in _concept.destinationChildren) {
+         if (_childMap[child.code] != other.getChild(child.code)) {
            return false;
          }
        }
@@ -151,6 +158,9 @@ class Entity<T extends Entity<T>> implements Comparable {
     return '${_oid.toString()} $_code';
   }
 
+  /**
+   * Displays (prints) an entity with its attributes, parents and children.
+   */
   display([String space='', bool withOid=true]) {
     var s = space;
     if (_concept != null && !_concept.entry) {

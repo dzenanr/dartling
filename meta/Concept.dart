@@ -9,20 +9,30 @@ class Concept extends Entity<Concept> {
   Model model;
 
   Attributes attributes;
-  Neighbors destinations; // neighbors
-  Neighbors sources;
+  Parents destinationParents; // parent neighbors
+  Children destinationChildren; // child neighbors
+
+  Parents sourceParents;
+  Children sourceChildren;
 
   Concept(this.model, String code) {
     super.code = code;
     model.concepts.add(this);
+
     attributes = new Attributes();
-    destinations = new Neighbors();
-    sources = new Neighbors();
+
+    destinationParents = new Parents();
+    destinationChildren = new Children();
+
+    sourceParents = new Parents();
+    sourceChildren = new Children();
   }
 
   Attribute getAttribute(String code) => attributes.getEntity(code);
 
-  Neighbor getDestination(String code) => destinations.getEntity(code);
+  Parent getDestinationParent(String code) => destinationParents.getEntity(code);
+  Child getDestinationChild(String code) => destinationChildren.getEntity(code);
 
-  Neighbor getSource(String code) => sources.getEntity(code);
+  Parent getSourceParent(String code) => sourceParents.getEntity(code);
+  Child getSourceChild(String code) => sourceChildren.getEntity(code);
 }
