@@ -16,7 +16,7 @@ testUserData() {
     expect(tim, isNotNull);
     tim.firstName = 'Timur';
     tim.lastName = 'Ridjanovic';
-    tim.code = '${tim.lastName}, ${tim.firstName}';
+    //tim.code = '${tim.lastName}, ${tim.firstName}';
     tim.email = 'timur.ridjanovic@gmail.com';
     members.add(tim);
     expect(members.count == 1);
@@ -25,7 +25,7 @@ testUserData() {
     expect(dzenan, isNotNull);
     dzenan.firstName = 'Dzenan';
     dzenan.lastName = 'Ridjanovic';
-    dzenan.code = '${dzenan.lastName}, ${dzenan.firstName}';
+    //dzenan.code = '${dzenan.lastName}, ${dzenan.firstName}';
     dzenan.email = 'dzenanr@gmail.com';
     members.add(dzenan);
     expect(members.count == 2);

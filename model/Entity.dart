@@ -155,6 +155,9 @@ class Entity<T extends Entity<T>> implements Comparable {
    * Returns a string that represents this entity by using oid and code.
    */
   String toString() {
+    if (_code == null) {
+      return '${_oid.toString()}';
+    }
     return '${_oid.toString()} $_code';
   }
 
@@ -167,12 +170,14 @@ class Entity<T extends Entity<T>> implements Comparable {
       s = '$space  ';
     }
     print('${s}------------------------------------');
-    print('${s}$_code                              ');
+    print('${s}${toString()}                       ');
     print('${s}------------------------------------');
     if (withOid) {
       print('${s}oid: $_oid');
     }
-    print('${s}code: $_code');
+    if (_code != null) {
+      print('${s}code: $_code');
+    }
 
     _attributeMap.forEach((k,v) {
       print('${s}$k: $v');
