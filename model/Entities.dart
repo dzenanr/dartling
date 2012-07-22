@@ -92,9 +92,9 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   display([String title='Data', bool withOid=true]) {
     if (title != '') {
       print('');
-      print('********************');
-      print('$title              ');
-      print('********************');
+      print('**************************************');
+      print('$title                                  ');
+      print('**************************************');
       print('');
     }
     for (T e in _entityList) {

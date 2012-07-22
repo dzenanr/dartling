@@ -7,7 +7,7 @@ class Category extends Entity<Category> {
   }
 
   String get description() => getAttribute('description');
-  set description(String d) => setAttribute('description', d);
+  set description(String a) => setAttribute('description', a);
 
   WebLinks get webLinks() => getChild('webLinks');
 

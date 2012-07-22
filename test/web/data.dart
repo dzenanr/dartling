@@ -1,6 +1,6 @@
 
-unitTests() {
-  test('Catalog Creation', () {
+testWebData() {
+  test('Web Data Creation', () {
     var catalog = new Catalog();
     var categoryConcept = catalog.categoryConcept;
     expect(categoryConcept, isNotNull);
@@ -55,7 +55,7 @@ unitTests() {
     tryDartWebLink.category = dartCategory;
     expect(tryDartWebLink.category, isNotNull);
 
-    //categories.display('Catalog', withOid: false);
-    categories.display('Create Web Catalog');
+    //categories.display('Web Data Creation', withOid: false);
+    categories.display('Web Data Creation');
   });
 }

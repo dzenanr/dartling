@@ -166,9 +166,9 @@ class Entity<T extends Entity<T>> implements Comparable {
     if (_concept != null && !_concept.entry) {
       s = '$space  ';
     }
-    print('${s}------------');
-    print('${s}$_code      ');
-    print('${s}------------');
+    print('${s}------------------------------------');
+    print('${s}$_code                              ');
+    print('${s}------------------------------------');
     if (withOid) {
       print('${s}oid: $_oid');
     }

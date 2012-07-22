@@ -1,5 +1,5 @@
 
-dataTests() {
+testWebModel() {
   // Meta
 
   Domain domain = new Domain();
@@ -77,5 +77,5 @@ dataTests() {
   assert(tryDartWebLink.getParent('category').code == 'Dart');
 
   // Display
-  categories.display('Create Model Data', withOid: true);
+  categories.display('Web Model Creation', withOid: true);
 }

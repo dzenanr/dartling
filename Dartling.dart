@@ -23,18 +23,25 @@
 #source('model/Entities.dart');
 #source('model/Data.dart');
 
-#source('web/Catalog.dart');
-#source('web/Category.dart');
-#source('web/Categories.dart');
-#source('web/WebLink.dart');
-#source('web/WebLinks.dart');
-
 #source('transfer/json.dart');
 
-#source('test/model.dart');
-#source('test/catalog.dart');
+#source('test/user/data.dart');
+
+#source('test/web/data.dart');
+#source('test/web/model.dart');
+
+#source('data/user/Data.dart');
+#source('data/user/Member.dart');
+#source('data/user/Members.dart');
+
+#source('data/web/Data.dart');
+#source('data/web/Category.dart');
+#source('data/web/Categories.dart');
+#source('data/web/WebLink.dart');
+#source('data/web/WebLinks.dart');
 
 void main() {
-  dataTests();
-  unitTests();
+  testUserData();
+  testWebModel();
+  testWebData();
 }
