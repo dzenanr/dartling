@@ -16,6 +16,8 @@ class Model extends Entity<Model> {
 
   List<Concept> get entryConcepts() => concepts.filter((c) => c.entry);
 
+  int get entryConceptCount() => entryConcepts.length;
+
   Concept getEntryConcept(String code) {
     Concept concept = concepts.getEntity(code);
     if (!concept.entry) {
@@ -25,5 +27,8 @@ class Model extends Entity<Model> {
   }
 
   Concept getConcept(String code) => concepts.getEntity(code);
+
+  int get conceptCount() => entryConcepts.length;
+
 }
 

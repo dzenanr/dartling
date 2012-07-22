@@ -13,14 +13,20 @@ log?
 attribute validations (required, type, length)
 id validation
 add entity cannot violate the max constraint
-add must increment
+add must increment if increment
 remove entity cannot violate the min constraint
 update propagations
 pre & post
 observers (notifications)
 persistance
-indexes?
+indexes? 
 undo?
+actions, transactions?
+
+2012-07-22
+length -> count
+Entries -> Data
+display title
 
 2012-07-21
 _oid

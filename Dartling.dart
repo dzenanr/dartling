@@ -18,7 +18,7 @@
 
 #source('model/Entity.dart');
 #source('model/Entities.dart');
-#source('model/Entries.dart');
+#source('model/Data.dart');
 
 #source('web/Catalog.dart');
 #source('web/Category.dart');
@@ -28,12 +28,10 @@
 
 #source('transfer/json.dart');
 
-#source('test/entry.dart');
+#source('test/model.dart');
 #source('test/catalog.dart');
-#source('test/unit.dart');
 
 void main() {
-  createModelEntry();
-  createWebCatalog();
-  tests();
+  dataTests();
+  unitTests();
 }

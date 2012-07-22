@@ -151,30 +151,30 @@ class Entity<T extends Entity<T>> implements Comparable {
     return '${_oid.toString()} $_code';
   }
 
-  display([bool withOid=false, String s='']) {
-    var s2 = s;
+  display([String space='', bool withOid=true]) {
+    var s = space;
     if (_concept != null && !_concept.entry) {
-      s2 = '$s  ';
+      s = '$space  ';
     }
-    print('${s2}----------');
-    print('${s2}$_code');
-    print('${s2}----------');
+    print('${s}------------');
+    print('${s}$_code      ');
+    print('${s}------------');
     if (withOid) {
-      print('${s2}oid: $_oid');
+      print('${s}oid: $_oid');
     }
-    print('${s2}code: $_code');
+    print('${s}code: $_code');
 
     _attributeMap.forEach((k,v) {
-      print('${s2}$k: $v');
+      print('${s}$k: $v');
     });
 
     _parentMap.forEach((k,v) {
-      print('${s2}$k: ${v.code}');
+      print('${s}$k: ${v.code}');
     });
 
     _childMap.forEach((k,v) {
-      print('${s2}$k:');
-      v.display(withOid, s2);
+      print('${s}$k:');
+      v.display(s, withOid);
     });
   }
 

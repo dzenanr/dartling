@@ -20,7 +20,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
 
   Iterator<T> iterator() => _entityList.iterator();
 
-  int get length() => _entityList.length;
+  int get count() => _entityList.length;
 
   bool get isEmpty() => _entityList.isEmpty();
 
@@ -54,7 +54,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return false;
   }
 
-  clear() {
+  empty() {
     _entityList.clear();
     _entityMap.clear();
   }
@@ -86,9 +86,16 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     }
   }
 
-  display([bool withOid=false, String s='']) {
+  display([String title='Data', bool withOid=true]) {
+    if (title != '') {
+      print('');
+      print('********************');
+      print('$title              ');
+      print('********************');
+      print('');
+    }
     for (T e in _entityList) {
-      e.display(withOid, s);
+      e.display('', withOid);
     }
   }
 

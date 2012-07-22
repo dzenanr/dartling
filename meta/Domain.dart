@@ -21,7 +21,7 @@ class Domain extends Entity<Domain> {
     Type stringType = new Type(this, 'String');
     Type intType = new Type(this, 'int');
     Type boolType = new Type(this, 'bool');
-    assert(types.length == 3);
+    assert(types.count == 3);
   }
 
   Domain getDomain(String name) => domains.getEntity(name);
