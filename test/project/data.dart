@@ -111,6 +111,7 @@ testProjectData() {
       var searchName = 'Dartling';
       id.setAttribute('name', searchName);
       var project = projects.getEntityById(id);
+      //Project project = projects.getEntityById(id);
       expect(project, isNotNull);
       expect(project.name == searchName);
     });
