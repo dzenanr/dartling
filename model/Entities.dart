@@ -138,17 +138,22 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   }
 
   T getEntityById(Id id) {
-    bool found = true;
+    if (id.count == 0) {
+      return null;
+    }
     for (T entity in _entityList) {
-      for (Parent p in _concept.parents) {
-        if (p.id) {
-          if (entity.getParent(p.code) != id.getIdParent(p.code)) {
-            found = false;
-            break;
+      var found = true;
+      if (id.parentCount > 0) {
+        for (Parent p in _concept.parents) {
+          if (p.id) {
+            if (entity.getParent(p.code) != id.getIdParent(p.code)) {
+              found = false;
+              break;
+            }
           }
         }
       }
-      if (found) {
+      if (found && id.attributeCount > 0) {
         for (Attribute a in _concept.attributes) {
           if (a.id) {
             if (entity.getAttribute(a.code) != id.getIdAttribute(a.code)) {

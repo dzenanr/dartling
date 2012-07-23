@@ -100,6 +100,20 @@ testProjectData() {
       programmingProjects.display('Programming Entities After Add');
       projects.display('All Projects');
     });
+    test('Get Project By Id', () {
+      var projects = data.projects;
+      expect(projects.count == 3);
+
+      Id id = new Id(data.projectConcept);
+      expect(id.count == 1);
+      expect(id.parentCount == 0);
+      expect(id.attributeCount == 1);
+      var searchName = 'Dartling';
+      id.setAttribute('name', searchName);
+      var project = projects.getEntityById(id);
+      expect(project, isNotNull);
+      expect(project.name == searchName);
+    });
   });
 }
 

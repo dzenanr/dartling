@@ -19,10 +19,13 @@ class Id {
         _idAttributeMap[a.code] = null;
       }
     }
-
   }
 
   Concept get concept() => _concept;
+
+  int get parentCount() => _idParentMap.length;
+  int get attributeCount() => _idAttributeMap.length;
+  int get count() => parentCount + attributeCount;
 
   Entity getIdParent(String code) => _idParentMap[code];
   setParent(String code, Entity entity) => _idParentMap[code] = entity;

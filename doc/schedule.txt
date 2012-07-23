@@ -26,6 +26,10 @@ filter returns Entities (reflection needed)
 sort entities
 copy entities
 
+2012-07-23, 18:05
+getEntityById
+unit test for getEntityById
+
 2012-07-23, 17:40
 Id
 getId
