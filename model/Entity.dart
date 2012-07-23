@@ -191,6 +191,8 @@ class Entity<T extends Entity<T>> implements Comparable {
       print('${s}$k:');
       v.display(s, withOid);
     });
+
+    print('');
   }
 
 }

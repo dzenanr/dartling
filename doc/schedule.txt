@@ -2,8 +2,7 @@ Dartling Schedule
 
 To do
 
-filter returns Entities (filter source entities)
-get list
+filter returns Entities (reflection needed)
 get entity by id (by oid?)
 get random entity?
 copy entities
@@ -22,6 +21,13 @@ persistance
 indexes? 
 undo?
 actions, transactions?
+
+2012-07-23, 13:28
+source entities
+propagate to source
+filter returns list of entities
+add from a list of entities
+get a new list from the list of entities
 
 2012-07-22, 13:20
 display code only if not null

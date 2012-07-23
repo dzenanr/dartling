@@ -6,6 +6,9 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   List<T> _entityList;
   Map<String, T> _entityMap;
 
+  Entities<T> sourceEntities;
+  bool propagateToSource = true;
+
   Entities() {
     _entityList = new List<T>();
     _entityMap = new Map<String, T>();
@@ -33,6 +36,9 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
         }
       }
       _entityMap[entity.code] = entity;
+    }
+    if (sourceEntities != null && propagateToSource) {
+      sourceEntities.add(entity);
     }
   }
 
@@ -69,9 +75,31 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
         }
       }
     }
+    if (sourceEntities != null && propagateToSource) {
+      sourceEntities.remove(entity);
+    }
   }
 
-  List<T> filter(Function f) => _entityList.filter(f);
+  List<T> filter(Function f) {
+    return _entityList.filter(f);
+  }
+
+  addFrom(List<T> other) {
+    other.forEach((entity) => add(entity));
+  }
+
+  /*
+  Entities<T> filter(Function f) {
+    List<T> filteredList = _entityList.filter(f);
+    // need to use reflection to create specific entities based on the concept
+    Entities<T> selectedEntities = new Entities.of(_concept);
+    filteredList.forEach((entity) => selectedEntities.add(entity));
+    selectedEntities._sourceEntities = this;
+    return selectedEntities;
+  }
+  */
+
+  List<T> getList() => new List.from(_entityList);
 
   T getEntity(String code) {
     if (_entityMap.containsKey(code)) {

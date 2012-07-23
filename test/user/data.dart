@@ -1,14 +1,14 @@
 
 testUserData() {
   test('User Data Creation', () {
-    var data = new UserData();
+    var entries = new UserData();
 
-    var memberConcept = data.memberConcept;
+    var memberConcept = entries.memberConcept;
     expect(memberConcept, isNotNull);
     expect(memberConcept.attributes, isNot(isEmpty));
     expect(memberConcept.attributes.count == 3);
 
-    var members = data.members;
+    var members = entries.members;
     expect(members, isNotNull);
     expect(members.count == 0);
 

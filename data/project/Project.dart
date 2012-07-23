@@ -9,4 +9,6 @@ class Project extends Entity<Project> {
   String get description() => getAttribute('description');
   set description(String a) => setAttribute('description', a);
 
+  bool isOnProgramming() => description.contains('Programming') ? true : false;
+
 }
