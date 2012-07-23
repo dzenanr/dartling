@@ -25,10 +25,14 @@
 
 #source('transfer/json.dart');
 
+#source('test/project/data.dart');
 #source('test/user/data.dart');
-
 #source('test/web/data.dart');
 #source('test/web/model.dart');
+
+#source('data/project/Data.dart');
+#source('data/project/Project.dart');
+#source('data/project/Projects.dart');
 
 #source('data/user/Data.dart');
 #source('data/user/Member.dart');
@@ -41,6 +45,7 @@
 #source('data/web/WebLinks.dart');
 
 void main() {
+  testProjectData();
   testUserData();
   testWebModel();
   testWebData();
