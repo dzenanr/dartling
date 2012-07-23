@@ -30,11 +30,11 @@ class Entity<T extends Entity<T>> implements Comparable {
       }
     }
 
-    for (Parent parent in _concept.destinationParents) {
+    for (Parent parent in _concept.parents) {
       _parentMap[parent.code] = null;
     }
 
-    for (Child child in _concept.destinationChildren) {
+    for (Child child in _concept.children) {
       var entities = new Entities();
       entities._concept = child.destinationConcept;
       _childMap[child.code] = entities;
@@ -57,16 +57,28 @@ class Entity<T extends Entity<T>> implements Comparable {
   Concept get concept() => _concept;
 
   Object getAttribute(String name) => _attributeMap[name];
-  setAttribute(String name, Object value) {
-    //Attribute attribute = concept.attributes.getEntity(name);
-    _attributeMap[name] = value;
-  }
+  setAttribute(String name, Object value) => _attributeMap[name] = value;
 
   Entity getParent(String name) => _parentMap[name];
   setParent(String name, Entity entity) => _parentMap[name] = entity;
 
   Entities getChild(String name) => _childMap[name];
   setChild(String name, Entities entities) => _childMap[name] = entities;
+
+  Id getId() {
+    Id id = new Id(_concept);
+    for (Parent p in _concept.parents) {
+      if (p.id) {
+        id.setParent(p.code, _parentMap[p.code]);
+      }
+    }
+    for (Attribute a in _concept.attributes) {
+      if (a.id) {
+        id.setAttribute(a.code, _attributeMap[a.code]);
+      }
+    }
+    return id;
+  }
 
   /**
    * Copies the entity (oid, code, attributes and neighbors).
@@ -79,11 +91,11 @@ class Entity<T extends Entity<T>> implements Comparable {
       e.setAttribute(a.code, _attributeMap[a.code]);
     }
 
-    for (Parent parent in _concept.destinationParents) {
+    for (Parent parent in _concept.parents) {
       e.setParent(parent.code, _parentMap[parent.code]);
     }
 
-    for (Child child in _concept.destinationChildren) {
+    for (Child child in _concept.children) {
       e.setChild(child.code, _childMap[child.code]);
     }
 
@@ -124,13 +136,13 @@ class Entity<T extends Entity<T>> implements Comparable {
          }
        }
 
-       for (Parent parent in _concept.destinationParents) {
+       for (Parent parent in _concept.parents) {
          if (_parentMap[parent.code] != other.getParent(parent.code)) {
            return false;
          }
        }
 
-       for (Child child in _concept.destinationChildren) {
+       for (Child child in _concept.children) {
          if (_childMap[child.code] != other.getChild(child.code)) {
            return false;
          }

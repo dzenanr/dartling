@@ -5,7 +5,7 @@ class Parent extends Neighbor {
 
   Parent(Concept sourceConcept, Concept destinationConcept, String code) :
     super(sourceConcept, destinationConcept, code) {
-    sourceConcept.destinationParents.add(this);
+    sourceConcept.parents.add(this);
     destinationConcept.sourceParents.add(this);
   }
 

@@ -9,8 +9,8 @@ class Concept extends Entity<Concept> {
   Model model;
 
   Attributes attributes;
-  Parents destinationParents; // parent neighbors
-  Children destinationChildren; // child neighbors
+  Parents parents; // destination parent neighbors
+  Children children; // destination child neighbors
 
   Parents sourceParents;
   Children sourceChildren;
@@ -21,8 +21,8 @@ class Concept extends Entity<Concept> {
 
     attributes = new Attributes();
 
-    destinationParents = new Parents();
-    destinationChildren = new Children();
+    parents = new Parents();
+    children = new Children();
 
     sourceParents = new Parents();
     sourceChildren = new Children();
@@ -30,10 +30,8 @@ class Concept extends Entity<Concept> {
 
   Attribute getAttribute(String code) => attributes.getEntityByCode(code);
 
-  Parent getDestinationParent(String code) =>
-      destinationParents.getEntityByCode(code);
-  Child getDestinationChild(String code) =>
-      destinationChildren.getEntityByCode(code);
+  Parent getParent(String code) => parents.getEntityByCode(code);
+  Child getChild(String code) => children.getEntityByCode(code);
 
   Parent getSourceParent(String code) => sourceParents.getEntityByCode(code);
   Child getSourceChild(String code) => sourceChildren.getEntityByCode(code);

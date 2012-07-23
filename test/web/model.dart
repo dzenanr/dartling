@@ -30,8 +30,8 @@ testWebModel() {
   webLinkCategoryNeighbor.id = true;
   categoryWebLinksNeighbor.opposite = webLinkCategoryNeighbor;
   webLinkCategoryNeighbor.opposite = categoryWebLinksNeighbor;
-  assert(categoryConcept.destinationChildren.count == 1);
-  assert(webLinkConcept.destinationParents.count == 1);
+  assert(categoryConcept.children.count == 1);
+  assert(webLinkConcept.parents.count == 1);
   assert(categoryConcept.sourceParents.count == 1);
   assert(webLinkConcept.sourceChildren.count == 1);
 

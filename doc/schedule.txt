@@ -2,6 +2,7 @@ Dartling Schedule
 
 To do
 
+entities forEach
 get entity by id 
 get random entity?
 error handling?
@@ -24,6 +25,11 @@ To do with reflection
 filter returns Entities (reflection needed)
 sort entities
 copy entities
+
+2012-07-23, 17:40
+Id
+getId
+getEntityById
 
 2012-07-23, 14:32
 oid Entity map
