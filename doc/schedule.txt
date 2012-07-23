@@ -2,11 +2,8 @@ Dartling Schedule
 
 To do
 
-filter returns Entities (reflection needed)
-get entity by id (by oid?)
+get entity by id 
 get random entity?
-copy entities
-sort
 error handling?
 log?
 attribute validations (required, type, length)
@@ -14,13 +11,24 @@ id validation
 add entity cannot violate the max constraint
 add must increment if increment
 remove entity cannot violate the min constraint
-update propagations
+property update propagations 
 pre & post
 observers (notifications)
 persistance
 indexes? 
 undo?
 actions, transactions?
+
+To do with reflection
+
+filter returns Entities (reflection needed)
+sort entities
+copy entities
+
+2012-07-23, 14:32
+oid Entity map
+getEntity -> getEntityByCode
+getEntity uses Oid
 
 2012-07-23, 13:28
 source entities

@@ -26,8 +26,8 @@ class Catalog {
   Catalog() {
     Domain domain = fromMagicBoxes(_json);
     Model model = domain.model;
-    categoryConcept = model.concepts.getEntity('Category');
-    webLinkConcept = model.concepts.getEntity('WebLink');
+    categoryConcept = model.concepts.getEntityByCode('Category');
+    webLinkConcept = model.concepts.getEntityByCode('WebLink');
     categories = new Categories(categoryConcept);
   }
 

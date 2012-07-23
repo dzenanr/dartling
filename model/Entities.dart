@@ -4,19 +4,22 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   Concept _concept;
 
   List<T> _entityList;
-  Map<String, T> _entityMap;
+  Map<Oid, T> _oidEntityMap;
+  Map<String, T> _codeEntityMap;
 
   Entities<T> sourceEntities;
   bool propagateToSource = true;
 
   Entities() {
     _entityList = new List<T>();
-    _entityMap = new Map<String, T>();
+    _oidEntityMap = new Map<Oid, T>();
+    _codeEntityMap = new Map<String, T>();
   }
 
   Entities.of(this._concept) {
     _entityList = new List<T>();
-    _entityMap = new Map<String, T>();
+    _oidEntityMap = new Map<Oid, T>();
+    _codeEntityMap = new Map<String, T>();
   }
 
   Concept get concept() => _concept;
@@ -29,13 +32,14 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
 
   add(T entity) {
     _entityList.add(entity);
+    _oidEntityMap[entity.oid] = entity;
     if (entity.code != null) {
-      if (_entityMap.containsKey(entity.code)) {
-        if (_entityMap[entity.code] != null) {
+      if (_codeEntityMap.containsKey(entity.code)) {
+        if (_codeEntityMap[entity.code] != null) {
           throw new IllegalArgumentException('Entity code must be unique.');
         }
       }
-      _entityMap[entity.code] = entity;
+      _codeEntityMap[entity.code] = entity;
     }
     if (sourceEntities != null && propagateToSource) {
       sourceEntities.add(entity);
@@ -43,9 +47,14 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   }
 
   bool contains(T entity) {
+    T element = _oidEntityMap[entity.oid];
+    if (entity == element) {
+      return true;
+    }
+    /*
     if (entity.code != null) {
-      if(_entityMap.containsKey(entity.code)) {
-        T element = _entityMap[entity.code];
+      if(_codeEntityMap.containsKey(entity.code)) {
+        T element = _codeEntityMap[entity.code];
         if (element == entity) {
           return true;
         }
@@ -57,12 +66,14 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
         }
       }
     }
+    */
     return false;
   }
 
   empty() {
     _entityList.clear();
-    _entityMap.clear();
+    _oidEntityMap.clear();
+    _codeEntityMap.clear();
   }
 
   remove(T entity) {
@@ -70,9 +81,11 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       if (element == entity) {
         int index = _entityList.indexOf(element, 0);
         _entityList.removeRange(index, 1);
+        _oidEntityMap.remove(entity.oid);
         if (entity.code != null) {
-          _entityMap.remove(entity.code);
+          _codeEntityMap.remove(entity.code);
         }
+        break;
       }
     }
     if (sourceEntities != null && propagateToSource) {
@@ -93,17 +106,27 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     List<T> filteredList = _entityList.filter(f);
     // need to use reflection to create specific entities based on the concept
     Entities<T> selectedEntities = new Entities.of(_concept);
-    filteredList.forEach((entity) => selectedEntities.add(entity));
+    filteredList.forEach((e) => selectedEntities.add(e));
     selectedEntities._sourceEntities = this;
     return selectedEntities;
+  }
+
+  Entities<T> copy() {
+    // need to use reflection to create specific entities based on the concept
+    Entities<T> ce = new Entities.of(_concept);
+    _entityList.forEach((e) => ce.add(e));
   }
   */
 
   List<T> getList() => new List.from(_entityList);
 
-  T getEntity(String code) {
-    if (_entityMap.containsKey(code)) {
-      return _entityMap[code];
+  T getEntity(Oid oid) {
+    _oidEntityMap[oid];
+  }
+
+  T getEntityByCode(String code) {
+    if (_codeEntityMap.containsKey(code)) {
+      return _codeEntityMap[code];
     } else {
       for (T element in _entityList) {
         if (element.code == code) {

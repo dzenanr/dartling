@@ -19,14 +19,14 @@ class Model extends Entity<Model> {
   int get entryConceptCount() => entryConcepts.length;
 
   Concept getEntryConcept(String code) {
-    Concept concept = concepts.getEntity(code);
+    Concept concept = concepts.getEntityByCode(code);
     if (!concept.entry) {
       throw new Exception('$code concept is not entry.');
     }
     return concept;
   }
 
-  Concept getConcept(String code) => concepts.getEntity(code);
+  Concept getConcept(String code) => concepts.getEntityByCode(code);
 
   int get conceptCount() => entryConcepts.length;
 

@@ -28,11 +28,13 @@ class Concept extends Entity<Concept> {
     sourceChildren = new Children();
   }
 
-  Attribute getAttribute(String code) => attributes.getEntity(code);
+  Attribute getAttribute(String code) => attributes.getEntityByCode(code);
 
-  Parent getDestinationParent(String code) => destinationParents.getEntity(code);
-  Child getDestinationChild(String code) => destinationChildren.getEntity(code);
+  Parent getDestinationParent(String code) =>
+      destinationParents.getEntityByCode(code);
+  Child getDestinationChild(String code) =>
+      destinationChildren.getEntityByCode(code);
 
-  Parent getSourceParent(String code) => sourceParents.getEntity(code);
-  Child getSourceChild(String code) => sourceChildren.getEntity(code);
+  Parent getSourceParent(String code) => sourceParents.getEntityByCode(code);
+  Child getSourceChild(String code) => sourceChildren.getEntityByCode(code);
 }

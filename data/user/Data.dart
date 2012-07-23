@@ -6,7 +6,7 @@ class UserData {
   Members members;
 
   //var _json = '''
-  
+
   //''';
   var _json = '''
     {"width":990,"lines":[],"height":580,
@@ -18,11 +18,11 @@ class UserData {
     {"sequence":30,"category":"identifier",
     "name":"email","type":"Email","init":""}]}]}
   ''';
-  
+
   UserData() {
     Domain domain = fromMagicBoxes(_json);
     Model model = domain.model;
-    memberConcept = model.concepts.getEntity('Member');
+    memberConcept = model.concepts.getEntityByCode('Member');
     members = new Members(memberConcept);
   }
 

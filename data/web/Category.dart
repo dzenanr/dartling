@@ -2,7 +2,7 @@
 class Category extends Entity<Category> {
 
   Category(Concept concept) : super.of(concept) {
-    Concept webLinkConcept = concept.model.concepts.getEntity('WebLink');
+    Concept webLinkConcept = concept.model.concepts.getEntityByCode('WebLink');
     setChild('webLinks', new WebLinks(webLinkConcept));
   }
 

@@ -24,11 +24,11 @@ class Domain extends Entity<Domain> {
     assert(types.count == 3);
   }
 
-  Domain getDomain(String code) => domains.getEntity(code);
+  Domain getDomain(String code) => domains.getEntityByCode(code);
 
-  Model get model() => models.getEntity('default');
+  Model get model() => models.getEntityByCode('default');
 
-  Model getModel(String code) => models.getEntity(code);
+  Model getModel(String code) => models.getEntityByCode(code);
 
-  Type getType(String code) => types.getEntity(code);
+  Type getType(String code) => types.getEntityByCode(code);
 }
