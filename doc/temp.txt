@@ -1,2 +1,39 @@
 
+    bool contains(T entity) {
+    T element = _oidEntityMap[entity.oid];
+    if (entity == element) {
+      return true;
+    }
+    /*
+    if (entity.code != null) {
+      if(_codeEntityMap.containsKey(entity.code)) {
+        T element = _codeEntityMap[entity.code];
+        if (element == entity) {
+          return true;
+        }
+      }
+    } else {
+      for (T element in _entityList) {
+        if (element == entity) {
+          return true;
+        }
+      }
+    }
+    */
+    return false;
+  }
+  
+  Entities<T> selectByFunction(Function f) {
+    List<T> filteredList = _entityList.filter(f);
+    // need to use reflection to create specific entities based on the concept
+    Entities<T> selectedEntities = new Entities.of(_concept);
+    filteredList.forEach((e) => selectedEntities.add(e));
+    selectedEntities._sourceEntities = this;
+    return selectedEntities;
+  }
 
+  Entities<T> copy() {
+    // need to use reflection to create specific entities based on the concept
+    Entities<T> ce = new Entities.of(_concept);
+    _entityList.forEach((e) => ce.add(e));
+  }

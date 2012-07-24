@@ -93,35 +93,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     }
   }
 
-  List<T> filter(Function f) {
-    return _entityList.filter(f);
-  }
-
-  addFrom(List<T> other) {
-    other.forEach((entity) => add(entity));
-  }
-
-  /*
-  Entities<T> filter(Function f) {
-    List<T> filteredList = _entityList.filter(f);
-    // need to use reflection to create specific entities based on the concept
-    Entities<T> selectedEntities = new Entities.of(_concept);
-    filteredList.forEach((e) => selectedEntities.add(e));
-    selectedEntities._sourceEntities = this;
-    return selectedEntities;
-  }
-
-  Entities<T> copy() {
-    // need to use reflection to create specific entities based on the concept
-    Entities<T> ce = new Entities.of(_concept);
-    _entityList.forEach((e) => ce.add(e));
-  }
-  */
-
-  List<T> getList() => new List.from(_entityList);
-
   T getEntity(Oid oid) {
-    _oidEntityMap[oid];
+    return _oidEntityMap[oid];
   }
 
   T getEntityByCode(String code) {
@@ -168,6 +141,45 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       }
     }
     return null;
+  }
+
+  addFrom(List<T> other) {
+    other.forEach((entity) => add(entity));
+  }
+
+  List<T> getList() => new List.from(_entityList);
+
+  List<T> selectByFunction(Function f) {
+    // returns a new list
+    return _entityList.filter(f);
+  }
+
+  List<T> selectByAttribute(String code, Object attribute) {
+    var selectionList = new List<T>();
+    for (T entity in _entityList) {
+      for (Attribute a in _concept.attributes) {
+        if (a.code == code) {
+          if (entity.getAttribute(a.code) == attribute) {
+            selectionList.add(entity);
+          }
+        }
+      }
+    }
+    return selectionList;
+  }
+
+  List<T> selectByParent(String code, Object parent) {
+    var selectionList = new List<T>();
+    for (T entity in _entityList) {
+      for (Parent p in _concept.parents) {
+        if (p.code == code) {
+          if (entity.getParent(p.code) == parent) {
+            selectionList.add(entity);
+          }
+        }
+      }
+    }
+    return selectionList;
   }
 
   /**

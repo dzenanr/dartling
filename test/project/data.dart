@@ -1,7 +1,6 @@
 
-var data;
-
 testProjectData() {
+  var data;
   group('Testing', () {
     setUp(() {
       data = new ProjectData();
@@ -44,35 +43,36 @@ testProjectData() {
       projects.empty();
       expect(projects.count == 0);
     });
-    test('Project Filtering 1', () {
+    test('Select Projects By Function 1', () {
       var projects = data.projects;
       expect(projects.count == 3);
 
-      var programmingProjects = projects.filter((p) => p.isOnProgramming());
+      var programmingProjects =
+          projects.selectByFunction((p) => p.isOnProgramming());
       expect(programmingProjects, isNotNull);
       expect(programmingProjects, isNot(isEmpty));
       expect(programmingProjects.length == 2);
 
       //programmingProjects.display('Programming Entities');
     });
-    test('Project Filtering 2', () {
+    test('Select Projects By Function 2', () {
       var projects = data.projects;
       expect(projects.count == 3);
 
       List<Project> programmingProjectList =
-          projects.filter((p) => p.isOnProgramming());
+          projects.selectByFunction((p) => p.isOnProgramming());
       expect(programmingProjectList, isNotNull);
       expect(programmingProjectList, isNot(isEmpty));
       expect(programmingProjectList.length == 2);
 
       //programmingProjects.display('Programming Entities');
     });
-    test('Project Filtering 3', () {
+    test('Select Projects By Function 3', () {
       var projects = data.projects;
       expect(projects.count == 3);
 
       List<Project> programmingProjectList =
-          projects.filter((p) => p.isOnProgramming());
+          projects.selectByFunction((p) => p.isOnProgramming());
       expect(programmingProjectList, isNotNull);
       expect(programmingProjectList, isNot(isEmpty));
       expect(programmingProjectList.length == 2);

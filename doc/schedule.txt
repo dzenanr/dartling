@@ -1,11 +1,10 @@
 Dartling Schedule
 
-To do
 
-entities forEach 
-get random entity?
-error handling?
-log?
+To do
+ 
+sort (order by)
+error handling
 attribute validations (required, type, length)
 id validation
 add entity cannot violate the max constraint
@@ -15,15 +14,28 @@ property update propagations
 pre & post
 observers (notifications)
 persistance
-indexes? 
-undo?
-actions, transactions?
+actions, transactions, undo
+
+logging
+entities forEach
+get random entity
+indexes
+
 
 To do with reflection
 
-filter returns Entities (reflection needed)
-sort entities
 copy entities
+sort entities
+selectByFunction
+selectByAttribute
+selectByParent
+
+
+2012-07-24, 12:53
+filter -> selectByFunction
+selectByProperty
+selectByParent
+
 
 2012-07-23, 18:10
 unit test for getEntityById
