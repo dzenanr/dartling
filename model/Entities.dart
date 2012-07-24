@@ -51,22 +51,6 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     if (entity == element) {
       return true;
     }
-    /*
-    if (entity.code != null) {
-      if(_codeEntityMap.containsKey(entity.code)) {
-        T element = _codeEntityMap[entity.code];
-        if (element == entity) {
-          return true;
-        }
-      }
-    } else {
-      for (T element in _entityList) {
-        if (element == entity) {
-          return true;
-        }
-      }
-    }
-    */
     return false;
   }
 
@@ -180,6 +164,18 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       }
     }
     return selectionList;
+  }
+
+  List<T> orderByFunction(Function f) {
+    List<T> sortedList = getList();
+    sortedList.sort(f);
+    return sortedList;
+  }
+
+  List<T> orderByCode() {
+    List<T> sortedList = getList();
+    sortedList.sort((m,n) => m.compareTo(n));
+    return sortedList;
   }
 
   /**

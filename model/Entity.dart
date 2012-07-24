@@ -154,13 +154,16 @@ class Entity<T extends Entity<T>> implements Comparable {
    }
 
   /**
-   * Compares two entities based on codes. If the result is less than 0 then
-   * the first entity is less than the second, if it is equal to 0 they are
-   * equal and if the result is greater than 0 then the first is greater than
-   * the second.
+   * Compares two entities based on codes.
+   * If the result is less than 0 then the first entity is less than the second,
+   * if it is equal to 0 they are equal and
+   * if the result is greater than 0 then the first is greater than the second.
    */
   int compareTo(T entity) {
-    return _code.compareTo(entity.code);
+    if (code != null) {
+      return _code.compareTo(entity.code);
+    }
+    throw new Exception('compare to: code is not used.');
   }
 
   /**

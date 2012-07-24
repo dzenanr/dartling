@@ -83,5 +83,28 @@ testUserData() {
 
       members.display('All Members After Remove');
     });
+    test('Order Members By Function', () {
+      var members = data.members;
+      expect(members.count == 3);
+      members.display('Members');
+
+      List<Member> orderedMemberList =
+          members.orderByFunction((m,n) => m.compareTo(n));
+      expect(orderedMemberList, isNotNull);
+      expect(orderedMemberList, isNot(isEmpty));
+      expect(orderedMemberList.length == 3);
+
+      Members orderedMembers = new Members(data.memberConcept);
+      orderedMembers.addFrom(orderedMemberList);
+      orderedMembers.sourceEntities = members;
+      expect(orderedMembers, isNotNull);
+      expect(orderedMembers, isNot(isEmpty));
+      expect(orderedMembers.count == 3);
+      expect(orderedMembers.sourceEntities, isNotNull);
+      expect(orderedMembers.sourceEntities, isNot(isEmpty));
+      expect(orderedMembers.sourceEntities.count == 3);
+
+      orderedMembers.display('Ordered Members');
+    });
   });
 }

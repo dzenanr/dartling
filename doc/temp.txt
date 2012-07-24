@@ -1,27 +1,14 @@
-
-    bool contains(T entity) {
-    T element = _oidEntityMap[entity.oid];
-    if (entity == element) {
-      return true;
-    }
-    /*
-    if (entity.code != null) {
-      if(_codeEntityMap.containsKey(entity.code)) {
-        T element = _codeEntityMap[entity.code];
-        if (element == entity) {
-          return true;
-        }
-      }
-    } else {
-      for (T element in _entityList) {
-        if (element == entity) {
-          return true;
-        }
-      }
-    }
-    */
-    return false;
-  }
+    var dartNewsWebLink = new WebLink(webLinkConcept);
+    expect(dartNewsWebLink, isNotNull);
+    expect(dartNewsWebLink.category, isNull);
+    dartNewsWebLink.code = 'Dart News';
+    dartNewsWebLink.url = 'http://news.dartlang.org/';
+    dartNewsWebLink.description =
+        'Official news from the Dart project.';
+    dartCategory.webLinks.add(dartNewsWebLink);
+    expect(dartCategory.webLinks.count == 3);
+    dartNewsWebLink.category = dartCategory;
+    expect(dartNewsWebLink.category, isNotNull);
   
   Entities<T> selectByFunction(Function f) {
     List<T> filteredList = _entityList.filter(f);
@@ -37,3 +24,29 @@
     Entities<T> ce = new Entities.of(_concept);
     _entityList.forEach((e) => ce.add(e));
   }
+  
+  int compareTo(T entity) {
+    if (code != null) {
+      return _code.compareTo(entity.code);
+    }
+    var id = getId();
+    if (id.count > 0) {
+      return id.compareTo(entity.getId());
+    }
+    throw new Exception('compare to: both code and id are not used.');
+  }
+  
+  /**
+   * Compares two ids. If the result is less than 0 then
+   * the first id is less than the second, if it is equal to 0 they are
+   * equal and if the result is greater than 0 then the first is greater than
+   * the second.
+   */
+  int compareTo(Id other) {
+    // to do
+      return 0;
+  }
+  
+  
+  
+  

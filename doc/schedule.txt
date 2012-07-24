@@ -2,9 +2,11 @@ Dartling Schedule
 
 
 To do
- 
-sort (order by)
+
+id compare to other id
+specific exceptions
 error handling
+url type
 attribute validations (required, type, length)
 id validation
 add entity cannot violate the max constraint
@@ -19,7 +21,7 @@ actions, transactions, undo
 logging
 entities forEach
 get random entity
-indexes
+indexes (http://www.mattfleming.com/node/192)
 
 
 To do with reflection
@@ -31,11 +33,16 @@ selectByAttribute
 selectByParent
 
 
+2012-07-24, 16:05
+member compare to other member (compare to function)
+entity compare to other entity (code)
+orderByFunction
+orderByCode
+
 2012-07-24, 12:53
 filter -> selectByFunction
-selectByProperty
+selectByAttribute
 selectByParent
-
 
 2012-07-23, 18:10
 unit test for getEntityById
