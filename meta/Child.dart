@@ -5,6 +5,8 @@ class Child extends Neighbor {
     super(sourceConcept, destinationConcept, code) {
     sourceConcept.children.add(this);
     destinationConcept.sourceChildren.add(this);
+    min = '0';
+    max = 'N';
   }
 
 }

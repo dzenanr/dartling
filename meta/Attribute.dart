@@ -3,9 +3,9 @@ class Attribute extends Property {
 
   bool guid = false;
   var init;
-  int increment;
+  num increment;
   int sequence;
-  bool derive = false;
+  bool _derive = false;
   bool essential = true;
 
   Type type;
@@ -14,6 +14,12 @@ class Attribute extends Property {
     sourceConcept.attributes.add(this);
     // default type is String
     type = sourceConcept.model.domain.getType('String');
+  }
+
+  bool get derive() => _derive;
+  set derive(bool derive) {
+    _derive = derive;
+    update = false;
   }
 
 }

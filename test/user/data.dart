@@ -89,7 +89,7 @@ testUserData() {
       members.display('Members');
 
       List<Member> orderedMemberList =
-          members.orderByFunction((m,n) => m.compareTo(n));
+          members.order((m,n) => m.compareTo(n));
       expect(orderedMemberList, isNotNull);
       expect(orderedMemberList, isNot(isEmpty));
       expect(orderedMemberList.length == 3);

@@ -3,6 +3,13 @@ class Concept extends Entity<Concept> {
 
   bool entry = true;
   bool abstract = false;
+
+  String min = '0';
+  String max = 'N';
+
+  bool add = true;
+  bool remove = true;
+
   String pluralName;
   String description;
 

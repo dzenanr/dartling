@@ -46,10 +46,10 @@ class Entity<T extends Entity<T>> implements Comparable {
   String get code() => _code;
   set code(String code) {
     if (_code != null) {
-      throw new Exception('Entity code cannot be updated.');
+      throw new CodeException('Entity code cannot be updated.');
     }
     if (code == null) {
-      throw new Exception('Entity code cannot be nullified.');
+      throw new CodeException('Entity code cannot be nullified.');
     }
     _code = code;
   }
@@ -57,15 +57,51 @@ class Entity<T extends Entity<T>> implements Comparable {
   Concept get concept() => _concept;
 
   Object getAttribute(String name) => _attributeMap[name];
-  setAttribute(String name, Object value) => _attributeMap[name] = value;
+  setAttribute(String name, Object value) {
+    if (_concept == null) {
+      throw new ConceptException('Entity concept is not defined.');
+    }
+    Attribute attribute = _concept.attributes.getEntityByCode(name);
+    if (!attribute.derive && attribute.update) {
+      _attributeMap[name] = value;
+    } else {
+      String msg = '${_concept.code}.${attribute.code} is not updateable.';
+      throw new UpdateException(msg);
+    }
+  }
 
   Entity getParent(String name) => _parentMap[name];
-  setParent(String name, Entity entity) => _parentMap[name] = entity;
+  setParent(String name, Entity entity) {
+    if (_concept == null) {
+      throw new ConceptException('Entity concept is not defined.');
+    }
+    Parent parent = _concept.parents.getEntityByCode(name);
+    if (parent.update) {
+      _parentMap[name] = entity;
+    } else {
+      String msg = '${_concept.code}.${parent.code} is not updateable.';
+      throw new UpdateException(msg);
+    }
+  }
 
   Entities getChild(String name) => _childMap[name];
-  setChild(String name, Entities entities) => _childMap[name] = entities;
+  setChild(String name, Entities entities) {
+    if (_concept == null) {
+      throw new ConceptException('Entity concept is not defined.');
+    }
+    Child child = _concept.children.getEntityByCode(name);
+    if (child.update) {
+      _childMap[name] = entities;
+    } else {
+      String msg = '${_concept.code}.${child.code} is not updateable.';
+      throw new UpdateException(msg);
+    }
+  }
 
-  Id getId() {
+  Id get id() {
+    if (_concept == null) {
+      throw new ConceptException('Entity concept is not defined.');
+    }
     Id id = new Id(_concept);
     for (Parent p in _concept.parents) {
       if (p.id) {
@@ -77,6 +113,9 @@ class Entity<T extends Entity<T>> implements Comparable {
         id.setAttribute(a.code, _attributeMap[a.code]);
       }
     }
+    if (id.count == 0) {
+      return null;
+    }
     return id;
   }
 
@@ -84,6 +123,9 @@ class Entity<T extends Entity<T>> implements Comparable {
    * Copies the entity (oid, code, attributes and neighbors).
    */
   T copy() {
+    if (_concept == null) {
+      throw new ConceptException('Entity concept is not defined.');
+    }
     T e = new Entity.of(_concept);
     e._oid = _oid;
     e.code = _code;
@@ -108,7 +150,7 @@ class Entity<T extends Entity<T>> implements Comparable {
   * two objects cannot be equal.
   * Two entities are equal if their oids are equal.
   */
-  bool equals(other) {
+  bool equalOids(other) {
     if (other is T) {
       if (_oid != other.oid) {
         return false;
@@ -125,7 +167,10 @@ class Entity<T extends Entity<T>> implements Comparable {
    * two objects cannot be equal. Two entities are
    * equal if they have the same content, except oid.
    */
-   bool equalsInContent(other) {
+   bool equals(other) {
+     if (_concept == null) {
+       throw new ConceptException('Entity concept is not defined.');
+     }
      if (other is T) {
        if (_code != other.code) {
          return false;
@@ -163,7 +208,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     if (code != null) {
       return _code.compareTo(entity.code);
     }
-    throw new Exception('compare to: code is not used.');
+    throw new CodeException('Entity code is not used.');
   }
 
   /**
@@ -180,8 +225,11 @@ class Entity<T extends Entity<T>> implements Comparable {
    * Displays (prints) an entity with its attributes, parents and children.
    */
   display([String space='', bool withOid=true]) {
+    if (_concept == null) {
+      throw new ConceptException('Entity concept is not defined.');
+    }
     var s = space;
-    if (_concept != null && !_concept.entry) {
+    if (!_concept.entry) {
       s = '$space  ';
     }
     print('${s}------------------------------------');

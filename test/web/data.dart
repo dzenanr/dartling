@@ -39,10 +39,17 @@ testWebData() {
       dartHomeWebLink.description =
           'Dart brings structure to web app engineering '
           'with a new language, libraries, and tools.';
+
       dartCategory.webLinks.add(dartHomeWebLink);
-      expect(dartCategory.webLinks.count == 1);
+      expect(dartCategory.webLinks.count == 0);
+      expect(dartCategory.webLinks.errors.count == 1);
+      expect(dartCategory.webLinks.errors.getList()[0].category == 'required');
+      dartCategory.webLinks.errors.display('Errors');
+
       dartHomeWebLink.category = dartCategory;
       expect(dartHomeWebLink.category, isNotNull);
+      dartCategory.webLinks.add(dartHomeWebLink);
+      expect(dartCategory.webLinks.count == 1);
 
       var tryDartWebLink = new WebLink(webLinkConcept);
       expect(tryDartWebLink, isNotNull);
@@ -51,10 +58,10 @@ testWebData() {
       tryDartWebLink.url = 'http://try.dartlang.org/';
       tryDartWebLink.description =
           'Try out the Dart Language from the comfort of your web browser.';
-      dartCategory.webLinks.add(tryDartWebLink);
-      expect(dartCategory.webLinks.count == 2);
       tryDartWebLink.category = dartCategory;
       expect(tryDartWebLink.category, isNotNull);
+      dartCategory.webLinks.add(tryDartWebLink);
+      expect(dartCategory.webLinks.count == 2);
 
       var dartNewsWebLink = new WebLink(webLinkConcept);
       expect(dartNewsWebLink, isNotNull);
@@ -63,10 +70,10 @@ testWebData() {
       dartNewsWebLink.url = 'http://news.dartlang.org/';
       dartNewsWebLink.description =
           'Official news from the Dart project.';
-      dartCategory.webLinks.add(dartNewsWebLink);
-      expect(dartCategory.webLinks.count == 3);
       dartNewsWebLink.category = dartCategory;
       expect(dartNewsWebLink.category, isNotNull);
+      dartCategory.webLinks.add(dartNewsWebLink);
+      expect(dartCategory.webLinks.count == 3);
     });
     tearDown(() {
       var categories = catalog.categories;

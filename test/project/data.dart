@@ -47,8 +47,7 @@ testProjectData() {
       var projects = data.projects;
       expect(projects.count == 3);
 
-      var programmingProjects =
-          projects.selectByFunction((p) => p.isOnProgramming());
+      var programmingProjects = projects.select((p) => p.isOnProgramming());
       expect(programmingProjects, isNotNull);
       expect(programmingProjects, isNot(isEmpty));
       expect(programmingProjects.length == 2);
@@ -60,7 +59,7 @@ testProjectData() {
       expect(projects.count == 3);
 
       List<Project> programmingProjectList =
-          projects.selectByFunction((p) => p.isOnProgramming());
+          projects.select((p) => p.isOnProgramming());
       expect(programmingProjectList, isNotNull);
       expect(programmingProjectList, isNot(isEmpty));
       expect(programmingProjectList.length == 2);
@@ -72,7 +71,7 @@ testProjectData() {
       expect(projects.count == 3);
 
       List<Project> programmingProjectList =
-          projects.selectByFunction((p) => p.isOnProgramming());
+          projects.select((p) => p.isOnProgramming());
       expect(programmingProjectList, isNotNull);
       expect(programmingProjectList, isNot(isEmpty));
       expect(programmingProjectList.length == 2);

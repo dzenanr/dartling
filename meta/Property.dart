@@ -12,13 +12,7 @@ abstract class Property extends Entity<Property> {
     super.code = code;
   }
 
-  bool get maxMany() {
-    var minmax = max.trim();
-    if (minmax != '0' && minmax != '1') {
-      return true;
-    }
-    return false;
-  }
+  bool get maxMany() => max != '0' && max != '1' ? true : false;
 
   bool get id() => _id;
   set id(bool i) {
@@ -27,6 +21,11 @@ abstract class Property extends Entity<Property> {
       min = '1';
       max = '1';
     }
+  }
+
+  bool get required() => min == '1' ? true : false;
+  set required(bool r) {
+    r ? min = '1' : min = '0';
   }
 
 }

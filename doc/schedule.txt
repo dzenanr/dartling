@@ -3,35 +3,48 @@ Dartling Schedule
 
 To do
 
-id compare to other id
-specific exceptions
-error handling
+attribute validations (type, length)
 url type
-attribute validations (required, type, length)
-id validation
-add entity cannot violate the max constraint
-add must increment if increment
-remove entity cannot violate the min constraint
-property update propagations 
-pre & post
+email type
 observers (notifications)
 persistance
-actions, transactions, undo
 
+id compare to other id
+specific exceptions
 logging
 entities forEach
 get random entity
+actions, transactions, undo
+post
 indexes (http://www.mattfleming.com/node/192)
 
 
 To do with reflection
 
-copy entities
+copy entities (set preAdd to false; at the end to true)
 sort entities
-selectByFunction
+select
 selectByAttribute
 selectByParent
+order
+orderByCode
 
+
+2012-07-27, 11:49
+selectByFunction -> select
+orderByFunction -> order
+preAdd: max validation, increment actions; 
+  unique (code, id), required (not null) validations
+preRemove: min validation 
+Error, Errors
+DartlingException
+AddException
+CodeException
+ConceptException
+RemoveException
+UpdateException
+concept add, remove permissions
+entity set attribute, parent, child (derive, update permission validations)
 
 2012-07-24, 16:05
 member compare to other member (compare to function)
@@ -43,6 +56,7 @@ orderByCode
 filter -> selectByFunction
 selectByAttribute
 selectByParent
+concept code used
 
 2012-07-23, 18:10
 unit test for getEntityById

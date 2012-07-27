@@ -15,6 +15,17 @@
 #source('data/web/WebLink.dart');
 #source('data/web/WebLinks.dart');
 
+#source('exception/AddException.dart');
+#source('exception/CodeException.dart');
+#source('exception/ConceptException.dart');
+#source('exception/DartlingException.dart');
+#source('exception/Error.dart');
+#source('exception/Errors.dart');
+#source('exception/RemoveException.dart');
+#source('exception/UpdateException.dart');
+
+#source('guid/Oid.dart');
+
 #source('meta/Attribute.dart');
 #source('meta/Attributes.dart');
 #source('meta/Child.dart');
@@ -26,7 +37,6 @@
 #source('meta/Model.dart');
 #source('meta/Models.dart');
 #source('meta/Neighbor.dart');
-#source('meta/Oid.dart');
 #source('meta/Parent.dart');
 #source('meta/Parents.dart');
 #source('meta/Property.dart');
@@ -38,6 +48,7 @@
 #source('model/Entity.dart');
 #source('model/Id.dart');
 
+#source('test/bug.dart');
 #source('test/project/data.dart');
 #source('test/user/data.dart');
 #source('test/web/data.dart');

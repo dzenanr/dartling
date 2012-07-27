@@ -24,7 +24,6 @@ testWebModel() {
 
   Child categoryWebLinksNeighbor =
       new Child(categoryConcept, webLinkConcept, 'webLinks');
-  categoryWebLinksNeighbor.max = 'N';
   Parent webLinkCategoryNeighbor =
       new Parent(webLinkConcept, categoryConcept, 'category');
   webLinkCategoryNeighbor.id = true;

@@ -1,14 +1,4 @@
-    var dartNewsWebLink = new WebLink(webLinkConcept);
-    expect(dartNewsWebLink, isNotNull);
-    expect(dartNewsWebLink.category, isNull);
-    dartNewsWebLink.code = 'Dart News';
-    dartNewsWebLink.url = 'http://news.dartlang.org/';
-    dartNewsWebLink.description =
-        'Official news from the Dart project.';
-    dartCategory.webLinks.add(dartNewsWebLink);
-    expect(dartCategory.webLinks.count == 3);
-    dartNewsWebLink.category = dartCategory;
-    expect(dartNewsWebLink.category, isNotNull);
+
   
   Entities<T> selectByFunction(Function f) {
     List<T> filteredList = _entityList.filter(f);
@@ -45,6 +35,14 @@
   int compareTo(Id other) {
     // to do
       return 0;
+  }
+  
+  T getEntityByPosition(int position) {
+    if (position >= 0 && position < count) {
+      return _entityList[position];
+    } else {
+      throw new SearchException('Position must be between 0 and count - 1.');
+    }
   }
   
   
