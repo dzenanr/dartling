@@ -16,7 +16,7 @@ class WebLink extends Entity<WebLink> {
   set category(Category p) => setParent('category', p);
 
   /**
-   * Compares two entities based on the names.
+   * Compares two web links based on the names.
    * If the result is less than 0 then the first entity is less than the second,
    * if it is equal to 0 they are equal and
    * if the result is greater than 0 then the first is greater than the second.

@@ -145,13 +145,12 @@ testUserData() {
 
       members.display('All Members After Remove');
     });
-    test('Order Members By Function', () {
+    test('Order Members By Last Then First Names', () {
       var members = data.members;
       expect(members.count == 3);
       members.display('Members');
 
-      List<Member> orderedMemberList =
-          members.order((m,n) => m.compareTo(n));
+      List<Member> orderedMemberList = members.order();
       expect(orderedMemberList, isNotNull);
       expect(orderedMemberList, isNot(isEmpty));
       expect(orderedMemberList.length == 3);

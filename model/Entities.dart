@@ -306,12 +306,20 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return selectionList;
   }
 
-  List<T> order(Function f) {
+  // must define the compareTo method on a specific entity
+  List<T> order() {
+    List<T> sortedList = getList();
+    sortedList.sort((m,n) => m.compareTo(n));
+    return sortedList;
+  }
+
+  List<T> orderByFunction(Function f) {
     List<T> sortedList = getList();
     sortedList.sort(f);
     return sortedList;
   }
 
+  // there should not be a specific compare
   List<T> orderByCode() {
     List<T> sortedList = getList();
     sortedList.sort((m,n) => m.compareTo(n));

@@ -114,6 +114,29 @@ testProjectData() {
       expect(project, isNotNull);
       expect(project.name == searchName);
     });
+    test('Order Projects By Name', () {
+      var projects = data.projects;
+      expect(projects.count == 3);
+      projects.display('Projects');
+
+      List<Project> orderedProjectList =
+          projects.orderByFunction((m,n) => m.compare(n));
+      expect(orderedProjectList, isNotNull);
+      expect(orderedProjectList, isNot(isEmpty));
+      expect(orderedProjectList.length == 3);
+
+      Projects orderedProjects = new Projects(data.projectConcept);
+      orderedProjects.addFrom(orderedProjectList);
+      orderedProjects.sourceEntities = projects;
+      expect(orderedProjects, isNotNull);
+      expect(orderedProjects, isNot(isEmpty));
+      expect(orderedProjects.count == 3);
+      expect(orderedProjects.sourceEntities, isNotNull);
+      expect(orderedProjects.sourceEntities, isNot(isEmpty));
+      expect(orderedProjects.sourceEntities.count == 3);
+
+      orderedProjects.display('Ordered Projects');
+    });
   });
 }
 

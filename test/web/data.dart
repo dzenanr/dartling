@@ -101,8 +101,7 @@ testWebData() {
       WebLinks dartWebLinks = dartCategory.webLinks;
       expect(dartWebLinks.count == 3);
 
-      List<WebLink> orderedDartWebLinkList =
-          dartWebLinks.order((m,n) => m.compareTo(n));
+      List<WebLink> orderedDartWebLinkList = dartWebLinks.order();
       expect(orderedDartWebLinkList, isNotNull);
       expect(orderedDartWebLinkList, isNot(isEmpty));
       expect(orderedDartWebLinkList.length == 3);

@@ -13,7 +13,7 @@ class Member extends Entity<Member> {
   set email(String a) => setAttribute('email', a);
 
   /**
-   * Compares two entities based on the last and first names.
+   * Compares two members based on the last and first names.
    * If the result is less than 0 then the first entity is less than the second,
    * if it is equal to 0 they are equal and
    * if the result is greater than 0 then the first is greater than the second.
