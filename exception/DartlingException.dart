@@ -5,7 +5,7 @@ class DartlingException implements Exception {
 
   const DartlingException(this.msg);
 
-  toString() => msg;
+  toString() => '*** $msg ***';
 
 }
 

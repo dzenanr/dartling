@@ -6,6 +6,9 @@ class Category extends Entity<Category> {
     setChild('webLinks', new WebLinks(webLinkConcept));
   }
 
+  String get name() => getAttribute('name');
+  set name(String a) => setAttribute('name', a);
+
   String get description() => getAttribute('description');
   set description(String a) => setAttribute('description', a);
 

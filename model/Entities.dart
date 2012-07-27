@@ -41,28 +41,6 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
 
   bool get isEmpty() => _entityList.isEmpty();
 
-  _codeExists(String code) {
-    if (code != null) {
-      if (_codeEntityMap.containsKey(code)) {
-        if (_codeEntityMap[code] != null) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  _idExists(Id id) {
-    if (id != null) {
-      for (T entity in _entityList) {
-        if (entity.id == id) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
   bool preAdd(T entity) {
     if (errors == null) {
       errors = new Errors();
@@ -123,15 +101,15 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     }
 
     // uniqueness validation
-    if (_codeExists(entity.code)) {
+    if (entity.code != null && getEntityByCode(entity.code) != null) {
       Error error = new Error('unique');
       error.message = '${entity.concept.code}.code is not unique.';
       errors.add(error);
       validation = false;
     }
-    if (_idExists(entity.id)) {
+    if (entity.id != null && getEntityById(entity.id) != null) {
       Error error = new Error('unique');
-      error.message = '${entity.concept.code}.id is not unique.';
+      error.message = '${entity.concept.code}.id ${entity.id.toString()} is not unique.';
       errors.add(error);
       validation = false;
     }
@@ -303,6 +281,14 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return selectionList;
   }
 
+  T getEntityByAttribute(String code, Object attribute) {
+    var selectionList = selectByAttribute(code, attribute);
+    if (selectionList.length > 0) {
+      return selectionList[0];
+    }
+    return null;
+  }
+
   List<T> selectByParent(String code, Object parent) {
     if (_concept == null) {
       throw new ConceptException('Entities concept is not defined.');
@@ -338,9 +324,9 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   display([String title='Entities', bool withOid=true]) {
     if (title != '') {
       print('');
-      print('**************************************');
-      print('$title                                  ');
-      print('**************************************');
+      print('======================================');
+      print('$title                                ');
+      print('======================================');
       print('');
     }
     for (T e in _entityList) {

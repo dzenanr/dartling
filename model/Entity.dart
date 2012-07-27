@@ -247,7 +247,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     });
 
     _parentMap.forEach((k,v) {
-      print('${s}$k: ${v.code}');
+      print('${s}$k: ${v.toString()}');
     });
 
     _childMap.forEach((k,v) {

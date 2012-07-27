@@ -12,11 +12,6 @@ class Member extends Entity<Member> {
   String get email() => getAttribute('email');
   set email(String a) => setAttribute('email', a);
 
-  /*
-  String get password() => getAttribute('password');
-  set password(String a) => setAttribute('password', a);
-  */
-
   /**
    * Compares two entities based on the last and first names.
    * If the result is less than 0 then the first entity is less than the second,

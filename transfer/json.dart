@@ -29,7 +29,11 @@ Domain fromMagicBoxes(String json) {
         int itemSequence = item["sequence"];
         attribute.sequence = itemSequence;
         String itemInit = item["init"];
-        attribute.init = itemInit;
+        if (itemInit == null || itemInit.trim() == '') {
+          attribute.init = null;
+        } else {
+          attribute.init = itemInit;
+        }
         String itemType = item["type"];
         Type type = domain.types.getEntityByCode(itemType);
         if (type != null) {

@@ -5,9 +5,6 @@ class UserData {
 
   Members members;
 
-  //var _json = '''
-
-  //''';
   var _json = '''
     {"width":990,"lines":[],"height":580,
     "boxes":[{"entry":true,"name":"Member",

@@ -7,9 +7,9 @@ class Errors extends Entities<Error> {
    display([String title='Entities', bool withOid=true]) {
      if (title != '') {
        print('');
-       print('******================================');
-       print('$title                                ');
-       print('******================================');
+       print('************************************************');
+       print('$title                                          ');
+       print('************************************************');
        print('');
      }
      for (Error error in this) {

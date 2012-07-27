@@ -10,9 +10,9 @@ class Error extends Entity<Error> {
    * Displays (prints) an error.
    */
   display([String space='', bool withOid=true]) {
-    print('${space}--------------------------------');
-    print('${space}${category}                     ');
-    print('${space}--------------------------------');
+    print('${space}******************************************');
+    print('${space}${category}                               ');
+    print('${space}******************************************');
     if (withOid) {
       print('${space}oid: $oid');
     }
@@ -20,6 +20,7 @@ class Error extends Entity<Error> {
       print('${space}code: $code');
     }
     print('${space}message: ${message}');
+    print('${space}******************************************');
     print('');
   }
 

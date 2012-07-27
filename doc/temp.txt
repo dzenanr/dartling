@@ -1,4 +1,5 @@
-
+List<WebLink> orderedDartWebLinkList =
+          dartWebLinks.order((m,n) => m.compareTo(n));
   
   Entities<T> selectByFunction(Function f) {
     List<T> filteredList = _entityList.filter(f);

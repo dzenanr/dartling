@@ -56,9 +56,14 @@
 
 #source('transfer/json.dart');
 
-void main() {
+allTests() {
   testProjectData();
   testUserData();
   testWebData();
   testWebModel();
+}
+
+void main() {
+  //testBug();
+  allTests();
 }

@@ -9,18 +9,23 @@ testWebModel() {
   Concept categoryConcept = new Concept(model, 'Category');
   categoryConcept.description = 'Category of web links.';
   assert(model.concepts.count == 1);
-  Attribute categoryDescriptionAttribute =
+  //Attribute categoryNameAttribute =
+      new Attribute(categoryConcept, 'name');
+  //Attribute categoryDescriptionAttribute =
       new Attribute(categoryConcept, 'description');
-  assert(categoryConcept.attributes.count == 1);
+  assert(categoryConcept.attributes.count == 2);
 
   Concept webLinkConcept = new Concept(model, 'WebLink');
   webLinkConcept.entry = false;
   webLinkConcept.description = 'Web links of interest.';
   assert(model.concepts.count == 2);
-  Attribute webLinkUrlAttribute = new Attribute(webLinkConcept, 'url');
-  Attribute webLinkDescriptionAttribute =
+  //Attribute webLinkNameAttribute =
+      new Attribute(webLinkConcept, 'name');
+  //Attribute webLinkUrlAttribute =
+      new Attribute(webLinkConcept, 'url');
+  //Attribute webLinkDescriptionAttribute =
       new Attribute(webLinkConcept, 'description');
-  assert(webLinkConcept.attributes.count == 2);
+  assert(webLinkConcept.attributes.count == 3);
 
   Child categoryWebLinksNeighbor =
       new Child(categoryConcept, webLinkConcept, 'webLinks');
@@ -41,13 +46,13 @@ testWebModel() {
   assert(categories.count == 0);
 
   Entity dartCategory = new Entity.of(categoryConcept);
-  dartCategory.code = 'Dart';
+  dartCategory.setAttribute('name', 'Dart');
   dartCategory.setAttribute('description', 'Dart Web language.');
   categories.add(dartCategory);
   assert(categories.count == 1);
 
   Entity html5Category = new Entity.of(categoryConcept);
-  html5Category.code = 'HTML5';
+  html5Category.setAttribute('name', 'HTML5');
   html5Category.setAttribute('description',
     'HTML5 is the ubiquitous platform for the web.');
   categories.add(html5Category);
@@ -56,24 +61,24 @@ testWebModel() {
   assert(dartWebLinks.count == 0);
 
   Entity dartHomeWebLink = new Entity.of(webLinkConcept);
-  dartHomeWebLink.code = 'Dart Home';
+  dartHomeWebLink.setAttribute('name', 'Dart Home');
   dartHomeWebLink.setAttribute('url', 'http://www.dartlang.org/');
   dartHomeWebLink.setAttribute('description',
     'Dart brings structure to web app engineering with a new language, libraries, and tools.');
   dartWebLinks.add(dartHomeWebLink);
   assert(dartWebLinks.count == 1);
-  dartHomeWebLink._parentMap['category'] = dartCategory;
-  assert(dartHomeWebLink.getParent('category').code == 'Dart');
+  dartHomeWebLink.setParent('category', dartCategory);
+  assert(dartHomeWebLink.getParent('category').getAttribute('name') == 'Dart');
 
   Entity tryDartWebLink = new Entity.of(webLinkConcept);
-  tryDartWebLink.code = 'Try Dart';
+  tryDartWebLink.setAttribute('name', 'Try Dart');
   tryDartWebLink.setAttribute('url', 'http://try.dartlang.org/');
   tryDartWebLink.setAttribute('description',
     'Try out the Dart Language from the comfort of your web browser.');
   dartWebLinks.add(tryDartWebLink);
   assert(dartWebLinks.count == 2);
   tryDartWebLink.setParent('category', dartCategory);
-  assert(tryDartWebLink.getParent('category').code == 'Dart');
+  assert(tryDartWebLink.getParent('category').getAttribute('name') == 'Dart');
 
   // Display
   categories.display('Web Model Creation', withOid: true);

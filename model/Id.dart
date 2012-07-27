@@ -64,4 +64,27 @@ class Id {
      return true;
    }
 
+   /**
+   * Returns a string that represents this id.
+   */
+  String toString() {
+     String result = '' ;
+     if (parentCount > 0) {
+       _idParentMap.forEach((k,v) => result = '$result ${v.code}');
+     }
+    _idAttributeMap.forEach((k,v) => result = '$result ${v}');
+    return '(${result.trim()})';
+  }
+
+  display([String title='Id']) {
+    if (title != '') {
+      print('');
+      print('======================================');
+      print('$title                                ');
+      print('======================================');
+      print('');
+    }
+    print(toString());
+  }
+
 }

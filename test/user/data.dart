@@ -49,6 +49,68 @@ testUserData() {
       members.empty();
       expect(members.count == 0);
     });
+    test('Add Member Required Error', () {
+      var members = data.members;
+      expect(members.count == 3);
+
+      var memberConcept = data.memberConcept;
+      expect(memberConcept, isNotNull);
+      expect(memberConcept.attributes, isNot(isEmpty));
+      expect(memberConcept.attributes.count == 3);
+
+      var robertm = new Member(memberConcept);
+      expect(robertm, isNotNull);
+      robertm.firstName = 'Robert';
+      robertm.email = 'robertm@gmail.com';
+      members.add(robertm);
+      expect(members.count == 3);
+      expect(members.errors.count == 1);
+      expect(members.errors.getList()[0].category == 'required');
+      //members.errors.display('Add Member Required Error');
+    });
+    test('Add Member Unique Error', () {
+      var members = data.members;
+      expect(members.count == 3);
+
+      var memberConcept = data.memberConcept;
+      expect(memberConcept, isNotNull);
+      expect(memberConcept.attributes, isNot(isEmpty));
+      expect(memberConcept.attributes.count == 3);
+
+      var robertm = new Member(memberConcept);
+      expect(robertm, isNotNull);
+      robertm.firstName = 'Robert';
+      robertm.lastName = 'Mantha';
+      robertm.email = 'charlem@hotmail.com';
+      expect(memberConcept.getAttribute('email').id, isTrue);
+      expect(robertm.id.count == 1);
+      expect(robertm.id.getIdAttribute('email') == robertm.email);
+      members.add(robertm);
+      expect(members.count == 3);
+      expect(members.errors.count == 1);
+      expect(members.errors.getList()[0].category == 'unique');
+      //members.errors.display('Add Member Unique Error');
+    });
+    test('Add Member Required and Unique Error', () {
+      var members = data.members;
+      expect(members.count == 3);
+
+      var memberConcept = data.memberConcept;
+      expect(memberConcept, isNotNull);
+      expect(memberConcept.attributes, isNot(isEmpty));
+      expect(memberConcept.attributes.count == 3);
+
+      var robertm = new Member(memberConcept);
+      expect(robertm, isNotNull);
+      robertm.firstName = 'Robert';
+      robertm.email = 'charlem@hotmail.com';
+      members.add(robertm);
+      expect(members.count == 3);
+      expect(members.errors.count == 2);
+      expect(members.errors.getList()[0].category == 'required');
+      expect(members.errors.getList()[1].category == 'unique');
+      members.errors.display('Add Member Required and Unique Error');
+    });
     test('Select Members By Attribute', () {
       var members = data.members;
       expect(members.count == 3);
