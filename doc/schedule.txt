@@ -3,7 +3,6 @@ Dartling Schedule
 
 To do
 
-id compare to other id (order by id)
 attribute validations (type, length)
 url type
 email type
@@ -27,7 +26,6 @@ select
 selectByAttribute
 selectByParent
 order
-orderByCode
 
 
 2012-07-29, 15:20
