@@ -1,5 +1,5 @@
 
-class Id {
+class Id implements Comparable {
 
   Concept _concept;
 
@@ -162,7 +162,7 @@ class Id {
   String toString() {
      String result = '' ;
      if (parentCount > 0) {
-       _parentMap.forEach((k,v) => result = '$result ${v.code}');
+       _parentMap.forEach((k,v) => result = '$result ${v}');
      }
      if (attributeCount > 0) {
        _attributeMap.forEach((k,v) => result = '$result ${v}');

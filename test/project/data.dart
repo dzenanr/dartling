@@ -1,6 +1,7 @@
 
 testProjectData() {
   var data;
+  var dartlingOid;
   group('Testing', () {
     setUp(() {
       data = new ProjectData();
@@ -37,6 +38,7 @@ testProjectData() {
           'Programming Dartling.';
       projects.add(production);
       expect(projects.count == 3);
+      dartlingOid = production.oid;
     });
     tearDown(() {
       var projects = data.projects;
@@ -98,6 +100,13 @@ testProjectData() {
 
       programmingProjects.display('Programming Entities After Add');
       projects.display('All Projects');
+    });
+    test('Get Project By Oid', () {
+      var projects = data.projects;
+      expect(projects.count == 3);
+      var project = projects.getEntity(dartlingOid);
+      expect(project, isNotNull);
+      expect(project.name == 'Dartling');
     });
     test('Get Project By Id', () {
       var projects = data.projects;

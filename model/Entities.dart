@@ -6,6 +6,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   List<T> _entityList;
   Map<Oid, T> _oidEntityMap;
   Map<String, T> _codeEntityMap;
+  Map<String, T> _idEntityMap;
 
   Entities<T> sourceEntities;
   bool propagateToSource = true;
@@ -22,6 +23,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _entityList = new List<T>();
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
+    _idEntityMap = new Map<String, T>();
 
     propagateToSource = false;
     pre = false;
@@ -31,6 +33,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _entityList = new List<T>();
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
+    _idEntityMap = new Map<String, T>();
   }
 
   Concept get concept() => _concept;
@@ -124,6 +127,9 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       if (entity.code != null) {
         _codeEntityMap[entity.code] = entity;
       }
+      if (entity.concept != null && entity.id != null) {
+        _idEntityMap[entity.id.toString()] = entity;
+      }
 
       if (sourceEntities != null && propagateToSource) {
         sourceEntities.add(entity);
@@ -143,6 +149,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _entityList.clear();
     _oidEntityMap.clear();
     _codeEntityMap.clear();
+    _idEntityMap.clear();
   }
 
   bool preRemove(T entity) {
@@ -190,6 +197,9 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
           if (entity.code != null) {
             _codeEntityMap.remove(entity.code);
           }
+          if (entity.concept != null && entity.id != null) {
+            _idEntityMap.remove(entity.id.toString());
+          }
           break;
         }
       }
@@ -209,39 +219,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   }
 
   T getEntityById(Id id) {
-    if (id.count == 0) {
-      return null;
-    }
-    if (_concept == null) {
-      throw new ConceptException('Entities concept is not defined.');
-    }
-    for (T entity in _entityList) {
-      var found = true;
-      if (id.parentCount > 0) {
-        for (Parent p in _concept.parents) {
-          if (p.id) {
-            if (entity.getParent(p.code) != id.getParent(p.code)) {
-              found = false;
-              break;
-            }
-          }
-        }
-      }
-      if (found && id.attributeCount > 0) {
-        for (Attribute a in _concept.attributes) {
-          if (a.id) {
-            if (entity.getAttribute(a.code) != id.getAttribute(a.code)) {
-              found = false;
-              break;
-            }
-          }
-        }
-      }
-      if (found) {
-        return entity;
-      }
-    }
-    return null;
+    return _idEntityMap[id.toString()];
   }
 
   T getEntityByAttribute(String code, Object attribute) {
@@ -263,23 +241,6 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return _entityList.filter(f);
   }
 
-  List<T> selectByAttribute(String code, Object attribute) {
-    if (_concept == null) {
-      throw new ConceptException('Entities concept is not defined.');
-    }
-    var selectionList = new List<T>();
-    for (T entity in _entityList) {
-      for (Attribute a in _concept.attributes) {
-        if (a.code == code) {
-          if (entity.getAttribute(a.code) == attribute) {
-            selectionList.add(entity);
-          }
-        }
-      }
-    }
-    return selectionList;
-  }
-
   List<T> selectByParent(String code, Object parent) {
     if (_concept == null) {
       throw new ConceptException('Entities concept is not defined.');
@@ -289,6 +250,23 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       for (Parent p in _concept.parents) {
         if (p.code == code) {
           if (entity.getParent(p.code) == parent) {
+            selectionList.add(entity);
+          }
+        }
+      }
+    }
+    return selectionList;
+  }
+
+  List<T> selectByAttribute(String code, Object attribute) {
+    if (_concept == null) {
+      throw new ConceptException('Entities concept is not defined.');
+    }
+    var selectionList = new List<T>();
+    for (T entity in _entityList) {
+      for (Attribute a in _concept.attributes) {
+        if (a.code == code) {
+          if (entity.getAttribute(a.code) == attribute) {
             selectionList.add(entity);
           }
         }
@@ -327,6 +305,24 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     for (T e in _entityList) {
       e.display('', withOid);
     }
+  }
+
+  displayOidMap() {
+    _oidEntityMap.forEach((k,v) {
+      print('oid $k: $v');
+    });
+  }
+
+  displayCodeMap() {
+    _codeEntityMap.forEach((k,v) {
+      print('code $k: $v');
+    });
+  }
+
+  displayIdMap() {
+    _idEntityMap.forEach((k,v) {
+      print('id $k: $v');
+    });
   }
 
 }

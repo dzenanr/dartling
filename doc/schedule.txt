@@ -3,6 +3,7 @@ Dartling Schedule
 
 To do
 
+_idEntityMap in Entities
 attribute validations (type, length)
 url type
 email type
@@ -27,6 +28,10 @@ selectByAttribute
 selectByParent
 order
 
+
+2012-07-29, 17:42
+_idEntityMap;
+no more Hashable for Id
 
 2012-07-29, 15:20
 removed orderByCode

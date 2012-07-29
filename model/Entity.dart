@@ -210,10 +210,7 @@ class Entity<T extends Entity<T>> implements Comparable {
    * Returns a string that represents this entity by using oid and code.
    */
   String toString() {
-    if (_code == null) {
-      return '${_oid.toString()}';
-    }
-    return '${_oid.toString()} $_code';
+    return '${_oid.toString()}';
   }
 
   /**
@@ -235,6 +232,9 @@ class Entity<T extends Entity<T>> implements Comparable {
     }
     if (_code != null) {
       print('${s}code: $_code');
+    }
+    if (id != null) {
+      print('${s}id: $id');
     }
 
     _attributeMap.forEach((k,v) {

@@ -116,6 +116,42 @@
   }
 
 }
+
+  T getEntityById(Id id) {
+    if (id.count == 0) {
+      return null;
+    }
+    if (_concept == null) {
+      throw new ConceptException('Entities concept is not defined.');
+    }
+    for (T entity in _entityList) {
+      var found = true;
+      if (id.parentCount > 0) {
+        for (Parent p in _concept.parents) {
+          if (p.id) {
+            if (entity.getParent(p.code) != id.getParent(p.code)) {
+              found = false;
+              break;
+            }
+          }
+        }
+      }
+      if (found && id.attributeCount > 0) {
+        for (Attribute a in _concept.attributes) {
+          if (a.id) {
+            if (entity.getAttribute(a.code) != id.getAttribute(a.code)) {
+              found = false;
+              break;
+            }
+          }
+        }
+      }
+      if (found) {
+        return entity;
+      }
+    }
+    return null;
+  }
   
 
   
