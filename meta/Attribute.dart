@@ -22,4 +22,6 @@ class Attribute extends Property {
     update = false;
   }
 
+  Concept get concept() => sourceConcept;
+
 }

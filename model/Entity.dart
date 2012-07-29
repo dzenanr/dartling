@@ -145,17 +145,10 @@ class Entity<T extends Entity<T>> implements Comparable {
   }
 
   /**
-  * Checks if the entity is equal to the given object.
-  * If the given object is not of the T type,
-  * two objects cannot be equal.
   * Two entities are equal if their oids are equal.
   */
-  bool equalOids(other) {
-    if (other is T) {
-      if (_oid != other.oid) {
-        return false;
-      }
-    } else {
+  bool equalOids(T entity) {
+    if (_oid != entity.oid) {
       return false;
     }
     return true;
@@ -172,23 +165,24 @@ class Entity<T extends Entity<T>> implements Comparable {
        throw new ConceptException('Entity concept is not defined.');
      }
      if (other is T) {
-       if (_code != other.code) {
+       var entity = other;
+       if (_code != entity.code) {
          return false;
        }
        for (Attribute a in _concept.attributes) {
-         if (_attributeMap[a.code] != other.getAttribute(a.code)) {
+         if (_attributeMap[a.code] != entity.getAttribute(a.code)) {
            return false;
          }
        }
 
        for (Parent parent in _concept.parents) {
-         if (_parentMap[parent.code] != other.getParent(parent.code)) {
+         if (_parentMap[parent.code] != entity.getParent(parent.code)) {
            return false;
          }
        }
 
        for (Child child in _concept.children) {
-         if (_childMap[child.code] != other.getChild(child.code)) {
+         if (_childMap[child.code] != entity.getChild(child.code)) {
            return false;
          }
        }
@@ -199,7 +193,7 @@ class Entity<T extends Entity<T>> implements Comparable {
    }
 
   /**
-   * Compares two entities based on codes.
+   * Compares two entities based on codes or ids.
    * If the result is less than 0 then the first entity is less than the second,
    * if it is equal to 0 they are equal and
    * if the result is greater than 0 then the first is greater than the second.
@@ -207,8 +201,9 @@ class Entity<T extends Entity<T>> implements Comparable {
   int compareTo(T entity) {
     if (code != null) {
       return _code.compareTo(entity.code);
+    } else {
+      id.compareTo(entity.id);
     }
-    throw new CodeException('Entity code is not used.');
   }
 
   /**

@@ -19,11 +19,11 @@ class Member extends Entity<Member> {
    * if the result is greater than 0 then the first is greater than the second.
    */
   int compareTo(Member other) {
-    var last = lastName.compareTo(other.lastName);
-    if (last == 0) {
+    var compare = lastName.compareTo(other.lastName);
+    if (compare == 0) {
       return firstName.compareTo(other.firstName);
     }
-    return last;
+    return compare;
   }
 
 }

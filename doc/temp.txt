@@ -45,6 +45,78 @@
     }
   }
   
+  T getEntityByCode(String code) {
+    if (_codeEntityMap.containsKey(code)) {
+      return _codeEntityMap[code];
+    } else {
+      for (T element in _entityList) {
+        if (element.code == code) {
+         return element;
+        }
+      }
+      return null;
+    }
+  }
+  
+  class AttributeValue {
+
+  Attribute _attribute;
+  Object _object;
+
+  AttributeValue(this._attribute, this._object);
+
+  Attribute get attribute() => _attribute;
+  Object get object() => _object;
+  String get string() => _object;
+
+  /**
+   * Checks if the value is equal to the given object.
+   * If the given object is not of the AttributeValue type,
+   * two objects cannot be equal. Two values are
+   * equal if they have the same attribute and are ==.
+   */
+   bool equals(other) {
+     if (other is AttributeValue) {
+       if (_attribute != other.attribute) {
+         return false;
+       }
+       if (_object != other.object) {
+         return false;
+       }
+     } else {
+       return false;
+     }
+     return true;
+   }
+
+  /**
+   * Compares two attribute values based on types.
+   * If the result is less than 0 then the first value is less than the second,
+   * if it is equal to 0 they are equal and
+   * if the result is greater than 0 then the first is greater than the second.
+   */
+  int compareTo(AttributeValue value) {
+    if (_attribute.type.base == 'String') {
+      if (_object is String) {
+        return string.compareTo(value.string);
+      } else {
+        String msg =
+            '${_attribute.concept.code}.${_attribute.code} is not of String type.';
+        throw new TypeException(msg);
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * Returns a string that represents this attribute value.
+   */
+  String toString() {
+    return '${_object.toString()}';
+  }
+
+}
+  
 
   
   

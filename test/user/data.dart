@@ -84,7 +84,7 @@ testUserData() {
       robertm.email = 'charlem@hotmail.com';
       expect(memberConcept.getAttribute('email').id, isTrue);
       expect(robertm.id.count == 1);
-      expect(robertm.id.getIdAttribute('email') == robertm.email);
+      expect(robertm.id.getAttribute('email') == robertm.email);
       members.add(robertm);
       expect(members.count == 3);
       expect(members.errors.count == 1);

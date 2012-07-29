@@ -21,7 +21,9 @@
 #source('exception/DartlingException.dart');
 #source('exception/Error.dart');
 #source('exception/Errors.dart');
+#source('exception/IdException.dart');
 #source('exception/RemoveException.dart');
+#source('exception/TypeException.dart');
 #source('exception/UpdateException.dart');
 
 #source('guid/Oid.dart');

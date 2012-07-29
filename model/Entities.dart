@@ -205,16 +205,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   }
 
   T getEntityByCode(String code) {
-    if (_codeEntityMap.containsKey(code)) {
-      return _codeEntityMap[code];
-    } else {
-      for (T element in _entityList) {
-        if (element.code == code) {
-         return element;
-        }
-      }
-      return null;
-    }
+    return _codeEntityMap[code];
   }
 
   T getEntityById(Id id) {
@@ -229,7 +220,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       if (id.parentCount > 0) {
         for (Parent p in _concept.parents) {
           if (p.id) {
-            if (entity.getParent(p.code) != id.getIdParent(p.code)) {
+            if (entity.getParent(p.code) != id.getParent(p.code)) {
               found = false;
               break;
             }
@@ -239,7 +230,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       if (found && id.attributeCount > 0) {
         for (Attribute a in _concept.attributes) {
           if (a.id) {
-            if (entity.getAttribute(a.code) != id.getIdAttribute(a.code)) {
+            if (entity.getAttribute(a.code) != id.getAttribute(a.code)) {
               found = false;
               break;
             }
@@ -249,6 +240,14 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       if (found) {
         return entity;
       }
+    }
+    return null;
+  }
+
+  T getEntityByAttribute(String code, Object attribute) {
+    var selectionList = selectByAttribute(code, attribute);
+    if (selectionList.length > 0) {
+      return selectionList[0];
     }
     return null;
   }
@@ -281,14 +280,6 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return selectionList;
   }
 
-  T getEntityByAttribute(String code, Object attribute) {
-    var selectionList = selectByAttribute(code, attribute);
-    if (selectionList.length > 0) {
-      return selectionList[0];
-    }
-    return null;
-  }
-
   List<T> selectByParent(String code, Object parent) {
     if (_concept == null) {
       throw new ConceptException('Entities concept is not defined.');
@@ -306,7 +297,10 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return selectionList;
   }
 
-  // must define the compareTo method on a specific entity
+  /**
+   * If there is no compareTo method on a specific entity,
+   * the Entity.compareTo method will be used (code if not null, otherwise id).
+   */
   List<T> order() {
     List<T> sortedList = getList();
     sortedList.sort((m,n) => m.compareTo(n));
@@ -316,13 +310,6 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   List<T> orderByFunction(Function f) {
     List<T> sortedList = getList();
     sortedList.sort(f);
-    return sortedList;
-  }
-
-  // there should not be a specific compare
-  List<T> orderByCode() {
-    List<T> sortedList = getList();
-    sortedList.sort((m,n) => m.compareTo(n));
     return sortedList;
   }
 

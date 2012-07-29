@@ -3,14 +3,14 @@ Dartling Schedule
 
 To do
 
+id compare to other id (order by id)
 attribute validations (type, length)
 url type
 email type
 observers (notifications)
 persistance
 
-id compare to other id
-specific exceptions
+
 logging
 entities forEach
 get random entity
@@ -29,6 +29,11 @@ selectByParent
 order
 orderByCode
 
+
+2012-07-29, 15:20
+removed orderByCode
+entity compareTo compares codes if not null, otherwise ids
+comparing ids requires comparing attribute objects based on their types
 
 2012-07-27, PM
 order
