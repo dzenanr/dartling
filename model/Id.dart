@@ -1,5 +1,5 @@
 
-class Id implements Comparable {
+class Id implements Comparable, Hashable {
 
   Concept _concept;
 
@@ -169,6 +169,8 @@ class Id implements Comparable {
      }
     return '(${result.trim()})';
   }
+
+  int hashCode() => toString().hashCode();
 
   display([String title='Id']) {
     if (title != '') {

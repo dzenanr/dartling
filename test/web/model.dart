@@ -9,22 +9,17 @@ testWebModel() {
   Concept categoryConcept = new Concept(model, 'Category');
   categoryConcept.description = 'Category of web links.';
   assert(model.concepts.count == 1);
-  //Attribute categoryNameAttribute =
-      new Attribute(categoryConcept, 'name');
-  //Attribute categoryDescriptionAttribute =
-      new Attribute(categoryConcept, 'description');
+  new Attribute(categoryConcept, 'name').id = true;
+  new Attribute(categoryConcept, 'description');
   assert(categoryConcept.attributes.count == 2);
 
   Concept webLinkConcept = new Concept(model, 'WebLink');
   webLinkConcept.entry = false;
   webLinkConcept.description = 'Web links of interest.';
   assert(model.concepts.count == 2);
-  //Attribute webLinkNameAttribute =
-      new Attribute(webLinkConcept, 'name');
-  //Attribute webLinkUrlAttribute =
-      new Attribute(webLinkConcept, 'url');
-  //Attribute webLinkDescriptionAttribute =
-      new Attribute(webLinkConcept, 'description');
+  new Attribute(webLinkConcept, 'name').id = true;
+  new Attribute(webLinkConcept, 'url');
+  new Attribute(webLinkConcept, 'description');
   assert(webLinkConcept.attributes.count == 3);
 
   Child categoryWebLinksNeighbor =

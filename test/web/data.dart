@@ -39,7 +39,6 @@ testWebData() {
       dartHomeWebLink.description =
           'Dart brings structure to web app engineering '
           'with a new language, libraries, and tools.';
-
       dartCategory.webLinks.add(dartHomeWebLink);
       expect(dartCategory.webLinks.count == 0);
       expect(dartCategory.webLinks.errors.count == 1);
@@ -87,15 +86,31 @@ testWebData() {
       categories.empty();
       expect(categories.count == 0);
     });
+    test('Get Category and Web Link By Id', () {
+      var categories = data.categories;
+      expect(categories.count == 2);
+      categories.display('Categories With Web Links');
+
+      Id categoryId = new Id(data.categoryConcept);
+      categoryId.setAttribute('name', 'Dart');
+      Category dartCategory = categories.getEntityById(categoryId);
+      expect(dartCategory, isNotNull);
+      expect(dartCategory.name == 'Dart');
+
+      WebLinks dartWebLinks = dartCategory.webLinks;
+      expect(dartWebLinks.count == 3);
+      Id dartHomeId = new Id(data.webLinkConcept);
+      dartHomeId.setParent('category', dartCategory);
+      dartHomeId.setAttribute('name', 'Dart Home');
+      WebLink dartHomeWebLink = dartWebLinks.getEntityById(dartHomeId);
+      expect(dartHomeWebLink, isNotNull);
+      expect(dartHomeWebLink.name == 'Dart Home');
+    });
     test('Order Web Links By Name', () {
       var categories = data.categories;
       expect(categories.count == 2);
       categories.display('Categories With Web Links');
-      /*
-      Id id = new Id(data.categoryConcept);
-      id.setAttribute('name', 'Dart');
-      Category dartCategory = categories.getEntityById(id);
-      */
+
       Category dartCategory = categories.getEntityByAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
       WebLinks dartWebLinks = dartCategory.webLinks;
@@ -120,4 +135,6 @@ testWebData() {
     });
   });
 }
+
+
 

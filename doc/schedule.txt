@@ -3,7 +3,7 @@ Dartling Schedule
 
 To do
 
-_idEntityMap in Entities
+more tests
 attribute validations (type, length)
 url type
 email type
@@ -29,8 +29,11 @@ selectByParent
 order
 
 
+2012-07-29, 18:12
+Id implements Hashable, but String is used instead of Id in _idEntityMap.
+
 2012-07-29, 17:42
-_idEntityMap;
+_idEntityMap
 no more Hashable for Id
 
 2012-07-29, 15:20
