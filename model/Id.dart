@@ -117,24 +117,65 @@ class Id implements Comparable, Hashable {
    int compareAttributes(Id id) {
      if (id.attributeCount > 0) {
        var compare = 0;
-       for (Attribute a in concept.attributes) {
-         if (a.id) {
-           if (a.type.base == 'String') {
-             if (_attributeMap[a.code] is String) {
-               String attributeString = _attributeMap[a.code];
-               compare = attributeString.compareTo(id.getAttribute(a.code));
+       try {
+         for (Attribute a in concept.attributes) {
+           if (a.id) {
+             if (a.type.code == 'String') {
+               if (_attributeMap[a.code] is String) {
+                 String attribute = _attributeMap[a.code];
+                 print('////////////////////// id compareAttributes $attribute');
+                 print('////////////////////// id compareAttributes ${id.getAttribute(a.code)}');
+                 compare = attribute.compareTo(id.getAttribute(a.code));
+                 print('////////////////////// id compareAttributes $compare');
+               } else {
+                 String msg =
+                     '${a.concept.code}.${a.code} is not of String type.';
+                 throw new TypeException(msg);
+               }
+             } else if (a.type.code == 'Date') {
+               if (_attributeMap[a.code] is Date) {
+                 Date attribute = _attributeMap[a.code];
+                 compare = attribute.compareTo(id.getAttribute(a.code));
+               } else {
+                 String msg =
+                     '${a.concept.code}.${a.code} is not of Date type.';
+                 throw new TypeException(msg);
+               }
+             } else if (a.type.code == 'num' ||
+                 a.type.code == 'int' ||
+                 a.type.code == 'double') {
+               if (_attributeMap[a.code] is num) {
+                 num attribute = _attributeMap[a.code];
+                 compare = attribute.compareTo(id.getAttribute(a.code));
+               } else {
+                 String msg =
+                     '${a.concept.code}.${a.code} is not of num type.';
+                 throw new TypeException(msg);
+               }
+             } else if (a.type.code == 'bool') {
+               if (_attributeMap[a.code] is bool) {
+                 String msg =
+                     '${a.concept.code}.${a.code} is of bool type: cannot order.';
+                 throw new OrderException(msg);
+               } else {
+                   String msg =
+                       '${a.concept.code}.${a.code} is not of bool type.';
+                   throw new TypeException(msg);
+               }
              } else {
                String msg =
-                   '${a.concept.code}.${a.code} is not of String type.';
-               throw new TypeException(msg);
+                   '${a.concept.code}.${a.code} is of ${a.type.code} type: cannot order.';
+               throw new OrderException(msg);
+             }
+             if (compare != 0) {
+               break;
              }
            }
-           if (compare != 0) {
-             break;
-           }
          }
+         return compare;
+       } catch (final Exception e) {
+         print('////////////////////// compareAttributes: $e');
        }
-       return compare;
      }
      throw new IdException('${_concept.code}.id does not have attributes.');
    }
@@ -147,7 +188,10 @@ class Id implements Comparable, Hashable {
    */
   int compareTo(Id id) {
     if (id.count > 0) {
-      var compare = compareParents(id);
+      var compare = 0;
+      if (id.parentCount > 0) {
+        compare = compareParents(id);
+      }
       if (compare == 0) {
         compare = compareAttributes(id);
       }

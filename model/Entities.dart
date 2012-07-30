@@ -54,13 +54,15 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     }
 
     if (entity.concept == null) {
-      throw new ConceptException('Entity concept is not defined.');
+      throw new ConceptException(
+        'Entity(oid: ${entity.oid}) concept is not defined.');
     }
     if (_concept == null) {
-      throw new ConceptException('Entities concept is not defined.');
+      throw new ConceptException('Entities.add: concept is not defined.');
     }
     if (!_concept.add) {
-      throw new AddException('An entity cannot be added to ${_concept.pluralName}.');
+      throw new AddException(
+        'An entity cannot be added to ${_concept.pluralName}.');
     }
 
     bool validation = true;
@@ -77,7 +79,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
           validation = false;
         }
       } catch (final BadNumberFormatException e) {
-        throw new AddException('Entities max is neither N nor a positive integer string.');
+        throw new AddException(
+          'Entities max is neither N nor a positive integer string.');
       }
     }
 
@@ -112,7 +115,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     }
     if (entity.id != null && getEntityById(entity.id) != null) {
       Error error = new Error('unique');
-      error.message = '${entity.concept.code}.id ${entity.id.toString()} is not unique.';
+      error.message =
+          '${entity.concept.code}.id ${entity.id.toString()} is not unique.';
       errors.add(error);
       validation = false;
     }
@@ -158,13 +162,15 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     }
 
     if (entity.concept == null) {
-      throw new ConceptException('Entity concept is not defined.');
+      throw new ConceptException(
+        'Entity(oid: ${entity.oid}) concept is not defined.');
     }
     if (_concept == null) {
-      throw new ConceptException('Entities concept is not defined.');
+      throw new ConceptException('Entities.remove: concept is not defined.');
     }
     if (!_concept.remove) {
-      throw new RemoveException('An entity cannot be removed from ${_concept.pluralName}.');
+      throw new RemoveException(
+        'An entity cannot be removed from ${_concept.pluralName}.');
     }
 
     bool validation = true;
@@ -243,7 +249,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
 
   List<T> selectByParent(String code, Object parent) {
     if (_concept == null) {
-      throw new ConceptException('Entities concept is not defined.');
+      throw new ConceptException(
+        'Entities.selectByParent($code, $parent): concept is not defined.');
     }
     var selectionList = new List<T>();
     for (T entity in _entityList) {
@@ -260,7 +267,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
 
   List<T> selectByAttribute(String code, Object attribute) {
     if (_concept == null) {
-      throw new ConceptException('Entities concept is not defined.');
+      throw new ConceptException(
+        'Entities.selectByAttribute($code, $attribute): concept is not defined.');
     }
     var selectionList = new List<T>();
     for (T entity in _entityList) {

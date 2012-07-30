@@ -6,6 +6,18 @@ class WebData {
 
   Categories categories;
 
+  /**
+   *  || Category
+   *  id name
+   *  at description
+   *  0N webLinks
+   *
+   *  WebLink
+   *  id name
+   *  rq url
+   *  at description
+   *  id category
+   */
   var _json = '''
     {"width":990,"lines":[{"box2box1Min":"1","box1Name":"Category",
     "box1box2Min":"0","box2Name":"WebLink","category":"relationship",

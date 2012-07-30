@@ -5,6 +5,11 @@ class ProjectData {
 
   Projects projects;
 
+  /**
+   *  || Project
+   *  id name
+   *  at description
+   */
   var _json = '''
       {"width":990,"lines":[],"height":580,"boxes":[{"entry":true,
       "name":"Project","x":179,"y":226,"width":120,"height":120,

@@ -1,5 +1,7 @@
 testWebData() {
   var data;
+  var categoryCount = 3;
+  var dartCategoryWebLinkCount = 3;
   group('Testing', () {
     setUp(() {
       data = new WebData();
@@ -27,9 +29,17 @@ testWebData() {
       expect(html5Category, isNotNull);
       expect(html5Category.webLinks.count == 0);
       html5Category.name = 'HTML5';
-      html5Category.description = 'HTML5 is the ubiquitous platform for the web.';
+      html5Category.description = 'HTML5 is the ubiquitous platform for the modern web.';
       categories.add(html5Category);
       expect(categories.count == 2);
+      
+      var css3Category = new Category(categoryConcept);
+      expect(css3Category, isNotNull);
+      expect(css3Category.webLinks.count == 0);
+      css3Category.name = 'CSS3';
+      css3Category.description = 'Cascading Style Sheets for the modern web.';
+      categories.add(css3Category);
+      expect(categories.count == 3);
 
       var dartHomeWebLink = new WebLink(webLinkConcept);
       expect(dartHomeWebLink, isNotNull);
@@ -48,7 +58,7 @@ testWebData() {
       try {
         dartCategory.webLinks.errors.selectByAttribute('category', 'required');
       } catch (final ConceptException ce) {
-        print('$ce');
+        print('In testWebData(), try errors.selectByAttribute -- $ce');
       }
 
       dartHomeWebLink.category = dartCategory;
@@ -65,7 +75,6 @@ testWebData() {
       expect(tryDartWebLink.category, isNull);
       tryDartWebLink.category = dartCategory;
       expect(tryDartWebLink.category, isNotNull);
-      tryDartWebLink.display('try: ');
       dartCategory.webLinks.add(tryDartWebLink);
       expect(dartCategory.webLinks.count == 2);
 
@@ -88,7 +97,7 @@ testWebData() {
     });
     test('Get Category and Web Link By Id', () {
       var categories = data.categories;
-      expect(categories.count == 2);
+      expect(categories.count == categoryCount);
       categories.display('Categories With Web Links');
 
       Id categoryId = new Id(data.categoryConcept);
@@ -98,7 +107,7 @@ testWebData() {
       expect(dartCategory.name == 'Dart');
 
       WebLinks dartWebLinks = dartCategory.webLinks;
-      expect(dartWebLinks.count == 3);
+      expect(dartWebLinks.count == dartCategoryWebLinkCount);
       Id dartHomeId = new Id(data.webLinkConcept);
       dartHomeId.setParent('category', dartCategory);
       dartHomeId.setAttribute('name', 'Dart Home');
@@ -106,35 +115,57 @@ testWebData() {
       expect(dartHomeWebLink, isNotNull);
       expect(dartHomeWebLink.name == 'Dart Home');
     });
+    //test('Order Categories By Id (code not used, id is name)', () {
+    test('Order Categories By Name', () {
+      var categories = data.categories;
+      expect(categories.count == categoryCount);
+      categories.display('Categories With Web Links');
+
+      List<Category> orderedCategoryList = categories.order();
+      expect(orderedCategoryList, isNotNull);
+      expect(orderedCategoryList, isNot(isEmpty));
+      expect(orderedCategoryList.length == categoryCount);
+
+      Categories orderedCategories = new Categories(data.categoryConcept);
+      orderedCategories.addFrom(orderedCategoryList);
+      orderedCategories.sourceEntities = categories;
+      expect(orderedCategories, isNotNull);
+      expect(orderedCategories, isNot(isEmpty));
+      expect(orderedCategories.count == categoryCount);
+      expect(orderedCategories.sourceEntities, isNotNull);
+      expect(orderedCategories.sourceEntities, isNot(isEmpty));
+      expect(orderedCategories.sourceEntities.count == categoryCount);
+
+      orderedCategories.display(
+        'Categories Ordered By Id (code not used, id is name)');
+    });
     test('Order Web Links By Name', () {
       var categories = data.categories;
-      expect(categories.count == 2);
+      expect(categories.count == categoryCount);
       categories.display('Categories With Web Links');
 
       Category dartCategory = categories.getEntityByAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
       WebLinks dartWebLinks = dartCategory.webLinks;
-      expect(dartWebLinks.count == 3);
+      expect(dartWebLinks.count == dartCategoryWebLinkCount);
 
       List<WebLink> orderedDartWebLinkList = dartWebLinks.order();
       expect(orderedDartWebLinkList, isNotNull);
       expect(orderedDartWebLinkList, isNot(isEmpty));
-      expect(orderedDartWebLinkList.length == 3);
+      expect(orderedDartWebLinkList.length == dartCategoryWebLinkCount);
 
-      WebLinks orderedDartWebLinks = new WebLinks(data.categoryConcept);
+      WebLinks orderedDartWebLinks = new WebLinks(data.webLinkConcept);
       orderedDartWebLinks.addFrom(orderedDartWebLinkList);
       orderedDartWebLinks.sourceEntities = dartWebLinks;
       expect(orderedDartWebLinks, isNotNull);
       expect(orderedDartWebLinks, isNot(isEmpty));
-      expect(orderedDartWebLinks.count == 3);
+      expect(orderedDartWebLinks.count == dartCategoryWebLinkCount);
       expect(orderedDartWebLinks.sourceEntities, isNotNull);
       expect(orderedDartWebLinks.sourceEntities, isNot(isEmpty));
-      expect(orderedDartWebLinks.sourceEntities.count == 3);
+      expect(orderedDartWebLinks.sourceEntities.count
+        == dartCategoryWebLinkCount);
 
       orderedDartWebLinks.display('Ordered Dart Web Links');
     });
   });
 }
-
-
-

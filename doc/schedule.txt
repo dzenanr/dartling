@@ -4,9 +4,13 @@ Dartling Schedule
 To do
 
 more tests
-attribute validations (type, length)
-url type
+attribute validations (base type, length)
+uri type
 email type
+money type
+telephone type
+postal code type
+zip code type
 observers (notifications)
 persistance
 
@@ -28,6 +32,19 @@ selectByAttribute
 selectByParent
 order
 
+
+2012-07-30, 18:12
+6 types in domain
+entity attribute init
+member code will be used
+member started (Date) attribute with init of now
+member receiveEmail (bool) attribute with init of false
+member password (sensitive)
+member role (String) attribute with init of regular
+member karma (num) attribute with init of 1
+member about
+sensitive property
+a.init becomes String in json transfer; typed in Entity.of
 
 2012-07-29, 18:12
 Id implements Hashable, but String is used instead of Id in _idEntityMap.

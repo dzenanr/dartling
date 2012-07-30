@@ -129,7 +129,7 @@ testProjectData() {
       projects.display('Projects');
 
       List<Project> orderedProjectList =
-          projects.orderByFunction((m,n) => m.compare(n));
+          projects.orderByFunction((m,n) => m.compareName(n));
       expect(orderedProjectList, isNotNull);
       expect(orderedProjectList, isNot(isEmpty));
       expect(orderedProjectList.length == 3);

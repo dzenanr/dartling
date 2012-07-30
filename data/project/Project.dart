@@ -12,12 +12,12 @@ class Project extends Entity<Project> {
   bool isOnProgramming() => description.contains('Programming') ? true : false;
 
   /**
-   * Compares two projects based on the last and first names.
+   * Compares two projects based on name.
    * If the result is less than 0 then the first entity is less than the second,
    * if it is equal to 0 they are equal and
    * if the result is greater than 0 then the first is greater than the second.
    */
-  int compare(Project other) {
+  int compareName(Project other) {
     return name.compareTo(other.name);
   }
 }

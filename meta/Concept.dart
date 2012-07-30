@@ -42,4 +42,25 @@ class Concept extends Entity<Concept> {
 
   Parent getSourceParent(String code) => sourceParents.getEntityByCode(code);
   Child getSourceChild(String code) => sourceChildren.getEntityByCode(code);
+
+  bool isAttributeSensitive(String code) {
+    Attribute a = attributes.getEntityByCode(code);
+    return a!= null && a.sensitive ? true : false;
+  }
+
+  bool isParentSensitive(String code) {
+    Parent p = parents.getEntityByCode(code);
+    return p!= null && p.sensitive ? true : false;
+  }
+
+  bool isChildSensitive(String code) {
+    Child c = children.getEntityByCode(code);
+    return c!= null && c.sensitive ? true : false;
+  }
+
+  bool isPropertySensitive(String code) {
+    return isAttributeSensitive(code) ||
+        isParentSensitive(code) ||
+        isChildSensitive(code);
+  }
 }

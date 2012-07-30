@@ -5,6 +5,7 @@ abstract class Property extends Entity<Property> {
   String max = '1';
   bool _id = false;
   bool update = true;
+  bool sensitive = false;
 
   Concept sourceConcept;
 

@@ -22,7 +22,37 @@ class Entity<T extends Entity<T>> implements Comparable {
 
     for (Attribute a in _concept.attributes) {
       if (a.init != null) {
-        _attributeMap[a.code] = a.init;
+        if (a.type.code == 'Date' && a.init == 'now') {
+          _attributeMap[a.code] = new Date.now();
+        } else if (a.type.code == 'bool' && a.init == 'true') {
+          _attributeMap[a.code] = true;
+        } else if (a.type.code == 'bool' && a.init == 'false') {
+          _attributeMap[a.code] = false;
+        } else if (a.type.code == 'int') {
+          try {
+            _attributeMap[a.code] = Math.parseInt(a.init);
+          } catch (final BadNumberFormatException e) {
+            throw new TypeException('${a.code} attribute init (default) value is not int.');
+          }
+        } else if (a.type.code == 'double') {
+          try {
+            _attributeMap[a.code] = Math.parseDouble(a.init);
+          } catch (final BadNumberFormatException e) {
+            throw new TypeException('${a.code} attribute init (default) value is not double.');
+          }
+        } else if (a.type.code == 'num') {
+          try {
+            _attributeMap[a.code] = Math.parseInt(a.init);
+          } catch (final BadNumberFormatException e) {
+            try {
+              _attributeMap[a.code] = Math.parseDouble(a.init);
+            } catch (final BadNumberFormatException e) {
+              throw new TypeException('${a.code} attribute init (default) value is not num.');
+            }
+          }
+        } else {
+          _attributeMap[a.code] = a.init;
+        }
       } else if (a.increment != null) {
         _attributeMap[a.code] = a.increment;
       } else {
@@ -202,6 +232,14 @@ class Entity<T extends Entity<T>> implements Comparable {
     if (code != null) {
       return _code.compareTo(entity.code);
     } else {
+      if (id == null || entity.id == null) {
+        if (_concept == null) {
+          throw new ConceptException('Entity concept is not defined.');
+        }
+        String msg =
+            '${_concept.code} concept does not have an id.';
+        throw new IdException(msg);
+      }
       id.compareTo(entity.id);
     }
   }
@@ -238,16 +276,28 @@ class Entity<T extends Entity<T>> implements Comparable {
     }
 
     _attributeMap.forEach((k,v) {
-      print('${s}$k: $v');
+      if (_concept.isAttributeSensitive(k)) {
+        print('${s}$k: **********');
+      } else {
+        print('${s}$k: $v');
+      }
     });
 
     _parentMap.forEach((k,v) {
-      print('${s}$k: ${v.toString()}');
+      if (_concept.isParentSensitive(k)) {
+        print('${s}$k: **********');
+      } else {
+        print('${s}$k: ${v.toString()}');
+      }
     });
 
     _childMap.forEach((k,v) {
       print('${s}$k:');
-      v.display(s, withOid);
+      if (_concept.isChildSensitive(k)) {
+        print('**********');
+      } else {
+        v.display(s, withOid);
+      }
     });
 
     print('');
