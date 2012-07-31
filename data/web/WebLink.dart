@@ -6,8 +6,8 @@ class WebLink extends Entity<WebLink> {
   String get name() => getAttribute('name');
   set name(String a) => setAttribute('name', a);
 
-  String get url() => getAttribute('url');
-  set url(String a) => setAttribute('url', a);
+  Uri get url() => getAttribute('url');
+  set url(Uri a) => setAttribute('url', a);
 
   String get description() => getAttribute('description');
   set description(String a) => setAttribute('description', a);

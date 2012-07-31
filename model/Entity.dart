@@ -50,6 +50,12 @@ class Entity<T extends Entity<T>> implements Comparable {
               throw new TypeException('${a.code} attribute init (default) value is not num.');
             }
           }
+        } else if (a.type.code == 'Uri') {
+          try {
+            _attributeMap[a.code] = new Uri.fromString(a.init);
+          } catch (final Exception e) {
+            throw new TypeException('${a.code} attribute init (default) value is not Uri.');
+          }
         } else {
           _attributeMap[a.code] = a.init;
         }
@@ -240,7 +246,7 @@ class Entity<T extends Entity<T>> implements Comparable {
             '${_concept.code} concept does not have an id.';
         throw new IdException(msg);
       }
-      id.compareTo(entity.id);
+      return id.compareTo(entity.id);
     }
   }
 

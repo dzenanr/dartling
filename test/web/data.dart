@@ -1,7 +1,7 @@
 testWebData() {
   var data;
   var categoryCount = 3;
-  var dartCategoryWebLinkCount = 3;
+  var dartCategoryWebLinkCount = 4;
   group('Testing', () {
     setUp(() {
       data = new WebData();
@@ -45,7 +45,7 @@ testWebData() {
       expect(dartHomeWebLink, isNotNull);
       expect(dartHomeWebLink.category, isNull);
       dartHomeWebLink.name = 'Dart Home';
-      dartHomeWebLink.url = 'http://www.dartlang.org/';
+      dartHomeWebLink.url = new Uri.fromString('http://www.dartlang.org/');
       dartHomeWebLink.description =
           'Dart brings structure to web app engineering '
           'with a new language, libraries, and tools.';
@@ -58,7 +58,9 @@ testWebData() {
       try {
         dartCategory.webLinks.errors.selectByAttribute('category', 'required');
       } catch (final ConceptException ce) {
+        print('');
         print('In testWebData(), try errors.selectByAttribute -- $ce');
+        print('');
       }
 
       dartHomeWebLink.category = dartCategory;
@@ -69,7 +71,7 @@ testWebData() {
       var tryDartWebLink = new WebLink(webLinkConcept);
       expect(tryDartWebLink, isNotNull);
       tryDartWebLink.name = 'Try Dart';
-      tryDartWebLink.url = 'http://try.dartlang.org/';
+      tryDartWebLink.url = new Uri.fromString('http://try.dartlang.org/');
       tryDartWebLink.description =
           'Try out the Dart Language from the comfort of your web browser.';
       expect(tryDartWebLink.category, isNull);
@@ -81,7 +83,7 @@ testWebData() {
       var dartNewsWebLink = new WebLink(webLinkConcept);
       expect(dartNewsWebLink, isNotNull);
       dartNewsWebLink.name = 'Dart News';
-      dartNewsWebLink.url = 'http://news.dartlang.org/';
+      dartNewsWebLink.url = new Uri.fromString('http://news.dartlang.org/');
       dartNewsWebLink.description =
           'Official news from the Dart project.';
       expect(dartNewsWebLink.category, isNull);
@@ -89,6 +91,17 @@ testWebData() {
       expect(dartNewsWebLink.category, isNotNull);
       dartCategory.webLinks.add(dartNewsWebLink);
       expect(dartCategory.webLinks.count == 3);
+      
+      var dartBugssWebLink = new WebLink(webLinkConcept);
+      expect(dartBugssWebLink, isNotNull);
+      dartBugssWebLink.name = 'Dart Bugs';
+      dartBugssWebLink.url = new Uri.fromString('????+\\dartbug!hom');
+      dartBugssWebLink.description = 'Dart error management.';
+      expect(dartBugssWebLink.category, isNull);
+      dartBugssWebLink.category = dartCategory;
+      expect(dartBugssWebLink.category, isNotNull);
+      dartCategory.webLinks.add(dartBugssWebLink);
+      expect(dartCategory.webLinks.count == 4);
     });
     tearDown(() {
       var categories = data.categories;
@@ -115,8 +128,7 @@ testWebData() {
       expect(dartHomeWebLink, isNotNull);
       expect(dartHomeWebLink.name == 'Dart Home');
     });
-    //test('Order Categories By Id (code not used, id is name)', () {
-    test('Order Categories By Name', () {
+    test('Order Categories By Id (code not used, id is name)', () {
       var categories = data.categories;
       expect(categories.count == categoryCount);
       categories.display('Categories With Web Links');
@@ -166,6 +178,11 @@ testWebData() {
         == dartCategoryWebLinkCount);
 
       orderedDartWebLinks.display('Ordered Dart Web Links');
+    });
+    test('New Uri value', () {
+      Uri uri = new Uri.fromString('????:\\**""##dartbug!hom');
+      expect(uri, isNotNull);  // it should be: expect(uri, isNull);
+      //print(uri);
     });
   });
 }

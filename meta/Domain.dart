@@ -18,13 +18,14 @@ class Domain extends Entity<Domain> {
       description = 'Default domain to keep types and models.';
     }
 
-    Type stringType = new Type(this, 'String');
-    Type numType = new Type(this, 'num');
-    Type intType = new Type(this, 'int');
-    Type doubleType = new Type(this, 'double');
-    Type boolType = new Type(this, 'bool');
-    Type dateType = new Type(this, 'Date');
-    assert(types.count == 6);
+    new Type(this, 'String');
+    new Type(this, 'num');
+    new Type(this, 'int');
+    new Type(this, 'double');
+    new Type(this, 'bool');
+    new Type(this, 'Date');
+    new Type(this, 'Uri');
+    assert(types.count == 7);
   }
 
   Domain getDomain(String code) => domains.getEntityByCode(code);

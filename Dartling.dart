@@ -1,5 +1,6 @@
 #import('../../unittest/unittest.dart');
 #import('dart:json');
+#import('dart:uri');
 
 #source('data/project/Data.dart');
 #source('data/project/Project.dart');

@@ -4,8 +4,7 @@ Dartling Schedule
 To do
 
 more tests
-attribute validations (base type, length)
-uri type
+attribute validations (type, length)
 email type
 money type
 telephone type
@@ -32,6 +31,14 @@ selectByAttribute
 selectByParent
 order
 
+
+2012-07-31, 10:38
+no return bug in Entity.compareTo
+WebLink Uri type for tyhe url attribute
+
+
+2012-07-30, 22:48
+Uri type
 
 2012-07-30, 18:12
 6 types in domain
