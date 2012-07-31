@@ -1,3 +1,5 @@
+#library('Dartling');
+
 #import('../../unittest/unittest.dart');
 #import('dart:json');
 #import('dart:uri');

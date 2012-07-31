@@ -6,7 +6,7 @@ class UserData {
   Members members;
 
   /**
-   *  || Member
+   *  || Member (code)
    *  id email : String
    *  rq firstName : String
    *  rq lastName : String

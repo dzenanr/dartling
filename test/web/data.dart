@@ -1,7 +1,7 @@
 testWebData() {
   var data;
-  var categoryCount = 3;
-  var dartCategoryWebLinkCount = 4;
+  var categoryCount;
+  var dartCategoryWebLinkCount;
   group('Testing', () {
     setUp(() {
       data = new WebData();
@@ -13,9 +13,12 @@ testWebData() {
       expect(webLinkConcept, isNotNull);
       expect(webLinkConcept.attributes, isNot(isEmpty));
       expect(webLinkConcept.attributes.count == 3);
+      
+      categoryCount = 0;
+      
       var categories = data.categories;
       expect(categories, isNotNull);
-      expect(categories.count == 0);
+      expect(categories.count == categoryCount);
 
       var dartCategory = new Category(categoryConcept);
       expect(dartCategory, isNotNull);
@@ -23,7 +26,7 @@ testWebData() {
       dartCategory.name = 'Dart';
       dartCategory.description = 'Dart Web language.';
       categories.add(dartCategory);
-      expect(categories.count == 1);
+      expect(categories.count == ++categoryCount);
 
       var html5Category = new Category(categoryConcept);
       expect(html5Category, isNotNull);
@@ -31,7 +34,7 @@ testWebData() {
       html5Category.name = 'HTML5';
       html5Category.description = 'HTML5 is the ubiquitous platform for the modern web.';
       categories.add(html5Category);
-      expect(categories.count == 2);
+      expect(categories.count == ++categoryCount);
       
       var css3Category = new Category(categoryConcept);
       expect(css3Category, isNotNull);
@@ -39,8 +42,10 @@ testWebData() {
       css3Category.name = 'CSS3';
       css3Category.description = 'Cascading Style Sheets for the modern web.';
       categories.add(css3Category);
-      expect(categories.count == 3);
+      expect(categories.count == ++categoryCount);
 
+      dartCategoryWebLinkCount = 0;
+      
       var dartHomeWebLink = new WebLink(webLinkConcept);
       expect(dartHomeWebLink, isNotNull);
       expect(dartHomeWebLink.category, isNull);
@@ -50,7 +55,7 @@ testWebData() {
           'Dart brings structure to web app engineering '
           'with a new language, libraries, and tools.';
       dartCategory.webLinks.add(dartHomeWebLink);
-      expect(dartCategory.webLinks.count == 0);
+      expect(dartCategory.webLinks.count == dartCategoryWebLinkCount);
       expect(dartCategory.webLinks.errors.count == 1);
       expect(dartCategory.webLinks.errors.getList()[0].category == 'required');
       dartCategory.webLinks.errors.display('WebLink Error');
@@ -66,7 +71,7 @@ testWebData() {
       dartHomeWebLink.category = dartCategory;
       expect(dartHomeWebLink.category, isNotNull);
       dartCategory.webLinks.add(dartHomeWebLink);
-      expect(dartCategory.webLinks.count == 1);
+      expect(dartCategory.webLinks.count == ++dartCategoryWebLinkCount);
 
       var tryDartWebLink = new WebLink(webLinkConcept);
       expect(tryDartWebLink, isNotNull);
@@ -78,7 +83,7 @@ testWebData() {
       tryDartWebLink.category = dartCategory;
       expect(tryDartWebLink.category, isNotNull);
       dartCategory.webLinks.add(tryDartWebLink);
-      expect(dartCategory.webLinks.count == 2);
+      expect(dartCategory.webLinks.count == ++dartCategoryWebLinkCount);
 
       var dartNewsWebLink = new WebLink(webLinkConcept);
       expect(dartNewsWebLink, isNotNull);
@@ -90,7 +95,7 @@ testWebData() {
       dartNewsWebLink.category = dartCategory;
       expect(dartNewsWebLink.category, isNotNull);
       dartCategory.webLinks.add(dartNewsWebLink);
-      expect(dartCategory.webLinks.count == 3);
+      expect(dartCategory.webLinks.count == ++dartCategoryWebLinkCount);
       
       var dartBugssWebLink = new WebLink(webLinkConcept);
       expect(dartBugssWebLink, isNotNull);
@@ -101,7 +106,7 @@ testWebData() {
       dartBugssWebLink.category = dartCategory;
       expect(dartBugssWebLink.category, isNotNull);
       dartCategory.webLinks.add(dartBugssWebLink);
-      expect(dartCategory.webLinks.count == 4);
+      expect(dartCategory.webLinks.count == ++dartCategoryWebLinkCount);
     });
     tearDown(() {
       var categories = data.categories;
@@ -178,6 +183,22 @@ testWebData() {
         == dartCategoryWebLinkCount);
 
       orderedDartWebLinks.display('Ordered Dart Web Links');
+    });
+    test('New Category With Id', () {
+      var categories = data.categories;
+      expect(categories.count == categoryCount);
+      
+      var categoryConcept = data.categoryConcept;
+      expect(categoryConcept, isNotNull);
+      expect(categoryConcept.attributes, isNot(isEmpty));
+      
+      var webFrameworkCategory = new Category.withId(categoryConcept, 'Web Framework');
+      expect(webFrameworkCategory, isNotNull);
+      expect(webFrameworkCategory.webLinks.count == 0);
+      categories.add(webFrameworkCategory);
+      expect(categories.count == ++categoryCount);
+      
+      categories.display('Categories Including Web Framework');
     });
     test('New Uri From String', () {
       Uri uri;

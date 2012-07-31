@@ -2,6 +2,10 @@
 class Project extends Entity<Project> {
 
   Project(Concept concept) : super.of(concept);
+  
+  Project.withId(Concept concept, String name) : super.of(concept) {
+    setAttribute('name', name);
+  }
 
   String get name() => getAttribute('name');
   set name(String a) => setAttribute('name', a);

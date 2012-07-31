@@ -2,6 +2,11 @@
 class WebLink extends Entity<WebLink> {
 
   WebLink(Concept concept) : super.of(concept);
+  
+  WebLink.withId(Concept concept, Category category, String name) : super.of(concept) {
+    setParent('category', category);
+    setAttribute('name', name);
+  }
 
   String get name() => getAttribute('name');
   set name(String a) => setAttribute('name', a);

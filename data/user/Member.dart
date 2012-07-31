@@ -2,6 +2,11 @@
 class Member extends Entity<Member> {
 
   Member(Concept concept) : super.of(concept);
+  
+  Member.withIds(Concept concept, String code, String email) : super.of(concept) {
+    this.code = code;
+    setAttribute('email', email);
+  }
 
   String get email() => getAttribute('email');
   set email(String a) => setAttribute('email', a);

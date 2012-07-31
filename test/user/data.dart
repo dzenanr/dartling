@@ -12,9 +12,11 @@ testUserData() {
       expect(memberConcept.attributes.count == 9);
       memberConcept.attributes.getEntityByCode('password').sensitive = true;
 
+      memberCount = 0;
+      
       var members = data.members;
       expect(members, isNotNull);
-      expect(members.count == 0);
+      expect(members.count == memberCount);
 
       var tim = new Member(memberConcept);
       expect(tim, isNotNull);
@@ -24,7 +26,7 @@ testUserData() {
       tim.lastName = 'Ridjanovic';
       tim.email = 'timur.ridjanovic@gmail.com';
       members.add(tim);
-      expect(members.count == 1);
+      expect(members.count == ++memberCount);
 
       var dzenan = new Member(memberConcept);
       expect(dzenan, isNotNull);
@@ -47,7 +49,7 @@ testUserData() {
     spiral development of domain models and dynamic web applications
     with NoSQL databases.''';
       members.add(dzenan);
-      expect(members.count == 2);
+      expect(members.count == ++memberCount);
       dzenanOid = dzenan.oid;
       expect(dzenanOid, isNotNull);
       var dr = members.getEntity(dzenanOid);
@@ -61,7 +63,7 @@ testUserData() {
       charlem.lastName = 'Mantha';
       charlem.email = 'charlem@hotmail.com';
       members.add(charlem);
-      expect(members.count == 3);
+      expect(members.count == ++memberCount);
 
       var amracr = new Member(memberConcept);
       expect(amracr, isNotNull);
@@ -72,7 +74,7 @@ testUserData() {
       amracr.email = 'amracr@gmail.com';
       amracr.receiveEmail = true;
       members.add(amracr);
-      expect(members.count == 4);
+      expect(members.count == ++memberCount);
     });
     tearDown(() {
       var members = data.members;
@@ -237,6 +239,26 @@ testUserData() {
       expect(orderedMembers.sourceEntities.count == memberCount);
 
       orderedMembers.display('Members Ordered By Code');
+    });
+    test('New Member With Ids', () {
+      var members = data.members;
+      expect(members.count == memberCount);
+      
+      var memberConcept = data.memberConcept;
+      expect(memberConcept, isNotNull);
+      expect(memberConcept.attributes, isNot(isEmpty));
+
+      var ogdenr = new Member.withIds(
+          memberConcept, 'ogdenr', 'ogden.ridjanovic@gmail.com');
+      expect(ogdenr, isNotNull);
+      ogdenr.password = 'toto9tutu';
+      ogdenr.firstName = 'Ogden';
+      ogdenr.lastName = 'Ridjanovic';
+      ogdenr.receiveEmail = false;
+      members.add(ogdenr);
+      expect(members.count == 5);
+      
+      members.display('Members Including Ogden');
     });
     test('New Date From String', () {
       Date date;

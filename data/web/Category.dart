@@ -5,6 +5,12 @@ class Category extends Entity<Category> {
     Concept webLinkConcept = concept.model.concepts.getEntityByCode('WebLink');
     setChild('webLinks', new WebLinks(webLinkConcept));
   }
+  
+  Category.withId(Concept concept, String name) : super.of(concept) {
+    setAttribute('name', name);
+    Concept webLinkConcept = concept.model.concepts.getEntityByCode('WebLink');
+    setChild('webLinks', new WebLinks(webLinkConcept));
+  }
 
   String get name() => getAttribute('name');
   set name(String a) => setAttribute('name', a);
