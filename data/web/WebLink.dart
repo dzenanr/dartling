@@ -3,10 +3,14 @@ class WebLink extends Entity<WebLink> {
 
   WebLink(Concept concept) : super.of(concept);
   
-  WebLink.withId(Concept concept, Category category, String name) : super.of(concept) {
+  WebLink.withId(
+      Concept concept, Category category, String name) : super.of(concept) {
     setParent('category', category);
     setAttribute('name', name);
   }
+      
+  Category get category() => getParent('category');
+  set category(Category p) => setParent('category', p);
 
   String get name() => getAttribute('name');
   set name(String a) => setAttribute('name', a);
@@ -16,9 +20,6 @@ class WebLink extends Entity<WebLink> {
 
   String get description() => getAttribute('description');
   set description(String a) => setAttribute('description', a);
-
-  Category get category() => getParent('category');
-  set category(Category p) => setParent('category', p);
 
   /**
    * Compares two web links based on name.

@@ -48,7 +48,7 @@ testProjectData() {
       projects.empty();
       expect(projects.count == 0);
     });
-    test('Select Projects By Function 1', () {
+    test('Select Projects by Function 1', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
 
@@ -59,7 +59,7 @@ testProjectData() {
 
       //programmingProjects.display('Programming Entities');
     });
-    test('Select Projects By Function 2', () {
+    test('Select Projects by Function 2', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
 
@@ -71,7 +71,7 @@ testProjectData() {
 
       //programmingProjects.display('Programming Entities');
     });
-    test('Select Projects By Function 3', () {
+    test('Select Projects by Function 3', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
 
@@ -104,7 +104,7 @@ testProjectData() {
       programmingProjects.display('Programming Entities After Add');
       projects.display('All Projects');
     });
-    test('Get Project By Oid', () {
+    test('Get Project by Oid', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
       
@@ -112,7 +112,7 @@ testProjectData() {
       expect(project, isNotNull);
       expect(project.name == 'Dartling');
     });
-    test('Get Project By Id', () {
+    test('Get Project by Id', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
 
@@ -127,7 +127,7 @@ testProjectData() {
       expect(project, isNotNull);
       expect(project.name == searchName);
     });
-    test('Order Projects By Name', () {
+    test('Order Projects by Name', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
       projects.display('Projects');
@@ -150,7 +150,7 @@ testProjectData() {
 
       orderedProjects.display('Ordered Projects');
     });
-    test('New Project With Id', () {
+    test('New Project with Id', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
       

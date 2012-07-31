@@ -38,7 +38,10 @@ selectByParent
 order
 
 
-2012-07-31, 59
+2012-07-31, 16:33
+tests for constructors with ids
+
+2012-07-31, 15:59
 library
 construct specific entities with id
 

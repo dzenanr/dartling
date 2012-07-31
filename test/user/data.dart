@@ -143,7 +143,7 @@ testUserData() {
       expect(members.errors.getList()[2].category == 'unique');
       members.errors.display('Add Member Required and Unique Error');
     });
-    test('Select Members By Attribute', () {
+    test('Select Members by Attribute', () {
       var members = data.members;
       expect(members.count == memberCount);
       members.display('All Members');
@@ -177,7 +177,7 @@ testUserData() {
 
       members.display('All Members After Remove');
     });
-    test('Select Members By (get) Function', () {
+    test('Select Members by (get) Function', () {
       var members = data.members;
       expect(members.count == memberCount);
 
@@ -186,7 +186,7 @@ testUserData() {
       expect(ridjanovicMembers, isNot(isEmpty));
       expect(ridjanovicMembers.length == 3);
     });
-    test('Select Members By (bool) Attribute, which is (get) Function', () {
+    test('Select Members by (bool) Attribute, which is (get) Function', () {
       var members = data.members;
       expect(members.count == memberCount);
 
@@ -195,7 +195,7 @@ testUserData() {
       expect(receiveEmailMembers, isNot(isEmpty));
       expect(receiveEmailMembers.length == 2);
     });
-    test('Order Members By Last Then First Name', () {
+    test('Order Members by Last then First Name', () {
       var members = data.members;
       expect(members.count == memberCount);
       members.display('Members');
@@ -215,9 +215,9 @@ testUserData() {
       expect(orderedMembers.sourceEntities, isNot(isEmpty));
       expect(orderedMembers.sourceEntities.count == memberCount);
 
-      orderedMembers.display('Members Ordered By Last Then First Name');
+      orderedMembers.display('Members Ordered by Last then First Name');
     });
-    test('Order Members By Code', () {
+    test('Order Members by Code', () {
       var members = data.members;
       expect(members.count == memberCount);
       //members.display('Members');
@@ -238,9 +238,9 @@ testUserData() {
       expect(orderedMembers.sourceEntities, isNot(isEmpty));
       expect(orderedMembers.sourceEntities.count == memberCount);
 
-      orderedMembers.display('Members Ordered By Code');
+      orderedMembers.display('Members Ordered by Code');
     });
-    test('New Member With Ids', () {
+    test('New Member with Ids', () {
       var members = data.members;
       expect(members.count == memberCount);
       
@@ -260,7 +260,7 @@ testUserData() {
       
       members.display('Members Including Ogden');
     });
-    test('New Date From String', () {
+    test('New Date from String', () {
       Date date;
       var s;
       
