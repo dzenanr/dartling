@@ -22,39 +22,43 @@ class Entity<T extends Entity<T>> implements Comparable {
 
     for (Attribute a in _concept.attributes) {
       if (a.init != null) {
-        if (a.type.code == 'Date' && a.init == 'now') {
+        if (a.type.base == 'Date' && a.init == 'now') {
           _attributeMap[a.code] = new Date.now();
-        } else if (a.type.code == 'bool' && a.init == 'true') {
+        } else if (a.type.base == 'bool' && a.init == 'true') {
           _attributeMap[a.code] = true;
-        } else if (a.type.code == 'bool' && a.init == 'false') {
+        } else if (a.type.base == 'bool' && a.init == 'false') {
           _attributeMap[a.code] = false;
-        } else if (a.type.code == 'int') {
+        } else if (a.type.base == 'int') {
           try {
             _attributeMap[a.code] = Math.parseInt(a.init);
           } catch (final BadNumberFormatException e) {
-            throw new TypeException('${a.code} attribute init (default) value is not int.');
+            throw new TypeException(
+              '${a.code} attribute init (default) value is not int: $e');
           }
-        } else if (a.type.code == 'double') {
+        } else if (a.type.base == 'double') {
           try {
             _attributeMap[a.code] = Math.parseDouble(a.init);
           } catch (final BadNumberFormatException e) {
-            throw new TypeException('${a.code} attribute init (default) value is not double.');
+            throw new TypeException(
+              '${a.code} attribute init (default) value is not double: $e');
           }
-        } else if (a.type.code == 'num') {
+        } else if (a.type.base == 'num') {
           try {
             _attributeMap[a.code] = Math.parseInt(a.init);
-          } catch (final BadNumberFormatException e) {
+          } catch (final BadNumberFormatException e1) {
             try {
               _attributeMap[a.code] = Math.parseDouble(a.init);
-            } catch (final BadNumberFormatException e) {
-              throw new TypeException('${a.code} attribute init (default) value is not num.');
+            } catch (final BadNumberFormatException e2) {
+              throw new TypeException(
+                '${a.code} attribute init (default) value is not num: $e1; $e2');
             }
           }
-        } else if (a.type.code == 'Uri') {
+        } else if (a.type.base == 'Uri') {
           try {
             _attributeMap[a.code] = new Uri.fromString(a.init);
-          } catch (final Exception e) {
-            throw new TypeException('${a.code} attribute init (default) value is not Uri.');
+          } catch (final IllegalArgumentException e) {
+            throw new TypeException(
+              '${a.code} attribute init (default) value is not Uri: $e');
           }
         } else {
           _attributeMap[a.code] = a.init;
@@ -103,6 +107,64 @@ class Entity<T extends Entity<T>> implements Comparable {
     } else {
       String msg = '${_concept.code}.${attribute.code} is not updateable.';
       throw new UpdateException(msg);
+    }
+  }
+  
+  String getStringFromAttribute(String name) => _attributeMap[name].toString();
+  setStringToAttribute(String name, String string) {
+    if (string == null) {
+      throw new IllegalArgumentException(
+        'Entity.setStringToAttribute argument is null.');
+    }
+    if (_concept == null) {
+      throw new ConceptException('Entity concept is not defined.');
+    }
+    Attribute a = _concept.attributes.getEntityByCode(name); 
+    if (a.type.base == 'Date') {    
+      try {
+        setAttribute(name, new Date.fromString(string));
+      } catch (final IllegalArgumentException e) {
+        throw new TypeException('${a.code} attribute value is not Date: $e');
+      }
+    } else if (a.type.base == 'bool') {
+      if (string == 'true') {
+        setAttribute(name, true);
+      } else if (string == 'false') {
+        setAttribute(name, false);
+      } else {
+        throw new TypeException('${a.code} attribute value is not bool.');
+      }
+    } else if (a.type.base == 'int') { 
+      try {
+        setAttribute(name, Math.parseInt(string));
+      } catch (final BadNumberFormatException e) {
+        throw new TypeException('${a.code} attribute value is not int: $e');
+      }
+    } else if (a.type.base == 'double') {
+      try {
+        setAttribute(name, Math.parseDouble(string));
+      } catch (final BadNumberFormatException e) {
+        throw new TypeException('${a.code} attribute value is not double: $e');
+      }
+    } else if (a.type.base == 'num') {  
+      try {
+        setAttribute(name, Math.parseInt(string));
+      } catch (final BadNumberFormatException e1) {
+        try {
+          setAttribute(name, Math.parseDouble(string));
+        } catch (final BadNumberFormatException e2) {
+          throw new TypeException(
+            '${a.code} attribute value is not num: $e1; $e2');
+        }
+      }
+    } else if (a.type.base == 'Uri') {
+      try {
+        setAttribute(name, new Uri.fromString(string));
+      } catch (final IllegalArgumentException e) {
+        throw new TypeException('${a.code} attribute value is not Uri: $e');
+      }
+    } else {
+      setAttribute(name, string); 
     }
   }
 

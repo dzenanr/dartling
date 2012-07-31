@@ -238,5 +238,36 @@ testUserData() {
 
       orderedMembers.display('Members Ordered By Code');
     });
+    test('New Date From String', () {
+      Date date;
+      var s;
+      
+      try {
+        s = 'one day in a year';
+        date = new Date.fromString(s);
+      } catch (final IllegalArgumentException e) {
+        expect(date, isNull); 
+        print('/// Not valid date: $s; $e');
+        print('');
+      }
+      
+      try {
+        s = '';
+        date = new Date.fromString(s);
+      } catch (final IllegalArgumentException e) {
+        expect(date, isNull); 
+        print('/// Not valid date: $s; $e');
+        print('');
+      }
+      
+      try {
+        s = null;
+        date = new Date.fromString(s);
+      } catch (final NullPointerException e) {
+        expect(date, isNull); 
+        print('/// Not valid date: $s; $e');
+        print('');
+      }
+    });
   });
 }

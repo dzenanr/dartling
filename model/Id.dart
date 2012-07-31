@@ -119,13 +119,13 @@ class Id implements Comparable, Hashable {
        var compare = 0;
        for (Attribute a in concept.attributes) {
          if (a.id) {
-           if (a.type.code == 'String') {
+           if (a.type.base == 'String') {
              String attribute = _attributeMap[a.code];
              compare = attribute.compareTo(id.getAttribute(a.code));          
-           } else if (a.type.code == 'Date') {         
+           } else if (a.type.base == 'Date') {         
              Date attribute = _attributeMap[a.code];
              compare = attribute.compareTo(id.getAttribute(a.code));        
-           } else if (a.type.code == 'num' ||
+           } else if (a.type.base == 'num' ||
              a.type.code == 'int' || a.type.code == 'double') {           
              num attribute = _attributeMap[a.code];
              compare = attribute.compareTo(id.getAttribute(a.code));         

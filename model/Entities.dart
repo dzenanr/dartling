@@ -186,7 +186,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
           validation = false;
         }
       } catch (final BadNumberFormatException e) {
-        throw new RemoveException('Entities min is not a positive integer string.');
+        throw new RemoveException(
+          'Entities min is not a positive integer string.');
       }
     }
 

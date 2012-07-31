@@ -4,17 +4,22 @@ Dartling Schedule
 To do
 
 more tests
-attribute validations (type, length)
+Uri validation for well formed uri (not done in Uri)
+  ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
+  http://msdn.microsoft.com/en-us/library/system.uri.iswellformedoriginalstring.aspx
+Dynamic type?
 email type
 money type
 telephone type
 postal code type
 zip code type
+
 observers (notifications)
 persistance
 
 
 logging
+attribute validations (type, length)?
 entities forEach
 get random entity
 actions, transactions, undo
@@ -30,6 +35,11 @@ select
 selectByAttribute
 selectByParent
 order
+
+
+2012-07-31, 13:07
+Entity.getStringFromAttribute
+Entity.setStringToAttribute
 
 
 2012-07-31, 10:38

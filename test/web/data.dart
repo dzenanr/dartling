@@ -95,7 +95,7 @@ testWebData() {
       var dartBugssWebLink = new WebLink(webLinkConcept);
       expect(dartBugssWebLink, isNotNull);
       dartBugssWebLink.name = 'Dart Bugs';
-      dartBugssWebLink.url = new Uri.fromString('????+\\dartbug!hom');
+      dartBugssWebLink.url = new Uri.fromString('????+\\dart&bug!hom');
       dartBugssWebLink.description = 'Dart error management.';
       expect(dartBugssWebLink.category, isNull);
       dartBugssWebLink.category = dartCategory;
@@ -179,10 +179,43 @@ testWebData() {
 
       orderedDartWebLinks.display('Ordered Dart Web Links');
     });
-    test('New Uri value', () {
-      Uri uri = new Uri.fromString('????:\\**""##dartbug!hom');
+    test('New Uri From String', () {
+      Uri uri;
+      var s;
+      
+      try {
+        s = '????:\\**""##&dartbug!hom';
+        uri = new Uri.fromString(s);
+      } catch (final IllegalArgumentException e) {
+        expect(uri, isNull); 
+        print('Not valid uri: $s; $e');
+        print('');
+      }
       expect(uri, isNotNull);  // it should be: expect(uri, isNull);
-      //print(uri);
+      print('/// Not valid uri, but no illegal argument exception: $uri');
+      print('');
+      
+      try {
+        s = '';
+        uri = new Uri.fromString(s);
+      } catch (final IllegalArgumentException e) {
+        expect(uri, isNull); 
+        print('Not valid uri: $s; $e');
+        print('');
+      }
+      expect(uri, isNotNull);  // it should be: expect(uri, isNull);
+      print('/// Not valid uri, but no illegal argument exception: $uri');
+      print('');
+      
+      try {
+        s = null;
+        uri = null;
+        uri = new Uri.fromString(s);
+      } catch (final NullPointerException e) {
+        expect(uri, isNull); 
+        print('Not valid uri: $s; $e');
+        print('');
+      }
     });
   });
 }
