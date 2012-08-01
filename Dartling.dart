@@ -84,10 +84,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('model/Data.dart');
 #source('model/Entities.dart');
 #source('model/Entity.dart');
+#source('model/Event');
 #source('model/Id.dart');
 
 #source('test/bug.dart');
 #source('test/project/data.dart');
+#source('test/project/reporter.dart');
 #source('test/user/data.dart');
 #source('test/web/data.dart');
 #source('test/web/model.dart');

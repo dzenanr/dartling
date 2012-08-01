@@ -18,12 +18,15 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
 
   bool pre = true;
   Errors errors;
+  
+  List<Listener> listeners;
 
   Entities() {
     _entityList = new List<T>();
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
+    listeners = new List<Listener>();
 
     propagateToSource = false;
     pre = false;
@@ -34,6 +37,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
+    listeners = new List<Listener>();
   }
   
   Entities<T> newEntities() => new Entities.of(_concept);
@@ -369,6 +373,18 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     orderedEntities.propagateToSource = false;
     orderedEntities.sourceEntities = this;
     return orderedEntities;
+  }
+  
+  accept(Listener listener) => listeners.add(listener);
+  cancel(Listener listener) {
+    int index = listeners.indexOf(listener, 0);
+    listeners.removeRange(index, 1);
+  }
+  
+  notifyListeners(Object message) {
+    for (Listener listener in listeners) {
+      listener.react(this, message);
+    }
   }
 
   /**

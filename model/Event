@@ -1,0 +1,6 @@
+
+class Listener {
+  
+  abstract react(Object source, Object message);
+  
+}

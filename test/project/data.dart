@@ -159,6 +159,23 @@ testProjectData() {
       expect(projects.every((p) => p.code == null), isTrue);
       expect(projects.every((p) => p.name != null), isTrue);
     });
+    test('Event Notification', () {
+      var projects = data.projects;
+      expect(projects.count == projectCount);
+      
+      expect(projects.every((p) => p.code == null), isTrue);
+      expect(projects.every((p) => p.name != null), isTrue);
+    });
+    test('React to New Project', () {
+      var projects = data.projects;
+      expect(projects, hasLength(projectCount));
+      
+      var projectReporter = new ProjectReporter('Test Project', projects);
+      expect(projectReporter, isNotNull);
+      projectReporter.addProject('Dartling Documentation');
+      expect(projects, hasLength(++projectCount));
+      expect(projectReporter.reacted, isTrue);
+    });
     
   });
 }

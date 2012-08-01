@@ -22,6 +22,7 @@ class ProjectData {
     Domain domain = fromMagicBoxes(_json);
     Model model = domain.model;
     projectConcept = model.concepts.getEntityByCode('Project');
+    projectConcept.pluralName = 'Projects';
     projects = new Projects(projectConcept);
   }
 
