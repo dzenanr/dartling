@@ -167,5 +167,29 @@ testProjectData() {
       
       projects.display('Projects Including Marketing');
     });
+    test('Copy Projects', () {
+      var projects = data.projects;
+      expect(projects.count == projectCount);
+      
+      var projectConcept = data.projectConcept;
+      expect(projectConcept, isNotNull);
+      expect(projectConcept.attributes, isNot(isEmpty));
+      expect(projectConcept.attributes.count == 2);
+      
+      Projects copiedProjects = projects.copy();
+      expect(copiedProjects, isNotNull);
+      expect(copiedProjects, isNot(isEmpty));
+      expect(copiedProjects.count == projectCount);
+      expect(copiedProjects, isNot(same(projects)));
+      expect(copiedProjects, isNot(equals(projects)));
+      
+      for (Project cp in copiedProjects) {
+        Project p = projects.getEntityById(cp.id);
+        expect(cp, isNot(same(p)));
+        expect(cp, isNot(equals(p)));
+      }
+      
+      copiedProjects.display('Copied Projects');
+    });
   });
 }

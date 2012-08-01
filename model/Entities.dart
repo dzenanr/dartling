@@ -35,6 +35,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
   }
+  
+  Entities<T> newEntities() => new Entities.of(_concept);
 
   Concept get concept() => _concept;
 
@@ -235,6 +237,23 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       return selectionList[0];
     }
     return null;
+  }
+  
+  /**
+   * Copies the entities.
+   * It is not a deep copy.
+   */
+  Entities<T> copy() {
+    if (_concept == null) {
+      throw new ConceptException('Entities.copy: concept is not defined.');
+    }
+    Entities<T> copiedEntities = newEntities(); 
+    copiedEntities.pre = false;
+    for (Entity entity in this) {
+      copiedEntities.add(entity.copy());
+    }
+    copiedEntities.pre = true;
+    return copiedEntities;
   }
 
   addFrom(List<T> other) {

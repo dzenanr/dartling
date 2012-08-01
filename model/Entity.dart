@@ -7,7 +7,8 @@ class Entity<T extends Entity<T>> implements Comparable {
   Concept _concept;
 
   Map<String, Object> _attributeMap;
-  Map<String, Entity> _parentMap;
+  // cannot use T since a parent is of a different type
+  Map<String, Entity> _parentMap; 
   Map<String, Entities> _childMap;
 
   Entity() {
@@ -80,6 +81,8 @@ class Entity<T extends Entity<T>> implements Comparable {
       _childMap[child.code] = entities;
     }
   }
+  
+  Entity<T> newEntity() => new Entity.of(_concept);
 
   Oid get oid() => _oid;
 
@@ -219,14 +222,17 @@ class Entity<T extends Entity<T>> implements Comparable {
 
   /**
    * Copies the entity (oid, code, attributes and neighbors).
+   * It is not a deep copy.
    */
   T copy() {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
-    T e = new Entity.of(_concept);
+    T e = newEntity();
     e._oid = _oid;
-    e.code = _code;
+    if (_code != null) {
+      e.code = _code;
+    }
     for (Attribute a in _concept.attributes) {
       e.setAttribute(a.code, _attributeMap[a.code]);
     }

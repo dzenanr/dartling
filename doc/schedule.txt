@@ -4,11 +4,20 @@ Dartling Schedule
 To do
 
 more tests
+
+license
+  http://opensource.org/licenses/
+  http://en.wikipedia.org/wiki/BSD_license
+  http://www.dartlang.org/docs/spec/latest/dart-language-specification.html
+  http://code.google.com/google_bsd_license.html
+  http://opensource.org/licenses/BSD-2-Clause
+  https://github.com/kevmoo/dartlib
  
 Uri validation for well formed uri (not done in Uri)
   ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
   http://msdn.microsoft.com/en-us/library/system.uri.iswellformedoriginalstring.aspx
 Dynamic type?
+Duration (time span) type
 email type
 money type
 telephone type
@@ -16,6 +25,13 @@ postal code type
 zip code type
 
 observers (notifications)
+  https://docs.google.com/document/d/17crOxOmR5AYwultXbNcfdbvD4ACBw5a9QbvO90FVgtk/edit
+  
+  https://github.com/kevmoo/dartlib
+  https://github.com/kevmoo/dartlib/tree/master/lib/dartlib/events
+  
+  https://github.com/prujohn/Buckshot
+  https://github.com/prujohn/Buckshot/tree/master/external/events
 persistance
 
 
@@ -25,6 +41,7 @@ entities forEach
 get random entity
 actions, transactions, undo
 post
+i18n
 indexes (http://www.mattfleming.com/node/192)
 
 
@@ -37,6 +54,16 @@ selectByAttribute
 selectByParent
 order
 
+
+2012-08-01, ??
+Entities.copy
+Entity.newEntity
+Entities.newEntities
+Project.newEntity overrides Entity.newEntity
+Projects.newEntities overrides Entities.newEntity
+
+2012-07-31, 16:51
+tag s02: spiral 02: create model from json (from Magic Boxes)
 
 2012-07-31, 16:33
 tests for constructors with ids

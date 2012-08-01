@@ -24,4 +24,7 @@ class Project extends Entity<Project> {
   int compareName(Project other) {
     return name.compareTo(other.name);
   }
+  
+  Project newEntity() => new Project(concept);
+  
 }
