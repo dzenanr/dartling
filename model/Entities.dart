@@ -41,10 +41,28 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   Concept get concept() => _concept;
 
   Iterator<T> iterator() => _entityList.iterator();
+  
+  forEach(Function f) {
+    _entityList.forEach(f);
+  }
+  
+  every(Function f) {
+    return _entityList.every(f);
+  }
+  
+  some(Function f) {
+    return _entityList.some(f);
+  }
 
   int get count() => _entityList.length;
+  
+  int get length() => count;
 
   bool get isEmpty() => _entityList.isEmpty();
+  
+  T last() {
+    return _entityList.last();
+  }
 
   bool preAdd(T entity) {
     if (errors == null) {
@@ -232,9 +250,9 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   }
 
   T getEntityByAttribute(String code, Object attribute) {
-    var selectionList = selectByAttribute(code, attribute);
-    if (selectionList.length > 0) {
-      return selectionList[0];
+    var selectionEntities = selectByAttribute(code, attribute);
+    if (selectionEntities.count > 0) {
+      return selectionEntities.list[0];
     }
     return null;
   }
@@ -260,63 +278,97 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     other.forEach((entity) => add(entity));
   }
 
-  List<T> getList() => new List.from(_entityList);
+  List<T> get list() => new List.from(_entityList);
 
-  List<T> select(Function f) {
-    // returns a new list
-    return _entityList.filter(f);
+  Entities<T> select(Function f) {
+    Entities<T> selectedEntities = newEntities(); 
+    selectedEntities.pre = false;
+    selectedEntities.propagateToSource = false;
+    // filter returns a new list
+    List<T> selectedList = _entityList.filter(f);
+    selectedEntities.addFrom(selectedList);
+    selectedEntities.pre = true;
+    selectedEntities.propagateToSource = true;
+    selectedEntities.sourceEntities = this;
+    return selectedEntities;
   }
 
-  List<T> selectByParent(String code, Object parent) {
+  Entities<T> selectByParent(String code, Object parent) {
     if (_concept == null) {
       throw new ConceptException(
         'Entities.selectByParent($code, $parent): concept is not defined.');
     }
-    var selectionList = new List<T>();
+    Entities<T> selectedEntities = newEntities(); 
+    selectedEntities.pre = false;
+    selectedEntities.propagateToSource = false;
     for (T entity in _entityList) {
       for (Parent p in _concept.parents) {
         if (p.code == code) {
           if (entity.getParent(p.code) == parent) {
-            selectionList.add(entity);
+            selectedEntities.add(entity);
           }
         }
       }
     }
-    return selectionList;
+    selectedEntities.pre = true;
+    selectedEntities.propagateToSource = true;
+    selectedEntities.sourceEntities = this;
+    return selectedEntities;
   }
 
-  List<T> selectByAttribute(String code, Object attribute) {
+  Entities<T> selectByAttribute(String code, Object attribute) {
     if (_concept == null) {
       throw new ConceptException(
         'Entities.selectByAttribute($code, $attribute): concept is not defined.');
     }
-    var selectionList = new List<T>();
+    Entities<T> selectedEntities = newEntities(); 
+    selectedEntities.pre = false;
+    selectedEntities.propagateToSource = false;
     for (T entity in _entityList) {
       for (Attribute a in _concept.attributes) {
         if (a.code == code) {
           if (entity.getAttribute(a.code) == attribute) {
-            selectionList.add(entity);
+            selectedEntities.add(entity);
           }
         }
       }
     }
-    return selectionList;
+    selectedEntities.pre = true;
+    selectedEntities.propagateToSource = true;
+    selectedEntities.sourceEntities = this;
+    return selectedEntities;
   }
 
   /**
    * If there is no compareTo method on a specific entity,
    * the Entity.compareTo method will be used (code if not null, otherwise id).
    */
-  List<T> order() {
-    List<T> sortedList = getList();
+  Entities<T> order() {
+    Entities<T> orderedEntities = newEntities(); 
+    orderedEntities.pre = false;
+    orderedEntities.propagateToSource = false;
+    List<T> sortedList = list;
+    // in place sort
     sortedList.sort((m,n) => m.compareTo(n));
-    return sortedList;
+    orderedEntities.addFrom(sortedList);
+    orderedEntities.pre = true;
+    orderedEntities.propagateToSource = false;
+    orderedEntities.sourceEntities = this;
+    return orderedEntities;
   }
 
-  List<T> orderByFunction(Function f) {
-    List<T> sortedList = getList();
+  Entities<T> orderByFunction(Function f) {
+    Entities<T> orderedEntities = newEntities(); 
+    orderedEntities.pre = false;
+    orderedEntities.propagateToSource = false;
+    List<T> sortedList = list;
+    // in place sort
     sortedList.sort(f);
-    return sortedList;
+    orderedEntities.addFrom(sortedList);
+    orderedEntities.pre = true;
+    orderedEntities.propagateToSource = false;
+    orderedEntities.sourceEntities = this;
+    return orderedEntities;
   }
 
   /**

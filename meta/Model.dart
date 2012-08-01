@@ -14,8 +14,8 @@ class Model extends Entity<Model> {
     concepts = new Concepts();
   }
 
-  List<Concept> get entryConcepts() => concepts.select((c) => c.entry);
-
+  List<Concept> get entryConcepts() => concepts.list.filter((c) => c.entry);
+  
   int get entryConceptCount() => entryConcepts.length;
 
   Concept getEntryConcept(String code) {

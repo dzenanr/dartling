@@ -12,9 +12,11 @@ class Project extends Entity<Project> {
 
   String get description() => getAttribute('description');
   set description(String a) => setAttribute('description', a);
+  
+  Project newEntity() => new Project(concept);
 
-  bool isOnProgramming() => description.contains('Programming') ? true : false;
-
+  bool get onProgramming() => description.contains('Programming') ? true : false;
+  
   /**
    * Compares two projects based on name.
    * If the result is less than 0 then the first entity is less than the second,
@@ -25,6 +27,6 @@ class Project extends Entity<Project> {
     return name.compareTo(other.name);
   }
   
-  Project newEntity() => new Project(concept);
+  
   
 }

@@ -1,3 +1,4 @@
+
 testUserData() {
   var data;
   var memberCount = 4;
@@ -96,8 +97,8 @@ testUserData() {
       members.add(robertm);
       expect(members.count == memberCount);
       expect(members.errors.count == 2);
-      expect(members.errors.getList()[0].category == 'required');
-      expect(members.errors.getList()[1].category == 'required');
+      expect(members.errors.list[0].category == 'required');
+      expect(members.errors.list[1].category == 'required');
       //members.errors.display('Add Member Required Error');
     });
     test('Add Member Unique Error', () {
@@ -119,8 +120,8 @@ testUserData() {
       members.add(robertm);
       expect(members.count == memberCount);
       expect(members.errors.count == 2);
-      expect(members.errors.getList()[0].category == 'required');
-      expect(members.errors.getList()[1].category == 'unique');
+      expect(members.errors.list[0].category == 'required');
+      expect(members.errors.list[1].category == 'unique');
       //members.errors.display('Add Member Unique Error');
     });
     test('Add Member Required and Unique Error', () {
@@ -138,25 +139,17 @@ testUserData() {
       members.add(robertm);
       expect(members.count == memberCount);
       expect(members.errors.count == 3);
-      expect(members.errors.getList()[0].category == 'required');
-      expect(members.errors.getList()[1].category == 'required');
-      expect(members.errors.getList()[2].category == 'unique');
+      expect(members.errors.list[0].category == 'required');
+      expect(members.errors.list[1].category == 'required');
+      expect(members.errors.list[2].category == 'unique');
       members.errors.display('Add Member Required and Unique Error');
     });
-    test('Select Members by Attribute', () {
+    test('Select Members by Attribute then Remove', () {
       var members = data.members;
       expect(members.count == memberCount);
-      members.display('All Members');
 
-      List<Member> selectedMemberList =
+      Members selectedMembers = 
           members.selectByAttribute('lastName', 'Ridjanovic');
-      expect(selectedMemberList, isNotNull);
-      expect(selectedMemberList, isNot(isEmpty));
-      expect(selectedMemberList.length == 2);
-
-      Members selectedMembers = new Members(data.memberConcept);
-      selectedMembers.addFrom(selectedMemberList);
-      selectedMembers.sourceEntities = members;
       expect(selectedMembers, isNotNull);
       expect(selectedMembers, isNot(isEmpty));
       expect(selectedMembers.count == 2);
@@ -173,8 +166,8 @@ testUserData() {
       selectedMembers.remove(dzenan);
       expect(selectedMembers.count == 1);
       expect(members.count == memberCount - 1);
+      
       selectedMembers.display('Selected Members After Remove');
-
       members.display('All Members After Remove');
     });
     test('Select Members by (get) Function', () {
@@ -198,16 +191,8 @@ testUserData() {
     test('Order Members by Last then First Name', () {
       var members = data.members;
       expect(members.count == memberCount);
-      members.display('Members');
 
-      List<Member> orderedMemberList = members.order();
-      expect(orderedMemberList, isNotNull);
-      expect(orderedMemberList, isNot(isEmpty));
-      expect(orderedMemberList.length == memberCount);
-
-      Members orderedMembers = new Members(data.memberConcept);
-      orderedMembers.addFrom(orderedMemberList);
-      orderedMembers.sourceEntities = members;
+      Members orderedMembers = members.order();
       expect(orderedMembers, isNotNull);
       expect(orderedMembers, isNot(isEmpty));
       expect(orderedMembers.count == memberCount);
@@ -220,17 +205,9 @@ testUserData() {
     test('Order Members by Code', () {
       var members = data.members;
       expect(members.count == memberCount);
-      //members.display('Members');
 
-      List<Member> orderedMemberList =
+      Members orderedMembers = 
           members.orderByFunction((m,n) => m.compareCode(n));
-      expect(orderedMemberList, isNotNull);
-      expect(orderedMemberList, isNot(isEmpty));
-      expect(orderedMemberList.length == memberCount);
-
-      Members orderedMembers = new Members(data.memberConcept);
-      orderedMembers.addFrom(orderedMemberList);
-      orderedMembers.sourceEntities = members;
       expect(orderedMembers, isNotNull);
       expect(orderedMembers, isNot(isEmpty));
       expect(orderedMembers.count == memberCount);
@@ -291,5 +268,13 @@ testUserData() {
         print('');
       }
     });
+    test('True for Some Projects', () {
+      var members = data.members;
+      expect(members.count == memberCount);
+      
+      expect(members.some((m) => m.about == null), isTrue);
+    });
+    
   });
-}
+} 
+

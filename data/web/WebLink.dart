@@ -20,6 +20,8 @@ class WebLink extends Entity<WebLink> {
 
   String get description() => getAttribute('description');
   set description(String a) => setAttribute('description', a);
+  
+  WebLink newEntity() => new WebLink(concept);
 
   /**
    * Compares two web links based on name.

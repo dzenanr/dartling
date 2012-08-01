@@ -48,42 +48,22 @@ testProjectData() {
       projects.empty();
       expect(projects.count == 0);
     });
-    test('Select Projects by Function 1', () {
+    test('Select Projects by Function', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
 
-      var programmingProjects = projects.select((p) => p.isOnProgramming());
+      var programmingProjects = projects.select((p) => p.onProgramming);
       expect(programmingProjects, isNotNull);
       expect(programmingProjects, isNot(isEmpty));
       expect(programmingProjects.length == 2);
 
-      //programmingProjects.display('Programming Entities');
+      programmingProjects.display('Programming Entities');
     });
-    test('Select Projects by Function 2', () {
+    test('Select Projects by Function then Add', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
 
-      List<Project> programmingProjectList =
-          projects.select((p) => p.isOnProgramming());
-      expect(programmingProjectList, isNotNull);
-      expect(programmingProjectList, isNot(isEmpty));
-      expect(programmingProjectList.length == 2);
-
-      //programmingProjects.display('Programming Entities');
-    });
-    test('Select Projects by Function 3', () {
-      var projects = data.projects;
-      expect(projects.count == projectCount);
-
-      List<Project> programmingProjectList =
-          projects.select((p) => p.isOnProgramming());
-      expect(programmingProjectList, isNotNull);
-      expect(programmingProjectList, isNot(isEmpty));
-      expect(programmingProjectList.length == 2);
-
-      Projects programmingProjects = new Projects(data.projectConcept);
-      programmingProjects.addFrom(programmingProjectList);
-      programmingProjects.sourceEntities = projects;
+      Projects programmingProjects = projects.select((p) => p.onProgramming);
       expect(programmingProjects, isNotNull);
       expect(programmingProjects, isNot(isEmpty));
       expect(programmingProjects.count == 2);
@@ -91,12 +71,9 @@ testProjectData() {
       expect(programmingProjects.sourceEntities, isNot(isEmpty));
       expect(programmingProjects.sourceEntities.count == projectCount);
 
-      programmingProjects.display('Programming Entities Before Add');
-
       var programmingProject = new Project(data.projectConcept);
       programmingProject.name = 'Dartling Testing';
-      programmingProject.description =
-          'Programming unit tests.';
+      programmingProject.description = 'Programming unit tests.';
       programmingProjects.add(programmingProject);
       expect(programmingProjects.count == 3);
       expect(projects.count == ++projectCount);
@@ -130,17 +107,9 @@ testProjectData() {
     test('Order Projects by Name', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
-      projects.display('Projects');
 
-      List<Project> orderedProjectList =
+      Projects orderedProjects = 
           projects.orderByFunction((m,n) => m.compareName(n));
-      expect(orderedProjectList, isNotNull);
-      expect(orderedProjectList, isNot(isEmpty));
-      expect(orderedProjectList.length == projectCount);
-
-      Projects orderedProjects = new Projects(data.projectConcept);
-      orderedProjects.addFrom(orderedProjectList);
-      orderedProjects.sourceEntities = projects;
       expect(orderedProjects, isNotNull);
       expect(orderedProjects, isNot(isEmpty));
       expect(orderedProjects.count == projectCount);
@@ -171,11 +140,6 @@ testProjectData() {
       var projects = data.projects;
       expect(projects.count == projectCount);
       
-      var projectConcept = data.projectConcept;
-      expect(projectConcept, isNotNull);
-      expect(projectConcept.attributes, isNot(isEmpty));
-      expect(projectConcept.attributes.count == 2);
-      
       Projects copiedProjects = projects.copy();
       expect(copiedProjects, isNotNull);
       expect(copiedProjects, isNot(isEmpty));
@@ -183,13 +147,19 @@ testProjectData() {
       expect(copiedProjects, isNot(same(projects)));
       expect(copiedProjects, isNot(equals(projects)));
       
-      for (Project cp in copiedProjects) {
-        Project p = projects.getEntityById(cp.id);
-        expect(cp, isNot(same(p)));
-        expect(cp, isNot(equals(p)));
-      }
+      copiedProjects.forEach((cp) => 
+          expect(cp, isNot(same(projects.getEntityById(cp.id)))));
       
       copiedProjects.display('Copied Projects');
     });
+    test('True for Every Project', () {
+      var projects = data.projects;
+      expect(projects.count == projectCount);
+      
+      expect(projects.every((p) => p.code == null), isTrue);
+      expect(projects.every((p) => p.name != null), isTrue);
+    });
+    
   });
 }
+

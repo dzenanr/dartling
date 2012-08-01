@@ -44,18 +44,21 @@ post
 i18n
 indexes (http://www.mattfleming.com/node/192)
 
+2012-08-01, 13:17
+Entities.forEach
+Entities.every
+Entities.some
+Entities.length
+Entities.last
+Entities.select
+Entities.selectByParent
+Entities.selectByAttribute
+Entities.order
+Entities.orderByFunction
 
-To do with reflection
 
-copy entities (set preAdd to false; at the end to true)
-sort entities
-select
-selectByAttribute
-selectByParent
-order
-
-
-2012-08-01, ??
+2012-08-01, 11:08
+Entity.copy
 Entities.copy
 Entity.newEntity
 Entities.newEntities

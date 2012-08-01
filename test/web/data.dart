@@ -1,3 +1,4 @@
+
 testWebData() {
   var data;
   var categoryCount;
@@ -122,16 +123,8 @@ testWebData() {
     test('Order Categories by Id (code not used, id is name)', () {
       var categories = data.categories;
       expect(categories.count == categoryCount);
-      categories.display('Categories With Web Links');
 
-      List<Category> orderedCategoryList = categories.order();
-      expect(orderedCategoryList, isNotNull);
-      expect(orderedCategoryList, isNot(isEmpty));
-      expect(orderedCategoryList.length == categoryCount);
-
-      Categories orderedCategories = new Categories(data.categoryConcept);
-      orderedCategories.addFrom(orderedCategoryList);
-      orderedCategories.sourceEntities = categories;
+      Categories orderedCategories = categories.order();
       expect(orderedCategories, isNotNull);
       expect(orderedCategories, isNot(isEmpty));
       expect(orderedCategories.count == categoryCount);
@@ -151,14 +144,7 @@ testWebData() {
       WebLinks dartWebLinks = dartCategory.webLinks;
       expect(dartWebLinks.count == dartCategoryWebLinkCount);
 
-      List<WebLink> orderedDartWebLinkList = dartWebLinks.order();
-      expect(orderedDartWebLinkList, isNotNull);
-      expect(orderedDartWebLinkList, isNot(isEmpty));
-      expect(orderedDartWebLinkList.length == dartCategoryWebLinkCount);
-
-      WebLinks orderedDartWebLinks = new WebLinks(data.webLinkConcept);
-      orderedDartWebLinks.addFrom(orderedDartWebLinkList);
-      orderedDartWebLinks.sourceEntities = dartWebLinks;
+      WebLinks orderedDartWebLinks = dartWebLinks.order();
       expect(orderedDartWebLinks, isNotNull);
       expect(orderedDartWebLinks, isNot(isEmpty));
       expect(orderedDartWebLinks.count == dartCategoryWebLinkCount);
@@ -207,7 +193,7 @@ testWebData() {
       dartCategory.webLinks.add(dartHomeWebLink);
       expect(dartCategory.webLinks.count == dartCategoryWebLinkCount);
       expect(dartCategory.webLinks.errors.count == 1);
-      expect(dartCategory.webLinks.errors.getList()[0].category == 'required');
+      expect(dartCategory.webLinks.errors.list[0].category == 'required');
       dartCategory.webLinks.errors.display('WebLink Error');
 
       try {

@@ -34,6 +34,8 @@ class Member extends Entity<Member> {
 
   String get about() => getAttribute('about');
   set about(String a) => setAttribute('about', a);
+  
+  Member newEntity() => new Member(concept);
 
   bool get ridjanovic() => lastName.contains('Ridjanovic') ? true : false;
 

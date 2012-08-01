@@ -20,6 +20,8 @@ class Category extends Entity<Category> {
 
   WebLinks get webLinks() => getChild('webLinks');
   
+  Category newEntity() => new Category(concept);
+  
   /**
    * Compares two categories based on name.
    * If the result is less than 0 then the first entity is less than the second,
