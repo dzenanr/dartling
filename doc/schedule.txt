@@ -1,18 +1,9 @@
 Dartling Schedule
 
-
 To do
 
 more tests
 
-license
-  http://opensource.org/licenses/
-  http://en.wikipedia.org/wiki/BSD_license
-  http://www.dartlang.org/docs/spec/latest/dart-language-specification.html
-  http://code.google.com/google_bsd_license.html
-  http://opensource.org/licenses/BSD-2-Clause
-  https://github.com/kevmoo/dartlib
- 
 Uri validation for well formed uri (not done in Uri)
   ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
   http://msdn.microsoft.com/en-us/library/system.uri.iswellformedoriginalstring.aspx
@@ -23,7 +14,6 @@ money type
 telephone type
 postal code type
 zip code type
-
 observers (notifications)
   https://docs.google.com/document/d/17crOxOmR5AYwultXbNcfdbvD4ACBw5a9QbvO90FVgtk/edit
   
@@ -34,15 +24,17 @@ observers (notifications)
   https://github.com/prujohn/Buckshot/tree/master/external/events
 persistance
 
-
 logging
 attribute validations (type, length)?
-entities forEach
 get random entity
 actions, transactions, undo
 post
 i18n
 indexes (http://www.mattfleming.com/node/192)
+
+
+2012-08-01, 13:31
+license
 
 2012-08-01, 13:17
 Entities.forEach
@@ -55,7 +47,6 @@ Entities.selectByParent
 Entities.selectByAttribute
 Entities.order
 Entities.orderByFunction
-
 
 2012-08-01, 11:08
 Entity.copy
@@ -75,16 +66,13 @@ tests for constructors with ids
 library
 construct specific entities with id
 
-
 2012-07-31, 13:07
 Entity.getStringFromAttribute
 Entity.setStringToAttribute
 
-
 2012-07-31, 10:38
 no return bug in Entity.compareTo
 WebLink Uri type for tyhe url attribute
-
 
 2012-07-30, 22:48
 Uri type
