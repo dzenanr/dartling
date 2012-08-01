@@ -170,11 +170,11 @@ testProjectData() {
       var projects = data.projects;
       expect(projects, hasLength(projectCount));
       
-      var projectReporter = new ProjectReporter('Test Project', projects);
-      expect(projectReporter, isNotNull);
-      projectReporter.addProject('Dartling Documentation');
+      var reactor = new ProjectReactor('Test Project', projects);
+      expect(reactor, isNotNull);
+      reactor.addProject('Dartling Documentation');
       expect(projects, hasLength(++projectCount));
-      expect(projectReporter.reacted, isTrue);
+      expect(reactor.reacted, isTrue);
     });
     
   });

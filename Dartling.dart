@@ -39,11 +39,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('data/project/Data.dart');
 #source('data/project/Project.dart');
 #source('data/project/Projects.dart');
-
 #source('data/user/Data.dart');
 #source('data/user/Member.dart');
 #source('data/user/Members.dart');
-
 #source('data/web/Categories.dart');
 #source('data/web/Category.dart');
 #source('data/web/Data.dart');
@@ -84,12 +82,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('model/Data.dart');
 #source('model/Entities.dart');
 #source('model/Entity.dart');
-#source('model/Event');
 #source('model/Id.dart');
+
+#source('operation/action.dart');
+#source('operation/event.dart');
 
 #source('test/bug.dart');
 #source('test/project/data.dart');
-#source('test/project/reporter.dart');
+#source('test/project/reactor.dart');
 #source('test/user/data.dart');
 #source('test/web/data.dart');
 #source('test/web/model.dart');

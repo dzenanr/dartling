@@ -10,9 +10,12 @@ class Entity<T extends Entity<T>> implements Comparable {
   // cannot use T since a parent is of a different type
   Map<String, Entity> _parentMap; 
   Map<String, Entities> _childMap;
+  
+  List<Reactor> reactors;
 
   Entity() {
     _oid = new Oid();
+    reactors = new List<Reactor>();
   }
 
   Entity.of(this._concept) {
@@ -20,6 +23,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     _attributeMap = new Map<String, Object>();
     _parentMap = new Map<String, Entity>();
     _childMap = new Map<String, Entities>();
+    reactors = new List<Reactor>();
 
     for (Attribute a in _concept.attributes) {
       if (a.init != null) {
@@ -315,6 +319,18 @@ class Entity<T extends Entity<T>> implements Comparable {
         throw new IdException(msg);
       }
       return id.compareTo(entity.id);
+    }
+  }
+  
+  accept(Reactor reactor) => reactors.add(reactor);
+  cancel(Reactor reactor) {
+    int index = reactors.indexOf(reactor, 0);
+    reactors.removeRange(index, 1);
+  }
+  
+  notifyReactors(Action action) {
+    for (Reactor reactor in reactors) {
+      reactor.react(action);
     }
   }
 

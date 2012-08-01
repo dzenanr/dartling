@@ -19,14 +19,14 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   bool pre = true;
   Errors errors;
   
-  List<Listener> listeners;
+  List<Reactor> reactors;
 
   Entities() {
     _entityList = new List<T>();
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    listeners = new List<Listener>();
+    reactors = new List<Reactor>();
 
     propagateToSource = false;
     pre = false;
@@ -37,7 +37,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    listeners = new List<Listener>();
+    reactors = new List<Reactor>();
   }
   
   Entities<T> newEntities() => new Entities.of(_concept);
@@ -375,15 +375,15 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return orderedEntities;
   }
   
-  accept(Listener listener) => listeners.add(listener);
-  cancel(Listener listener) {
-    int index = listeners.indexOf(listener, 0);
-    listeners.removeRange(index, 1);
+  accept(Reactor reactor) => reactors.add(reactor);
+  cancel(Reactor reactor) {
+    int index = reactors.indexOf(reactor, 0);
+    reactors.removeRange(index, 1);
   }
   
-  notifyListeners(Object message) {
-    for (Listener listener in listeners) {
-      listener.react(this, message);
+  notifyReactors(Action action) {
+    for (Reactor reactor in reactors) {
+      reactor.react(action);
     }
   }
 

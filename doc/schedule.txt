@@ -4,7 +4,6 @@ To do
 
 more tests
 
-add listeners to Entity
 notify from Entities and Entity
 Uri validation for well formed uri (not done in Uri)
   ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
@@ -26,6 +25,11 @@ post
 i18n
 indexes (http://www.mattfleming.com/node/192)
 
+
+2012-08-01, 19:45
+Listener -> Reactor
+Action
+Entity
 
 2012-08-01, 17:16
 event listeners
