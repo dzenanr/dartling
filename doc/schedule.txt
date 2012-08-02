@@ -4,6 +4,7 @@ To do
 
 more tests
 
+test on undo and redo set property
 Uri validation for well formed uri (not done in Uri)
   ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
   http://msdn.microsoft.com/en-us/library/system.uri.iswellformedoriginalstring.aspx
@@ -19,11 +20,25 @@ persistance
 logging
 attribute validations (type, length)?
 get random entity
-actions, transactions, undo
+model session, actions, transactions, undo
 post
 i18n
 indexes (http://www.mattfleming.com/node/192)
 
+
+2012-02-08, 42
+Entities.reactions -> _reactions
+Entity.reactions -> _reactions
+action/history.dart
+History
+ActionException
+Action, EntityAction, EntitiesAction
+undo and redo of add or remove on entities
+undo and redo of set attribute, set parent or set child on entity
+
+
+2012-08-02, 12:10
+tag s03: action events
 
 2012-08-02, 11:59
 Reactor -> Reaction

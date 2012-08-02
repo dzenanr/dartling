@@ -19,14 +19,16 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   bool pre = true;
   Errors errors;
 
-  List<Reaction> reactions;
+  List<Reaction> _reactions;
+  History history;
 
   Entities() {
     _entityList = new List<T>();
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    reactions = new List<Reaction>();
+    _reactions = new List<Reaction>();
+    history = new History();
 
     propagateToSource = false;
     pre = false;
@@ -37,7 +39,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    reactions = new List<Reaction>();
+    _reactions = new List<Reaction>();
+    history = new History();
   }
 
   Entities<T> newEntities() => new Entities.of(_concept);
@@ -147,7 +150,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return validation;
   }
 
-  add(T entity) {
+  bool add(T entity) {
     if (preAdd(entity)) {
       _entityList.add(entity);
       _oidEntityMap[entity.oid] = entity;
@@ -163,11 +166,14 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       }
 
       var action = new EntitiesAction('add');
-      action.description = 'Entities.add $entity.';
       action.entities = this;
       action.entity = entity;
+      action.description = 'Entities.add $entity.';
+      history.add(action);
       notifyReactions(action);
+      return true;
     }
+    return false;
   }
 
   bool contains(T entity) {
@@ -185,8 +191,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _idEntityMap.clear();
 
     var action = new EntitiesAction('empty');
-    action.description = 'Entities.empty.';
     action.entities = this;
+    action.description = 'Entities.empty.';
     notifyReactions(action);
   }
 
@@ -228,7 +234,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return validation;
   }
 
-  remove(T entity) {
+  bool remove(T entity) {
     if (preRemove(entity)) {
       for (T element in _entityList) {
         if (element == entity) {
@@ -243,9 +249,10 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
           }
 
           var action = new EntitiesAction('remove');
-          action.description = 'Entities.remove $entity.';
           action.entities = this;
           action.entity = entity;
+          action.description = 'Entities.remove $entity.';
+          history.add(action);
           notifyReactions(action);
 
           break;
@@ -254,7 +261,9 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       if (sourceEntities != null && propagateToSource) {
         sourceEntities.remove(entity);
       }
+      return true;
     }
+    return false;
   }
 
   T getEntity(Oid oid) {
@@ -391,14 +400,14 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return orderedEntities;
   }
 
-  start(Reaction reaction) => reactions.add(reaction);
+  start(Reaction reaction) => _reactions.add(reaction);
   cancel(Reaction reaction) {
-    int index = reactions.indexOf(reaction, 0);
-    reactions.removeRange(index, 1);
+    int index = _reactions.indexOf(reaction, 0);
+    _reactions.removeRange(index, 1);
   }
 
   notifyReactions(Action action) {
-    for (Reaction reaction in reactions) {
+    for (Reaction reaction in _reactions) {
       reaction.react(action);
     }
   }

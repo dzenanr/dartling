@@ -9,7 +9,13 @@ class DartlingException implements Exception {
 
 }
 
-class AddException extends DartlingException {
+class ActionException extends DartlingException {
+
+  const ActionException(String msg) : super(msg);
+
+}
+
+class AddException extends ActionException {
 
   const AddException(String msg) : super(msg);
 
@@ -39,7 +45,7 @@ class OrderException extends DartlingException {
 
 }
 
-class RemoveException extends DartlingException {
+class RemoveException extends ActionException {
 
   const RemoveException(String msg) : super(msg);
 
@@ -51,7 +57,7 @@ class TypeException extends DartlingException {
 
 }
 
-class UpdateException extends DartlingException {
+class UpdateException extends ActionException {
 
   const UpdateException(String msg) : super(msg);
 

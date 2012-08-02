@@ -37,6 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import('dart:uri');
 
 #source('action/event.dart');
+#source('action/history.dart');
 #source('action/s.dart');
 
 #source('data/project/Data.dart');
@@ -96,6 +97,6 @@ allTests() {
 }
 
 void main() {
-  //testBug();
-  allTests();
+  testBug();
+  //allTests();
 }

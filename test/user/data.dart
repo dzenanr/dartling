@@ -1,7 +1,7 @@
 
 testUserData() {
   var data;
-  var memberCount = 4;
+  var memberCount;
   var dzenanOid;
   group('Testing', () {
     setUp(() {
@@ -14,7 +14,7 @@ testUserData() {
       memberConcept.attributes.getEntityByCode('password').sensitive = true;
 
       memberCount = 0;
-      
+
       var members = data.members;
       expect(members, isNotNull);
       expect(members.count == memberCount);
@@ -148,7 +148,7 @@ testUserData() {
       var members = data.members;
       expect(members.count == memberCount);
 
-      Members selectedMembers = 
+      Members selectedMembers =
           members.selectByAttribute('lastName', 'Ridjanovic');
       expect(selectedMembers, isNotNull);
       expect(selectedMembers, isNot(isEmpty));
@@ -166,7 +166,7 @@ testUserData() {
       selectedMembers.remove(dzenan);
       expect(selectedMembers.count == 1);
       expect(members.count == memberCount - 1);
-      
+
       selectedMembers.display('Selected Members After Remove');
       members.display('All Members After Remove');
     });
@@ -206,7 +206,7 @@ testUserData() {
       var members = data.members;
       expect(members.count == memberCount);
 
-      Members orderedMembers = 
+      Members orderedMembers =
           members.orderByFunction((m,n) => m.compareCode(n));
       expect(orderedMembers, isNotNull);
       expect(orderedMembers, isNot(isEmpty));
@@ -220,7 +220,7 @@ testUserData() {
     test('New Member with Ids', () {
       var members = data.members;
       expect(members.count == memberCount);
-      
+
       var memberConcept = data.memberConcept;
       expect(memberConcept, isNotNull);
       expect(memberConcept.attributes, isNot(isEmpty));
@@ -234,36 +234,36 @@ testUserData() {
       ogdenr.receiveEmail = false;
       members.add(ogdenr);
       expect(members.count == 5);
-      
+
       members.display('Members Including Ogden');
     });
     test('New Date from String', () {
       Date date;
       var s;
-      
+
       try {
         s = 'one day in a year';
         date = new Date.fromString(s);
       } catch (final IllegalArgumentException e) {
-        expect(date, isNull); 
+        expect(date, isNull);
         print('/// Not valid date: $s; $e');
         print('');
       }
-      
+
       try {
         s = '';
         date = new Date.fromString(s);
       } catch (final IllegalArgumentException e) {
-        expect(date, isNull); 
+        expect(date, isNull);
         print('/// Not valid date: $s; $e');
         print('');
       }
-      
+
       try {
         s = null;
         date = new Date.fromString(s);
       } catch (final NullPointerException e) {
-        expect(date, isNull); 
+        expect(date, isNull);
         print('/// Not valid date: $s; $e');
         print('');
       }
@@ -271,10 +271,10 @@ testUserData() {
     test('True for Some Projects', () {
       var members = data.members;
       expect(members.count == memberCount);
-      
+
       expect(members.some((m) => m.about == null), isTrue);
     });
-    
+
   });
-} 
+}
 
