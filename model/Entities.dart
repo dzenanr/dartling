@@ -64,7 +64,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   int get count() => _entityList.length;
   int get length() => count;
 
-  bool get isEmpty() => _entityList.isEmpty();
+  bool get empty() => _entityList.isEmpty();
 
   T last() {
     return _entityList.last();
@@ -184,7 +184,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return false;
   }
 
-  empty() {
+  clear() {
     _entityList.clear();
     _oidEntityMap.clear();
     _codeEntityMap.clear();

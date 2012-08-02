@@ -26,7 +26,11 @@ i18n
 indexes (http://www.mattfleming.com/node/192)
 
 
-2012-02-08, 42
+2012-02-08, 19:40
+Entities.empty() -> clear(), isEmpty -> empty
+
+
+2012-02-08, 18:42
 Entities.reactions -> _reactions
 Entity.reactions -> _reactions
 action/history.dart
@@ -35,7 +39,6 @@ ActionException
 Action, EntityAction, EntitiesAction
 undo and redo of add or remove on entities
 undo and redo of set attribute, set parent or set child on entity
-
 
 2012-08-02, 12:10
 tag s03: action events

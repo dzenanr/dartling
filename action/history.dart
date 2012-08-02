@@ -31,10 +31,12 @@ class History {
     }
   }
 
-  empty() {
+  clear() {
     cursor = 0;
-    _actions.removeRange(0, _actions.length);
+    _actions.clear();
   }
+
+  bool get empty() => _actions.isEmpty();
 
   bool undo() {
     if (_actions.length > 0) {
