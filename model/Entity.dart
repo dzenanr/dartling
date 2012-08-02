@@ -8,14 +8,14 @@ class Entity<T extends Entity<T>> implements Comparable {
 
   Map<String, Object> _attributeMap;
   // cannot use T since a parent is of a different type
-  Map<String, Entity> _parentMap; 
+  Map<String, Entity> _parentMap;
   Map<String, Entities> _childMap;
-  
-  List<Reactor> reactors;
+
+  List<Reaction> reactions;
 
   Entity() {
     _oid = new Oid();
-    reactors = new List<Reactor>();
+    reactions = new List<Reaction>();
   }
 
   Entity.of(this._concept) {
@@ -23,7 +23,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     _attributeMap = new Map<String, Object>();
     _parentMap = new Map<String, Entity>();
     _childMap = new Map<String, Entities>();
-    reactors = new List<Reactor>();
+    reactions = new List<Reaction>();
 
     for (Attribute a in _concept.attributes) {
       if (a.init != null) {
@@ -85,7 +85,7 @@ class Entity<T extends Entity<T>> implements Comparable {
       _childMap[child.code] = entities;
     }
   }
-  
+
   Entity<T> newEntity() => new Entity.of(_concept);
 
   Oid get oid() => _oid;
@@ -110,13 +110,23 @@ class Entity<T extends Entity<T>> implements Comparable {
     }
     Attribute attribute = _concept.attributes.getEntityByCode(name);
     if (!attribute.derive && attribute.update) {
+      var action = new EntityAction('set');
+      action.category = 'attribute';
+      action.description = 'Entity.setAttribute $name with $value value.';
+      action.entity = this;
+      action.property = name;
+      action.before = getAttribute(name);
+
       _attributeMap[name] = value;
+
+      action.after = value;
+      notifyReactions(action);
     } else {
       String msg = '${_concept.code}.${attribute.code} is not updateable.';
       throw new UpdateException(msg);
     }
   }
-  
+
   String getStringFromAttribute(String name) => _attributeMap[name].toString();
   setStringToAttribute(String name, String string) {
     if (string == null) {
@@ -126,8 +136,8 @@ class Entity<T extends Entity<T>> implements Comparable {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
-    Attribute a = _concept.attributes.getEntityByCode(name); 
-    if (a.type.base == 'Date') {    
+    Attribute a = _concept.attributes.getEntityByCode(name);
+    if (a.type.base == 'Date') {
       try {
         setAttribute(name, new Date.fromString(string));
       } catch (final IllegalArgumentException e) {
@@ -141,7 +151,7 @@ class Entity<T extends Entity<T>> implements Comparable {
       } else {
         throw new TypeException('${a.code} attribute value is not bool.');
       }
-    } else if (a.type.base == 'int') { 
+    } else if (a.type.base == 'int') {
       try {
         setAttribute(name, Math.parseInt(string));
       } catch (final BadNumberFormatException e) {
@@ -153,7 +163,7 @@ class Entity<T extends Entity<T>> implements Comparable {
       } catch (final BadNumberFormatException e) {
         throw new TypeException('${a.code} attribute value is not double: $e');
       }
-    } else if (a.type.base == 'num') {  
+    } else if (a.type.base == 'num') {
       try {
         setAttribute(name, Math.parseInt(string));
       } catch (final BadNumberFormatException e1) {
@@ -171,7 +181,7 @@ class Entity<T extends Entity<T>> implements Comparable {
         throw new TypeException('${a.code} attribute value is not Uri: $e');
       }
     } else {
-      setAttribute(name, string); 
+      setAttribute(name, string);
     }
   }
 
@@ -182,7 +192,17 @@ class Entity<T extends Entity<T>> implements Comparable {
     }
     Parent parent = _concept.parents.getEntityByCode(name);
     if (parent.update) {
+      var action = new EntityAction('set');
+      action.category = 'parent';
+      action.description = 'Entity.setParent $name with $entity entity.';
+      action.entity = this;
+      action.property = name;
+      action.before = getParent(name);
+
       _parentMap[name] = entity;
+
+      action.after = entity;
+      notifyReactions(action);
     } else {
       String msg = '${_concept.code}.${parent.code} is not updateable.';
       throw new UpdateException(msg);
@@ -196,7 +216,17 @@ class Entity<T extends Entity<T>> implements Comparable {
     }
     Child child = _concept.children.getEntityByCode(name);
     if (child.update) {
+      var action = new EntityAction('set');
+      action.category = 'child';
+      action.description = 'Entity.setChild $name with ${entities.count} entities.';
+      action.entity = this;
+      action.property = name;
+      action.before = getChild(name);
+
       _childMap[name] = entities;
+
+      action.after = entities;
+      notifyReactions(action);
     } else {
       String msg = '${_concept.code}.${child.code} is not updateable.';
       throw new UpdateException(msg);
@@ -321,16 +351,16 @@ class Entity<T extends Entity<T>> implements Comparable {
       return id.compareTo(entity.id);
     }
   }
-  
-  accept(Reactor reactor) => reactors.add(reactor);
-  cancel(Reactor reactor) {
-    int index = reactors.indexOf(reactor, 0);
-    reactors.removeRange(index, 1);
+
+  start(Reaction reaction) => reactions.add(reaction);
+  cancel(Reaction reaction) {
+    int index = reactions.indexOf(reaction, 0);
+    reactions.removeRange(index, 1);
   }
-  
-  notifyReactors(Action action) {
-    for (Reactor reactor in reactors) {
-      reactor.react(action);
+
+  notifyReactions(Action action) {
+    for (Reaction reaction in reactions) {
+      reaction.react(action);
     }
   }
 

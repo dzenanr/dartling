@@ -11,9 +11,9 @@ testProjectData() {
       expect(projectConcept, isNotNull);
       expect(projectConcept.attributes, isNot(isEmpty));
       expect(projectConcept.attributes.count == 2);
-      
+
       projectCount = 0;
-      
+
       var projects = data.projects;
       expect(projects, isNotNull);
       expect(projects.count == projectCount);
@@ -41,7 +41,7 @@ testProjectData() {
           'Programming Dartling.';
       projects.add(production);
       expect(projects.count == ++projectCount);
-      dartlingOid = production.oid;          
+      dartlingOid = production.oid;
     });
     tearDown(() {
       var projects = data.projects;
@@ -84,7 +84,7 @@ testProjectData() {
     test('Get Project by Oid', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
-      
+
       var project = projects.getEntity(dartlingOid);
       expect(project, isNotNull);
       expect(project.name == 'Dartling');
@@ -108,7 +108,7 @@ testProjectData() {
       var projects = data.projects;
       expect(projects.count == projectCount);
 
-      Projects orderedProjects = 
+      Projects orderedProjects =
           projects.orderByFunction((m,n) => m.compareName(n));
       expect(orderedProjects, isNotNull);
       expect(orderedProjects, isNot(isEmpty));
@@ -122,7 +122,7 @@ testProjectData() {
     test('New Project with Id', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
-      
+
       var projectConcept = data.projectConcept;
       expect(projectConcept, isNotNull);
       expect(projectConcept.attributes, isNot(isEmpty));
@@ -133,50 +133,61 @@ testProjectData() {
       marketing.description = 'Making Dartling known to the Dart community.';
       projects.add(marketing);
       expect(projects.count == ++projectCount);
-      
+
       projects.display('Projects Including Marketing');
     });
     test('Copy Projects', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
-      
+
       Projects copiedProjects = projects.copy();
       expect(copiedProjects, isNotNull);
       expect(copiedProjects, isNot(isEmpty));
       expect(copiedProjects.count == projectCount);
       expect(copiedProjects, isNot(same(projects)));
       expect(copiedProjects, isNot(equals(projects)));
-      
-      copiedProjects.forEach((cp) => 
+
+      copiedProjects.forEach((cp) =>
           expect(cp, isNot(same(projects.getEntityById(cp.id)))));
-      
+
       copiedProjects.display('Copied Projects');
     });
     test('True for Every Project', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
-      
+
       expect(projects.every((p) => p.code == null), isTrue);
       expect(projects.every((p) => p.name != null), isTrue);
     });
     test('Event Notification', () {
       var projects = data.projects;
       expect(projects.count == projectCount);
-      
+
       expect(projects.every((p) => p.code == null), isTrue);
       expect(projects.every((p) => p.name != null), isTrue);
     });
-    test('React to New Project', () {
+    test('Reaction to New Project', () {
       var projects = data.projects;
       expect(projects, hasLength(projectCount));
-      
-      var reactor = new ProjectReactor('Test Project', projects);
-      expect(reactor, isNotNull);
-      reactor.addProject('Dartling Documentation');
+
+      var reaction = new ProjectReaction('Test Project', projects);
+      expect(reaction, isNotNull);
+      reaction.addProject('Dartling Documentation');
       expect(projects, hasLength(++projectCount));
-      expect(reactor.reacted, isTrue);
+      expect(reaction.reacted, isTrue);
     });
-    
+
+    test('Reaction to Project Update', () {
+      var projects = data.projects;
+      expect(projects, hasLength(projectCount));
+
+      var reaction = new ProjectReaction('Test Project', projects);
+      expect(reaction, isNotNull);
+      reaction.updateProjectDescription('Dartling', 'Developing Dartling.');
+      expect(projects, hasLength(projectCount));
+      expect(reaction.reacted, isTrue);
+    });
+
   });
 }
 

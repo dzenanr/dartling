@@ -18,15 +18,15 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
 
   bool pre = true;
   Errors errors;
-  
-  List<Reactor> reactors;
+
+  List<Reaction> reactions;
 
   Entities() {
     _entityList = new List<T>();
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    reactors = new List<Reactor>();
+    reactions = new List<Reaction>();
 
     propagateToSource = false;
     pre = false;
@@ -37,33 +37,32 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    reactors = new List<Reactor>();
+    reactions = new List<Reaction>();
   }
-  
+
   Entities<T> newEntities() => new Entities.of(_concept);
 
   Concept get concept() => _concept;
 
   Iterator<T> iterator() => _entityList.iterator();
-  
+
   forEach(Function f) {
     _entityList.forEach(f);
   }
-  
+
   every(Function f) {
     return _entityList.every(f);
   }
-  
+
   some(Function f) {
     return _entityList.some(f);
   }
 
   int get count() => _entityList.length;
-  
   int get length() => count;
 
   bool get isEmpty() => _entityList.isEmpty();
-  
+
   T last() {
     return _entityList.last();
   }
@@ -162,6 +161,12 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       if (sourceEntities != null && propagateToSource) {
         sourceEntities.add(entity);
       }
+
+      var action = new EntitiesAction('add');
+      action.description = 'Entities.add $entity.';
+      action.entities = this;
+      action.entity = entity;
+      notifyReactions(action);
     }
   }
 
@@ -178,6 +183,11 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _oidEntityMap.clear();
     _codeEntityMap.clear();
     _idEntityMap.clear();
+
+    var action = new EntitiesAction('empty');
+    action.description = 'Entities.empty.';
+    action.entities = this;
+    notifyReactions(action);
   }
 
   bool preRemove(T entity) {
@@ -231,10 +241,16 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
           if (entity.concept != null && entity.id != null) {
             _idEntityMap.remove(entity.id.toString());
           }
+
+          var action = new EntitiesAction('remove');
+          action.description = 'Entities.remove $entity.';
+          action.entities = this;
+          action.entity = entity;
+          notifyReactions(action);
+
           break;
         }
       }
-
       if (sourceEntities != null && propagateToSource) {
         sourceEntities.remove(entity);
       }
@@ -260,7 +276,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     }
     return null;
   }
-  
+
   /**
    * Copies the entities.
    * It is not a deep copy.
@@ -269,7 +285,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     if (_concept == null) {
       throw new ConceptException('Entities.copy: concept is not defined.');
     }
-    Entities<T> copiedEntities = newEntities(); 
+    Entities<T> copiedEntities = newEntities();
     copiedEntities.pre = false;
     for (Entity entity in this) {
       copiedEntities.add(entity.copy());
@@ -285,7 +301,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   List<T> get list() => new List.from(_entityList);
 
   Entities<T> select(Function f) {
-    Entities<T> selectedEntities = newEntities(); 
+    Entities<T> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.propagateToSource = false;
     // filter returns a new list
@@ -302,7 +318,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       throw new ConceptException(
         'Entities.selectByParent($code, $parent): concept is not defined.');
     }
-    Entities<T> selectedEntities = newEntities(); 
+    Entities<T> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.propagateToSource = false;
     for (T entity in _entityList) {
@@ -325,7 +341,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       throw new ConceptException(
         'Entities.selectByAttribute($code, $attribute): concept is not defined.');
     }
-    Entities<T> selectedEntities = newEntities(); 
+    Entities<T> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.propagateToSource = false;
     for (T entity in _entityList) {
@@ -348,7 +364,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
    * the Entity.compareTo method will be used (code if not null, otherwise id).
    */
   Entities<T> order() {
-    Entities<T> orderedEntities = newEntities(); 
+    Entities<T> orderedEntities = newEntities();
     orderedEntities.pre = false;
     orderedEntities.propagateToSource = false;
     List<T> sortedList = list;
@@ -362,7 +378,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   }
 
   Entities<T> orderByFunction(Function f) {
-    Entities<T> orderedEntities = newEntities(); 
+    Entities<T> orderedEntities = newEntities();
     orderedEntities.pre = false;
     orderedEntities.propagateToSource = false;
     List<T> sortedList = list;
@@ -374,16 +390,16 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     orderedEntities.sourceEntities = this;
     return orderedEntities;
   }
-  
-  accept(Reactor reactor) => reactors.add(reactor);
-  cancel(Reactor reactor) {
-    int index = reactors.indexOf(reactor, 0);
-    reactors.removeRange(index, 1);
+
+  start(Reaction reaction) => reactions.add(reaction);
+  cancel(Reaction reaction) {
+    int index = reactions.indexOf(reaction, 0);
+    reactions.removeRange(index, 1);
   }
-  
-  notifyReactors(Action action) {
-    for (Reactor reactor in reactors) {
-      reactor.react(action);
+
+  notifyReactions(Action action) {
+    for (Reaction reaction in reactions) {
+      reaction.react(action);
     }
   }
 
