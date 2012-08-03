@@ -10,9 +10,18 @@ abstract class Action {
   }
 
   abstract bool undo();
-  abstract bool redo();
 
   toString() => 'action: $name -- description: $description';
+
+  display([String title='Action']) {
+    print('');
+    print('======================================');
+    print('$title                                ');
+    print('======================================');
+    print('');
+    print('$this');
+    print('');
+  }
 
 }
 
@@ -34,19 +43,6 @@ class EntitiesAction extends Action {
         'Allowed actions on entities for undo are add or remove.');
     }
     return undone;
-  }
-
-  bool redo() {
-    bool redone = false;
-    if (name == 'add') {
-      redone = entities.remove(entity);
-    } else if (name == 'remove') {
-      redone = entities.add(entity);
-    } else {
-      throw new ActionException(
-        'Allowed actions on entities for redo are add or remove.');
-    }
-    return redone;
   }
 
 }
@@ -76,22 +72,9 @@ class EntityAction extends Action {
     return undone;
   }
 
-  bool redo() {
-    bool redone = false;
-    if (name == 'set' && category == 'attribute') {
-      redone = entity.setAttribute(property, after);
-    } else if (name == 'set' && category == 'parent') {
-      redone = entity.setParent(property, after);
-    } else if (name == 'set' && category == 'child') {
-      redone = entity.setChild(property, after);
-    } else {
-      throw new ActionException(
-        'Allowed actions on entity for undo are set attribute, parent or child.');
-    }
-    return redone;
-  }
-
-  toString() => 'action: $name; category: $category --'
+  toString() => 'action: $name; category: $category -- '
                 'property: $property; before: $before; after: $after';
 
 }
+
+

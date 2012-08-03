@@ -10,14 +10,14 @@ testWebData() {
       expect(categoryConcept, isNotNull);
       expect(categoryConcept.attributes, isNot(isEmpty));
       expect(categoryConcept.attributes.count == 2);
-      
+
       var webLinkConcept = data.webLinkConcept;
       expect(webLinkConcept, isNotNull);
       expect(webLinkConcept.attributes, isNot(isEmpty));
       expect(webLinkConcept.attributes.count == 3);
-      
+
       categoryCount = 0;
-      
+
       var categories = data.categories;
       expect(categories, isNotNull);
       expect(categories.count == categoryCount);
@@ -34,11 +34,11 @@ testWebData() {
       expect(html5Category, isNotNull);
       expect(html5Category.webLinks.count == 0);
       html5Category.name = 'HTML5';
-      html5Category.description = 
+      html5Category.description =
           'HTML5 is the ubiquitous platform for the modern web.';
       categories.add(html5Category);
       expect(categories.count == ++categoryCount);
-      
+
       var css3Category = new Category(categoryConcept);
       expect(css3Category, isNotNull);
       expect(css3Category.webLinks.count == 0);
@@ -84,7 +84,7 @@ testWebData() {
       expect(dartNewsWebLink.category, isNotNull);
       dartCategory.webLinks.add(dartNewsWebLink);
       expect(dartCategory.webLinks.count == ++dartCategoryWebLinkCount);
-      
+
       var dartBugssWebLink = new WebLink(webLinkConcept);
       expect(dartBugssWebLink, isNotNull);
       dartBugssWebLink.name = 'Dart Bugs';
@@ -98,7 +98,7 @@ testWebData() {
     });
     tearDown(() {
       var categories = data.categories;
-      categories.empty();
+      categories.clear();
       expect(categories.count == 0);
     });
     test('Get Category and Web Link by Id', () {
@@ -158,30 +158,30 @@ testWebData() {
     test('New Category with Id', () {
       var categories = data.categories;
       expect(categories.count == categoryCount);
-      
+
       var categoryConcept = data.categoryConcept;
       expect(categoryConcept, isNotNull);
       expect(categoryConcept.attributes, isNot(isEmpty));
-      
+
       var webFrameworkCategory = new Category.withId(categoryConcept, 'Web Framework');
       expect(webFrameworkCategory, isNotNull);
       expect(webFrameworkCategory.webLinks.count == 0);
       categories.add(webFrameworkCategory);
       expect(categories.count == ++categoryCount);
-      
+
       categories.display('Categories Including Web Framework');
     });
     test('New WebLink No Category Error', () {
       var categories = data.categories;
       expect(categories.count == categoryCount);
-      
+
       Category dartCategory = categories.getEntityByAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
-      
+
       var webLinkConcept = data.webLinkConcept;
       expect(webLinkConcept, isNotNull);
       expect(webLinkConcept.attributes, isNot(isEmpty));
-      
+
       var dartHomeWebLink = new WebLink(webLinkConcept);
       expect(dartHomeWebLink, isNotNull);
       expect(dartHomeWebLink.category, isNull);
@@ -195,19 +195,11 @@ testWebData() {
       expect(dartCategory.webLinks.errors.count == 1);
       expect(dartCategory.webLinks.errors.list[0].category == 'required');
       dartCategory.webLinks.errors.display('WebLink Error');
-
-      try {
-        dartCategory.webLinks.errors.selectByAttribute('category', 'required');
-      } catch (final ConceptException ce) {
-        print('');
-        print('In testWebData(), try errors.selectByAttribute -- $ce');
-        print('');
-      }
     });
     test('No Concept Defined for Errors', () {
       var categories = data.categories;
       expect(categories.count == categoryCount);
-      
+
       Category dartCategory = categories.getEntityByAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
 
@@ -222,38 +214,38 @@ testWebData() {
     test('New Uri from String', () {
       Uri uri;
       var s;
-      
+
       try {
         s = '????:\\**""##&dartbug!hom';
         uri = new Uri.fromString(s);
       } catch (final IllegalArgumentException e) {
-        expect(uri, isNull); 
-        print('Not valid uri: $s; $e');
+        expect(uri, isNull);
+        print('/// Not valid uri: $s; $e');
         print('');
       }
       expect(uri, isNotNull);  // it should be: expect(uri, isNull);
       print('/// Not valid uri, but no illegal argument exception: $uri');
       print('');
-      
+
       try {
         s = '';
         uri = new Uri.fromString(s);
       } catch (final IllegalArgumentException e) {
-        expect(uri, isNull); 
-        print('Not valid uri: $s; $e');
+        expect(uri, isNull);
+        print('/// Not valid uri: $s; $e');
         print('');
       }
       expect(uri, isNotNull);  // it should be: expect(uri, isNull);
       print('/// Not valid uri, but no illegal argument exception: $uri');
       print('');
-      
+
       try {
         s = null;
         uri = null;
         uri = new Uri.fromString(s);
       } catch (final NullPointerException e) {
-        expect(uri, isNull); 
-        print('Not valid uri: $s; $e');
+        expect(uri, isNull);
+        print('/// Not valid uri: $s; $e');
         print('');
       }
     });

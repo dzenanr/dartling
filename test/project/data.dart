@@ -45,7 +45,7 @@ testProjectData() {
     });
     tearDown(() {
       var projects = data.projects;
-      projects.empty();
+      projects.clear();
       expect(projects.count == 0);
     });
     test('Select Projects by Function', () {
@@ -167,7 +167,7 @@ testProjectData() {
       expect(reaction, isNotNull);
       reaction.addProject('Dartling Documentation');
       expect(projects, hasLength(++projectCount));
-      expect(reaction.reacted, isTrue);
+      expect(reaction.reactedOnAdd, isTrue);
     });
 
     test('Reaction to Project Update', () {
@@ -178,7 +178,7 @@ testProjectData() {
       expect(reaction, isNotNull);
       reaction.updateProjectDescription('Dartling', 'Developing Dartling.');
       expect(projects, hasLength(projectCount));
-      expect(reaction.reacted, isTrue);
+      expect(reaction.reactedOnUpdate, isTrue);
     });
 
   });

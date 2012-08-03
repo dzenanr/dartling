@@ -1,9 +1,11 @@
 
-abstract class Reaction {
+abstract class ActionReaction {
 
   abstract react(Action action);
 
 }
+
+
 
 
 

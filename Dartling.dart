@@ -36,10 +36,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import('dart:json');
 #import('dart:uri');
 
-#source('action/event.dart');
-#source('action/history.dart');
-#source('action/s.dart');
-
 #source('data/project/Data.dart');
 #source('data/project/Project.dart');
 #source('data/project/Projects.dart');
@@ -52,8 +48,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('data/web/WebLink.dart');
 #source('data/web/WebLinks.dart');
 
-#source('exception/Error.dart');
-#source('exception/Errors.dart');
+#source('exception/error.dart');
 #source('exception/s.dart');
 
 #source('guid/Oid.dart');
@@ -80,10 +75,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('model/Entity.dart');
 #source('model/Id.dart');
 
-#source('test/bug.dart');
+#source('operation/reaction.dart');
+#source('operation/action.dart');
+
+#source('test/lastGroupTest.dart');
+#source('test/lastSingleTest.dart');
 #source('test/project/data.dart');
 #source('test/project/reaction.dart');
 #source('test/user/data.dart');
+#source('test/user/reaction.dart');
 #source('test/web/data.dart');
 #source('test/web/model.dart');
 
@@ -94,9 +94,10 @@ allTests() {
   testUserData();
   testWebData();
   testWebModel();
+  //lastSingleTest();
+  //lastGroupTest();
 }
 
 void main() {
-  testBug();
-  //allTests();
+  allTests();
 }

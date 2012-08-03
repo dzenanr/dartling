@@ -1,8 +1,9 @@
 
-class ProjectReaction implements Reaction {
+class ProjectReaction implements ActionReaction {
 
   String name;
-  bool reacted = false;
+  bool reactedOnAdd = false;
+  bool reactedOnUpdate = false;
 
   var projects;
 
@@ -12,9 +13,12 @@ class ProjectReaction implements Reaction {
     var project = new Project(projects.concept);
     project.name = projectName;
 
-    projects.start(this);
+    projects.startReaction(this);
     projects.add(project);
-    projects.cancel(this);
+    projects.cancelReaction(this);
+
+    projects.lastAction.undo();
+    projects.lastAction.undo();
 
     assert(projects.getEntityByAttribute('name', projectName) != null);
   }
@@ -23,9 +27,9 @@ class ProjectReaction implements Reaction {
     var project = projects.getEntityByAttribute('name', projectName);
     assert(project != null);
 
-    project.start(this);
+    project.startReaction(this);
     project.description = projectDescription;
-    project.cancel(this);
+    project.cancelReaction(this);
   }
 
   react(Action action) {
@@ -35,18 +39,19 @@ class ProjectReaction implements Reaction {
         ps.errors.display();
       } else {
         ps.display('Projects with Reaction');
+        reactedOnAdd = true;
       }
     } else if (action is EntityAction) {
       Project p = action.entity;
       print('Dartling Project with After Update Description');
       print('');
       p.display();
+      reactedOnUpdate = true;
     }
     print('!!! Action Reaction for ${projects.concept.pluralName} by $name !!!');
     print('');
     print('$action');
     print('');
-    reacted = true;
   }
 
 }

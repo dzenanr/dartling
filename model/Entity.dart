@@ -11,13 +11,12 @@ class Entity<T extends Entity<T>> implements Comparable {
   Map<String, Entity> _parentMap;
   Map<String, Entities> _childMap;
 
-  List<Reaction> _reactions;
-  History history;
+  Action _lastAction;
+  List<ActionReaction> _reactions;
 
   Entity() {
     _oid = new Oid();
-    _reactions = new List<Reaction>();
-    history = new History();
+    _reactions = new List<ActionReaction>();
   }
 
   Entity.of(this._concept) {
@@ -25,8 +24,8 @@ class Entity<T extends Entity<T>> implements Comparable {
     _attributeMap = new Map<String, Object>();
     _parentMap = new Map<String, Entity>();
     _childMap = new Map<String, Entities>();
-    _reactions = new List<Reaction>();
-    history = new History();
+
+    _reactions = new List<ActionReaction>();
 
     for (Attribute a in _concept.attributes) {
       if (a.init != null) {
@@ -90,6 +89,8 @@ class Entity<T extends Entity<T>> implements Comparable {
   }
 
   Entity<T> newEntity() => new Entity.of(_concept);
+
+  Action get lastAction() => _lastAction;
 
   Oid get oid() => _oid;
 
@@ -181,7 +182,7 @@ class Entity<T extends Entity<T>> implements Comparable {
       _attributeMap[name] = value;
 
       action.after = value;
-      history.add(action);
+      _lastAction = action;
       notifyReactions(action);
       return true;
     } else {
@@ -208,7 +209,7 @@ class Entity<T extends Entity<T>> implements Comparable {
       _parentMap[name] = entity;
 
       action.after = entity;
-      history.add(action);
+      _lastAction = action;
       notifyReactions(action);
       return true;
     } else {
@@ -236,7 +237,7 @@ class Entity<T extends Entity<T>> implements Comparable {
       _childMap[name] = entities;
 
       action.after = entities;
-      history.add(action);
+      _lastAction = action;
       notifyReactions(action);
       return true;
     } else {
@@ -365,14 +366,14 @@ class Entity<T extends Entity<T>> implements Comparable {
     }
   }
 
-  start(Reaction reaction) => _reactions.add(reaction);
-  cancel(Reaction reaction) {
+  startReaction(ActionReaction reaction) => _reactions.add(reaction);
+  cancelReaction(ActionReaction reaction) {
     int index = _reactions.indexOf(reaction, 0);
     _reactions.removeRange(index, 1);
   }
 
   notifyReactions(Action action) {
-    for (Reaction reaction in _reactions) {
+    for (ActionReaction reaction in _reactions) {
       reaction.react(action);
     }
   }

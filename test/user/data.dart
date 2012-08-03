@@ -3,7 +3,7 @@ testUserData() {
   var data;
   var memberCount;
   var dzenanOid;
-  group('Testing', () {
+  group('Testing User', () {
     setUp(() {
       data = new UserData();
 
@@ -19,14 +19,14 @@ testUserData() {
       expect(members, isNotNull);
       expect(members.count == memberCount);
 
-      var tim = new Member(memberConcept);
-      expect(tim, isNotNull);
-      tim.code = 'atimurr';
-      tim.password = 'timmy8527';
-      tim.firstName = 'Timur';
-      tim.lastName = 'Ridjanovic';
-      tim.email = 'timur.ridjanovic@gmail.com';
-      members.add(tim);
+      var claudeb = new Member(memberConcept);
+      expect(claudeb, isNotNull);
+      claudeb.code = 'aclaudeburr';
+      claudeb.password = 'claudebmy8527';
+      claudeb.firstName = 'claudebur';
+      claudeb.lastName = 'Ridjanovic';
+      claudeb.email = 'claudebur.ridjanovic@gmail.com';
+      members.add(claudeb);
       expect(members.count == ++memberCount);
 
       var dzenan = new Member(memberConcept);
@@ -79,7 +79,7 @@ testUserData() {
     });
     tearDown(() {
       var members = data.members;
-      members.empty();
+      members.clear();
       expect(members.count == 0);
     });
     test('Add Member Required Error', () {
@@ -273,6 +273,116 @@ testUserData() {
       expect(members.count == memberCount);
 
       expect(members.some((m) => m.about == null), isTrue);
+    });
+    test('New Member Undo', () {
+      var members = data.members;
+      expect(members.count == memberCount);
+
+      var memberConcept = data.memberConcept;
+      expect(memberConcept, isNotNull);
+      expect(memberConcept.attributes, isNot(isEmpty));
+
+      var robertm = new Member(memberConcept);
+      expect(robertm, isNotNull);
+      robertm.code = 'rwm';
+      robertm.password = 'r1w2m32';
+      robertm.firstName = 'Robert';
+      robertm.lastName = 'Mantha';
+      robertm.email = 'robert.mantha@abc.com';
+      members.add(robertm);
+      expect(members.count == ++memberCount);
+
+      members.lastAction.undo();
+      expect(members.count == --memberCount);
+
+      members.lastAction.undo();
+      expect(members.count == ++memberCount);
+    });
+    test('Update Member Undo', () {
+      var members = data.members;
+      expect(members.count == memberCount);
+
+      var memberConcept = data.memberConcept;
+      expect(memberConcept, isNotNull);
+      expect(memberConcept.attributes, isNot(isEmpty));
+
+      var acr = members.getEntityByCode('acr');
+      expect(acr, isNotNull);
+
+      var beforeAboutUpdate = acr.about;
+      acr.about = 'Intercultural interests.';
+      var afterAboutUpdate = acr.about;
+      acr.lastAction.undo();
+      expect(acr.about == beforeAboutUpdate);
+      acr.lastAction.undo();
+      expect(acr.about == afterAboutUpdate);
+    });
+    test('Member Undo', () {
+      var members = data.members;
+      expect(members.count == memberCount);
+
+      var memberConcept = data.memberConcept;
+      expect(memberConcept, isNotNull);
+      expect(memberConcept.attributes, isNot(isEmpty));
+
+      var claudeb = new Member(memberConcept);
+      expect(claudeb, isNotNull);
+      claudeb.code = 'claudeb';
+      claudeb.password = 'claudebtom0';
+      claudeb.firstName = 'Claude';
+      claudeb.lastName = 'Begin';
+      claudeb.email = 'claude.begin@gmail.com';
+      members.add(claudeb);
+      expect(members.count == ++memberCount);
+      members.display('After Add');
+
+      var undo = members.lastAction.undo();
+      expect(members.count == --memberCount);
+      members.display('After Undo on Members');
+
+      undo = members.lastAction.undo();
+      expect(members.count == ++memberCount);
+      members.display('After Undoing Undo on Members');
+
+      var aboutClaude = 'Claude is a calm fellow, with good spirit.';
+      claudeb.about = aboutClaude;
+      members.display('After Update on Member');
+      claudeb.lastAction.undo();
+      expect(claudeb.about != aboutClaude);
+      members.display('After Undo on Member');
+      claudeb.lastAction.undo();
+      expect(claudeb.about == aboutClaude);
+      members.display('After Undoing Undo on Member');
+    });
+    test('Reactions to Member Actions', () {
+      var members = data.members;
+      expect(members.count == memberCount);
+
+      var memberConcept = data.memberConcept;
+      expect(memberConcept, isNotNull);
+      expect(memberConcept.attributes, isNot(isEmpty));
+
+      var reaction = new MemberReaction();
+      expect(reaction, isNotNull);
+
+      members.startReaction(reaction);
+      var member = new Member(memberConcept);
+      expect(member, isNotNull);
+      member.code = 'amemberurr';
+      member.password = 'membermy8527';
+      member.firstName = 'John';
+      member.lastName = 'Smith';
+      member.email = 'john.smith@gmail.com';
+      members.add(member);
+      expect(members.count == ++memberCount);
+      expect(reaction.reactedOnAdd, isTrue);
+      members.cancelReaction(reaction);
+
+      member.startReaction(reaction);
+      var about = 'He is a calm fellow, with good spirit.';
+      member.about = about;
+      expect(reaction.reactedOnUpdate, isTrue);
+      member.cancelReaction(reaction);
     });
 
   });

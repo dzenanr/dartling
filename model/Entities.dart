@@ -19,16 +19,16 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   bool pre = true;
   Errors errors;
 
-  List<Reaction> _reactions;
-  History history;
+  Action _lastAction;
+  List<ActionReaction> _reactions;
 
   Entities() {
     _entityList = new List<T>();
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    _reactions = new List<Reaction>();
-    history = new History();
+
+    _reactions = new List<ActionReaction>();
 
     propagateToSource = false;
     pre = false;
@@ -39,8 +39,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    _reactions = new List<Reaction>();
-    history = new History();
+
+    _reactions = new List<ActionReaction>();
   }
 
   Entities<T> newEntities() => new Entities.of(_concept);
@@ -65,6 +65,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   int get length() => count;
 
   bool get empty() => _entityList.isEmpty();
+
+  Action get lastAction() => _lastAction;
 
   T last() {
     return _entityList.last();
@@ -169,7 +171,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       action.entities = this;
       action.entity = entity;
       action.description = 'Entities.add $entity.';
-      history.add(action);
+      _lastAction = action;
       notifyReactions(action);
       return true;
     }
@@ -252,7 +254,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
           action.entities = this;
           action.entity = entity;
           action.description = 'Entities.remove $entity.';
-          history.add(action);
+          _lastAction = action;
           notifyReactions(action);
 
           break;
@@ -400,14 +402,14 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return orderedEntities;
   }
 
-  start(Reaction reaction) => _reactions.add(reaction);
-  cancel(Reaction reaction) {
+  startReaction(ActionReaction reaction) => _reactions.add(reaction);
+  cancelReaction(ActionReaction reaction) {
     int index = _reactions.indexOf(reaction, 0);
     _reactions.removeRange(index, 1);
   }
 
   notifyReactions(Action action) {
-    for (Reaction reaction in _reactions) {
+    for (ActionReaction reaction in _reactions) {
       reaction.react(action);
     }
   }
