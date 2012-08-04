@@ -12,10 +12,12 @@ class Entity<T extends Entity<T>> implements Comparable {
   Map<String, Entities> _childMap;
 
   Action _lastAction;
+  Past _past;
   List<ActionReaction> _reactions;
 
   Entity() {
     _oid = new Oid();
+    _past = new Past();
     _reactions = new List<ActionReaction>();
   }
 
@@ -24,7 +26,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     _attributeMap = new Map<String, Object>();
     _parentMap = new Map<String, Entity>();
     _childMap = new Map<String, Entities>();
-
+    _past = new Past();
     _reactions = new List<ActionReaction>();
 
     for (Attribute a in _concept.attributes) {
@@ -91,6 +93,7 @@ class Entity<T extends Entity<T>> implements Comparable {
   Entity<T> newEntity() => new Entity.of(_concept);
 
   Action get lastAction() => _lastAction;
+  Past get past() => _past;
 
   Oid get oid() => _oid;
 
@@ -182,6 +185,7 @@ class Entity<T extends Entity<T>> implements Comparable {
       _attributeMap[name] = value;
 
       action.after = value;
+      action.state = 'done';
       _lastAction = action;
       notifyReactions(action);
       return true;
@@ -209,6 +213,7 @@ class Entity<T extends Entity<T>> implements Comparable {
       _parentMap[name] = entity;
 
       action.after = entity;
+      action.state = 'done';
       _lastAction = action;
       notifyReactions(action);
       return true;
@@ -237,6 +242,7 @@ class Entity<T extends Entity<T>> implements Comparable {
       _childMap[name] = entities;
 
       action.after = entities;
+      action.state = 'done';
       _lastAction = action;
       notifyReactions(action);
       return true;

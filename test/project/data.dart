@@ -1,9 +1,90 @@
 
+class ProjectActionReaction implements ActionReaction {
+
+  String name;
+  bool reactedOnAdd = false;
+  bool reactedOnUpdate = false;
+
+  var projects;
+
+  ProjectActionReaction(this.name, this.projects);
+
+  addProject(String projectName) {
+    var project = new Project(projects.concept);
+    project.name = projectName;
+
+    projects.startReaction(this);
+    projects.add(project);
+    projects.cancelReaction(this);
+
+    projects.lastAction.undo();
+    projects.lastAction.undo();
+
+    assert(projects.getEntityByAttribute('name', projectName) != null);
+  }
+
+  updateProjectDescription(String projectName, String projectDescription) {
+    var project = projects.getEntityByAttribute('name', projectName);
+    assert(project != null);
+
+    project.startReaction(this);
+    project.description = projectDescription;
+    project.cancelReaction(this);
+  }
+
+  react(Action action) {
+    if (action is EntitiesAction) {
+      Projects ps = action.entities;
+      if (ps.errors.count > 0) {
+        ps.errors.display();
+      } else {
+        ps.display('Projects with Reaction');
+        reactedOnAdd = true;
+      }
+    } else if (action is EntityAction) {
+      Project p = action.entity;
+      print('Dartling Project with After Update Description');
+      print('');
+      p.display();
+      reactedOnUpdate = true;
+    }
+    print('!!! Action Reaction for ${projects.concept.pluralName} by $name !!!');
+    print('');
+    print('$action');
+    print('');
+  }
+
+}
+
+class ProjectPastReaction implements PastReaction {
+
+  Projects projects;
+
+  ProjectPastReaction(this.projects) {
+    projects.past.startReaction(this);
+  }
+
+  reactNoPast() {
+    print('!!! No Past Reaction for ${projects.concept.pluralName} !!!');
+    print('');
+    print('There are no past actions.');
+    print('');
+  }
+
+  reactYesPast() {
+    print('!!! Yes Past Reaction for ${projects.concept.pluralName} !!!');
+    print('');
+    print('There is at least one past action.');
+    print('');
+  }
+
+}
+
 testProjectData() {
   var data;
   var projectCount;
   var dartlingOid;
-  group('Testing', () {
+  group('Testing Project', () {
     setUp(() {
       data = new ProjectData();
 
@@ -163,7 +244,7 @@ testProjectData() {
       var projects = data.projects;
       expect(projects, hasLength(projectCount));
 
-      var reaction = new ProjectReaction('Test Project', projects);
+      var reaction = new ProjectActionReaction('Test Project', projects);
       expect(reaction, isNotNull);
       reaction.addProject('Dartling Documentation');
       expect(projects, hasLength(++projectCount));
@@ -174,11 +255,60 @@ testProjectData() {
       var projects = data.projects;
       expect(projects, hasLength(projectCount));
 
-      var reaction = new ProjectReaction('Test Project', projects);
+      var reaction = new ProjectActionReaction('Test Project', projects);
       expect(reaction, isNotNull);
       reaction.updateProjectDescription('Dartling', 'Developing Dartling.');
       expect(projects, hasLength(projectCount));
       expect(reaction.reactedOnUpdate, isTrue);
+    });
+    test('Project Action with Undo and Redo ', () {
+      var projects = data.projects;
+      expect(projects, hasLength(projectCount));
+      var projectConcept = projects.concept;
+
+      new ProjectPastReaction(projects);
+
+      var product1 = new Project(projectConcept);
+      product1.name = 'Oracle';
+
+      var action1 = new EntitiesAction('add');
+      action1.entities = projects;
+      action1.entity = product1;
+      action1.doit();
+      expect(projects.count, equals(++projectCount));
+
+      var product2 = new Project(projectConcept);
+      product2.name = 'MySql';
+
+      var action2 = new EntitiesAction('add');
+      action2.entities = projects;
+      action2.entity = product2;
+      action2.doit();
+      expect(projects.count, equals(++projectCount));
+      /*
+      action2.undo();
+      expect(projects.count, equals(--projectCount));
+
+      action1.undo();
+      expect(projects.count, equals(--projectCount));
+      */
+      projects.past.display();
+
+      projects.past.undo();
+      expect(projects.count, equals(--projectCount));
+      projects.past.display();
+
+      projects.past.undo();
+      expect(projects.count, equals(--projectCount));
+      projects.past.display();
+
+      projects.past.redo();
+      expect(projects.count, equals(++projectCount));
+      projects.past.display();
+
+      projects.past.redo();
+      expect(projects.count, equals(++projectCount));
+      projects.past.display();
     });
 
   });

@@ -1,11 +1,11 @@
 
-class Data {
+class ModelData {
 
   Model model;
 
   Map<String, Entities> _entryConceptMap;
 
-  Data(this.model) {
+  ModelData(this.model) {
     _entryConceptMap = new Map<String, Entities>();
     model.entryConcepts.forEach((c)
       {var entryEntities = new Entities.of(c);

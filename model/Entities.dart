@@ -20,6 +20,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   Errors errors;
 
   Action _lastAction;
+  Past _past;
   List<ActionReaction> _reactions;
 
   Entities() {
@@ -27,7 +28,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-
+    _past = new Past();
     _reactions = new List<ActionReaction>();
 
     propagateToSource = false;
@@ -39,7 +40,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-
+    _past = new Past();
     _reactions = new List<ActionReaction>();
   }
 
@@ -67,6 +68,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   bool get empty() => _entityList.isEmpty();
 
   Action get lastAction() => _lastAction;
+  Past get past() => _past;
 
   T last() {
     return _entityList.last();
@@ -171,6 +173,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       action.entities = this;
       action.entity = entity;
       action.description = 'Entities.add $entity.';
+      action.state = 'done';
       _lastAction = action;
       notifyReactions(action);
       return true;
@@ -254,6 +257,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
           action.entities = this;
           action.entity = entity;
           action.description = 'Entities.remove $entity.';
+          action.state = 'done';
           _lastAction = action;
           notifyReactions(action);
 

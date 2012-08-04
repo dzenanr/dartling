@@ -36,68 +36,56 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import('dart:json');
 #import('dart:uri');
 
-#source('data/project/Data.dart');
-#source('data/project/Project.dart');
-#source('data/project/Projects.dart');
-#source('data/user/Data.dart');
-#source('data/user/Member.dart');
-#source('data/user/Members.dart');
-#source('data/web/Categories.dart');
-#source('data/web/Category.dart');
-#source('data/web/Data.dart');
-#source('data/web/WebLink.dart');
-#source('data/web/WebLinks.dart');
+#source('data/link/categories.dart');
+#source('data/link/data.dart');
+#source('data/link/webLinks.dart');
+#source('data/project/data.dart');
+#source('data/project/projects.dart');
+#source('data/user/data.dart');
+#source('data/user/members.dart');
 
-#source('exception/error.dart');
-#source('exception/s.dart');
+#source('event/reactions.dart');
+#source('event/actions.dart');
+
+#source('exception/errors.dart');
+#source('exception/exceptions.dart');
 
 #source('guid/Oid.dart');
 
-#source('meta/Attribute.dart');
-#source('meta/Attributes.dart');
-#source('meta/Child.dart');
-#source('meta/Children.dart');
-#source('meta/Concept.dart');
-#source('meta/Concepts.dart');
-#source('meta/Domain.dart');
-#source('meta/Domains.dart');
-#source('meta/Model.dart');
-#source('meta/Models.dart');
-#source('meta/Neighbor.dart');
-#source('meta/Parent.dart');
-#source('meta/Parents.dart');
-#source('meta/Property.dart');
-#source('meta/Type.dart');
-#source('meta/Types.dart');
+#source('meta/attributes.dart');
+#source('meta/children.dart');
+#source('meta/concepts.dart');
+#source('meta/domains.dart');
+#source('meta/models.dart');
+#source('meta/neighbor.dart');
+#source('meta/parents.dart');
+#source('meta/property.dart');
+#source('meta/types.dart');
 
-#source('model/Data.dart');
+#source('model/data.dart');
 #source('model/Entities.dart');
 #source('model/Entity.dart');
 #source('model/Id.dart');
 
-#source('operation/reaction.dart');
-#source('operation/action.dart');
-
+#source('test/link/data.dart');
+#source('test/link/model.dart');
 #source('test/lastGroupTest.dart');
 #source('test/lastSingleTest.dart');
 #source('test/project/data.dart');
-#source('test/project/reaction.dart');
 #source('test/user/data.dart');
-#source('test/user/reaction.dart');
-#source('test/web/data.dart');
-#source('test/web/model.dart');
 
 #source('transfer/json.dart');
 
 allTests() {
   testProjectData();
   testUserData();
-  testWebData();
-  testWebModel();
+  testLinkData();
+  testLinkModel();
   //lastSingleTest();
   //lastGroupTest();
 }
 
 void main() {
+  lastSingleTest();
   allTests();
 }

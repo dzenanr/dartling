@@ -1,4 +1,23 @@
 
+class MemberReaction implements ActionReaction {
+
+  bool reactedOnAdd = false;
+  bool reactedOnUpdate = false;
+
+  react(Action action) {
+    Members ms;
+    Member m;
+    if (action is EntitiesAction) {
+      //ms = action.entities;
+      reactedOnAdd = true;
+    } else if (action is EntityAction) {
+      //m = action.entity;
+      reactedOnUpdate = true;
+    }
+  }
+
+}
+
 testUserData() {
   var data;
   var memberCount;
@@ -142,7 +161,7 @@ testUserData() {
       expect(members.errors.list[0].category == 'required');
       expect(members.errors.list[1].category == 'required');
       expect(members.errors.list[2].category == 'unique');
-      members.errors.display('Add Member Required and Unique Error');
+      //members.errors.display('Add Member Required and Unique Error');
     });
     test('Select Members by Attribute then Remove', () {
       var members = data.members;
@@ -334,7 +353,7 @@ testUserData() {
       claudeb.email = 'claude.begin@gmail.com';
       members.add(claudeb);
       expect(members.count == ++memberCount);
-      members.display('After Add');
+      members.display('After Add on Members');
 
       var undo = members.lastAction.undo();
       expect(members.count == --memberCount);
@@ -383,6 +402,28 @@ testUserData() {
       member.about = about;
       expect(reaction.reactedOnUpdate, isTrue);
       member.cancelReaction(reaction);
+    });
+    test('Add Member Pre Validation', () {
+      var members = data.members;
+      expect(members.count, equals(memberCount));
+
+      var memberConcept = data.memberConcept;
+      expect(memberConcept, isNotNull);
+      expect(memberConcept.attributes, isNot(isEmpty));
+
+      var robertm = new Member(memberConcept);
+      expect(robertm, isNotNull);
+      robertm.code = 'robertm';
+      robertm.password = 'rvvm3w';
+      robertm.firstName = 'Robert';
+      robertm.lastName = 'Mantha';
+      robertm.email = 'robertm@gmail.com';
+      robertm.role = 'prof';
+      members.add(robertm);
+      expect(members.count, equals(memberCount));
+      expect(members.errors.count, equals(1));
+      expect(members.errors.list[0].category, equals('pre'));
+      members.errors.display('Add Member Pre Error');
     });
 
   });

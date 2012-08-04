@@ -2,8 +2,6 @@ Dartling Schedule
 
 To do
 
-more tests
-
 Uri validation for well formed uri (not done in Uri)
   ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
   http://msdn.microsoft.com/en-us/library/system.uri.iswellformedoriginalstring.aspx
@@ -17,13 +15,21 @@ zip code type
 persistance
 
 logging
-model session, past actions, transactions, undo
+model session, transactions
 attribute validations (type, length)?
 get random entity
 post
 i18n
 indexes (http://www.mattfleming.com/node/192)
 
+
+2012-08-04, 17:59
+operation folder -> event
+Action.execute -> doit
+move plural name classes to single name class files
+rename dart files to plural name except for Entity and Id (and Entities)
+PastReaction
+pre specific validation
 
 2012-08-03, 16:57
 Reaction -> ActionReaction
