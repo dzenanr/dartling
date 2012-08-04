@@ -57,9 +57,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('meta/concepts.dart');
 #source('meta/domains.dart');
 #source('meta/models.dart');
-#source('meta/neighbor.dart');
+#source('meta/Neighbor.dart');
 #source('meta/parents.dart');
-#source('meta/property.dart');
+#source('meta/Property.dart');
 #source('meta/types.dart');
 
 #source('model/data.dart');
@@ -86,6 +86,6 @@ allTests() {
 }
 
 void main() {
-  lastSingleTest();
+  //lastSingleTest();
   allTests();
 }
