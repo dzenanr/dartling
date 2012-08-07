@@ -22,7 +22,7 @@ class Entry implements SourceOfActionReaction {
 
   Data getData(String code) => _dataMap[code];
 
-  DomainSession getNewSession() {
+  DomainSession newSession() {
     return new DomainSession(this);
   }
 

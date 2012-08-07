@@ -25,7 +25,7 @@ class ProjectActionReaction implements ActionReaction {
   var projects;
 
   ProjectActionReaction(this.entry, this.projects) {
-    session = entry.getNewSession();
+    session = entry.newSession();
   }
 
   addProject(String projectName) {
@@ -37,11 +37,11 @@ class ProjectActionReaction implements ActionReaction {
     action.doit();
     entry.cancelActionReaction(this);
 
-    assert(projects.getEntityByAttribute('name', projectName) != null);
+    assert(projects.findByAttribute('name', projectName) != null);
   }
 
   updateProjectDescription(String projectName, String projectDescription) {
-    var project = projects.getEntityByAttribute('name', projectName);
+    var project = projects.findByAttribute('name', projectName);
     assert(project != null);
 
     entry.startActionReaction(this);
@@ -80,7 +80,7 @@ class ProjectPastReaction implements PastReaction {
   var entry;
 
   ProjectPastReaction(this.entry) {
-    entry.getNewSession().past.startPastReaction(this);
+    entry.newSession().past.startPastReaction(this);
   }
 
   reactNoPast() {
@@ -107,7 +107,7 @@ testProjectData() {
     setUp(() {
       entry = fromJsonToProjectEntry();
       data = entry.data;
-      session = entry.newSession;
+      session = entry.newSession();
 
       projectConcept = data.projectConcept;
       expect(projectConcept, isNotNull);
@@ -176,24 +176,24 @@ testProjectData() {
       programmingProjects.display('Programming Entities After Add');
       projects.display('All Projects');
     });
-    test('Get Project by Oid', () {
-      var project = projects.getEntity(dartlingOid);
+    test('Find Project by Oid', () {
+      var project = projects.find(dartlingOid);
       expect(project, isNotNull);
       expect(project.name == 'Dartling');
     });
-    test('Get Project by Id', () {
+    test('Find Project by Id', () {
       Id id = new Id(data.projectConcept);
       expect(id.count == 1);
       expect(id.parentCount == 0);
       expect(id.attributeCount == 1);
       var searchName = 'Dartling';
       id.setAttribute('name', searchName);
-      var project = projects.getEntityById(id);
-      //Project project = projects.getEntityById(id);
+      var project = projects.findById(id);
+      //Project project = projects.findById(id);
       expect(project, isNotNull);
       expect(project.name == searchName);
     });
-    test('Get Project by Name Id', () {
+    test('Find Project by Name Id', () {
       var searchName = 'Dartling';
       var project = projects.getProjectByNameId(searchName);
       expect(project, isNotNull);
@@ -229,7 +229,7 @@ testProjectData() {
       expect(copiedProjects, isNot(equals(projects)));
 
       copiedProjects.forEach((cp) =>
-          expect(cp, isNot(same(projects.getEntityById(cp.id)))));
+          expect(cp, isNot(same(projects.findById(cp.id)))));
 
       copiedProjects.display('Copied Projects');
     });

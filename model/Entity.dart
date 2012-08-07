@@ -108,7 +108,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
-    Attribute a = _concept.attributes.getEntityByCode(name);
+    Attribute a = _concept.attributes.findByCode(name);
     if (a.type.base == 'Date') {
       try {
         setAttribute(name, new Date.fromString(string));
@@ -162,7 +162,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
-    Attribute attribute = _concept.attributes.getEntityByCode(name);
+    Attribute attribute = _concept.attributes.findByCode(name);
     if (!attribute.derive && attribute.update) {
       _attributeMap[name] = value;
       return true;
@@ -178,7 +178,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
-    Parent parent = _concept.parents.getEntityByCode(name);
+    Parent parent = _concept.parents.findByCode(name);
     if (parent.update) {
       _parentMap[name] = entity;
       return true;
@@ -194,7 +194,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
-    Child child = _concept.children.getEntityByCode(name);
+    Child child = _concept.children.findByCode(name);
     if (child.update) {
       _childMap[name] = entities;
       return true;

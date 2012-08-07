@@ -5,7 +5,7 @@ class ProjectEntry extends Entry {
 
   Map<String, Data> newData() {
     var data = new Map<String, Data>();
-    var model = domain.models.getEntityByCode('default');
+    var model = domain.models.findByCode('default');
     data[model.code] = new ProjectData(model, this);
     return data;
   }
@@ -22,7 +22,7 @@ class ProjectData extends Data {
 
   Map<String, Entities> newEntries() {
     var entries = new Map<String, Entities>();
-    var concept = model.concepts.getEntityByCode('Project');
+    var concept = model.concepts.findByCode('Project');
     entries[concept.code] = new Projects(concept);
     return entries;
   }

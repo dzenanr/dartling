@@ -5,7 +5,7 @@ class LinkEntry extends Entry {
 
   Map<String, Data> newData() {
     var data = new Map<String, Data>();
-    var model = domain.models.getEntityByCode('default');
+    var model = domain.models.findByCode('default');
     data[model.code] = new LinkData(model, this);
     return data;
   }
@@ -22,7 +22,7 @@ class LinkData extends Data {
 
   Map<String, Entities> newEntries() {
     var entries = new Map<String, Entities>();
-    var concept = model.concepts.getEntityByCode('Category');
+    var concept = model.concepts.findByCode('Category');
     entries[concept.code] = new Categories(concept);
     return entries;
   }
@@ -30,7 +30,7 @@ class LinkData extends Data {
   Categories get categories() => getEntry('Category');
 
   Concept get categoryConcept() => categories.concept;
-  Concept get webLinkConcept() => model.concepts.getEntityByCode('WebLink');
+  Concept get webLinkConcept() => model.concepts.findByCode('WebLink');
 
 }
 

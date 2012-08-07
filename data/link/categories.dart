@@ -10,13 +10,13 @@ class Categories extends Entities<Category> {
 class Category extends Entity<Category> {
 
   Category(Concept concept) : super.of(concept) {
-    Concept webLinkConcept = concept.model.concepts.getEntityByCode('WebLink');
+    Concept webLinkConcept = concept.model.concepts.findByCode('WebLink');
     setChild('webLinks', new WebLinks(webLinkConcept));
   }
 
   Category.withId(Concept concept, String name) : super.of(concept) {
     setAttribute('name', name);
-    Concept webLinkConcept = concept.model.concepts.getEntityByCode('WebLink');
+    Concept webLinkConcept = concept.model.concepts.findByCode('WebLink');
     setChild('webLinks', new WebLinks(webLinkConcept));
   }
 

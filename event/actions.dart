@@ -47,7 +47,7 @@ abstract class EntitiesAction extends Action {
         done = entities.remove(entity);
       } else {
         throw new ActionException(
-        'Allowed actions on entities for execute are add or remove.');
+        'Allowed actions on entities for doit are add or remove.');
       }
       if (done) {
         state = 'done';
@@ -56,9 +56,6 @@ abstract class EntitiesAction extends Action {
           session.entry.notifyActionReactions(this);
         }
       }
-    } else {
-      throw new ActionException(
-      'The doit action on entities is allowed only for the started state.');
     }
     return done;
   }
@@ -80,9 +77,6 @@ abstract class EntitiesAction extends Action {
           session.entry.notifyActionReactions(this);
         }
       }
-    } else {
-      throw new ActionException(
-      'The undo action on entities is allowed only for the done or redone state.');
     }
     return undone;
   }
@@ -104,9 +98,6 @@ abstract class EntitiesAction extends Action {
           session.entry.notifyActionReactions(this);
         }
       }
-    } else {
-      throw new ActionException(
-      'The redo action on entities is allowed only for the undone state.');
     }
     return redone;
   }
@@ -154,7 +145,7 @@ abstract class EntityAction extends Action {
         done = entity.setChild(property, after);
       } else {
         throw new ActionException(
-          'Allowed actions on entity for execute are set attribute, parent or child.');
+          'Allowed actions on entity for doit are set attribute, parent or child.');
       }
       if (done) {
         state = 'done';
@@ -163,9 +154,6 @@ abstract class EntityAction extends Action {
           session.entry.notifyActionReactions(this);
         }
       }
-    } else {
-      throw new ActionException(
-      'The doit action on entity is allowed only for the started state.');
     }
     return done;
   }
@@ -189,9 +177,6 @@ abstract class EntityAction extends Action {
           session.entry.notifyActionReactions(this);
         }
       }
-    } else {
-      throw new ActionException(
-      'The undo action on entity is allowed only for the done or redone state.');
     }
     return undone;
   }
@@ -215,9 +200,6 @@ abstract class EntityAction extends Action {
           session.entry.notifyActionReactions(this);
         }
       }
-    } else {
-      throw new ActionException(
-      'The redo action on entity is allowed only for the undone state.');
     }
     return redone;
   }
@@ -279,11 +261,8 @@ class Transaction extends Action {
         session.past.add(this);
         session.entry.notifyActionReactions(this);
       } else {
-        _actions.undoAll();
+        var undone = _actions.undoAll();
       }
-    } else {
-      throw new ActionException(
-      'The transaction doit is allowed only for the started state.');
     }
     return done;
   }
@@ -298,9 +277,6 @@ class Transaction extends Action {
       } else {
         _actions.doAll();
       }
-    } else {
-      throw new ActionException(
-      'The transaction undo is allowed only for the done or redone state.');
     }
     return undone;
   }
@@ -315,9 +291,6 @@ class Transaction extends Action {
       } else {
         _actions.undoAll();
       }
-    } else {
-      throw new ActionException(
-      'The transaction redo is allowed only for the undone state.');
     }
     return redone;
   }
@@ -403,15 +376,14 @@ class Past implements SourceOfPastReaction {
   }
 
   bool doAll() {
-    bool allExecuted = true;
+    bool allDone = true;
     cursor = 0;
     while (cursor < _actions.length) {
       if (!doit()) {
-        allExecuted = false;
-        break;
+        allDone = false;
       }
     }
-    return allExecuted;
+    return allDone;
   }
 
   bool undoAll() {
@@ -419,7 +391,6 @@ class Past implements SourceOfPastReaction {
     while (cursor > 0) {
       if (!undo()) {
         allUndone = false;
-        break;
       }
     }
     return allUndone;
@@ -431,7 +402,6 @@ class Past implements SourceOfPastReaction {
     while (cursor < _actions.length) {
       if (!redo()) {
         allRedone = false;
-        break;
       }
     }
     return allRedone;

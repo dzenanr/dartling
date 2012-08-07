@@ -44,7 +44,7 @@ testLinkData() {
     setUp(() {
       entry = fromJsonToLinkEntry();
       data = entry.data;
-      session = entry.newSession;
+      session = entry.newSession();
 
       categoryConcept = data.categoryConcept;
       expect(categoryConcept, isNotNull);
@@ -140,10 +140,10 @@ testLinkData() {
       categories.clear();
       expect(categories.count, equals(0));
     });
-    test('Get Category and Web Link by Id', () {
+    test('Find Category and Web Link by Id', () {
       Id categoryId = new Id(data.categoryConcept);
       categoryId.setAttribute('name', 'Dart');
-      Category dartCategory = categories.getEntityById(categoryId);
+      Category dartCategory = categories.findById(categoryId);
       expect(dartCategory, isNotNull);
       expect(dartCategory.name, equals('Dart'));
 
@@ -152,7 +152,7 @@ testLinkData() {
       Id dartHomeId = new Id(data.webLinkConcept);
       dartHomeId.setParent('category', dartCategory);
       dartHomeId.setAttribute('name', 'Dart Home');
-      WebLink dartHomeWebLink = dartWebLinks.getEntityById(dartHomeId);
+      WebLink dartHomeWebLink = dartWebLinks.findById(dartHomeId);
       expect(dartHomeWebLink, isNotNull);
       expect(dartHomeWebLink.name, equals('Dart Home'));
     });
@@ -169,7 +169,7 @@ testLinkData() {
         'Categories Ordered By Id (code not used, id is name)');
     });
     test('Order Dart Web Links by Name', () {
-      Category dartCategory = categories.getEntityByAttribute('name', 'Dart');
+      Category dartCategory = categories.findByAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
       WebLinks dartWebLinks = dartCategory.webLinks;
       expect(dartWebLinks.count, equals(dartCategoryWebLinkCount));
@@ -196,7 +196,7 @@ testLinkData() {
       categories.display('Categories Including Web Framework');
     });
     test('New WebLink No Category Error', () {
-      Category dartCategory = categories.getEntityByAttribute('name', 'Dart');
+      Category dartCategory = categories.findByAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
 
       var dartHomeWebLink = new WebLink(webLinkConcept);
@@ -252,7 +252,7 @@ testLinkData() {
       }
     });
     test('No Concept Defined for Errors', () {
-      Category dartCategory = categories.getEntityByAttribute('name', 'Dart');
+      Category dartCategory = categories.findByAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
 
       try {
@@ -302,17 +302,50 @@ testLinkData() {
       transaction.doit();
       categoryCount = categoryCount + 2;
       expect(categories.count, equals(categoryCount));
-      categories.display();
+      categories.display('Transaction Done');
 
       session.past.undo();
       categoryCount = categoryCount - 2;
       expect(categories.count, equals(categoryCount));
-      categories.display();
+      categories.display('Transaction Undone');
 
       session.past.redo();
       categoryCount = categoryCount + 2;
       expect(categories.count, equals(categoryCount));
-      categories.display();
+      categories.display('Transaction Redone');
+    });
+    test('Undo and Redo Transaction with Id Error', () {
+      var webFrameworkCategory =
+          new Category.withId(categoryConcept, 'Web Framework');
+      expect(webFrameworkCategory, isNotNull);
+      expect(webFrameworkCategory.webLinks.count, equals(0));
+
+      var action1 = new AddAction(session, categories, webFrameworkCategory);
+
+      var dbCategory = new Category.withId(categoryConcept, 'Dart');
+      expect(dbCategory, isNotNull);
+      expect(dbCategory.webLinks.count, equals(0));
+
+      var action2 = new AddAction(session, categories, dbCategory);
+
+      var transaction = new Transaction(
+        'two adds on categories, with an error on the second', session);
+      transaction.add(action1);
+      transaction.add(action2);
+      var done = transaction.doit();
+      expect(categories.count, equals(categoryCount));
+      categories.display('Transaction (with Id Error) Done');
+
+      if (done) {
+        var undone = session.past.undo();
+        expect(categories.count, equals(categoryCount));
+        categories.display('Transaction (with Id Error) Undone');
+        if (undone) {
+          session.past.redo();
+          expect(categories.count, equals(categoryCount));
+          categories.display('Transaction (with Id Error) Redone');
+        }
+      }
     });
 
   });

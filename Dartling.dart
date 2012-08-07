@@ -72,16 +72,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #source('test/link/data.dart');
 #source('test/link/model.dart');
-#source('test/lastGroupTest.dart');
-#source('test/lastSingleTest.dart');
 #source('test/project/data.dart');
 #source('test/user/data.dart');
+#source('test/lastGroupTest.dart');
+#source('test/lastSingleTest.dart');
 
 #source('transfer/json.dart');
-
-start() {
-
-}
 
 allTests() {
   testProjectData();
@@ -93,7 +89,5 @@ allTests() {
 }
 
 void main() {
-  //lastSingleTest();
-  testLinkData();
-  //allTests();
+  allTests();
 }

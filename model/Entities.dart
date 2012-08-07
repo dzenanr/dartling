@@ -126,13 +126,13 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     }
 
     // uniqueness validation
-    if (entity.code != null && getEntityByCode(entity.code) != null) {
+    if (entity.code != null && findByCode(entity.code) != null) {
       Error error = new Error('unique');
       error.message = '${entity.concept.code}.code is not unique.';
       errors.add(error);
       validation = false;
     }
-    if (entity.id != null && getEntityById(entity.id) != null) {
+    if (entity.id != null && findById(entity.id) != null) {
       Error error = new Error('unique');
       error.message =
           '${entity.concept.code}.id ${entity.id.toString()} is not unique.';
@@ -239,19 +239,23 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return false;
   }
 
-  T getEntity(Oid oid) {
+  T find(Oid oid) {
     return _oidEntityMap[oid];
   }
 
-  T getEntityByCode(String code) {
+  T findByCode(String code) {
     return _codeEntityMap[code];
   }
 
-  T getEntityById(Id id) {
+  T findById(Id id) {
     return _idEntityMap[id.toString()];
   }
 
-  T getEntityByAttribute(String code, Object attribute) {
+  T findByAttributeId(String code, Object attribute) {
+    return findById(new Id(concept)..setAttribute('code', attribute));
+  }
+
+  T findByAttribute(String code, Object attribute) {
     var selectionEntities = selectByAttribute(code, attribute);
     if (selectionEntities.count > 0) {
       return selectionEntities.list[0];

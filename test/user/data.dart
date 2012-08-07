@@ -57,13 +57,13 @@ testUserData() {
     setUp(() {
       entry = fromJsonToUserEntry();
       data = entry.data;
-      session = entry.newSession;
+      session = entry.newSession();
 
       memberConcept = data.memberConcept;
       expect(memberConcept, isNotNull);
       expect(memberConcept.attributes, isNot(isEmpty));
       expect(memberConcept.attributes.count == 9);
-      memberConcept.attributes.getEntityByCode('password').sensitive = true;
+      memberConcept.attributes.findByCode('password').sensitive = true;
 
       memberCount = 0;
 
@@ -105,7 +105,7 @@ testUserData() {
       expect(members.count, equals(++memberCount));
       dzenanOid = dzenan.oid;
       expect(dzenanOid, isNotNull);
-      var dr = members.getEntity(dzenanOid);
+      var dr = members.find(dzenanOid);
       expect(dr, isNotNull);
 
       var charlem = new Member(memberConcept);
@@ -188,7 +188,7 @@ testUserData() {
       expect(selectedMembers.count == 2);
       expect(members.count == memberCount);
       expect(dzenanOid, isNotNull);
-      var dzenan = selectedMembers.getEntity(dzenanOid);
+      var dzenan = selectedMembers.find(dzenanOid);
       expect(dzenan, isNotNull);
       selectedMembers.remove(dzenan);
       expect(selectedMembers.count == 1);
@@ -299,7 +299,7 @@ testUserData() {
       expect(members.count, equals(++memberCount));
     });
     test('Update Member Undo', () {
-      var acr = members.getEntityByCode('acr');
+      var acr = members.findByCode('acr');
       expect(acr, isNotNull);
 
       var action =

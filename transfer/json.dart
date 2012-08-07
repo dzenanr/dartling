@@ -35,7 +35,7 @@ Domain fromMagicBoxes(String json) {
           attribute.init = itemInit;
         }
         String itemType = item["type"];
-        Type type = domain.types.getEntityByCode(itemType);
+        Type type = domain.types.findByCode(itemType);
         if (type != null) {
           attribute.type = type;
         }
@@ -47,8 +47,8 @@ Domain fromMagicBoxes(String json) {
     String box1Name = line["box1Name"];
     String box2Name = line["box2Name"];
 
-    Concept concept1 = model.concepts.getEntityByCode(box1Name);
-    Concept concept2 = model.concepts.getEntityByCode(box2Name);
+    Concept concept1 = model.concepts.findByCode(box1Name);
+    Concept concept2 = model.concepts.findByCode(box2Name);
     if (concept1 == null) {
       throw new NullPointerException(
         'Line concept is missing for the $box1Name box.');
