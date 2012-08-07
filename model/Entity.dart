@@ -11,14 +11,8 @@ class Entity<T extends Entity<T>> implements Comparable {
   Map<String, Entity> _parentMap;
   Map<String, Entities> _childMap;
 
-  Action _lastAction;
-  Past _past;
-  List<ActionReaction> _reactions;
-
   Entity() {
     _oid = new Oid();
-    _past = new Past();
-    _reactions = new List<ActionReaction>();
   }
 
   Entity.of(this._concept) {
@@ -26,8 +20,6 @@ class Entity<T extends Entity<T>> implements Comparable {
     _attributeMap = new Map<String, Object>();
     _parentMap = new Map<String, Entity>();
     _childMap = new Map<String, Entities>();
-    _past = new Past();
-    _reactions = new List<ActionReaction>();
 
     for (Attribute a in _concept.attributes) {
       if (a.init != null) {
@@ -91,9 +83,6 @@ class Entity<T extends Entity<T>> implements Comparable {
   }
 
   Entity<T> newEntity() => new Entity.of(_concept);
-
-  Action get lastAction() => _lastAction;
-  Past get past() => _past;
 
   Oid get oid() => _oid;
 
@@ -175,19 +164,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     }
     Attribute attribute = _concept.attributes.getEntityByCode(name);
     if (!attribute.derive && attribute.update) {
-      var action = new EntityAction('set');
-      action.category = 'attribute';
-      action.entity = this;
-      action.property = name;
-      action.before = getAttribute(name);
-      action.description = 'Entity.setAttribute $name with $value value.';
-
       _attributeMap[name] = value;
-
-      action.after = value;
-      action.state = 'done';
-      _lastAction = action;
-      notifyReactions(action);
       return true;
     } else {
       String msg = '${_concept.code}.${attribute.code} is not updateable.';
@@ -203,19 +180,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     }
     Parent parent = _concept.parents.getEntityByCode(name);
     if (parent.update) {
-      var action = new EntityAction('set');
-      action.category = 'parent';
-      action.entity = this;
-      action.property = name;
-      action.before = getParent(name);
-      action.description = 'Entity.setParent $name with $entity entity.';
-
       _parentMap[name] = entity;
-
-      action.after = entity;
-      action.state = 'done';
-      _lastAction = action;
-      notifyReactions(action);
       return true;
     } else {
       String msg = '${_concept.code}.${parent.code} is not updateable.';
@@ -231,20 +196,7 @@ class Entity<T extends Entity<T>> implements Comparable {
     }
     Child child = _concept.children.getEntityByCode(name);
     if (child.update) {
-      var action = new EntityAction('set');
-      action.category = 'child';
-      action.entity = this;
-      action.property = name;
-      action.before = getChild(name);
-      action.description =
-          'Entity.setChild $name with ${entities.count} entities.';
-
       _childMap[name] = entities;
-
-      action.after = entities;
-      action.state = 'done';
-      _lastAction = action;
-      notifyReactions(action);
       return true;
     } else {
       String msg = '${_concept.code}.${child.code} is not updateable.';
@@ -369,18 +321,6 @@ class Entity<T extends Entity<T>> implements Comparable {
         throw new IdException(msg);
       }
       return id.compareTo(entity.id);
-    }
-  }
-
-  startReaction(ActionReaction reaction) => _reactions.add(reaction);
-  cancelReaction(ActionReaction reaction) {
-    int index = _reactions.indexOf(reaction, 0);
-    _reactions.removeRange(index, 1);
-  }
-
-  notifyReactions(Action action) {
-    for (ActionReaction reaction in _reactions) {
-      reaction.react(action);
     }
   }
 

@@ -15,12 +15,33 @@ zip code type
 persistance
 
 logging
-model session, transactions
+model session
 attribute validations (type, length)?
 get random entity
 post
 i18n
 indexes (http://www.mattfleming.com/node/192)
+
+
+2012-08-05, 00:10
+domain entry
+domain session
+model data
+specific entry and model
+add action, remove action, set attribute action, set parent action, set child action
+file renaming
+
+
+2012-08-05, 20:33
+transactions (not tested)
+domain data with past (for transactions and actions)
+domain data for action reaction notifications
+no more past on entities and entity
+no more action reaction notifications on entities and entity
+no more last action in entities and entity
+only doit action or transaction goes to past
+model data
+
 
 
 2012-08-04, 17:59

@@ -36,7 +36,7 @@ testLinkModel() {
 
   // Data
 
-  var entries = new ModelData(model);
+  var entries = new Data(model);
   Entities categories = entries.getEntry('Category');
   assert(categories.count == 0);
 

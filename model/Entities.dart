@@ -19,17 +19,11 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   bool pre = true;
   Errors errors;
 
-  Action _lastAction;
-  Past _past;
-  List<ActionReaction> _reactions;
-
   Entities() {
     _entityList = new List<T>();
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    _past = new Past();
-    _reactions = new List<ActionReaction>();
 
     propagateToSource = false;
     pre = false;
@@ -40,8 +34,6 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    _past = new Past();
-    _reactions = new List<ActionReaction>();
   }
 
   Entities<T> newEntities() => new Entities.of(_concept);
@@ -66,9 +58,6 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   int get length() => count;
 
   bool get empty() => _entityList.isEmpty();
-
-  Action get lastAction() => _lastAction;
-  Past get past() => _past;
 
   T last() {
     return _entityList.last();
@@ -168,14 +157,6 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       if (sourceEntities != null && propagateToSource) {
         sourceEntities.add(entity);
       }
-
-      var action = new EntitiesAction('add');
-      action.entities = this;
-      action.entity = entity;
-      action.description = 'Entities.add $entity.';
-      action.state = 'done';
-      _lastAction = action;
-      notifyReactions(action);
       return true;
     }
     return false;
@@ -194,11 +175,6 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     _oidEntityMap.clear();
     _codeEntityMap.clear();
     _idEntityMap.clear();
-
-    var action = new EntitiesAction('empty');
-    action.entities = this;
-    action.description = 'Entities.empty.';
-    notifyReactions(action);
   }
 
   bool preRemove(T entity) {
@@ -252,15 +228,6 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
           if (entity.concept != null && entity.id != null) {
             _idEntityMap.remove(entity.id.toString());
           }
-
-          var action = new EntitiesAction('remove');
-          action.entities = this;
-          action.entity = entity;
-          action.description = 'Entities.remove $entity.';
-          action.state = 'done';
-          _lastAction = action;
-          notifyReactions(action);
-
           break;
         }
       }
@@ -404,18 +371,6 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     orderedEntities.propagateToSource = false;
     orderedEntities.sourceEntities = this;
     return orderedEntities;
-  }
-
-  startReaction(ActionReaction reaction) => _reactions.add(reaction);
-  cancelReaction(ActionReaction reaction) {
-    int index = _reactions.indexOf(reaction, 0);
-    _reactions.removeRange(index, 1);
-  }
-
-  notifyReactions(Action action) {
-    for (ActionReaction reaction in _reactions) {
-      reaction.react(action);
-    }
   }
 
   /**

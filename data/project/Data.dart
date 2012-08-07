@@ -1,29 +1,34 @@
 
-class ProjectData {
+class ProjectEntry extends Entry {
 
-  Concept projectConcept;
+  ProjectEntry(Domain domain) : super(domain);
 
-  Projects projects;
-
-  /**
-   *  || Project
-   *  id name
-   *  at description
-   */
-  var _json = '''
-      {"width":990,"lines":[],"height":580,"boxes":[{"entry":true,
-      "name":"Project","x":179,"y":226,"width":120,"height":120,
-      "items":[{"sequence":10,"category":"identifier","name":"name",
-      "type":"String","init":""},{"sequence":20,"category":"attribute",
-      "name":"description","type":"String","init":""}]}]}
-  ''';
-
-  ProjectData() {
-    Domain domain = fromMagicBoxes(_json);
-    Model model = domain.model;
-    projectConcept = model.concepts.getEntityByCode('Project');
-    projectConcept.pluralName = 'Projects';
-    projects = new Projects(projectConcept);
+  Map<String, Data> newData() {
+    var data = new Map<String, Data>();
+    var model = domain.models.getEntityByCode('default');
+    data[model.code] = new ProjectData(model, this);
+    return data;
   }
+
+  ProjectData get data() => getData('default');
+
+}
+
+class ProjectData extends Data {
+
+  ProjectEntry entry;
+
+  ProjectData(Model model, this.entry) : super(model);
+
+  Map<String, Entities> newEntries() {
+    var entries = new Map<String, Entities>();
+    var concept = model.concepts.getEntityByCode('Project');
+    entries[concept.code] = new Projects(concept);
+    return entries;
+  }
+
+  Projects get projects() => getEntry('Project');
+
+  Concept get projectConcept() => projects.concept;
 
 }

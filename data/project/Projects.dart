@@ -5,6 +5,10 @@ class Projects extends Entities<Project> {
 
   Projects newEntities() => new Projects(concept);
 
+  Project getProjectByNameId(String name) {
+    return getEntityById(new Id(concept)..setAttribute('name', name));
+  }
+
 }
 
 class Project extends Entity<Project> {
@@ -34,7 +38,5 @@ class Project extends Entity<Project> {
   int compareName(Project other) {
     return name.compareTo(other.name);
   }
-
-
 
 }

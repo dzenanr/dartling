@@ -1,17 +1,44 @@
 
+UserEntry fromJsonToUserEntry() {
+  /**
+   *  || Member (code)
+   *  id email : String
+   *  rq firstName : String
+   *  rq lastName : String
+   *  rq started : Date (init : now)
+   *  at receiveEmail : bool (init : false)
+   *  rq password : String
+   *  rq role : String (init : regular)
+   *  at karma : num (init : 1)
+   *  at about : String
+   */
+  var _json = '''
+      {"width":990,"lines":[],"height":580,"boxes":[{"entry":true,"name":"Member",
+      "x":207,"y":160,"width":100,"height":180,"items":[{"sequence":10,
+      "category":"identifier","name":"email","type":"Email","init":""},
+      {"sequence":20,"category":"required","name":"firstName","type":"String",
+      "init":""},{"sequence":30,"category":"required","name":"lastName",
+      "type":"String","init":""},{"sequence":40,"category":"required",
+      "name":"started","type":"Date","init":"now"},{"sequence":50,
+      "category":"attribute","name":"receiveEmail","type":"bool","init":"false"},
+      {"sequence":60,"category":"required","name":"password","type":"String",
+      "init":""},{"sequence":70,"category":"required","name":"role","type":"String",
+      "init":"regular"},{"sequence":80,"category":"attribute","name":"karma",
+      "type":"num","init":"1"},{"sequence":90,"category":"attribute",
+      "name":"about","type":"String","init":""}]}]}
+  ''';
+  return new UserEntry(fromMagicBoxes(_json));
+}
+
 class MemberReaction implements ActionReaction {
 
   bool reactedOnAdd = false;
   bool reactedOnUpdate = false;
 
   react(Action action) {
-    Members ms;
-    Member m;
     if (action is EntitiesAction) {
-      //ms = action.entities;
       reactedOnAdd = true;
     } else if (action is EntityAction) {
-      //m = action.entity;
       reactedOnUpdate = true;
     }
   }
@@ -19,14 +46,20 @@ class MemberReaction implements ActionReaction {
 }
 
 testUserData() {
+  var entry;
+  var session;
   var data;
+  var members;
+  var memberConcept;
   var memberCount;
   var dzenanOid;
   group('Testing User', () {
     setUp(() {
-      data = new UserData();
+      entry = fromJsonToUserEntry();
+      data = entry.data;
+      session = entry.newSession;
 
-      var memberConcept = data.memberConcept;
+      memberConcept = data.memberConcept;
       expect(memberConcept, isNotNull);
       expect(memberConcept.attributes, isNot(isEmpty));
       expect(memberConcept.attributes.count == 9);
@@ -34,9 +67,9 @@ testUserData() {
 
       memberCount = 0;
 
-      var members = data.members;
+      members = data.members;
       expect(members, isNotNull);
-      expect(members.count == memberCount);
+      expect(members.count, equals(memberCount));
 
       var claudeb = new Member(memberConcept);
       expect(claudeb, isNotNull);
@@ -46,7 +79,7 @@ testUserData() {
       claudeb.lastName = 'Ridjanovic';
       claudeb.email = 'claudebur.ridjanovic@gmail.com';
       members.add(claudeb);
-      expect(members.count == ++memberCount);
+      expect(members.count, equals(++memberCount));
 
       var dzenan = new Member(memberConcept);
       expect(dzenan, isNotNull);
@@ -59,9 +92,9 @@ testUserData() {
       dzenan.role = 'admin';
       dzenan.karma = 17.9;
       dzenan.about = '''I like to walk, hike and stop to have a good bite and drink. 
-    In addition, my name is Dženan Riđanović (Dzenan Ridjanovic). 
+    In addition, my name is Denan Ri?anovi? (Dzenan Ridjanovic). 
     I am an associate professor in the Business School at the 
-    Laval University (Université Laval), Quebec, Canada. 
+    Laval University (Universit Laval), Quebec, Canada. 
     I received a B.Sc. in informatics from the University of Sarajevo, 
     an M.Sc. in computer science from the University of Maryland, 
     and a Ph.D. in management information systems from the 
@@ -69,7 +102,7 @@ testUserData() {
     spiral development of domain models and dynamic web applications
     with NoSQL databases.''';
       members.add(dzenan);
-      expect(members.count == ++memberCount);
+      expect(members.count, equals(++memberCount));
       dzenanOid = dzenan.oid;
       expect(dzenanOid, isNotNull);
       var dr = members.getEntity(dzenanOid);
@@ -83,7 +116,7 @@ testUserData() {
       charlem.lastName = 'Mantha';
       charlem.email = 'charlem@hotmail.com';
       members.add(charlem);
-      expect(members.count == ++memberCount);
+      expect(members.count, equals(++memberCount));
 
       var amracr = new Member(memberConcept);
       expect(amracr, isNotNull);
@@ -94,21 +127,13 @@ testUserData() {
       amracr.email = 'amracr@gmail.com';
       amracr.receiveEmail = true;
       members.add(amracr);
-      expect(members.count == ++memberCount);
+      expect(members.count, equals(++memberCount));
     });
     tearDown(() {
-      var members = data.members;
       members.clear();
-      expect(members.count == 0);
+      expect(members.count, equals(0));
     });
     test('Add Member Required Error', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
-      var memberConcept = data.memberConcept;
-      expect(memberConcept, isNotNull);
-      expect(memberConcept.attributes, isNot(isEmpty));
-
       var robertm = new Member(memberConcept);
       expect(robertm, isNotNull);
       robertm.firstName = 'Robert';
@@ -121,13 +146,6 @@ testUserData() {
       //members.errors.display('Add Member Required Error');
     });
     test('Add Member Unique Error', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
-      var memberConcept = data.memberConcept;
-      expect(memberConcept, isNotNull);
-      expect(memberConcept.attributes, isNot(isEmpty));
-
       var robertm = new Member(memberConcept);
       expect(robertm, isNotNull);
       robertm.firstName = 'Robert';
@@ -144,13 +162,6 @@ testUserData() {
       //members.errors.display('Add Member Unique Error');
     });
     test('Add Member Required and Unique Error', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
-      var memberConcept = data.memberConcept;
-      expect(memberConcept, isNotNull);
-      expect(memberConcept.attributes, isNot(isEmpty));
-
       var robertm = new Member(memberConcept);
       expect(robertm, isNotNull);
       robertm.firstName = 'Robert';
@@ -164,9 +175,6 @@ testUserData() {
       //members.errors.display('Add Member Required and Unique Error');
     });
     test('Select Members by Attribute then Remove', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
       Members selectedMembers =
           members.selectByAttribute('lastName', 'Ridjanovic');
       expect(selectedMembers, isNotNull);
@@ -190,27 +198,18 @@ testUserData() {
       members.display('All Members After Remove');
     });
     test('Select Members by (get) Function', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
       var ridjanovicMembers = members.select((m) => m.ridjanovic);
       expect(ridjanovicMembers, isNotNull);
       expect(ridjanovicMembers, isNot(isEmpty));
       expect(ridjanovicMembers.length == 3);
     });
     test('Select Members by (bool) Attribute, which is (get) Function', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
       var receiveEmailMembers = members.select((m) => m.receiveEmail);
       expect(receiveEmailMembers, isNotNull);
       expect(receiveEmailMembers, isNot(isEmpty));
       expect(receiveEmailMembers.length == 2);
     });
     test('Order Members by Last then First Name', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
       Members orderedMembers = members.order();
       expect(orderedMembers, isNotNull);
       expect(orderedMembers, isNot(isEmpty));
@@ -222,9 +221,6 @@ testUserData() {
       orderedMembers.display('Members Ordered by Last then First Name');
     });
     test('Order Members by Code', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
       Members orderedMembers =
           members.orderByFunction((m,n) => m.compareCode(n));
       expect(orderedMembers, isNotNull);
@@ -237,13 +233,6 @@ testUserData() {
       orderedMembers.display('Members Ordered by Code');
     });
     test('New Member with Ids', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
-      var memberConcept = data.memberConcept;
-      expect(memberConcept, isNotNull);
-      expect(memberConcept.attributes, isNot(isEmpty));
-
       var ogdenr = new Member.withIds(
           memberConcept, 'ogdenr', 'ogden.ridjanovic@gmail.com');
       expect(ogdenr, isNotNull);
@@ -288,19 +277,9 @@ testUserData() {
       }
     });
     test('True for Some Projects', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
       expect(members.some((m) => m.about == null), isTrue);
     });
     test('New Member Undo', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
-      var memberConcept = data.memberConcept;
-      expect(memberConcept, isNotNull);
-      expect(memberConcept.attributes, isNot(isEmpty));
-
       var robertm = new Member(memberConcept);
       expect(robertm, isNotNull);
       robertm.code = 'rwm';
@@ -308,42 +287,32 @@ testUserData() {
       robertm.firstName = 'Robert';
       robertm.lastName = 'Mantha';
       robertm.email = 'robert.mantha@abc.com';
-      members.add(robertm);
-      expect(members.count == ++memberCount);
 
-      members.lastAction.undo();
-      expect(members.count == --memberCount);
+      var action = new AddAction(session, members, robertm);
+      action.doit();
+      expect(members.count, equals(++memberCount));
 
-      members.lastAction.undo();
-      expect(members.count == ++memberCount);
+      session.past.undo();
+      expect(members.count, equals(--memberCount));
+
+      session.past.redo();
+      expect(members.count, equals(++memberCount));
     });
     test('Update Member Undo', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
-      var memberConcept = data.memberConcept;
-      expect(memberConcept, isNotNull);
-      expect(memberConcept.attributes, isNot(isEmpty));
-
       var acr = members.getEntityByCode('acr');
       expect(acr, isNotNull);
 
-      var beforeAboutUpdate = acr.about;
-      acr.about = 'Intercultural interests.';
-      var afterAboutUpdate = acr.about;
-      acr.lastAction.undo();
-      expect(acr.about == beforeAboutUpdate);
-      acr.lastAction.undo();
-      expect(acr.about == afterAboutUpdate);
+      var action =
+          new SetAttributeAction(session, acr, 'about', 'Intercultural interests.');
+      action.doit();
+
+      session.past.undo();
+      expect(acr.about, equals(action.before));
+
+      session.past.redo();
+      expect(acr.about, equals(action.after));
     });
     test('Member Undo', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
-      var memberConcept = data.memberConcept;
-      expect(memberConcept, isNotNull);
-      expect(memberConcept.attributes, isNot(isEmpty));
-
       var claudeb = new Member(memberConcept);
       expect(claudeb, isNotNull);
       claudeb.code = 'claudeb';
@@ -351,40 +320,38 @@ testUserData() {
       claudeb.firstName = 'Claude';
       claudeb.lastName = 'Begin';
       claudeb.email = 'claude.begin@gmail.com';
-      members.add(claudeb);
-      expect(members.count == ++memberCount);
+
+      var action = new AddAction(session, members, claudeb);
+      action.doit();
+      expect(members.count, equals(++memberCount));
       members.display('After Add on Members');
 
-      var undo = members.lastAction.undo();
-      expect(members.count == --memberCount);
+      session.past.undo();
+      expect(members.count, equals(--memberCount));
       members.display('After Undo on Members');
 
-      undo = members.lastAction.undo();
-      expect(members.count == ++memberCount);
+      session.past.redo();
+      expect(members.count, equals(++memberCount));
       members.display('After Undoing Undo on Members');
 
-      var aboutClaude = 'Claude is a calm fellow, with good spirit.';
-      claudeb.about = aboutClaude;
+      var about = 'Claude is a calm fellow, with good spirit.';
+      action = new SetAttributeAction(session, claudeb, 'about', about);
+      action.doit();
       members.display('After Update on Member');
-      claudeb.lastAction.undo();
-      expect(claudeb.about != aboutClaude);
+
+      session.past.undo();
+      expect(claudeb.about, isNot(equals(about)));
       members.display('After Undo on Member');
-      claudeb.lastAction.undo();
-      expect(claudeb.about == aboutClaude);
+
+      session.past.redo();
+      expect(claudeb.about, equals(about));
       members.display('After Undoing Undo on Member');
     });
     test('Reactions to Member Actions', () {
-      var members = data.members;
-      expect(members.count == memberCount);
-
-      var memberConcept = data.memberConcept;
-      expect(memberConcept, isNotNull);
-      expect(memberConcept.attributes, isNot(isEmpty));
-
       var reaction = new MemberReaction();
       expect(reaction, isNotNull);
 
-      members.startReaction(reaction);
+      entry.startActionReaction(reaction);
       var member = new Member(memberConcept);
       expect(member, isNotNull);
       member.code = 'amemberurr';
@@ -392,25 +359,20 @@ testUserData() {
       member.firstName = 'John';
       member.lastName = 'Smith';
       member.email = 'john.smith@gmail.com';
-      members.add(member);
-      expect(members.count == ++memberCount);
-      expect(reaction.reactedOnAdd, isTrue);
-      members.cancelReaction(reaction);
 
-      member.startReaction(reaction);
+      var action = new AddAction(session, members, member);
+      action.doit();
+      expect(members.count, equals(++memberCount));
+      expect(reaction.reactedOnAdd, isTrue);
+
+      entry.startActionReaction(reaction);
       var about = 'He is a calm fellow, with good spirit.';
-      member.about = about;
+      action = new SetAttributeAction(session, member, 'about', about);
+      action.doit();
       expect(reaction.reactedOnUpdate, isTrue);
-      member.cancelReaction(reaction);
+      entry.cancelActionReaction(reaction);
     });
     test('Add Member Pre Validation', () {
-      var members = data.members;
-      expect(members.count, equals(memberCount));
-
-      var memberConcept = data.memberConcept;
-      expect(memberConcept, isNotNull);
-      expect(memberConcept.attributes, isNot(isEmpty));
-
       var robertm = new Member(memberConcept);
       expect(robertm, isNotNull);
       robertm.code = 'robertm';

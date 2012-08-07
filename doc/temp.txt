@@ -1,4 +1,32 @@
 
+test('Undo and Redo Transaction', () {
+      var webFrameworkCategory =
+          new Category.withId(categoryConcept, 'Web Framework');
+      expect(webFrameworkCategory, isNotNull);
+      expect(webFrameworkCategory.webLinks.count, equals(0));
+
+      var action1 = new AddAction(session, categories, webFrameworkCategory);
+
+      var wicketHomeWebLink = new WebLink(webLinkConcept);
+      expect(wicketHomeWebLink, isNotNull);
+      wicketHomeWebLink.name = 'Wicket Home';
+      wicketHomeWebLink.url = new Uri.fromString('http://wicket.apache.org/');
+      wicketHomeWebLink.description =
+          'With proper mark-up/logic separation, a POJO data model, and a ' 
+          'refreshing lack of XML, Apache Wicket makes developing web-apps ' 
+          'simple and enjoyable again. Swap the boilerplate, complex debugging ' 
+          'and brittle code for powerful, reusable components written with ' 
+          'plain Java and HTML.';
+      wicketHomeWebLink.category = webFrameworkCategory;
+      
+      var action2 = new AddAction(session, categories, webFrameworkCategory);
+      
+      dartCategory.webLinks.add(dartHomeWebLink);
+      
+      expect(categories.count, equals(++categoryCount));
+      expect(dartCategory.webLinks.count, equals(1));
+
+    }
   
   Entities<T> selectByFunction(Function f) {
     List<T> filteredList = _entityList.filter(f);

@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #library('Dartling');
 
-#import('../../unittest/unittest.dart');
+#import('../unittest/unittest.dart');
 #import('dart:json');
 #import('dart:uri');
 
@@ -44,28 +44,31 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('data/user/data.dart');
 #source('data/user/members.dart');
 
+#source('domain/data.dart');
+#source('domain/session.dart');
+
 #source('event/reactions.dart');
 #source('event/actions.dart');
 
 #source('exception/errors.dart');
 #source('exception/exceptions.dart');
 
-#source('guid/Oid.dart');
+#source('guid/id.dart');
 
 #source('meta/attributes.dart');
 #source('meta/children.dart');
 #source('meta/concepts.dart');
 #source('meta/domains.dart');
 #source('meta/models.dart');
-#source('meta/Neighbor.dart');
+#source('meta/neighbor.dart');
 #source('meta/parents.dart');
-#source('meta/Property.dart');
+#source('meta/property.dart');
 #source('meta/types.dart');
 
 #source('model/data.dart');
-#source('model/Entities.dart');
-#source('model/Entity.dart');
-#source('model/Id.dart');
+#source('model/entities.dart');
+#source('model/entity.dart');
+#source('model/id.dart');
 
 #source('test/link/data.dart');
 #source('test/link/model.dart');
@@ -75,6 +78,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('test/user/data.dart');
 
 #source('transfer/json.dart');
+
+start() {
+
+}
 
 allTests() {
   testProjectData();
@@ -87,5 +94,6 @@ allTests() {
 
 void main() {
   //lastSingleTest();
-  allTests();
+  testLinkData();
+  //allTests();
 }

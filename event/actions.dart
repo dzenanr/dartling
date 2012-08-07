@@ -6,9 +6,11 @@ abstract class Action {
   String state = 'started';
   String description;
 
-  Action(this.name) {
-    category = name;
-  }
+  DomainSession session;
+
+  bool partOfTransaction = false;
+
+  Action(this.name, this.session);
 
   abstract bool doit();
   abstract bool undo();
@@ -28,12 +30,13 @@ abstract class Action {
 
 }
 
-class EntitiesAction extends Action {
-
-  EntitiesAction(String name) : super(name);
+abstract class EntitiesAction extends Action {
 
   Entities entities;
   Entity entity;
+
+  EntitiesAction(String name, DomainSession session,
+                 this.entities, this.entity) : super(name, session);
 
   bool doit() {
     bool done = false;
@@ -48,8 +51,14 @@ class EntitiesAction extends Action {
       }
       if (done) {
         state = 'done';
-        entities.past.add(this);
+        if (!partOfTransaction) {
+          session.past.add(this);
+          session.entry.notifyActionReactions(this);
+        }
       }
+    } else {
+      throw new ActionException(
+      'The doit action on entities is allowed only for the started state.');
     }
     return done;
   }
@@ -67,7 +76,13 @@ class EntitiesAction extends Action {
       }
       if (undone) {
         state = 'undone';
+        if (!partOfTransaction) {
+          session.entry.notifyActionReactions(this);
+        }
       }
+    } else {
+      throw new ActionException(
+      'The undo action on entities is allowed only for the done or redone state.');
     }
     return undone;
   }
@@ -85,22 +100,48 @@ class EntitiesAction extends Action {
       }
       if (redone) {
         state = 'redone';
+        if (!partOfTransaction) {
+          session.entry.notifyActionReactions(this);
+        }
       }
+    } else {
+      throw new ActionException(
+      'The redo action on entities is allowed only for the undone state.');
     }
     return redone;
   }
 
 }
 
-class EntityAction extends Action {
+class AddAction extends EntitiesAction {
 
-  EntityAction(String name) : super(name);
+  AddAction(DomainSession session, Entities entities,
+            Entity entity) : super('add', session, entities, entity) {
+    category = 'entity';
+  }
+
+}
+
+class RemoveAction extends EntitiesAction {
+
+  RemoveAction(DomainSession session, Entities entities,
+               Entity entity) : super('remove', session, entities, entity) {
+    category = 'entity';
+  }
+
+}
+
+abstract class EntityAction extends Action {
 
   Entity entity;
-
   String property;
   Object before;
   Object after;
+
+  EntityAction(DomainSession session, this.entity, this.property, this.after) :
+    super('set', session) {
+    before = entity.getAttribute(property);
+  }
 
   bool doit() {
     bool done = false;
@@ -117,8 +158,14 @@ class EntityAction extends Action {
       }
       if (done) {
         state = 'done';
-        entity.past.add(this);
+        if (!partOfTransaction) {
+          session.past.add(this);
+          session.entry.notifyActionReactions(this);
+        }
       }
+    } else {
+      throw new ActionException(
+      'The doit action on entity is allowed only for the started state.');
     }
     return done;
   }
@@ -138,7 +185,13 @@ class EntityAction extends Action {
       }
       if (undone) {
         state = 'undone';
+        if (!partOfTransaction) {
+          session.entry.notifyActionReactions(this);
+        }
       }
+    } else {
+      throw new ActionException(
+      'The undo action on entity is allowed only for the done or redone state.');
     }
     return undone;
   }
@@ -158,7 +211,13 @@ class EntityAction extends Action {
       }
       if (redone) {
         state = 'redone';
+        if (!partOfTransaction) {
+          session.entry.notifyActionReactions(this);
+        }
       }
+    } else {
+      throw new ActionException(
+      'The redo action on entity is allowed only for the undone state.');
     }
     return redone;
   }
@@ -168,16 +227,113 @@ class EntityAction extends Action {
 
 }
 
-class Past {
+class SetAttributeAction extends EntityAction {
+
+  SetAttributeAction(DomainSession session, Entity entity,
+                     String property, Object after) :
+    super(session, entity, property, after) {
+    category = 'attribute';
+  }
+
+}
+
+class SetParentAction extends EntityAction {
+
+  SetParentAction(DomainSession session, Entity entity,
+                  String property, Object after) :
+    super(session, entity, property, after) {
+    category = 'parent';
+  }
+
+}
+
+class SetChildAction extends EntityAction {
+
+  SetChildAction(DomainSession session, Entity entity,
+                 String property, Object after) :
+    super(session, entity, property, after) {
+    category = 'child';
+  }
+
+}
+
+class Transaction extends Action {
+
+  Past _actions;
+
+  Transaction(String name, DomainSession session) : super(name, session) {
+    _actions = new Past();
+  }
+
+  add(Action action) {
+    _actions.add(action);
+    action.partOfTransaction = true;
+  }
+
+  bool doit() {
+    bool done = false;
+    if (state == 'started') {
+      done = _actions.doAll();
+      if (done) {
+        state = 'done';
+        session.past.add(this);
+        session.entry.notifyActionReactions(this);
+      } else {
+        _actions.undoAll();
+      }
+    } else {
+      throw new ActionException(
+      'The transaction doit is allowed only for the started state.');
+    }
+    return done;
+  }
+
+  bool undo() {
+    bool undone = false;
+    if (state == 'done' || state == 'redone') {
+      undone = _actions.undoAll();
+      if (undone) {
+        state = 'undone';
+        session.entry.notifyActionReactions(this);
+      } else {
+        _actions.doAll();
+      }
+    } else {
+      throw new ActionException(
+      'The transaction undo is allowed only for the done or redone state.');
+    }
+    return undone;
+  }
+
+  bool redo() {
+    bool redone = false;
+    if (state == 'undone') {
+      redone = _actions.redoAll();
+      if (redone) {
+        state = 'redone';
+        session.entry.notifyActionReactions(this);
+      } else {
+        _actions.undoAll();
+      }
+    } else {
+      throw new ActionException(
+      'The transaction redo is allowed only for the undone state.');
+    }
+    return redone;
+  }
+
+}
+
+class Past implements SourceOfPastReaction {
 
   int cursor = 0;
-
   List<Action> _actions;
-  List<PastReaction> _reactions;
+
+  List<PastReaction> _pastReactions;
 
   Past() {
     _actions = new List<Action>();
-    _reactions = new List<PastReaction>();
+    _pastReactions = new List<PastReaction>();
   }
 
   add(Action action) {
@@ -216,6 +372,16 @@ class Past {
 
   bool get empty() => _actions.isEmpty();
 
+  bool doit() {
+    bool done = false;
+    if (!empty) {
+      Action action = _actions[cursor];
+      done = action.doit();
+      _moveCursorForward();
+    }
+    return done;
+  }
+
   bool undo() {
     bool undone = false;
     if (!empty) {
@@ -240,7 +406,7 @@ class Past {
     bool allExecuted = true;
     cursor = 0;
     while (cursor < _actions.length) {
-      if (!redo()) {
+      if (!doit()) {
         allExecuted = false;
         break;
       }
@@ -259,20 +425,32 @@ class Past {
     return allUndone;
   }
 
-  startReaction(PastReaction reaction) => _reactions.add(reaction);
-  cancelReaction(PastReaction reaction) {
-    int index = _reactions.indexOf(reaction, 0);
-    _reactions.removeRange(index, 1);
+  bool redoAll() {
+    bool allRedone = true;
+    cursor = 0;
+    while (cursor < _actions.length) {
+      if (!redo()) {
+        allRedone = false;
+        break;
+      }
+    }
+    return allRedone;
+  }
+
+  startPastReaction(PastReaction reaction) => _pastReactions.add(reaction);
+  cancelPastReaction(PastReaction reaction) {
+    int index = _pastReactions.indexOf(reaction, 0);
+    _pastReactions.removeRange(index, 1);
   }
 
   notifyNoPast() {
-    for (PastReaction reaction in _reactions) {
+    for (PastReaction reaction in _pastReactions) {
       reaction.reactNoPast();
     }
   }
 
   notifyYesPast() {
-    for (PastReaction reaction in _reactions) {
+    for (PastReaction reaction in _pastReactions) {
       reaction.reactYesPast();
     }
   }
@@ -291,6 +469,5 @@ class Past {
   }
 
 }
-
 
 
