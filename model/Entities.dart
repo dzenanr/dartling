@@ -18,8 +18,6 @@ abstract class AEntities<T extends Entity<T>> implements Iterable<T> {
 
   abstract bool preAdd(T entity);
   abstract bool add(T entity);
-  abstract bool contains(T entity);
-  abstract void clear();
   abstract bool preRemove(T entity);
   abstract bool remove(T entity);
 
@@ -28,6 +26,7 @@ abstract class AEntities<T extends Entity<T>> implements Iterable<T> {
   abstract bool every(Function f);
   abstract bool some(Function f);
 
+  abstract bool contains(T entity);
   abstract T last();
   abstract T find(Oid oid);
   abstract T findByCode(String code);
@@ -41,6 +40,7 @@ abstract class AEntities<T extends Entity<T>> implements Iterable<T> {
   abstract Entities<T> order();
   abstract Entities<T> orderByFunction(Function f);
 
+  abstract void clear();
   abstract Entities<T> copy();
   abstract bool addFrom(Entities<T> entities);
   abstract List<T> get list();
@@ -101,10 +101,6 @@ class Entities<T extends Entity<T>> implements AEntities<T> {
 
   bool some(Function f) {
     return _entityList.some(f);
-  }
-
-  T last() {
-    return _entityList.last();
   }
 
   bool preAdd(T entity) {
@@ -206,21 +202,6 @@ class Entities<T extends Entity<T>> implements AEntities<T> {
     return false;
   }
 
-  bool contains(T entity) {
-    T element = _oidEntityMap[entity.oid];
-    if (entity == element) {
-      return true;
-    }
-    return false;
-  }
-
-  void clear() {
-    _entityList.clear();
-    _oidEntityMap.clear();
-    _codeEntityMap.clear();
-    _idEntityMap.clear();
-  }
-
   bool preRemove(T entity) {
     if (!pre) {
       return true;
@@ -281,6 +262,18 @@ class Entities<T extends Entity<T>> implements AEntities<T> {
       return true;
     }
     return false;
+  }
+
+  bool contains(T entity) {
+    T element = _oidEntityMap[entity.oid];
+    if (entity == element) {
+      return true;
+    }
+    return false;
+  }
+
+  T last() {
+    return _entityList.last();
   }
 
   T find(Oid oid) {
@@ -401,6 +394,13 @@ class Entities<T extends Entity<T>> implements AEntities<T> {
     orderedEntities.propagateToSource = false;
     orderedEntities._source = this;
     return orderedEntities;
+  }
+
+  void clear() {
+    _entityList.clear();
+    _oidEntityMap.clear();
+    _codeEntityMap.clear();
+    _idEntityMap.clear();
   }
 
   /**

@@ -2,6 +2,8 @@ Dartling Schedule
 
 To do
 
+persistance
+document code
 Uri validation for well formed uri (not done in Uri)
   ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
   http://msdn.microsoft.com/en-us/library/system.uri.iswellformedoriginalstring.aspx
@@ -12,7 +14,6 @@ money type
 telephone type
 postal code type
 zip code type
-persistance
 
 logging
 attribute validations (type, length)?
@@ -22,6 +23,9 @@ post
 i18n
 indexes? (http://www.mattfleming.com/node/192)
 
+
+2012-08-07, 17:44
+abstract methods reordered in AEntities and AEntity
 
 2012-08-07, 17:16
 tested transaction on 2 different concepts

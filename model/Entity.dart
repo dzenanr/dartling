@@ -6,6 +6,7 @@ abstract class AEntity<T extends Entity<T>> implements Comparable {
   abstract Oid get oid();
   abstract String get code();
   abstract void set code(String code);
+
   abstract Object getAttribute(String name);
   abstract bool setAttribute(String name, Object value);
   abstract String getStringFromAttribute(String name);
