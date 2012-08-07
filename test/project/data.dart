@@ -162,9 +162,9 @@ testProjectData() {
       expect(programmingProjects, isNotNull);
       expect(programmingProjects, isNot(isEmpty));
       expect(programmingProjects.count, equals(2));
-      expect(programmingProjects.sourceEntities, isNotNull);
-      expect(programmingProjects.sourceEntities, isNot(isEmpty));
-      expect(programmingProjects.sourceEntities.count, equals(projectCount));
+      expect(programmingProjects.source, isNotNull);
+      expect(programmingProjects.source, isNot(isEmpty));
+      expect(programmingProjects.source.count, equals(projectCount));
 
       var programmingProject = new Project(data.projectConcept);
       programmingProject.name = 'Dartling Testing';
@@ -188,14 +188,20 @@ testProjectData() {
       expect(id.attributeCount == 1);
       var searchName = 'Dartling';
       id.setAttribute('name', searchName);
-      var project = projects.findById(id);
-      //Project project = projects.findById(id);
+      //var project = projects.findById(id);
+      Project project = projects.findById(id);
       expect(project, isNotNull);
-      expect(project.name == searchName);
+      expect(project.name, equals(searchName));
+    });
+    test('Find Project by Attribute Id', () {
+      var searchName = 'Dartling';
+      Project project = projects.findByAttributeId('name', searchName);
+      expect(project, isNotNull);
+      expect(project.name, equals(searchName));
     });
     test('Find Project by Name Id', () {
       var searchName = 'Dartling';
-      var project = projects.getProjectByNameId(searchName);
+      Project project = projects.findByNameId(searchName);
       expect(project, isNotNull);
       expect(project.name, equals(searchName));
     });
@@ -205,9 +211,9 @@ testProjectData() {
       expect(orderedProjects, isNotNull);
       expect(orderedProjects, isNot(isEmpty));
       expect(orderedProjects.count, equals(projectCount));
-      expect(orderedProjects.sourceEntities, isNotNull);
-      expect(orderedProjects.sourceEntities, isNot(isEmpty));
-      expect(orderedProjects.sourceEntities.count, equals(projectCount));
+      expect(orderedProjects.source, isNotNull);
+      expect(orderedProjects.source, isNot(isEmpty));
+      expect(orderedProjects.source.count, equals(projectCount));
 
       orderedProjects.display('Ordered Projects');
     });

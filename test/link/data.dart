@@ -111,7 +111,7 @@ testLinkData() {
       tryDartWebLink.category = dartCategory;
       expect(tryDartWebLink.category, isNotNull);
       dartCategory.webLinks.add(tryDartWebLink);
-      expect(dartCategory.webLinks.count == ++dartCategoryWebLinkCount);
+      expect(dartCategory.webLinks.count, equals(++dartCategoryWebLinkCount));
 
       var dartNewsWebLink = new WebLink(webLinkConcept);
       expect(dartNewsWebLink, isNotNull);
@@ -123,7 +123,7 @@ testLinkData() {
       dartNewsWebLink.category = dartCategory;
       expect(dartNewsWebLink.category, isNotNull);
       dartCategory.webLinks.add(dartNewsWebLink);
-      expect(dartCategory.webLinks.count == ++dartCategoryWebLinkCount);
+      expect(dartCategory.webLinks.count, equals(++dartCategoryWebLinkCount));
 
       var dartBugssWebLink = new WebLink(webLinkConcept);
       expect(dartBugssWebLink, isNotNull);
@@ -134,7 +134,7 @@ testLinkData() {
       dartBugssWebLink.category = dartCategory;
       expect(dartBugssWebLink.category, isNotNull);
       dartCategory.webLinks.add(dartBugssWebLink);
-      expect(dartCategory.webLinks.count == ++dartCategoryWebLinkCount);
+      expect(dartCategory.webLinks.count, equals(++dartCategoryWebLinkCount));
     });
     tearDown(() {
       categories.clear();
@@ -161,9 +161,9 @@ testLinkData() {
       expect(orderedCategories, isNotNull);
       expect(orderedCategories, isNot(isEmpty));
       expect(orderedCategories.count, equals(categoryCount));
-      expect(orderedCategories.sourceEntities, isNotNull);
-      expect(orderedCategories.sourceEntities, isNot(isEmpty));
-      expect(orderedCategories.sourceEntities.count, equals(categoryCount));
+      expect(orderedCategories.source, isNotNull);
+      expect(orderedCategories.source, isNot(isEmpty));
+      expect(orderedCategories.source.count, equals(categoryCount));
 
       orderedCategories.display(
         'Categories Ordered By Id (code not used, id is name)');
@@ -178,9 +178,9 @@ testLinkData() {
       expect(orderedDartWebLinks, isNotNull);
       expect(orderedDartWebLinks, isNot(isEmpty));
       expect(orderedDartWebLinks.count, equals(dartCategoryWebLinkCount));
-      expect(orderedDartWebLinks.sourceEntities, isNotNull);
-      expect(orderedDartWebLinks.sourceEntities, isNot(isEmpty));
-      expect(orderedDartWebLinks.sourceEntities.count,
+      expect(orderedDartWebLinks.source, isNotNull);
+      expect(orderedDartWebLinks.source, isNot(isEmpty));
+      expect(orderedDartWebLinks.source.count,
         equals(dartCategoryWebLinkCount));
 
       orderedDartWebLinks.display('Ordered Dart Web Links');
@@ -346,6 +346,49 @@ testLinkData() {
           categories.display('Transaction (with Id Error) Redone');
         }
       }
+    });
+    test('Undo and Redo Transaction on Two Different Concepts', () {
+      var webFrameworkCategory =
+          new Category.withId(categoryConcept, 'Web Framework');
+      expect(webFrameworkCategory, isNotNull);
+      expect(webFrameworkCategory.webLinks.count, equals(0));
+
+      var action1 = new AddAction(session, categories, webFrameworkCategory);
+
+      var wicketWebLink = new WebLink(webLinkConcept);
+      expect(wicketWebLink, isNotNull);
+      wicketWebLink.name = 'Wicket';
+      wicketWebLink.url = new Uri.fromString('http://wicket.apache.org/');
+      wicketWebLink.description =
+          'With proper mark-up/logic separation, a POJO data model, '
+          'and a refreshing lack of XML, Apache Wicket makes developing '
+          'web-apps simple and enjoyable again. Swap the boilerplate, complex '
+          'debugging and brittle code for powerful, reusable components written '
+          'with plain Java and HTML.';
+      wicketWebLink.category = webFrameworkCategory;
+      expect(webFrameworkCategory.webLinks.count, equals(0));
+
+      var action2 =
+          new AddAction(session, webFrameworkCategory.webLinks, wicketWebLink);
+
+      var transaction = new Transaction('two adds on different concepts', session);
+      transaction.add(action1);
+      transaction.add(action2);
+      transaction.doit();
+      expect(categories.count, equals(++categoryCount));
+      expect(webFrameworkCategory.webLinks.count, equals(1));
+      categories.display('Transaction  on Two Different Concepts Done');
+
+      session.past.undo();
+      expect(categories.count, equals(--categoryCount));
+      categories.display('Transaction on Two Different Concepts Undone');
+
+      session.past.redo();
+      expect(categories.count, equals(++categoryCount));
+      var category = categories.findByAttribute('name', 'Web Framework');
+      expect(category, isNotNull);
+      expect(category.webLinks.count, equals(1));
+      categories.display('Transaction on Two Different Concepts Redone');
     });
 
   });

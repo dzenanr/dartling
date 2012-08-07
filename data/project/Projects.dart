@@ -5,7 +5,7 @@ class Projects extends Entities<Project> {
 
   Projects newEntities() => new Projects(concept);
 
-  Project getProjectByNameId(String name) {
+  Project findByNameId(String name) {
     return findById(new Id(concept)..setAttribute('name', name));
   }
 

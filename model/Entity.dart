@@ -1,11 +1,34 @@
 
-class Entity<T extends Entity<T>> implements Comparable {
+abstract class AEntity<T extends Entity<T>> implements Comparable {
 
-  Oid _oid;
-  String _code;
+  abstract Entity<T> newEntity();
+  abstract Concept get concept();
+  abstract Oid get oid();
+  abstract String get code();
+  abstract void set code(String code);
+  abstract Object getAttribute(String name);
+  abstract bool setAttribute(String name, Object value);
+  abstract String getStringFromAttribute(String name);
+  abstract bool setStringToAttribute(String name, String string);
+  abstract Entity getParent(String name);
+  abstract bool setParent(String name, Entity entity);
+  abstract Entities getChild(String name);
+  abstract bool setChild(String name, Entities entities);
+
+  abstract Id get id();
+  abstract T copy();
+  abstract bool equalOids(T entity);
+  abstract bool equals(other);
+  abstract int compareTo(T entity);
+  abstract String toString();
+
+}
+
+class Entity<T extends Entity<T>> implements AEntity {
 
   Concept _concept;
-
+  Oid _oid;
+  String _code;
   Map<String, Object> _attributeMap;
   // cannot use T since a parent is of a different type
   Map<String, Entity> _parentMap;
@@ -84,10 +107,10 @@ class Entity<T extends Entity<T>> implements Comparable {
 
   Entity<T> newEntity() => new Entity.of(_concept);
 
+  Concept get concept() => _concept;
   Oid get oid() => _oid;
-
   String get code() => _code;
-  set code(String code) {
+  void set code(String code) {
     if (_code != null) {
       throw new CodeException('Entity code cannot be updated.');
     }
@@ -97,72 +120,16 @@ class Entity<T extends Entity<T>> implements Comparable {
     _code = code;
   }
 
-  Concept get concept() => _concept;
-
-  String getStringFromAttribute(String name) => _attributeMap[name].toString();
-  setStringToAttribute(String name, String string) {
-    if (string == null) {
-      throw new IllegalArgumentException(
-        'Entity.setStringToAttribute argument is null.');
-    }
-    if (_concept == null) {
-      throw new ConceptException('Entity concept is not defined.');
-    }
-    Attribute a = _concept.attributes.findByCode(name);
-    if (a.type.base == 'Date') {
-      try {
-        setAttribute(name, new Date.fromString(string));
-      } catch (final IllegalArgumentException e) {
-        throw new TypeException('${a.code} attribute value is not Date: $e');
-      }
-    } else if (a.type.base == 'bool') {
-      if (string == 'true') {
-        setAttribute(name, true);
-      } else if (string == 'false') {
-        setAttribute(name, false);
-      } else {
-        throw new TypeException('${a.code} attribute value is not bool.');
-      }
-    } else if (a.type.base == 'int') {
-      try {
-        setAttribute(name, Math.parseInt(string));
-      } catch (final BadNumberFormatException e) {
-        throw new TypeException('${a.code} attribute value is not int: $e');
-      }
-    } else if (a.type.base == 'double') {
-      try {
-        setAttribute(name, Math.parseDouble(string));
-      } catch (final BadNumberFormatException e) {
-        throw new TypeException('${a.code} attribute value is not double: $e');
-      }
-    } else if (a.type.base == 'num') {
-      try {
-        setAttribute(name, Math.parseInt(string));
-      } catch (final BadNumberFormatException e1) {
-        try {
-          setAttribute(name, Math.parseDouble(string));
-        } catch (final BadNumberFormatException e2) {
-          throw new TypeException(
-            '${a.code} attribute value is not num: $e1; $e2');
-        }
-      }
-    } else if (a.type.base == 'Uri') {
-      try {
-        setAttribute(name, new Uri.fromString(string));
-      } catch (final IllegalArgumentException e) {
-        throw new TypeException('${a.code} attribute value is not Uri: $e');
-      }
-    } else {
-      setAttribute(name, string);
-    }
-  }
-
   Object getAttribute(String name) => _attributeMap[name];
-  setAttribute(String name, Object value) {
+  bool setAttribute(String name, Object value) {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
     Attribute attribute = _concept.attributes.findByCode(name);
+    if (attribute == null) {
+      String msg = '${_concept.code}.$name is not correct attribute name.';
+      throw new UpdateException(msg);
+    }
     if (!attribute.derive && attribute.update) {
       _attributeMap[name] = value;
       return true;
@@ -173,12 +140,78 @@ class Entity<T extends Entity<T>> implements Comparable {
     return false;
   }
 
+  String getStringFromAttribute(String name) => _attributeMap[name].toString();
+  bool setStringToAttribute(String name, String string) {
+    if (string == null) {
+      throw new IllegalArgumentException(
+        'Entity.setStringToAttribute argument is null.');
+    }
+    if (_concept == null) {
+      throw new ConceptException('Entity concept is not defined.');
+    }
+    Attribute attribute = _concept.attributes.findByCode(name);
+    if (attribute == null) {
+      String msg = '${_concept.code}.$name is not correct attribute name.';
+      throw new UpdateException(msg);
+    }
+    if (attribute.type.base == 'Date') {
+      try {
+        return setAttribute(name, new Date.fromString(string));
+      } catch (final IllegalArgumentException e) {
+        throw new TypeException('${attribute.code} attribute value is not Date: $e');
+      }
+    } else if (attribute.type.base == 'bool') {
+      if (string == 'true') {
+        return setAttribute(name, true);
+      } else if (string == 'false') {
+        return setAttribute(name, false);
+      } else {
+        throw new TypeException('${attribute.code} attribute value is not bool.');
+      }
+    } else if (attribute.type.base == 'int') {
+      try {
+        return setAttribute(name, Math.parseInt(string));
+      } catch (final BadNumberFormatException e) {
+        throw new TypeException('${attribute.code} attribute value is not int: $e');
+      }
+    } else if (attribute.type.base == 'double') {
+      try {
+        return setAttribute(name, Math.parseDouble(string));
+      } catch (final BadNumberFormatException e) {
+        throw new TypeException('${attribute.code} attribute value is not double: $e');
+      }
+    } else if (attribute.type.base == 'num') {
+      try {
+        return setAttribute(name, Math.parseInt(string));
+      } catch (final BadNumberFormatException e1) {
+        try {
+          return setAttribute(name, Math.parseDouble(string));
+        } catch (final BadNumberFormatException e2) {
+          throw new TypeException(
+            '${attribute.code} attribute value is not num: $e1; $e2');
+        }
+      }
+    } else if (attribute.type.base == 'Uri') {
+      try {
+        return setAttribute(name, new Uri.fromString(string));
+      } catch (final IllegalArgumentException e) {
+        throw new TypeException('${attribute.code} attribute value is not Uri: $e');
+      }
+    } else { // other
+      return setAttribute(name, string);
+    }
+  }
+
   Entity getParent(String name) => _parentMap[name];
-  setParent(String name, Entity entity) {
+  bool setParent(String name, Entity entity) {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
     Parent parent = _concept.parents.findByCode(name);
+    if (parent == null) {
+      String msg = '${_concept.code}.$name is not correct parent entity name.';
+      throw new UpdateException(msg);
+    }
     if (parent.update) {
       _parentMap[name] = entity;
       return true;
@@ -190,11 +223,15 @@ class Entity<T extends Entity<T>> implements Comparable {
   }
 
   Entities getChild(String name) => _childMap[name];
-  setChild(String name, Entities entities) {
+  bool setChild(String name, Entities entities) {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
     Child child = _concept.children.findByCode(name);
+    if (child == null) {
+      String msg = '${_concept.code}.$name is not correct child entities name.';
+      throw new UpdateException(msg);
+    }
     if (child.update) {
       _childMap[name] = entities;
       return true;

@@ -180,9 +180,9 @@ testUserData() {
       expect(selectedMembers, isNotNull);
       expect(selectedMembers, isNot(isEmpty));
       expect(selectedMembers.count == 2);
-      expect(selectedMembers.sourceEntities, isNotNull);
-      expect(selectedMembers.sourceEntities, isNot(isEmpty));
-      expect(selectedMembers.sourceEntities.count == memberCount);
+      expect(selectedMembers.source, isNotNull);
+      expect(selectedMembers.source, isNot(isEmpty));
+      expect(selectedMembers.source.count == memberCount);
 
       selectedMembers.display('Selected Members Before Remove');
       expect(selectedMembers.count == 2);
@@ -214,9 +214,9 @@ testUserData() {
       expect(orderedMembers, isNotNull);
       expect(orderedMembers, isNot(isEmpty));
       expect(orderedMembers.count == memberCount);
-      expect(orderedMembers.sourceEntities, isNotNull);
-      expect(orderedMembers.sourceEntities, isNot(isEmpty));
-      expect(orderedMembers.sourceEntities.count == memberCount);
+      expect(orderedMembers.source, isNotNull);
+      expect(orderedMembers.source, isNot(isEmpty));
+      expect(orderedMembers.source.count == memberCount);
 
       orderedMembers.display('Members Ordered by Last then First Name');
     });
@@ -226,9 +226,9 @@ testUserData() {
       expect(orderedMembers, isNotNull);
       expect(orderedMembers, isNot(isEmpty));
       expect(orderedMembers.count == memberCount);
-      expect(orderedMembers.sourceEntities, isNotNull);
-      expect(orderedMembers.sourceEntities, isNot(isEmpty));
-      expect(orderedMembers.sourceEntities.count == memberCount);
+      expect(orderedMembers.source, isNotNull);
+      expect(orderedMembers.source, isNot(isEmpty));
+      expect(orderedMembers.source.count == memberCount);
 
       orderedMembers.display('Members Ordered by Code');
     });

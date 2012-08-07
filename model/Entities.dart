@@ -1,23 +1,67 @@
 
-class Entities<T extends Entity<T>> implements Iterable<Entity> {
+abstract class AEntities<T extends Entity<T>> implements Iterable<T> {
+
+  /*
+  String min = '0';
+  String max = 'N';
+
+  bool pre = true;
+  bool propagateToSource = true;
+  */
+
+  abstract Entities<T> newEntities();
+  abstract Concept get concept();
+  abstract Entities<T> get source();
+  abstract Errors get errors();
+  abstract int get count();
+  abstract bool get empty();
+
+  abstract bool preAdd(T entity);
+  abstract bool add(T entity);
+  abstract bool contains(T entity);
+  abstract void clear();
+  abstract bool preRemove(T entity);
+  abstract bool remove(T entity);
+
+  abstract Iterator<T> iterator();
+  abstract void forEach(Function f);
+  abstract bool every(Function f);
+  abstract bool some(Function f);
+
+  abstract T last();
+  abstract T find(Oid oid);
+  abstract T findByCode(String code);
+  abstract T findById(Id id);
+  abstract T findByAttributeId(String code, Object attribute);
+  abstract T findByAttribute(String code, Object attribute);
+
+  abstract Entities<T> select(Function f);
+  abstract Entities<T> selectByParent(String code, Object parent);
+  abstract Entities<T> selectByAttribute(String code, Object attribute);
+  abstract Entities<T> order();
+  abstract Entities<T> orderByFunction(Function f);
+
+  abstract Entities<T> copy();
+  abstract bool addFrom(Entities<T> entities);
+  abstract List<T> get list();
+
+}
+
+class Entities<T extends Entity<T>> implements AEntities<T> {
 
   Concept _concept;
-
   List<T> _entityList;
   Map<Oid, T> _oidEntityMap;
   Map<String, T> _codeEntityMap;
   Map<String, T> _idEntityMap;
-
-  Entities<T> sourceEntities;
-  bool propagateToSource = true;
+  Entities<T> _source;
+  Errors _errors;
+  num _lastIncrement = 0;
 
   String min = '0';
   String max = 'N';
-
-  num lastIncrement = 0;
-
   bool pre = true;
-  Errors errors;
+  bool propagateToSource = true;
 
   Entities() {
     _entityList = new List<T>();
@@ -39,33 +83,33 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   Entities<T> newEntities() => new Entities.of(_concept);
 
   Concept get concept() => _concept;
+  Entities<T> get source() => _source;
+  Errors get errors() => _errors;
+  int get count() => _entityList.length;
+  int get length() => count;
+  bool get empty() => _entityList.isEmpty();
 
   Iterator<T> iterator() => _entityList.iterator();
 
-  forEach(Function f) {
+  void forEach(Function f) {
     _entityList.forEach(f);
   }
 
-  every(Function f) {
+  bool every(Function f) {
     return _entityList.every(f);
   }
 
-  some(Function f) {
+  bool some(Function f) {
     return _entityList.some(f);
   }
-
-  int get count() => _entityList.length;
-  int get length() => count;
-
-  bool get empty() => _entityList.isEmpty();
 
   T last() {
     return _entityList.last();
   }
 
   bool preAdd(T entity) {
-    if (errors == null) {
-      errors = new Errors();
+    if (_errors == null) {
+      _errors = new Errors();
     }
 
     if (!pre) {
@@ -94,7 +138,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
         if (count == maxInt) {
           Error error = new Error('max');
           error.message = '${_concept.code}.max is $max.';
-          errors.add(error);
+          _errors.add(error);
           validation = false;
         }
       } catch (final BadNumberFormatException e) {
@@ -107,12 +151,12 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     for (Attribute a in _concept.attributes) {
       if (a.increment != null) {
         print('attribute increment');
-        lastIncrement == lastIncrement + a.increment;
-        entity.setAttribute(a.code, lastIncrement);
+        _lastIncrement == _lastIncrement + a.increment;
+        entity.setAttribute(a.code, _lastIncrement);
       } else if (a.required && entity.getAttribute(a.code) == null) {
         Error error = new Error('required');
         error.message = '${entity.concept.code}.${a.code} attribute is null.';
-        errors.add(error);
+        _errors.add(error);
         validation = false;
       }
     }
@@ -120,7 +164,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
       if (p.required && entity.getParent(p.code) == null) {
         Error error = new Error('required');
         error.message = '${entity.concept.code}.${p.code} parent is null.';
-        errors.add(error);
+        _errors.add(error);
         validation = false;
       }
     }
@@ -129,14 +173,14 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     if (entity.code != null && findByCode(entity.code) != null) {
       Error error = new Error('unique');
       error.message = '${entity.concept.code}.code is not unique.';
-      errors.add(error);
+      _errors.add(error);
       validation = false;
     }
     if (entity.id != null && findById(entity.id) != null) {
       Error error = new Error('unique');
       error.message =
           '${entity.concept.code}.id ${entity.id.toString()} is not unique.';
-      errors.add(error);
+      _errors.add(error);
       validation = false;
     }
 
@@ -154,8 +198,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
         _idEntityMap[entity.id.toString()] = entity;
       }
 
-      if (sourceEntities != null && propagateToSource) {
-        sourceEntities.add(entity);
+      if (_source != null && propagateToSource) {
+        _source.add(entity);
       }
       return true;
     }
@@ -170,7 +214,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return false;
   }
 
-  clear() {
+  void clear() {
     _entityList.clear();
     _oidEntityMap.clear();
     _codeEntityMap.clear();
@@ -231,8 +275,8 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
           break;
         }
       }
-      if (sourceEntities != null && propagateToSource) {
-        sourceEntities.remove(entity);
+      if (_source != null && propagateToSource) {
+        _source.remove(entity);
       }
       return true;
     }
@@ -252,7 +296,12 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
   }
 
   T findByAttributeId(String code, Object attribute) {
-    return findById(new Id(concept)..setAttribute('code', attribute));
+    /*
+    Id id = new Id(_concept);
+    id.setAttribute(code, attribute);
+    return findById(id);
+    */
+    return findById(new Id(_concept)..setAttribute(code, attribute));
   }
 
   T findByAttribute(String code, Object attribute) {
@@ -263,39 +312,16 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     return null;
   }
 
-  /**
-   * Copies the entities.
-   * It is not a deep copy.
-   */
-  Entities<T> copy() {
-    if (_concept == null) {
-      throw new ConceptException('Entities.copy: concept is not defined.');
-    }
-    Entities<T> copiedEntities = newEntities();
-    copiedEntities.pre = false;
-    for (Entity entity in this) {
-      copiedEntities.add(entity.copy());
-    }
-    copiedEntities.pre = true;
-    return copiedEntities;
-  }
-
-  addFrom(List<T> other) {
-    other.forEach((entity) => add(entity));
-  }
-
-  List<T> get list() => new List.from(_entityList);
-
   Entities<T> select(Function f) {
     Entities<T> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.propagateToSource = false;
     // filter returns a new list
     List<T> selectedList = _entityList.filter(f);
-    selectedEntities.addFrom(selectedList);
+    selectedEntities._addFromList(selectedList);
     selectedEntities.pre = true;
     selectedEntities.propagateToSource = true;
-    selectedEntities.sourceEntities = this;
+    selectedEntities._source = this;
     return selectedEntities;
   }
 
@@ -318,7 +344,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     }
     selectedEntities.pre = true;
     selectedEntities.propagateToSource = true;
-    selectedEntities.sourceEntities = this;
+    selectedEntities._source = this;
     return selectedEntities;
   }
 
@@ -341,7 +367,7 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     }
     selectedEntities.pre = true;
     selectedEntities.propagateToSource = true;
-    selectedEntities.sourceEntities = this;
+    selectedEntities._source = this;
     return selectedEntities;
   }
 
@@ -356,10 +382,10 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     List<T> sortedList = list;
     // in place sort
     sortedList.sort((m,n) => m.compareTo(n));
-    orderedEntities.addFrom(sortedList);
+    orderedEntities._addFromList(sortedList);
     orderedEntities.pre = true;
     orderedEntities.propagateToSource = false;
-    orderedEntities.sourceEntities = this;
+    orderedEntities._source = this;
     return orderedEntities;
   }
 
@@ -370,12 +396,45 @@ class Entities<T extends Entity<T>> implements Iterable<Entity> {
     List<T> sortedList = list;
     // in place sort
     sortedList.sort(f);
-    orderedEntities.addFrom(sortedList);
+    orderedEntities._addFromList(sortedList);
     orderedEntities.pre = true;
     orderedEntities.propagateToSource = false;
-    orderedEntities.sourceEntities = this;
+    orderedEntities._source = this;
     return orderedEntities;
   }
+
+  /**
+   * Copies the entities.
+   * It is not a deep copy.
+   */
+  Entities<T> copy() {
+    if (_concept == null) {
+      throw new ConceptException('Entities.copy: concept is not defined.');
+    }
+    Entities<T> copiedEntities = newEntities();
+    copiedEntities.pre = false;
+    for (Entity entity in this) {
+      copiedEntities.add(entity.copy());
+    }
+    copiedEntities.pre = true;
+    return copiedEntities;
+  }
+
+  _addFromList(List<T> other) {
+    other.forEach((entity) => add(entity));
+  }
+
+  bool addFrom(Entities<T> entities) {
+    bool allAdded = true;
+    if (_concept == entities.concept) {
+      entities.forEach((entity) => add(entity) ? true : allAdded = false);
+    } else {
+      throw new ConceptException('The concept of the argument is different.');
+    }
+    return allAdded;
+  }
+
+  List<T> get list() => new List.from(_entityList);
 
   /**
   * Displays (prints) a title, then entities.
