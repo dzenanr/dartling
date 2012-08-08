@@ -89,6 +89,5 @@ allTests() {
 }
 
 void main() {
-  //testLinkData();
   allTests();
 }

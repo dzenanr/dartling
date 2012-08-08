@@ -1,13 +1,5 @@
 
-abstract class AEntities<T extends Entity<T>> implements Iterable<T> {
-
-  /*
-  String min = '0';
-  String max = 'N';
-
-  bool pre = true;
-  bool propagateToSource = true;
-  */
+abstract class EntitiesApi<T extends Entity<T>> implements Iterable<T> {
 
   abstract Entities<T> newEntities();
   abstract Concept get concept();
@@ -47,7 +39,7 @@ abstract class AEntities<T extends Entity<T>> implements Iterable<T> {
 
 }
 
-class Entities<T extends Entity<T>> implements AEntities<T> {
+class Entities<T extends Entity<T>> implements EntitiesApi<T> {
 
   Concept _concept;
   List<T> _entityList;

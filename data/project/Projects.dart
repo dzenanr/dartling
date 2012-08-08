@@ -27,7 +27,8 @@ class Project extends Entity<Project> {
 
   Project newEntity() => new Project(concept);
 
-  bool get onProgramming() => description.contains('Programming') ? true : false;
+  bool get onProgramming() =>
+      description.contains('Programming') ? true : false;
 
   /**
    * Compares two projects based on name.
