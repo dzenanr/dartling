@@ -67,7 +67,7 @@ class ProjectActionReaction implements ActionReaction {
       p.display();
       reactedOnUpdate = true;
     }
-    print('!!! Action Reaction for ${projects.concept.pluralName} !!!');
+    print('!!! Action Reaction for ${projects.concept.plural} !!!');
     print('');
     print('$action');
     print('');

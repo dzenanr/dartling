@@ -13,7 +13,7 @@ class Members extends Entities<Member> {
       if (!validation) {
         Error error = new Error('pre');
         error.message =
-            '${concept.pluralName}.preAdd rejects the ${member.role} role.';
+            '${concept.plural}.preAdd rejects the ${member.role} role.';
         errors.add(error);
       }
     }

@@ -14,7 +14,7 @@ class Concept extends Entity<Concept> {
   bool add = true;
   bool remove = true;
 
-  String pluralName;
+  String _plural;
   String description;
 
   Model model;
@@ -67,4 +67,47 @@ class Concept extends Entity<Concept> {
         isParentSensitive(code) ||
         isChildSensitive(code);
   }
+
+  String _dropEnd(String text, String end) {
+    String withoutEnd = text;
+    int endPosition = text.lastIndexOf(end);
+    if (endPosition > 0) {
+      // Drop the end.
+      withoutEnd = text.substring(0, endPosition);
+    }
+    return withoutEnd;
+  }
+
+  String _convertToPlural(String text) {
+    var textInPlural;
+    if (text.length > 0) {
+      String lastCharacterString = text.substring(text.length - 1,
+          text.length);
+      if (lastCharacterString == 'x') {
+        textInPlural = '${text}es';
+      } else if (lastCharacterString == 'z') {
+        textInPlural = '${text}zes';
+      } else if (lastCharacterString == 'y') {
+        String withoutLast = _dropEnd(text, lastCharacterString);
+        textInPlural = '${withoutLast}ies';
+      } else {
+        textInPlural = '${text}s';
+      }
+    }
+    return textInPlural;
+  }
+
+  String get plural() {
+    if (_plural != null) {
+      return _plural;
+    } else {
+      _plural = _convertToPlural(code);
+      return _plural;
+    }
+  }
+
+  set plural(String pluralConceptName) {
+    _plural = pluralConceptName;
+  }
+
 }

@@ -23,7 +23,6 @@ class ProjectData extends Data {
   Map<String, Entities> newEntries() {
     var entries = new Map<String, Entities>();
     var concept = model.concepts.findByCode('Project');
-    concept.pluralName = 'Projects';
     entries[concept.code] = new Projects(concept);
     return entries;
   }
