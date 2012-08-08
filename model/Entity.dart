@@ -1,5 +1,5 @@
 
-abstract class AEntity<T extends Entity<T>> implements Comparable {
+abstract class EntityApi<T extends Entity<T>> implements Comparable {
 
   abstract Entity<T> newEntity();
   abstract Concept get concept();
@@ -25,7 +25,7 @@ abstract class AEntity<T extends Entity<T>> implements Comparable {
 
 }
 
-class Entity<T extends Entity<T>> implements AEntity {
+class Entity<T extends Entity<T>> implements EntityApi {
 
   Concept _concept;
   Oid _oid;
