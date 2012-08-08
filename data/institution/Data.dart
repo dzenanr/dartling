@@ -6,7 +6,7 @@ class EcoleEntry extends Entry {
   Map<String, Data> newData() {
     var data = new Map<String, Data>();
     var model = domain.models.findByCode('default');
-    data[model.code] = new UserData(model, this);
+    data[model.code] = new IstitutionData(model, this);
     return data;
   }
 
@@ -14,11 +14,11 @@ class EcoleEntry extends Entry {
 
 }
 
-class UserData extends Data {
+class IstitutionData extends Data {
 
   EcoleEntry entry;
 
-  UserData(Model model, this.entry) : super(model);
+  IstitutionData(Model model, this.entry) : super(model);
 
   Map<String, Entities> newEntries() {
     var entries = new Map<String, Entities>();

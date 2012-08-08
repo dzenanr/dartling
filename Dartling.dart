@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #library('Dartling');
 
-#import('../unittest/unittest.dart');
+#import('unittest/unittest.dart');
 #import('dart:json');
 #import('dart:uri');
 
@@ -43,6 +43,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('data/project/projects.dart');
 #source('data/user/data.dart');
 #source('data/user/members.dart');
+#source('data/institution/ecoles.dart');
+#source('data/institution/data.dart');
 
 #source('domain/data.dart');
 #source('domain/session.dart');
@@ -76,6 +78,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('test/user/data.dart');
 #source('test/lastGroupTest.dart');
 #source('test/lastSingleTest.dart');
+#source('test/institution/data.dart');
 
 #source('transfer/json.dart');
 

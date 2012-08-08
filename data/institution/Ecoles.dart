@@ -5,20 +5,11 @@ class Ecoles extends Entities<Ecole> {
 
   Ecoles newEntities() => new Ecoles(concept);
 
-  bool preAdd(Ecole ecole) {
-    bool validation = super.preAdd(ecole);
-    if (validation) {
-      List<String> roles = ['regular', 'manager', 'admin'];
-      validation = roles.some((r) => r == ecole.role);
-      if (!validation) {
-        Error error = new Error('pre');
-        error.message =
-            '${concept.pluralName}.preAdd rejects the ${ecole.role} role.';
-        errors.add(error);
-      }
-    }
-    return validation;
+
+  Ecole findByNameId(int numeroEcole) {
+    return findById(new Id(concept)..setAttribute('numeroEcole', numeroEcole));
   }
+
 
 }
 

@@ -1,5 +1,5 @@
 
-EcoleEntry fromJsonToUserEntry() {
+EcoleEntry fromJsonToInstitutionEntry() {
   /**
 
    */
@@ -27,14 +27,14 @@ class EcoleReaction implements ActionReaction {
 
 }
 
-testUserData() {
+testInstitutionData() {
   var entry;
   var session;
   var data;
-  var members;
-  var memberConcept;
-  var memberCount;
-  var dzenanOid;
+  var ecoles;
+  var ecoleConcept;
+  var ecoleCount;
+  var UlavaOid;
   group('Testing User', () {
     setUp(() {
       entry = fromJsonToUserEntry();
@@ -63,7 +63,7 @@ testUserData() {
       var ULaval = new Ecole(ecoleConcept);
       expect(ULaval, isNotNull);
       ULaval.numeroEcole = 2;
-      ULaval.password = 'Laval Univ';
+      ULaval.nomEcole = 'Laval Univ';
       ecoles.add(ULaval);
       expect(ecoles.count, equals(++ecoleCount));
       UlavaOid = ULaval.oid;
@@ -80,7 +80,7 @@ testUserData() {
     test('Add Ecole Required Error', () {
       var robertm = new Ecole(ecoleConcept);
       expect(robertm, isNotNull);
-      robertm.numerEcole = 2;
+      robertm.numeroEcole = 2;
       robertm.nomEcole = 'Robert school';
       ecoles.add(robertm);
       expect(ecoles.count == ecoleCount);
@@ -89,8 +89,8 @@ testUserData() {
       expect(ecoles.errors.list[1].category == 'required');
       //members.errors.display('Add Member Required Error');
     });
-    test('Add Member Unique Error', () {
-      var robertm = new Member(memberConcept);
+  /*  test('Add Member Unique Error', () {
+      var robertm = new Ecole(ecoleConcept);
       expect(robertm, isNotNull);
       robertm.firstName = 'Robert';
       robertm.lastName = 'Mantha';
@@ -117,35 +117,35 @@ testUserData() {
       expect(members.errors.list[1].category == 'required');
       expect(members.errors.list[2].category == 'unique');
       //members.errors.display('Add Member Required and Unique Error');
-    });
-    test('Select Members by Attribute then Remove', () {
-      Members selectedMembers =
-          members.selectByAttribute('lastName', 'Ridjanovic');
-      expect(selectedMembers, isNotNull);
-      expect(selectedMembers, isNot(isEmpty));
-      expect(selectedMembers.count == 2);
-      expect(selectedMembers.source, isNotNull);
-      expect(selectedMembers.source, isNot(isEmpty));
-      expect(selectedMembers.source.count == memberCount);
+    });*/
+    test('Select Ecoles by Attribute then Remove', () {
+      Ecoles selectedEcoles =
+          ecoles.selectByAttribute('nomEcole', 'Laval school');
+      expect(selectedEcoles, isNotNull);
+      expect(selectedEcoles, isNot(isEmpty));
+      expect(selectedEcoles.count == 1);
+      expect(selectedEcoles.source, isNotNull);
+      expect(selectedEcoles.source, isNot(isEmpty));
+      expect(selectedEcoles.source.count == ecoleCount);
 
-      selectedMembers.display('Selected Members Before Remove');
-      expect(selectedMembers.count == 2);
-      expect(members.count == memberCount);
-      expect(dzenanOid, isNotNull);
-      var dzenan = selectedMembers.find(dzenanOid);
-      expect(dzenan, isNotNull);
-      selectedMembers.remove(dzenan);
-      expect(selectedMembers.count == 1);
-      expect(members.count == memberCount - 1);
+      selectedEcoles.display('Selected Ecoles Before Remove');
+      expect(selectedEcoles.count == 2);
+      expect(ecoles.count == ecoleCount);
+      expect(UlavaOid, isNotNull);
+      var ULaval = selectedEcoles.find(UlavaOid);
+      expect(ULaval, isNotNull);
+      selectedEcoles.remove(ULaval);
+      expect(selectedEcoles.count == 1);
+      expect(ecoles.count == ecoleCount - 1);
 
-      selectedMembers.display('Selected Members After Remove');
-      members.display('All Members After Remove');
+      selectedEcoles.display('Selected Members After Remove');
+      ecoles.display('All Members After Remove');
     });
-    test('Select Members by (get) Function', () {
-      var ridjanovicMembers = members.select((m) => m.ridjanovic);
-      expect(ridjanovicMembers, isNotNull);
-      expect(ridjanovicMembers, isNot(isEmpty));
-      expect(ridjanovicMembers.length == 3);
+  /*  test('Select Ecoles by (get) Function', () {
+      var ridjanovicEcloes = ecoles.select((m) => m.ridjanovic);
+      expect(ridjanovicEcloes, isNotNull);
+      expect(ridjanovicEcloes, isNot(isEmpty));
+      expect(ridjanovicEcloes.length == 3);
     });
     test('Select Members by (bool) Attribute, which is (get) Function', () {
       var receiveEmailMembers = members.select((m) => m.receiveEmail);
@@ -175,10 +175,10 @@ testUserData() {
       expect(orderedMembers.source.count == memberCount);
 
       orderedMembers.display('Members Ordered by Code');
-    });
-    test('New Member with Ids', () {
+    });*/
+    test('New Ecole with Ids', () {
       var ogdenr = new Member.withIds(
-          memberConcept, 'ogdenr', 'ogden.ridjanovic@gmail.com');
+          ecoleConcept, 'ogdenr', 'ogden.ridjanovic@gmail.com');
       expect(ogdenr, isNotNull);
       ogdenr.password = 'toto9tutu';
       ogdenr.firstName = 'Ogden';
