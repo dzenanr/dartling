@@ -4,22 +4,22 @@ class ProjectActionReaction implements ActionReaction {
   bool reactedOnAdd = false;
   bool reactedOnUpdate = false;
 
-  var domainData;
+  var models;
   var session;
   var projects;
 
-  ProjectActionReaction(this.domainData, this.projects) {
-    session = domainData.newSession();
+  ProjectActionReaction(this.models, this.projects) {
+    session = models.newSession();
   }
 
   addProject(String projectName) {
     var project = new Project(projects.concept);
     project.name = projectName;
 
-    domainData.startActionReaction(this);
+    models.startActionReaction(this);
     var action = new AddAction(session, projects, project);
     action.doit();
-    domainData.cancelActionReaction(this);
+    models.cancelActionReaction(this);
 
     assert(projects.findByAttribute('name', projectName) != null);
   }
@@ -28,11 +28,11 @@ class ProjectActionReaction implements ActionReaction {
     var project = projects.findByAttribute('name', projectName);
     assert(project != null);
 
-    domainData.startActionReaction(this);
-    var action = new
-        SetAttributeAction(session, project, 'description', projectDescription);
+    models.startActionReaction(this);
+    var action = new SetAttributeAction(
+        session, project, 'description', projectDescription);
     action.doit();
-    domainData.cancelActionReaction(this);
+    models.cancelActionReaction(this);
   }
 
   react(Action action) {
@@ -61,19 +61,19 @@ class ProjectActionReaction implements ActionReaction {
 
 class ProjectPastReaction implements PastReaction {
 
-  var domainData;
+  var models;
 
-  ProjectPastReaction(this.domainData) {
-    domainData.newSession().past.startPastReaction(this);
+  ProjectPastReaction(this.models) {
+    models.newSession().past.startPastReaction(this);
   }
 
   reactNoPast() {
-    print('There are no past actions in the ${domainData.domain.code} domain.');
+    print('There are no past actions in the ${models.domain.code} domain.');
     print('');
   }
 
   reactYesPast() {
-    print('There is at least one past action in the ${domainData.domain.code} domain.');
+    print('There is at least one past action in the ${models.domain.code} domain.');
     print('');
   }
 
