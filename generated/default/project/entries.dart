@@ -6,7 +6,8 @@ ProjectEntries fromJsonToProjectData(Domain domain, [String modelCode = 'default
    *  at description
    */
   var json = '''
-      {"width":990,"height":580,"lines":[],
+      {"width":990,"height":580,
+       "lines":[],
        "boxes":[
         {"entry":true,"name":"Project",
          "x":179,"y":226,"width":120,"height":120,
