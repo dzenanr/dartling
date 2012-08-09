@@ -15,8 +15,8 @@ abstract class Property extends Entity<Property> {
 
   bool get maxMany() => max != '0' && max != '1' ? true : false;
 
-  bool get id() => _id;
-  set id(bool i) {
+  bool get identifier() => _id;
+  set identifier(bool i) {
     _id = i;
     if (i) {
       min = '1';

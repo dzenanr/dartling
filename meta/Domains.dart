@@ -34,7 +34,7 @@ class Domain extends Entity<Domain> {
 
   Domain getDomain(String code) => domains.findByCode(code);
 
-  Model get model() => models.findByCode('default');
+  Model get defaultModel() => models.findByCode('default');
 
   Model getModel(String code) => models.findByCode(code);
 

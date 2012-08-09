@@ -129,4 +129,11 @@ git stash
 
 git checkout master
 
+----------------------------------------------------------------------
+
+http://learn.github.com/p/diff.html
+
+all changes since the last commit
+git diff HEAD
+
 
