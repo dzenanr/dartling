@@ -16,6 +16,9 @@ class Ecole extends Entity<Ecole> {
 
   String get nom() => getAttribute('nom');
   set nom(String a) => setAttribute('nom', a);
+  
+  String get adress() => getAttribute('address');
+  set adress(String a) => setAttribute('address', a);
 
   Ecole newEntity() => new Ecole(concept);
 
@@ -39,5 +42,16 @@ class Ecole extends Entity<Ecole> {
   int compareNom(Ecole other) {
     return nom.compareTo(other.nom);
   }
+  
+  /**
+   * Compares two ecoles based on address.
+   * If the result is less than 0 then the first entity is less than the second,
+   * if it is equal to 0 they are equal and
+   * if the result is greater than 0 then the first is greater than the second.
+   */
+  int compareAddress(Ecole other) {
+    return nom.compareTo(other.adress);
+  }
+
 
 }

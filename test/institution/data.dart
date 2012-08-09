@@ -2,12 +2,13 @@
 EcoleEntry fromJsonToEcoleEntry() {
   /**
    *  || Ecole
-   *  at numero
-   *  at nom
+   *  id numero
+   *  req nom
+   *  at address
    */
   var _json = '''
-   {"width":990,"lines":[],"height":580,"boxes":[{"entry":true,"name":"Ecole","x":342,"y":252,"width":120,"height":120,"items":[{"sequence":10,"category":"attribute","name":"numero","type":"int","init":""},{"sequence":20,"category":"attribute","name":"nom","type":"String","init":""}]}]}
-    ''';
+  {"width":990,"lines":[],"height":580,"boxes":[{"entry":true,"name":"Ecole","x":342,"y":252,"width":120,"height":120,"items":[{"sequence":10,"category":"identifier","name":"numero","type":"int","init":""},{"sequence":20,"category":"required","name":"nom","type":"String","init":""},
+  {"sequence":30,"category":"attribute","name":"address","type":"String","init":""}]}]}    ''';
   return new EcoleEntry(fromMagicBoxes(_json));
 }
 
@@ -43,7 +44,7 @@ testInstitutionData() {
       ecoleConcept = data.ecoleConcept;
       expect(ecoleConcept, isNotNull);
       expect(ecoleConcept.attributes, isNot(isEmpty));
-      expect(ecoleConcept.attributes.count, equals(2));
+      expect(ecoleConcept.attributes.count, equals(3));
 
       ecoleCount = 0;
 
@@ -55,6 +56,7 @@ testInstitutionData() {
       expect(lavalHighScool, isNotNull);
       lavalHighScool.numero = 2;
       lavalHighScool.nom = 'Laval School';
+      lavalHighScool.adress = '1307 Chemin Sainte Foy';
       ecoles.add(lavalHighScool);
       expect(ecoles.count, equals(++ecoleCount));
 
@@ -62,6 +64,7 @@ testInstitutionData() {
       expect(abcScool, isNotNull);
       abcScool.numero = 3;
       abcScool.nom = 'Abc School';
+      abcScool.adress = '122 Chemain Quatre bourgeois';
       ecoles.add(abcScool);
       expect(ecoles.count, equals(++ecoleCount));
 
@@ -69,6 +72,7 @@ testInstitutionData() {
       expect(uLaval, isNotNull);
       uLaval.numero = 1;
       uLaval.nom = 'Laval Univ';
+      uLaval.adress = '1245 Rue University';
       ecoles.add(uLaval);
       expect(ecoles.count, equals(++ecoleCount));
       uLavalOid = uLaval.oid;
@@ -137,11 +141,24 @@ testInstitutionData() {
       expect(orderedEcoles.source.count, equals(ecoleCount));
       orderedEcoles.display('Ecoles Ordered by Nom');
     });
+    
+    test('Order Ecoles by Address', () {
+      Ecoles orderedEcoles =
+          ecoles.orderByFunction((m,n) => m.compareAddress(n));
+      expect(orderedEcoles, isNotNull);
+      expect(orderedEcoles, isNot(isEmpty));
+      expect(orderedEcoles.count, equals(ecoleCount));
+      expect(orderedEcoles.source, isNotNull);
+      expect(orderedEcoles.source, isNot(isEmpty));
+      expect(orderedEcoles.source.count, equals(ecoleCount));
+      orderedEcoles.display('Ecoles Ordered by Address');
+    });
     test('New Member Undo', () {
       var yyySchool = new Ecole(ecoleConcept);
       expect(yyySchool, isNotNull);
       yyySchool.numero = 4;
       yyySchool.nom = 'YYY School';
+      yyySchool.adress = 'New Orleans 11 St';
 
       var action = new AddAction(session, ecoles, yyySchool);
       action.doit();
@@ -162,7 +179,8 @@ testInstitutionData() {
       expect(yyySchool, isNotNull);
       yyySchool.numero = 4;
       yyySchool.nom = 'YYY School';
-
+      yyySchool.adress = 'New Orleans 11 St';
+      
       var action = new AddAction(session, ecoles, yyySchool);
       action.doit();
       expect(ecoles.count, equals(++ecoleCount));
