@@ -1,5 +1,5 @@
 
-InstitutionData fromJsonToInstitutionData(Domain domain,
+InstitutionEntries fromJsonToInstitutionEntries(Domain domain,
                                           [String modelCode = 'default']) {
   /**
    *  || Ecole
@@ -24,12 +24,12 @@ InstitutionData fromJsonToInstitutionData(Domain domain,
       }]
     }
   ''';
-  return new InstitutionData(fromMagicBoxes(json, domain, modelCode));
+  return new InstitutionEntries(fromMagicBoxes(json, domain, modelCode));
 }
 
-class InstitutionData extends ModelEntries {
+class InstitutionEntries extends ModelEntries {
 
-  InstitutionData(Model model) : super(model);
+  InstitutionEntries(Model model) : super(model);
 
   Map<String, Entities> newEntries() {
     var entries = new Map<String, Entities>();

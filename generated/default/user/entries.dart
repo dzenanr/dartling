@@ -1,5 +1,5 @@
 
-UserData fromJsonToUserData(Domain domain, [String modelCode = 'default']) {
+UserEntries fromJsonToUserEntries(Domain domain, [String modelCode = 'default']) {
   /**
    *  || Member (code)
    *  id email : String
@@ -41,12 +41,12 @@ UserData fromJsonToUserData(Domain domain, [String modelCode = 'default']) {
         }]
       }
   ''';
-  return new UserData(fromMagicBoxes(json, domain, modelCode));
+  return new UserEntries(fromMagicBoxes(json, domain, modelCode));
 }
 
-class UserData extends ModelEntries {
+class UserEntries extends ModelEntries {
 
-  UserData(Model model) : super(model);
+  UserEntries(Model model) : super(model);
 
   Map<String, Entities> newEntries() {
     var entries = new Map<String, Entities>();

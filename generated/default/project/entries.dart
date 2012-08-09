@@ -1,5 +1,5 @@
 
-ProjectEntries fromJsonToProjectData(Domain domain, [String modelCode = 'default']) {
+ProjectEntries fromJsonToProjectEntries(Domain domain, [String modelCode = 'default']) {
   /**
    *  || Project
    *  id name

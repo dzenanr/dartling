@@ -113,24 +113,24 @@ void main() {
   var defaultModels = repository.defaultDomainModels;
 
   var institutionModelCode = 'Institution';
-  var institutionData =
-      fromJsonToInstitutionData(defaultDomain, institutionModelCode);
-  defaultModels.add(institutionData);
+  var institutionEntries =
+      fromJsonToInstitutionEntries(defaultDomain, institutionModelCode);
+  defaultModels.add(institutionEntries);
   testInstitutionData(repository, institutionModelCode);
 
   var projectModelCode = 'Project';
-  var projectData = fromJsonToProjectData(defaultDomain, projectModelCode);
-  defaultModels.add(projectData);
+  var projectEntries = fromJsonToProjectEntries(defaultDomain, projectModelCode);
+  defaultModels.add(projectEntries);
   testProjectData(repository, projectModelCode);
 
   var userModelCode = 'User';
-  var userData = fromJsonToUserData(defaultDomain, userModelCode);
-  defaultModels.add(userData);
+  var userEntries = fromJsonToUserEntries(defaultDomain, userModelCode);
+  defaultModels.add(userEntries);
   testUserData(repository, userModelCode);
 
   var linkModelCode = 'Link';
-  var linkData = fromJsonToLinkData(defaultDomain, linkModelCode);
-  defaultModels.add(linkData);
+  var linkEntries = fromJsonToLinkEntries(defaultDomain, linkModelCode);
+  defaultModels.add(linkEntries);
   testLinkData(repository, linkModelCode);
 
   testLinkModel();

@@ -1,5 +1,5 @@
 
-LinkData fromJsonToLinkData(Domain domain, [String modelCode = 'default']) {
+LinkEntries fromJsonToLinkEntries(Domain domain, [String modelCode = 'default']) {
   /**
    *  || Category
    *  id name
@@ -44,12 +44,12 @@ LinkData fromJsonToLinkData(Domain domain, [String modelCode = 'default']) {
       }]
     }
   ''';
-  return new LinkData(fromMagicBoxes(json, domain, modelCode));
+  return new LinkEntries(fromMagicBoxes(json, domain, modelCode));
 }
 
-class LinkData extends ModelEntries {
+class LinkEntries extends ModelEntries {
 
-  LinkData(Model model) : super(model);
+  LinkEntries(Model model) : super(model);
 
   Map<String, Entities> newEntries() {
     var entries = new Map<String, Entities>();
