@@ -1,5 +1,7 @@
 
-
+  expect(() =>
+    dartCategory.webLinks.errors.selectByAttribute('category', 'required'),
+      throwsException);
   
   Entities<T> selectByFunction(Function f) {
     List<T> filteredList = _entityList.filter(f);

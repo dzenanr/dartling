@@ -41,8 +41,8 @@ class Concept extends Entity<Concept> {
 
   Attribute getAttribute(String code) => attributes.findByCode(code);
 
-  Parent getParent(String code) => parents.findByCode(code);
-  Child getChild(String code) => children.findByCode(code);
+  Parent getDestinationParent(String code) => parents.findByCode(code);
+  Child getDestinationChild(String code) => children.findByCode(code);
 
   Parent getSourceParent(String code) => sourceParents.findByCode(code);
   Child getSourceChild(String code) => sourceChildren.findByCode(code);

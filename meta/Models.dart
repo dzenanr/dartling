@@ -32,7 +32,7 @@ class Model extends Entity<Model> {
 
   Concept getConcept(String code) => concepts.findByCode(code);
 
-  int get conceptCount() => entryConcepts.length;
+  int get conceptCount() => concepts.length;
 
 }
 
