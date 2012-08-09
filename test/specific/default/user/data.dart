@@ -15,20 +15,20 @@ class MemberReaction implements ActionReaction {
 }
 
 testUserData(Repo repo, String modelCode) {
-  var domainData;
+  var models;
   var session;
-  var modelData;
+  var entries;
   var members;
   var memberConcept;
   var memberCount = 0;
   var dzenanOid;
   group('Testing User', () {
     setUp(() {
-      domainData = repo.defaultDomainModels;
-      session = domainData.newSession();
-      modelData = domainData.getModelEntries(modelCode);
+      models = repo.defaultDomainModels;
+      session = models.newSession();
+      entries = models.getModelEntries(modelCode);
 
-      members = modelData.members;
+      members = entries.members;
       expect(members, isNotNull);
       expect(members.count, equals(memberCount));
 
@@ -319,7 +319,7 @@ testUserData(Repo repo, String modelCode) {
       var reaction = new MemberReaction();
       expect(reaction, isNotNull);
 
-      domainData.startActionReaction(reaction);
+      models.startActionReaction(reaction);
       var member = new Member(memberConcept);
       expect(member, isNotNull);
       member.code = 'amemberurr';
@@ -337,7 +337,7 @@ testUserData(Repo repo, String modelCode) {
       action = new SetAttributeAction(session, member, 'about', about);
       action.doit();
       expect(reaction.reactedOnUpdate, isTrue);
-      domainData.cancelActionReaction(reaction);
+      models.cancelActionReaction(reaction);
     });
     test('Add Member Pre Validation', () {
       var robertm = new Member(memberConcept);

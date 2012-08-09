@@ -15,20 +15,20 @@ class EcoleReaction implements ActionReaction {
 }
 
 testInstitutionData(Repo repo, String modelCode) {
-  var domainData;
+  var models;
   var session;
-  var modelData;
+  var entries;
   var ecoles;
   var ecoleConcept;
   var ecoleCount = 0;
   var uLavalOid;
   group('Testing Institution', () {
     setUp(() {
-      domainData = repo.defaultDomainModels;
-      session = domainData.newSession();
-      modelData = domainData.getModelEntries(modelCode);
+      models = repo.defaultDomainModels;
+      session = models.newSession();
+      entries = models.getModelEntries(modelCode);
 
-      ecoles = modelData.ecoles;
+      ecoles = entries.ecoles;
       expect(ecoles, isNotNull);
       expect(ecoles.count, equals(ecoleCount));
 
@@ -167,7 +167,7 @@ testInstitutionData(Repo repo, String modelCode) {
       var reaction = new EcoleReaction();
       expect(reaction, isNotNull);
 
-      domainData.startActionReaction(reaction);
+      models.startActionReaction(reaction);
       var yyySchool = new Ecole(ecoleConcept);
       expect(yyySchool, isNotNull);
       yyySchool.numero = 4;
@@ -179,7 +179,7 @@ testInstitutionData(Repo repo, String modelCode) {
       expect(ecoles.count, equals(++ecoleCount));
       expect(reaction.reactedOnAdd, isTrue);
 
-      domainData.cancelActionReaction(reaction);
+      models.cancelActionReaction(reaction);
     });
 
   });

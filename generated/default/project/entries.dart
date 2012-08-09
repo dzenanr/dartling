@@ -1,11 +1,11 @@
 
-ProjectData fromJsonToProjectData(Domain domain, [String modelCode = 'default']) {
+ProjectEntries fromJsonToProjectData(Domain domain, [String modelCode = 'default']) {
   /**
    *  || Project
    *  id name
    *  at description
    */
-  var _json = '''
+  var json = '''
       {"width":990,"height":580,"lines":[],
        "boxes":[
         {"entry":true,"name":"Project",
@@ -20,12 +20,12 @@ ProjectData fromJsonToProjectData(Domain domain, [String modelCode = 'default'])
         }]
       }
   ''';
-  return new ProjectData(fromMagicBoxes(_json, domain, modelCode));
+  return new ProjectEntries(fromMagicBoxes(json, domain, modelCode));
 }
 
-class ProjectData extends ModelEntries {
+class ProjectEntries extends ModelEntries {
 
-  ProjectData(Model model) : super(model);
+  ProjectEntries(Model model) : super(model);
 
   Map<String, Entities> newEntries() {
     var entries = new Map<String, Entities>();

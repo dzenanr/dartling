@@ -80,20 +80,20 @@ class ProjectPastReaction implements PastReaction {
 }
 
 testProjectData(Repo repo, String modelCode) {
-  var domainData;
+  var models;
   var session;
-  var modelData;
+  var entries;
   var projects;
   var projectConcept;
   var projectCount = 0;
   var dartlingOid;
   group('Testing Project', () {
     setUp(() {
-      domainData = repo.defaultDomainModels;
-      session = domainData.newSession();
-      modelData = domainData.getModelEntries(modelCode);
+      models = repo.defaultDomainModels;
+      session = models.newSession();
+      entries = models.getModelEntries(modelCode);
 
-      projects = modelData.projects;
+      projects = entries.projects;
       expect(projects, isNotNull);
       expect(projects.count, equals(projectCount));
 
@@ -149,7 +149,7 @@ testProjectData(Repo repo, String modelCode) {
       expect(programmingProjects.source, isNot(isEmpty));
       expect(programmingProjects.source.count, equals(projectCount));
 
-      var programmingProject = new Project(modelData.projectConcept);
+      var programmingProject = new Project(entries.projectConcept);
       programmingProject.name = 'Dartling Testing';
       programmingProject.description = 'Programming unit tests.';
       programmingProjects.add(programmingProject);
@@ -165,7 +165,7 @@ testProjectData(Repo repo, String modelCode) {
       expect(project.name == 'Dartling');
     });
     test('Find Project by Id', () {
-      Id id = new Id(modelData.projectConcept);
+      Id id = new Id(entries.projectConcept);
       expect(id.count == 1);
       expect(id.parentCount == 0);
       expect(id.attributeCount == 1);
@@ -227,21 +227,21 @@ testProjectData(Repo repo, String modelCode) {
       expect(projects.every((p) => p.name != null), isTrue);
     });
     test('Reaction to New Project', () {
-      var reaction = new ProjectActionReaction(domainData, projects);
+      var reaction = new ProjectActionReaction(models, projects);
       expect(reaction, isNotNull);
       reaction.addProject('Dartling Documentation');
       expect(projects, hasLength(++projectCount));
       expect(reaction.reactedOnAdd, isTrue);
     });
     test('Reaction to Project Update', () {
-      var reaction = new ProjectActionReaction(domainData, projects);
+      var reaction = new ProjectActionReaction(models, projects);
       expect(reaction, isNotNull);
       reaction.updateProjectDescription('Dartling', 'Developing Dartling.');
       expect(projects, hasLength(projectCount));
       expect(reaction.reactedOnUpdate, isTrue);
     });
     test('Project Action with Undo and Redo ', () {
-      new ProjectPastReaction(domainData);
+      new ProjectPastReaction(models);
 
       var product1 = new Project(projectConcept);
       product1.name = 'Oracle';

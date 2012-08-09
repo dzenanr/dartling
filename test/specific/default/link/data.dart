@@ -1,8 +1,8 @@
 
 testLinkData(Repo repo, String modelCode) {
-  var domainData;
+  var models;
   var session;
-  var modelData;
+  var entries;
   var categories;
   var categoryConcept;
   var webLinkConcept;
@@ -10,21 +10,21 @@ testLinkData(Repo repo, String modelCode) {
   var dartCategoryWebLinkCount;
   group('Testing Link', () {
     setUp(() {
-      domainData = repo.defaultDomainModels;
-      session = domainData.newSession();
-      modelData = domainData.getModelEntries(modelCode);
+      models = repo.defaultDomainModels;
+      session = models.newSession();
+      entries = models.getModelEntries(modelCode);
       
-      categoryConcept = modelData.categoryConcept;
+      categoryConcept = entries.categoryConcept;
       expect(categoryConcept, isNotNull);
       expect(categoryConcept.attributes, isNot(isEmpty));
       expect(categoryConcept.attributes.count, equals(2));
       
-      webLinkConcept = modelData.webLinkConcept;
+      webLinkConcept = entries.webLinkConcept;
       expect(webLinkConcept, isNotNull);
       expect(webLinkConcept.attributes, isNot(isEmpty));
       expect(webLinkConcept.attributes.count, equals(3));
 
-      categories = modelData.categories;
+      categories = entries.categories;
       expect(categories, isNotNull);
       expect(categories.count, equals(categoryCount));
 
@@ -108,7 +108,7 @@ testLinkData(Repo repo, String modelCode) {
       categoryCount = 0;
     });
     test('Find Category and Web Link by Id', () {
-      Id categoryId = new Id(modelData.categoryConcept);
+      Id categoryId = new Id(entries.categoryConcept);
       categoryId.setAttribute('name', 'Dart');
       Category dartCategory = categories.findById(categoryId);
       expect(dartCategory, isNotNull);
@@ -116,7 +116,7 @@ testLinkData(Repo repo, String modelCode) {
 
       WebLinks dartWebLinks = dartCategory.webLinks;
       expect(dartWebLinks.count == dartCategoryWebLinkCount);
-      Id dartHomeId = new Id(modelData.webLinkConcept);
+      Id dartHomeId = new Id(entries.webLinkConcept);
       dartHomeId.setParent('category', dartCategory);
       dartHomeId.setAttribute('name', 'Dart Home');
       WebLink dartHomeWebLink = dartWebLinks.findById(dartHomeId);

@@ -7,7 +7,7 @@ InstitutionData fromJsonToInstitutionData(Domain domain,
    *  rq nom
    *  at adress
    */
-  var _json = '''
+  var json = '''
     {"width":990,"lines":[],"height":580,
      "boxes":[
       {"entry":true,"name":"Ecole", "x":342,"y":252,"width":120,"height":120,
@@ -23,8 +23,8 @@ InstitutionData fromJsonToInstitutionData(Domain domain,
         }]
       }]
     }
-  '''; 
-  return new InstitutionData(fromMagicBoxes(_json, domain, modelCode));
+  ''';
+  return new InstitutionData(fromMagicBoxes(json, domain, modelCode));
 }
 
 class InstitutionData extends ModelEntries {

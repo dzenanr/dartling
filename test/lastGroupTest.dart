@@ -1,13 +1,13 @@
 
 lastGroupTest(Repo repo, String modelCode) {
-  var domainData;
+  var models;
   var session;
-  var modelData;
+  var entries;
   group('Group Title', () {
     setUp(() {
-      domainData = repo.defaultDomainModels;
-      session = domainData.newSession();
-      modelData = domainData.getModelEntries(modelCode);
+      models = repo.defaultDomainModels;
+      session = models.newSession();
+      entries = models.getModelEntries(modelCode);
 
 
     });

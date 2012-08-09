@@ -97,40 +97,40 @@ initRepo() {
   var defaultDomain = new Domain();
   domains.add(defaultDomain);
 
-  var dcDomainData = new DomainModels(dcDomain);
-  repository.add(dcDomainData);
-  var defaultDomainData = new DomainModels(defaultDomain);
-  repository.add(defaultDomainData);
+  var dcModels = new DomainModels(dcDomain);
+  repository.add(dcModels);
+  var defaultModels = new DomainModels(defaultDomain);
+  repository.add(defaultModels);
 }
 
 void main() {
   initRepo();
 
   var dcDomain = repository.domains.getDomain('dc');
-  var dcDomainData = repository.getDomainModels('dc');
+  var dcModels = repository.getDomainModels('dc');
 
   var defaultDomain = repository.domains.defaultDomain;
-  var defaultDomainData = repository.defaultDomainModels;
+  var defaultModels = repository.defaultDomainModels;
 
   var institutionModelCode = 'Institution';
   var institutionData =
       fromJsonToInstitutionData(defaultDomain, institutionModelCode);
-  defaultDomainData.add(institutionData);
+  defaultModels.add(institutionData);
   testInstitutionData(repository, institutionModelCode);
 
   var projectModelCode = 'Project';
   var projectData = fromJsonToProjectData(defaultDomain, projectModelCode);
-  defaultDomainData.add(projectData);
+  defaultModels.add(projectData);
   testProjectData(repository, projectModelCode);
 
   var userModelCode = 'User';
   var userData = fromJsonToUserData(defaultDomain, userModelCode);
-  defaultDomainData.add(userData);
+  defaultModels.add(userData);
   testUserData(repository, userModelCode);
 
   var linkModelCode = 'Link';
   var linkData = fromJsonToLinkData(defaultDomain, linkModelCode);
-  defaultDomainData.add(linkData);
+  defaultModels.add(linkData);
   testLinkData(repository, linkModelCode);
 
   testLinkModel();

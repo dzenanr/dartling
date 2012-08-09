@@ -12,7 +12,7 @@ UserData fromJsonToUserData(Domain domain, [String modelCode = 'default']) {
    *  at karma : num (init : 1)
    *  at about : String
    */
-  var _json = '''
+  var json = '''
       {"width":990,"lines":[],"height":580,"boxes":[{"entry":true,"name":"Member",
       "x":207,"y":160,"width":100,"height":180,"items":[{"sequence":10,
       "category":"identifier","name":"email","type":"Email","init":""},
@@ -27,7 +27,7 @@ UserData fromJsonToUserData(Domain domain, [String modelCode = 'default']) {
       "type":"num","init":"1"},{"sequence":90,"category":"attribute",
       "name":"about","type":"String","init":""}]}]}
   ''';
-  return new UserData(fromMagicBoxes(_json, domain, modelCode));
+  return new UserData(fromMagicBoxes(json, domain, modelCode));
 }
 
 class UserData extends ModelEntries {

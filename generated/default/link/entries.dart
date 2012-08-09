@@ -12,7 +12,7 @@ LinkData fromJsonToLinkData(Domain domain, [String modelCode = 'default']) {
    *  at description
    *  id category
    */
-  var _json = '''
+  var json = '''
     {"width":990,"lines":[{"box2box1Min":"1","box1Name":"Category",
     "box1box2Min":"0","box2Name":"WebLink","category":"relationship",
     "box2box1Id":true,"box2box1Name":"category","box1box2Id":false,
@@ -28,7 +28,7 @@ LinkData fromJsonToLinkData(Domain domain, [String modelCode = 'default']) {
     "name":"url","type":"String","init":""},{"sequence":40,
     "category":"attribute","name":"description","type":"String","init":""}]}]}
   ''';
-  return new LinkData(fromMagicBoxes(_json, domain, modelCode));
+  return new LinkData(fromMagicBoxes(json, domain, modelCode));
 }
 
 class LinkData extends ModelEntries {

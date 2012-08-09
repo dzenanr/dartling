@@ -2,9 +2,9 @@
 
 lastSingleTest(Repo repo, String modelCode) {
   test('Test Title', () {
-    var domainData = repo.defaultDomainModels;
-    var session = domainData.newSession();
-    var modelData = domainData.getModelEntries(modelCode);
+    var models = repo.defaultDomainModels;
+    var session = models.newSession();
+    var entries = models.getModelEntries(modelCode);
 
 
   });
