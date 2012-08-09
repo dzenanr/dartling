@@ -5,9 +5,9 @@ lastGroupTest(Repo repo, String modelCode) {
   var modelData;
   group('Group Title', () {
     setUp(() {
-      domainData = repo.defaultDomainData;
+      domainData = repo.defaultDomainModels;
       session = domainData.newSession();
-      modelData = domainData.getModelData(modelCode);
+      modelData = domainData.getModelEntries(modelCode);
 
 
     });

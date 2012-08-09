@@ -53,7 +53,7 @@ abstract class EntitiesAction extends Action {
         state = 'done';
         if (!partOfTransaction) {
           session.past.add(this);
-          session.domainData.notifyActionReactions(this);
+          session.domainModels.notifyActionReactions(this);
         }
       }
     }
@@ -74,7 +74,7 @@ abstract class EntitiesAction extends Action {
       if (undone) {
         state = 'undone';
         if (!partOfTransaction) {
-          session.domainData.notifyActionReactions(this);
+          session.domainModels.notifyActionReactions(this);
         }
       }
     }
@@ -95,7 +95,7 @@ abstract class EntitiesAction extends Action {
       if (redone) {
         state = 'redone';
         if (!partOfTransaction) {
-          session.domainData.notifyActionReactions(this);
+          session.domainModels.notifyActionReactions(this);
         }
       }
     }
@@ -151,7 +151,7 @@ abstract class EntityAction extends Action {
         state = 'done';
         if (!partOfTransaction) {
           session.past.add(this);
-          session.domainData.notifyActionReactions(this);
+          session.domainModels.notifyActionReactions(this);
         }
       }
     }
@@ -174,7 +174,7 @@ abstract class EntityAction extends Action {
       if (undone) {
         state = 'undone';
         if (!partOfTransaction) {
-          session.domainData.notifyActionReactions(this);
+          session.domainModels.notifyActionReactions(this);
         }
       }
     }
@@ -197,7 +197,7 @@ abstract class EntityAction extends Action {
       if (redone) {
         state = 'redone';
         if (!partOfTransaction) {
-          session.domainData.notifyActionReactions(this);
+          session.domainModels.notifyActionReactions(this);
         }
       }
     }
@@ -259,7 +259,7 @@ class Transaction extends Action {
       if (done) {
         state = 'done';
         session.past.add(this);
-        session.domainData.notifyActionReactions(this);
+        session.domainModels.notifyActionReactions(this);
       } else {
         var undone = _actions.undoAll();
       }
@@ -273,7 +273,7 @@ class Transaction extends Action {
       undone = _actions.undoAll();
       if (undone) {
         state = 'undone';
-        session.domainData.notifyActionReactions(this);
+        session.domainModels.notifyActionReactions(this);
       } else {
         _actions.doAll();
       }
@@ -287,7 +287,7 @@ class Transaction extends Action {
       redone = _actions.redoAll();
       if (redone) {
         state = 'redone';
-        session.domainData.notifyActionReactions(this);
+        session.domainModels.notifyActionReactions(this);
       } else {
         _actions.undoAll();
       }

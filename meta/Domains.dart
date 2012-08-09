@@ -1,6 +1,10 @@
 
 class Domains extends Entities<Domain> {
 
+  Domain get defaultDomain() => findByCode('default');
+
+  Domain getDomain(String code) => findByCode(code);
+
 }
 
 class Domain extends Entity<Domain> {
@@ -32,11 +36,12 @@ class Domain extends Entity<Domain> {
     assert(types.count == 7);
   }
 
-  Domain getDomain(String code) => domains.findByCode(code);
+  Model get defaultModel() => models.defaultModel;
 
-  Model get defaultModel() => models.findByCode('default');
+  Domain getDomain(String code) => domains.findByCode(code);
 
   Model getModel(String code) => models.findByCode(code);
 
   Type getType(String code) => types.findByCode(code);
+
 }
