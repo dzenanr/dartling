@@ -38,9 +38,11 @@ testInstitutionData(Repo repo, String modelCode) {
   var ecoleConcept;
   var ecoleCount;
   var uLavalOid;
+  var entry ;
+  var data ;
   group('Testing Institution', () {
     setUp(() {
-<<<<<<< HEAD:test/institution/data.dart
+//<<<<<<< HEAD:test/institution/data.dart
       entry = fromJsonToEcoleEntry();
       data = entry.data;
       session = entry.newSession();
@@ -49,11 +51,11 @@ testInstitutionData(Repo repo, String modelCode) {
       expect(ecoleConcept, isNotNull);
       expect(ecoleConcept.attributes, isNot(isEmpty));
       expect(ecoleConcept.attributes.count, equals(3));
-=======
+//=======
       domainData = repo.defaultDomainData;
       session = domainData.newSession();
       modelData = domainData.getModelData(modelCode);
->>>>>>> 1b9b79fd25ffc25d4e7f19d2a04b1994890a7273:test/domain/model/institution/data.dart
+//>>>>>>> 1b9b79fd25ffc25d4e7f19d2a04b1994890a7273:test/domain/model/institution/data.dart
 
       ecoleCount = 0;
 
@@ -64,7 +66,7 @@ testInstitutionData(Repo repo, String modelCode) {
       ecoleConcept = ecoles.concept;
       expect(ecoleConcept, isNotNull);
       expect(ecoleConcept.attributes, isNot(isEmpty));
-      expect(ecoleConcept.attributes.count, equals(2));
+      expect(ecoleConcept.attributes.count, equals(3));
 
       var lavalHighScool = new Ecole(ecoleConcept);
       expect(lavalHighScool, isNotNull);
