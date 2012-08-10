@@ -6,6 +6,8 @@ abstract class CategoryGen extends Entity<Category> {
     setChild('webLinks', new WebLinks(webLinkConcept));
     Concept interestConcept = concept.model.concepts.findByCode('Interest');
     setChild('interests', new Interests(interestConcept));
+    Concept questionConcept = concept.model.concepts.findByCode('Question');
+    setChild('questions', new Questions(questionConcept));
   }
 
   CategoryGen.withId(Concept concept, String name) : super.of(concept) {
@@ -14,6 +16,8 @@ abstract class CategoryGen extends Entity<Category> {
     setChild('webLinks', new WebLinks(webLinkConcept));
     Concept interestConcept = concept.model.concepts.findByCode('Interest');
     setChild('interests', new Interests(interestConcept));
+    Concept questionConcept = concept.model.concepts.findByCode('Question');
+    setChild('questions', new Questions(questionConcept));
   }
 
   String get name() => getAttribute('name');
@@ -21,6 +25,9 @@ abstract class CategoryGen extends Entity<Category> {
 
   String get description() => getAttribute('description');
   set description(String a) => setAttribute('description', a);
+
+  bool get approved() => getAttribute('approved');
+  set approved(bool a) => setAttribute('approved', a);
 
   WebLinks get webLinks() => getChild('webLinks');
   Interests get interests() => getChild('interests');

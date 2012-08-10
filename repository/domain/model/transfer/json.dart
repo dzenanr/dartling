@@ -30,6 +30,12 @@ Model fromMagicBoxes(String json, Domain domain, [String modelCode = 'default'])
         String itemInit = item["init"];
         if (itemInit == null || itemInit.trim() == '') {
           attribute.init = null;
+        } else if (itemInit  == 'sensitive') {
+          attribute.sensitive = true;
+          attribute.init = null;
+        } else if (itemInit  == 'increment') {
+          attribute.increment = 1;
+          attribute.init = null;
         } else {
           attribute.init = itemInit;
         }

@@ -134,7 +134,6 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
     // required validation
     for (Attribute a in _concept.attributes) {
       if (a.increment != null) {
-        print('attribute increment');
         _lastIncrement == _lastIncrement + a.increment;
         entity.setAttribute(a.code, _lastIncrement);
       } else if (a.required && entity.getAttribute(a.code) == null) {

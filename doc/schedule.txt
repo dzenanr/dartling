@@ -2,6 +2,12 @@
 
 To do
 
+comment tests
+question tests
+  increment number
+  not required category (Question is entry)
+webLink tests 
+  updatedOn must be set to true if anything changed in the webLink
 persistance
 document code
 post
@@ -28,6 +34,12 @@ get random entity
 i18n
 indexes? (http://www.mattfleming.com/node/192)
 
+
+2012-08-09, 18:20
+Comment concept, Question conceptwith optional rship with Category
+
+2012-08-09, 15:15
+Interest concept with many-to-many relationship
 
 2012-08-09, 12:18
 ModelData -> ModelEntries, DomainData -> DomainModels

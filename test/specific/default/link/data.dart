@@ -62,7 +62,7 @@ testLinkData(Repo repo, String modelCode) {
 
       var dartHomeWebLink = new WebLink(webLinkConcept);
       expect(dartHomeWebLink, isNotNull);
-      dartHomeWebLink.name = 'Dart Home';
+      dartHomeWebLink.subject = 'Dart Home';
       dartHomeWebLink.url = new Uri.fromString('http://www.dartlang.org/');
       dartHomeWebLink.description =
           'Dart brings structure to web app engineering '
@@ -74,7 +74,7 @@ testLinkData(Repo repo, String modelCode) {
 
       var tryDartWebLink = new WebLink(webLinkConcept);
       expect(tryDartWebLink, isNotNull);
-      tryDartWebLink.name = 'Try Dart';
+      tryDartWebLink.subject = 'Try Dart';
       tryDartWebLink.url = new Uri.fromString('http://try.dartlang.org/');
       tryDartWebLink.description =
           'Try out the Dart Language from the comfort of your web browser.';
@@ -86,7 +86,7 @@ testLinkData(Repo repo, String modelCode) {
 
       var dartNewsWebLink = new WebLink(webLinkConcept);
       expect(dartNewsWebLink, isNotNull);
-      dartNewsWebLink.name = 'Dart News';
+      dartNewsWebLink.subject = 'Dart News';
       dartNewsWebLink.url = new Uri.fromString('http://news.dartlang.org/');
       dartNewsWebLink.description =
           'Official news from the Dart project.';
@@ -98,7 +98,7 @@ testLinkData(Repo repo, String modelCode) {
 
       var dartBugssWebLink = new WebLink(webLinkConcept);
       expect(dartBugssWebLink, isNotNull);
-      dartBugssWebLink.name = 'Dart Bugs';
+      dartBugssWebLink.subject = 'Dart Bugs';
       dartBugssWebLink.url = new Uri.fromString('????+\\dart&bug!hom');
       dartBugssWebLink.description = 'Dart error management.';
       expect(dartBugssWebLink.category, isNull);
@@ -110,7 +110,7 @@ testLinkData(Repo repo, String modelCode) {
       memberConcept = entries.memberConcept;
       expect(memberConcept, isNotNull);
       expect(memberConcept.attributes, isNot(isEmpty));
-      memberConcept.attributes.findByCode('password').sensitive = true;
+      //memberConcept.attributes.findByCode('password').sensitive = true;
 
       interestConcept = entries.interestConcept;
       expect(interestConcept, isNotNull);
@@ -192,10 +192,10 @@ testLinkData(Repo repo, String modelCode) {
       expect(dartWebLinks.count == dartWebLinkCount);
       Id dartHomeId = new Id(entries.webLinkConcept);
       dartHomeId.setParent('category', dartCategory);
-      dartHomeId.setAttribute('name', 'Dart Home');
+      dartHomeId.setAttribute('subject', 'Dart Home');
       WebLink dartHomeWebLink = dartWebLinks.findById(dartHomeId);
       expect(dartHomeWebLink, isNotNull);
-      expect(dartHomeWebLink.name, equals('Dart Home'));
+      expect(dartHomeWebLink.subject, equals('Dart Home'));
     });
     test('Order Categories by Id (code not used, id is name)', () {
       Categories orderedCategories = categories.order();
@@ -243,7 +243,7 @@ testLinkData(Repo repo, String modelCode) {
       var dartHomeWebLink = new WebLink(webLinkConcept);
       expect(dartHomeWebLink, isNotNull);
       expect(dartHomeWebLink.category, isNull);
-      dartHomeWebLink.name = 'Dart Home';
+      dartHomeWebLink.subject = 'Dart Home';
       dartHomeWebLink.url = new Uri.fromString('http://www.dartlang.org/');
       dartHomeWebLink.description =
           'Dart brings structure to web app engineering '
@@ -383,7 +383,7 @@ testLinkData(Repo repo, String modelCode) {
 
       var wicketWebLink = new WebLink(webLinkConcept);
       expect(wicketWebLink, isNotNull);
-      wicketWebLink.name = 'Wicket';
+      wicketWebLink.subject = 'Wicket';
       wicketWebLink.url = new Uri.fromString('http://wicket.apache.org/');
       wicketWebLink.description =
           'With proper mark-up/logic separation, a POJO data model, '
@@ -508,8 +508,8 @@ testLinkData(Repo repo, String modelCode) {
       expect(html5.interests.errors.count, equals(1));
       expect(html5.interests.errors.list[0].category, equals('unique'));
 
-      //dzenan.display('dzenan: ', withChildren:false);
-      //html5.display('html5: ', withChildren:false);
+      dzenan.display('dzenan: ', withChildren:false);
+      html5.display('html5: ', withChildren:false);
 
       dzenan.interests.errors.display('Dzenan: Add Interest Unique Error');
       html5.interests.errors.display('HTML5: Add Interest Unique Error');

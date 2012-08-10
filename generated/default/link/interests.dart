@@ -3,7 +3,7 @@ abstract class InterestGen extends Entity<Interest> {
 
   InterestGen(Concept concept) : super.of(concept);
 
-  InterestGen.withIds(Concept concept,
+  InterestGen.withId(Concept concept,
       Member member, Category category) : super.of(concept) {
     setParent('member', member);
     setParent('category', category);

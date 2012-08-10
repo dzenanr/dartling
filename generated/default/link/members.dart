@@ -23,8 +23,8 @@ abstract class MemberGen extends Entity<Member> {
   String get lastName() => getAttribute('lastName');
   set lastName(String a) => setAttribute('lastName', a);
 
-  Date get started() => getAttribute('started');
-  set started(Date a) => setAttribute('started', a);
+  Date get startedOn() => getAttribute('startedOn');
+  set startedOn(Date a) => setAttribute('startedOn', a);
 
   bool get receiveEmail() => getAttribute('receiveEmail');
   set receiveEmail(bool a) => setAttribute('receiveEmail', a);
