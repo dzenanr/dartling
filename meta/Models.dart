@@ -1,6 +1,8 @@
 
 class Models extends Entities<Model> {
 
+  Model get defaultModel() => findByCode('default');
+
 }
 
 class Model extends Entity<Model> {
@@ -30,9 +32,9 @@ class Model extends Entity<Model> {
     return concept;
   }
 
-  Concept getConcept(String code) => concepts.findByCode(code);
-
   int get conceptCount() => concepts.length;
+
+  Concept getConcept(String code) => concepts.findByCode(code);
 
 }
 

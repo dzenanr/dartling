@@ -3,17 +3,17 @@ class Repo {
 
   Domains _domains;
 
-  Map<String, DomainData> _domainDataMap;
+  Map<String, DomainModels> _domainModelsMap;
 
   Repo(this._domains) {
-    _domainDataMap = new Map<String, DomainData>();
+    _domainModelsMap = new Map<String, DomainModels>();
   }
 
-  bool add(DomainData domainData) {
-    var code = domainData.domain.code;
-    var dd = getDomainData(code);
-    if (dd == null) {
-      _domainDataMap[code] = domainData;
+  bool add(DomainModels domainModels) {
+    var code = domainModels.domain.code;
+    var models = getDomainModels(code);
+    if (models == null) {
+      _domainModelsMap[code] = domainModels;
     } else {
       throw new CodeException('$code domain code exists already in the repository.');
     }
@@ -21,8 +21,8 @@ class Repo {
 
   Domains get domains() => _domains;
 
-  DomainData get defaultDomainData() => _domainDataMap['default'];
+  DomainModels get defaultDomainModels() => _domainModelsMap['default'];
 
-  DomainData getDomainData(String code) => _domainDataMap[code];
+  DomainModels getDomainModels(String code) => _domainModelsMap[code];
 
 }

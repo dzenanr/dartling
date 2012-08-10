@@ -1,14 +1,14 @@
 
 class DomainSession {
 
-  DomainData _domainData;
+  DomainModels _domainModels;
   Past _past;
 
-  DomainSession(this._domainData) {
+  DomainSession(this._domainModels) {
     _past = new Past();
   }
 
-  DomainData get domainData() => _domainData;
+  DomainModels get domainModels() => _domainModels;
   Past get past() => _past;
 
 }

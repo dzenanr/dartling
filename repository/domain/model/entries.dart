@@ -1,0 +1,25 @@
+
+class ModelEntries {
+
+  Model _model;
+
+  Map<String, Entities> _entryEntitiesMap;
+
+  ModelEntries(this._model) {
+    _entryEntitiesMap = newEntries();
+  }
+
+  Map<String, Entities> newEntries() {
+    var entries = new Map<String, Entities>();
+    _model.entryConcepts.forEach((c)
+      {var entryEntities = new Entities.of(c);
+      entries[c.code] = entryEntities;
+      });
+    return entries;
+  }
+
+  Model get model() => _model;
+
+  Entities getEntry(String code) => _entryEntitiesMap[code];
+
+}
