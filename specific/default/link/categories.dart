@@ -7,6 +7,8 @@ class Category extends CategoryGen {
     setAttribute('name', name);
     Concept webLinkConcept = concept.model.concepts.findByCode('WebLink');
     setChild('webLinks', new WebLinks(webLinkConcept));
+    Concept interestConcept = concept.model.concepts.findByCode('Interest');
+    setChild('interests', new Interests(interestConcept));
   }
 
 }

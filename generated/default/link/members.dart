@@ -1,11 +1,17 @@
 
 abstract class MemberGen extends Entity<Member> {
 
-  MemberGen(Concept concept) : super.of(concept);
+  MemberGen(Concept concept) : super.of(concept) {
+    Concept interestConcept = concept.model.concepts.findByCode('Interest');
+    setChild('interests', new Interests(interestConcept));
+  }
 
-  MemberGen.withIds(Concept concept, String code, String email) : super.of(concept) {
+  MemberGen.withIds(Concept concept,
+      String code, String email) : super.of(concept) {
     this.code = code;
     setAttribute('email', email);
+    Concept interestConcept = concept.model.concepts.findByCode('Interest');
+    setChild('interests', new Interests(interestConcept));
   }
 
   String get email() => getAttribute('email');
@@ -34,6 +40,8 @@ abstract class MemberGen extends Entity<Member> {
 
   String get about() => getAttribute('about');
   set about(String a) => setAttribute('about', a);
+
+  Interests get interests() => getChild('interests');
 
   Member newEntity() => new Member(concept);
 

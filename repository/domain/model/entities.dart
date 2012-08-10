@@ -429,7 +429,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
   /**
   * Displays (prints) a title, then entities.
   */
-  display([String title='Entities', bool withOid=true]) {
+  display([String title='Entities', bool withOid=true, bool withChildren=true]) {
     if (title != '') {
       print('');
       print('======================================');
@@ -438,7 +438,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
       print('');
     }
     for (T e in _entityList) {
-      e.display('', withOid);
+      e.display('', withOid, withChildren);
     }
   }
 

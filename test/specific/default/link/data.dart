@@ -4,25 +4,32 @@ testLinkData(Repo repo, String modelCode) {
   var session;
   var entries;
   var categories;
+  var categoryCount = 0;
   var categoryConcept;
   var webLinkConcept;
-  var categoryCount = 0;
-  var dartCategoryWebLinkCount;
+  var dartWebLinkCount = 0;
+  var members;
+  var memberConcept;
+  var memberCount = 0;
+  var interestConcept;
+  var dzenanInterestCount = 0;
+  var dartInterestCount = 0;
+  var html5InterestCount = 0;
+  var dzenanOid;
   group('Testing Link', () {
     setUp(() {
       models = repo.defaultDomainModels;
       session = models.newSession();
       entries = models.getModelEntries(modelCode);
-      
+
       categoryConcept = entries.categoryConcept;
       expect(categoryConcept, isNotNull);
       expect(categoryConcept.attributes, isNot(isEmpty));
-      expect(categoryConcept.attributes.count, equals(2));
-      
+
       webLinkConcept = entries.webLinkConcept;
       expect(webLinkConcept, isNotNull);
       expect(webLinkConcept.attributes, isNot(isEmpty));
-      expect(webLinkConcept.attributes.count, equals(3));
+      expect(webLinkConcept.parents.count, equals(1));
 
       categories = entries.categories;
       expect(categories, isNotNull);
@@ -53,8 +60,6 @@ testLinkData(Repo repo, String modelCode) {
       categories.add(css3Category);
       expect(categories.count, equals(++categoryCount));
 
-      dartCategoryWebLinkCount = 0;
-
       var dartHomeWebLink = new WebLink(webLinkConcept);
       expect(dartHomeWebLink, isNotNull);
       dartHomeWebLink.name = 'Dart Home';
@@ -65,7 +70,7 @@ testLinkData(Repo repo, String modelCode) {
       dartHomeWebLink.category = dartCategory;
       expect(dartHomeWebLink.category, isNotNull);
       dartCategory.webLinks.add(dartHomeWebLink);
-      expect(dartCategory.webLinks.count == ++dartCategoryWebLinkCount);
+      expect(dartCategory.webLinks.count == ++dartWebLinkCount);
 
       var tryDartWebLink = new WebLink(webLinkConcept);
       expect(tryDartWebLink, isNotNull);
@@ -77,7 +82,7 @@ testLinkData(Repo repo, String modelCode) {
       tryDartWebLink.category = dartCategory;
       expect(tryDartWebLink.category, isNotNull);
       dartCategory.webLinks.add(tryDartWebLink);
-      expect(dartCategory.webLinks.count, equals(++dartCategoryWebLinkCount));
+      expect(dartCategory.webLinks.count, equals(++dartWebLinkCount));
 
       var dartNewsWebLink = new WebLink(webLinkConcept);
       expect(dartNewsWebLink, isNotNull);
@@ -89,7 +94,7 @@ testLinkData(Repo repo, String modelCode) {
       dartNewsWebLink.category = dartCategory;
       expect(dartNewsWebLink.category, isNotNull);
       dartCategory.webLinks.add(dartNewsWebLink);
-      expect(dartCategory.webLinks.count, equals(++dartCategoryWebLinkCount));
+      expect(dartCategory.webLinks.count, equals(++dartWebLinkCount));
 
       var dartBugssWebLink = new WebLink(webLinkConcept);
       expect(dartBugssWebLink, isNotNull);
@@ -100,12 +105,81 @@ testLinkData(Repo repo, String modelCode) {
       dartBugssWebLink.category = dartCategory;
       expect(dartBugssWebLink.category, isNotNull);
       dartCategory.webLinks.add(dartBugssWebLink);
-      expect(dartCategory.webLinks.count, equals(++dartCategoryWebLinkCount));
+      expect(dartCategory.webLinks.count, equals(++dartWebLinkCount));
+
+      memberConcept = entries.memberConcept;
+      expect(memberConcept, isNotNull);
+      expect(memberConcept.attributes, isNot(isEmpty));
+      memberConcept.attributes.findByCode('password').sensitive = true;
+
+      interestConcept = entries.interestConcept;
+      expect(interestConcept, isNotNull);
+      expect(interestConcept.attributes, isNot(isEmpty));
+      expect(interestConcept.parents.count, equals(2));
+
+      members = entries.members;
+      expect(members, isNotNull);
+      expect(members.count, equals(memberCount));
+
+      var dzenan = new Member(memberConcept);
+      expect(dzenan, isNotNull);
+      dzenan.code = 'dzenanr';
+      dzenan.password = 'drifting09';
+      dzenan.firstName = 'Dzenan';
+      dzenan.lastName = 'Ridjanovic';
+      dzenan.email = 'dzenanr@gmail.com';
+      dzenan.receiveEmail = true;
+      dzenan.role = 'admin';
+      dzenan.karma = 17.9;
+      dzenan.about = '''I like to walk, hike and stop to have a good bite and drink. 
+    In addition, my name is Denan Ri?anovi? (Dzenan Ridjanovic). 
+    I am an associate professor in the Business School at the 
+    Laval University (Universit Laval), Quebec, Canada. 
+    I received a B.Sc. in informatics from the University of Sarajevo, 
+    an M.Sc. in computer science from the University of Maryland, 
+    and a Ph.D. in management information systems from the 
+    University of Minnesota. My research interests are in the 
+    spiral development of domain models and dynamic web applications
+    with NoSQL databases.''';
+      members.add(dzenan);
+      expect(members.count, equals(++memberCount));
+      dzenanOid = dzenan.oid;
+      expect(dzenanOid, isNotNull);
+
+      var claudeb = new Member(memberConcept);
+      expect(claudeb, isNotNull);
+      claudeb.code = 'claudeb';
+      claudeb.password = 'claudeb8527';
+      claudeb.firstName = 'Claude';
+      claudeb.lastName = 'Begin';
+      claudeb.email = 'claude.begin@hotmail.com';
+      members.add(claudeb);
+      expect(members.count, equals(++memberCount));
+
+      var dzenanDartInterest = new Interest(interestConcept);
+      expect(dzenanDartInterest, isNotNull);
+      dzenanDartInterest.description =
+          'I am interested in web software developed in Dart.';
+      expect(dzenanDartInterest.member, isNull);
+      expect(dzenanDartInterest.category, isNull);
+      dzenanDartInterest.member = dzenan;
+      dzenanDartInterest.category = dartCategory;
+      dzenan.interests.add(dzenanDartInterest);
+      dartCategory.interests.add(dzenanDartInterest);
+      expect(dzenan.interests.count, equals(++dzenanInterestCount));
+      expect(dartCategory.interests.count, equals(++dartInterestCount));
     });
     tearDown(() {
       categories.clear();
       expect(categories.count, equals(0));
+      members.clear();
+      expect(members.count, equals(0));
       categoryCount = 0;
+      dartWebLinkCount = 0;
+      memberCount = 0;
+      dzenanInterestCount = 0;
+      dartInterestCount = 0;
+      html5InterestCount = 0;
     });
     test('Find Category and Web Link by Id', () {
       Id categoryId = new Id(entries.categoryConcept);
@@ -115,7 +189,7 @@ testLinkData(Repo repo, String modelCode) {
       expect(dartCategory.name, equals('Dart'));
 
       WebLinks dartWebLinks = dartCategory.webLinks;
-      expect(dartWebLinks.count == dartCategoryWebLinkCount);
+      expect(dartWebLinks.count == dartWebLinkCount);
       Id dartHomeId = new Id(entries.webLinkConcept);
       dartHomeId.setParent('category', dartCategory);
       dartHomeId.setAttribute('name', 'Dart Home');
@@ -139,16 +213,16 @@ testLinkData(Repo repo, String modelCode) {
       Category dartCategory = categories.findByAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
       WebLinks dartWebLinks = dartCategory.webLinks;
-      expect(dartWebLinks.count, equals(dartCategoryWebLinkCount));
+      expect(dartWebLinks.count, equals(dartWebLinkCount));
 
       WebLinks orderedDartWebLinks = dartWebLinks.order();
       expect(orderedDartWebLinks, isNotNull);
       expect(orderedDartWebLinks, isNot(isEmpty));
-      expect(orderedDartWebLinks.count, equals(dartCategoryWebLinkCount));
+      expect(orderedDartWebLinks.count, equals(dartWebLinkCount));
       expect(orderedDartWebLinks.source, isNotNull);
       expect(orderedDartWebLinks.source, isNot(isEmpty));
       expect(orderedDartWebLinks.source.count,
-        equals(dartCategoryWebLinkCount));
+        equals(dartWebLinkCount));
 
       orderedDartWebLinks.display('Ordered Dart Web Links');
     });
@@ -175,7 +249,7 @@ testLinkData(Repo repo, String modelCode) {
           'Dart brings structure to web app engineering '
           'with a new language, libraries, and tools.';
       dartCategory.webLinks.add(dartHomeWebLink);
-      expect(dartCategory.webLinks.count, equals(dartCategoryWebLinkCount));
+      expect(dartCategory.webLinks.count, equals(dartWebLinkCount));
       expect(dartCategory.webLinks.errors.count, equals(1));
       expect(dartCategory.webLinks.errors.list[0].category, equals('required'));
       dartCategory.webLinks.errors.display('WebLink Error');
@@ -341,6 +415,104 @@ testLinkData(Repo repo, String modelCode) {
       expect(category, isNotNull);
       expect(category.webLinks.count, equals(1));
       categories.display('Transaction on Two Different Concepts Redone');
+    });
+    test('Find Member by Oid', () {
+      var dzenan = members.find(dzenanOid);
+      expect(dzenan, isNotNull);
+      expect(dzenan.firstName == 'Dzenan');
+    });
+    test('Find Member by Attribute Id', () {
+      var search = 'dzenanr@gmail.com';
+      Member member = members.findByAttributeId('email', search);
+      expect(members, isNotNull);
+      expect(member.email, equals(search));
+    });
+    test('Find Category by Attribute Id', () {
+      var search = 'Dart';
+      var dart = categories.findByAttributeId('name', search);
+      expect(dart, isNotNull);
+      expect(dart.name, equals(search));
+    });
+    test('Add New Interest', () {
+      var dzenan = members.find(dzenanOid);
+      expect(dzenan, isNotNull);
+      expect(dzenan.firstName == 'Dzenan');
+
+      var search = 'HTML5';
+      var html5 = categories.findByAttributeId('name', search);
+      expect(html5, isNotNull);
+      expect(html5.name, equals(search));
+
+      var dzenanHtml5Interest = new Interest(interestConcept);
+      expect(dzenanHtml5Interest, isNotNull);
+      dzenanHtml5Interest.description =
+          'I am interested in canvas and other modern elements of HTML5.';
+      dzenanHtml5Interest.member = dzenan;
+      dzenanHtml5Interest.category = html5;
+      dzenan.interests.add(dzenanHtml5Interest);
+      html5.interests.add(dzenanHtml5Interest);
+      expect(dzenan.interests.count, equals(++dzenanInterestCount));
+      expect(html5.interests.count, equals(++html5InterestCount));
+
+      categories.display('Categories', withChildren:false);
+      dzenan.interests.display("Dzenan's Interests");
+    });
+    test('Add Interest Required Error', () {
+      var dzenan = members.find(dzenanOid);
+      expect(dzenan, isNotNull);
+      expect(dzenan.firstName == 'Dzenan');
+
+      var dzenanHtml5Interest = new Interest(interestConcept);
+      expect(dzenanHtml5Interest, isNotNull);
+      dzenanHtml5Interest.description =
+          'I am interested in canvas and other modern elements of HTML5.';
+      dzenanHtml5Interest.member = dzenan;
+      dzenan.interests.add(dzenanHtml5Interest);
+      expect(dzenan.interests.count, equals(dzenanInterestCount));
+      expect(dzenan.interests.errors.count, equals(1));
+      expect(dzenan.interests.errors.list[0].category, equals('required'));
+
+      dzenan.interests.errors.display('Add Interest Required Error');
+    });
+    test('Add Interest Unique Error', () {
+      var dzenan = members.find(dzenanOid);
+      expect(dzenan, isNotNull);
+      expect(dzenan.firstName == 'Dzenan');
+
+      var search = 'HTML5';
+      var html5 = categories.findByAttributeId('name', search);
+      expect(html5, isNotNull);
+      expect(html5.name, equals(search));
+
+      var dzenanHtml5Interest = new Interest(interestConcept);
+      expect(dzenanHtml5Interest, isNotNull);
+      dzenanHtml5Interest.description =
+          'I am interested in canvas and other modern elements of HTML5.';
+      dzenanHtml5Interest.member = dzenan;
+      dzenanHtml5Interest.category = html5;
+      dzenan.interests.add(dzenanHtml5Interest);
+      html5.interests.add(dzenanHtml5Interest);
+      expect(dzenan.interests.count, equals(++dzenanInterestCount));
+      expect(html5.interests.count, equals(++html5InterestCount));
+
+      var dzenanHtmlInterest = new Interest(interestConcept);
+      expect(dzenanHtmlInterest, isNotNull);
+      dzenanHtmlInterest.member = dzenan;
+      dzenanHtmlInterest.category = html5;
+      dzenan.interests.add(dzenanHtmlInterest);
+      html5.interests.add(dzenanHtmlInterest);
+      expect(dzenan.interests.count, equals(dzenanInterestCount));
+      expect(dzenan.interests.errors.count, equals(1));
+      expect(dzenan.interests.errors.list[0].category, equals('unique'));
+      expect(html5.interests.count, equals(html5InterestCount));
+      expect(html5.interests.errors.count, equals(1));
+      expect(html5.interests.errors.list[0].category, equals('unique'));
+
+      //dzenan.display('dzenan: ', withChildren:false);
+      //html5.display('html5: ', withChildren:false);
+
+      dzenan.interests.errors.display('Dzenan: Add Interest Unique Error');
+      html5.interests.errors.display('HTML5: Add Interest Unique Error');
     });
 
   });

@@ -1,9 +1,11 @@
-Dartling Schedule
+ Dartling Schedule
 
 To do
 
 persistance
 document code
+post
+json pretty formating for Dartling
 Uri validation for well formed uri (not done in Uri)
   https://github.com/berkerpeksag/murl#readme
   ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
@@ -15,13 +17,14 @@ money type
 telephone type
 postal code type
 zip code type
+marketing
+  https://talentopoly.com/posts/5440-episode_36_-_how_to_get_traction_for_your_projects
 
 logging 
   http://www.trottercashion.com/2012/08/12/how-to-write-good-log-messages.html
 attribute validations (type, length)?
 constraints?
 get random entity
-post
 i18n
 indexes? (http://www.mattfleming.com/node/192)
 

@@ -372,7 +372,7 @@ class Entity<T extends Entity<T>> implements EntityApi {
   /**
    * Displays (prints) an entity with its attributes, parents and children.
    */
-  display([String space='', bool withOid=true]) {
+  display([String space='', bool withOid=true, bool withChildren=true]) {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
@@ -409,14 +409,16 @@ class Entity<T extends Entity<T>> implements EntityApi {
       }
     });
 
-    _childMap.forEach((k,v) {
-      print('${s}$k:');
-      if (_concept.isChildSensitive(k)) {
-        print('**********');
-      } else {
-        v.display(s, withOid);
-      }
-    });
+    if (withChildren) {
+      _childMap.forEach((k,v) {
+        print('${s}$k:');
+        if (_concept.isChildSensitive(k)) {
+          print('**********');
+        } else {
+          v.display(s, withOid);
+        }
+      });
+    }
 
     print('');
   }

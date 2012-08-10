@@ -1,6 +1,6 @@
 
 InstitutionEntries fromJsonToInstitutionEntries(Domain domain,
-                                          [String modelCode = 'default']) {
+                                                [String modelCode = 'default']) {
   /**
    *  || Ecole
    *  id numero

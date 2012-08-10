@@ -9,7 +9,7 @@ class Error extends Entity<Error> {
   /**
    * Displays (prints) an error.
    */
-  display([String space='', bool withOid=true]) {
+  display([String space='', bool withOid=true, bool withChildren=true]) {
     print('${space}******************************************');
     print('${space}${category}                               ');
     print('${space}******************************************');

@@ -41,11 +41,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #source('generated/default/link/categories.dart');
 #source('generated/default/link/entries.dart');
+#source('generated/default/link/interests.dart');
+#source('generated/default/link/members.dart');
 #source('generated/default/link/webLinks.dart');
 #source('generated/default/project/entries.dart');
 #source('generated/default/project/projects.dart');
 #source('generated/default/user/entries.dart');
-#source('generated/default/user/members.dart');
+#source('generated/default/user/users.dart');
 
 #source('meta/attributes.dart');
 #source('meta/children.dart');
@@ -74,9 +76,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('specific/dc/institution/ecoles.dart');
 
 #source('specific/default/link/categories.dart');
+#source('specific/default/link/interests.dart');
+#source('specific/default/link/members.dart');
 #source('specific/default/link/webLinks.dart');
 #source('specific/default/project/projects.dart');
-#source('specific/default/user/members.dart');
+#source('specific/default/user/users.dart');
 
 #source('test/specific/dc/institution/data.dart');
 #source('test/specific/default/link/data.dart');

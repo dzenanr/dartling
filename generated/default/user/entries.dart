@@ -1,7 +1,8 @@
 
-UserEntries fromJsonToUserEntries(Domain domain, [String modelCode = 'default']) {
+UserEntries fromJsonToUserEntries(Domain domain,
+                                  [String modelCode = 'default']) {
   /**
-   *  || Member (code)
+   *  || User (code)
    *  id email : String
    *  rq firstName : String
    *  rq lastName : String
@@ -16,7 +17,7 @@ UserEntries fromJsonToUserEntries(Domain domain, [String modelCode = 'default'])
       {"width":990,"height":580,
        "lines":[],
        "boxes":[
-        {"entry":true,"name":"Member",
+        {"entry":true,"name":"User",
          "x":207,"y":160,"width":100,"height":180,
          "items":[
           {"sequence":10,"category":"identifier","name":"email",
@@ -50,13 +51,13 @@ class UserEntries extends ModelEntries {
 
   Map<String, Entities> newEntries() {
     var entries = new Map<String, Entities>();
-    var concept = model.concepts.findByCode('Member');
-    entries[concept.code] = new Members(concept);
+    var concept = model.concepts.findByCode('User');
+    entries[concept.code] = new Users(concept);
     return entries;
   }
 
-  Members get members() => getEntry('Member');
+  Users get users() => getEntry('User');
 
-  Concept get memberConcept() => members.concept;
+  Concept get userConcept() => users.concept;
 
 }
