@@ -22,14 +22,14 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
   var ecoleConcept;
   var ecoleCount = 0;
   var uLavalOid;
-<<<<<<< HEAD:test/specific/dc/institution/data.dart
   var entry ;
   var data ;
+  var domainData;
+  var modelData;
   group('Testing Institution', () {
     setUp(() {
-//<<<<<<< HEAD:test/domain/model/institution/data.dart
-//<<<<<<< HEAD:test/institution/data.dart
-      entry = fromJsonToEcoleEntry();
+      domainData = repo.domains;
+      entry = fromJsonToInstitutionEntries(domainData,modelCode);
       data = entry.data;
       session = entry.newSession();
 
@@ -37,23 +37,20 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
       expect(ecoleConcept, isNotNull);
       expect(ecoleConcept.attributes, isNot(isEmpty));
       expect(ecoleConcept.attributes.count, equals(3));
-//=======
-      domainData = repo.defaultDomainData;
+     
       session = domainData.newSession();
       modelData = domainData.getModelData(modelCode);
-//>>>>>>> 1b9b79fd25ffc25d4e7f19d2a04b1994890a7273:test/domain/model/institution/data.dart
-
       ecoleCount = 0;
-//=======
-      models = repo.defaultDomainModels;
-=======
+
+      models = repo.getDomainModels(domainCode);
+
   group('Testing ${domainCode}.${modelCode}', () {
     setUp(() {
       models = repo.getDomainModels(domainCode);
->>>>>>> 58ab40c018dab9b7746e596f6f689652c19b2db8:test/specific/davidCurtis/institution/data.dart
+
       session = models.newSession();
       entries = models.getModelEntries(modelCode);
->>>>>>> c7aa936db6f8e4b3d402245179b2b27147c2f469:test/specific/dc/institution/data.dart
+
 
       ecoles = entries.ecoles;
       expect(ecoles, isNotNull);
@@ -210,5 +207,3 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
     });
 
   });
-}
-
