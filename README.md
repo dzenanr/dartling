@@ -10,7 +10,7 @@ A graphical model designed in MagicBoxes (https://github.com/dzenanr/MagicBoxes)
 
 Dartling API
 
-To understand what you can do with Dartling examine its API defined in EntitiesApi and EntityApi abstract classes.
+To understand what you can do with Dartling examine its API defined in abstract classes with Api at the end of their names. The two most important are EntitiesApi and EntityApi.
 
 The following short examples show how the API is used for the Project concept that has only two attributes: name and description. The name attribute is also an identifier.
 

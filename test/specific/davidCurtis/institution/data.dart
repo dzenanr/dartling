@@ -1,5 +1,5 @@
 
-class EcoleReaction implements ActionReaction {
+class EcoleReaction implements ActionReactionApi {
 
   bool reactedOnAdd = false;
   bool reactedOnUpdate = false;

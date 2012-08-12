@@ -1,5 +1,13 @@
 
-class Repo {
+abstract class RepoApi {
+
+  abstract add(DomainModelsApi domainModels);
+  abstract Domains get domains();
+  abstract DomainModelsApi getDomainModels(String domainCode);
+
+}
+
+class Repo implements RepoApi {
 
   Domains _domains;
 

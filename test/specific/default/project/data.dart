@@ -1,5 +1,5 @@
 
-class ProjectActionReaction implements ActionReaction {
+class ProjectActionReaction implements ActionReactionApi {
 
   bool reactedOnAdd = false;
   bool reactedOnUpdate = false;
@@ -58,7 +58,7 @@ class ProjectActionReaction implements ActionReaction {
 
 }
 
-class ProjectPastReaction implements PastReaction {
+class ProjectPastReaction implements PastReactionApi {
 
   var models;
 

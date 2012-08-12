@@ -7,6 +7,26 @@ abstract class ActionApi {
 
 }
 
+abstract class TransactionApi extends ActionApi {
+
+  abstract add(ActionApi action);
+
+}
+
+abstract class PastApi implements SourceOfPastReactionApi {
+
+  abstract add(ActionApi action);
+  abstract clear();
+  abstract bool get empty();
+  abstract bool doit();
+  abstract bool undo();
+  abstract bool redo();
+  abstract bool doAll();
+  abstract bool undoAll();
+  abstract bool redoAll();
+
+}
+
 abstract class Action implements ActionApi {
 
   String name;
@@ -247,7 +267,7 @@ class SetChildAction extends EntityAction {
 
 }
 
-class Transaction extends Action {
+class Transaction extends Action implements TransactionApi {
 
   Past _actions;
 
@@ -305,16 +325,16 @@ class Transaction extends Action {
 
 }
 
-class Past implements SourceOfPastReaction {
+class Past implements PastApi {
 
   int cursor = 0;
   List<Action> _actions;
 
-  List<PastReaction> _pastReactions;
+  List<PastReactionApi> _pastReactions;
 
   Past() {
     _actions = new List<Action>();
-    _pastReactions = new List<PastReaction>();
+    _pastReactions = new List<PastReactionApi>();
   }
 
   add(Action action) {
@@ -415,20 +435,20 @@ class Past implements SourceOfPastReaction {
     return allRedone;
   }
 
-  startPastReaction(PastReaction reaction) => _pastReactions.add(reaction);
-  cancelPastReaction(PastReaction reaction) {
+  startPastReaction(PastReactionApi reaction) => _pastReactions.add(reaction);
+  cancelPastReaction(PastReactionApi reaction) {
     int index = _pastReactions.indexOf(reaction, 0);
     _pastReactions.removeRange(index, 1);
   }
 
   notifyNoPast() {
-    for (PastReaction reaction in _pastReactions) {
+    for (PastReactionApi reaction in _pastReactions) {
       reaction.reactNoPast();
     }
   }
 
   notifyYesPast() {
-    for (PastReaction reaction in _pastReactions) {
+    for (PastReactionApi reaction in _pastReactions) {
       reaction.reactYesPast();
     }
   }

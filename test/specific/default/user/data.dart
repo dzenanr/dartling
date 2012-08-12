@@ -1,5 +1,5 @@
 
-class UserReaction implements ActionReaction {
+class UserReaction implements ActionReactionApi {
 
   bool reactedOnAdd = false;
   bool reactedOnUpdate = false;
