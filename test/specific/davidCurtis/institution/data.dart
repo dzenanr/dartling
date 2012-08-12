@@ -14,7 +14,7 @@ class EcoleReaction implements ActionReaction {
 
 }
 
-testInstitutionData(Repo repo, String modelCode) {
+testInstitutionData(Repo repo, String domainCode, String modelCode) {
   var models;
   var session;
   var entries;
@@ -22,9 +22,9 @@ testInstitutionData(Repo repo, String modelCode) {
   var ecoleConcept;
   var ecoleCount = 0;
   var uLavalOid;
-  group('Testing Institution', () {
+  group('Testing ${domainCode}.${modelCode}', () {
     setUp(() {
-      models = repo.defaultDomainModels;
+      models = repo.getDomainModels(domainCode);
       session = models.newSession();
       entries = models.getModelEntries(modelCode);
 

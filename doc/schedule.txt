@@ -1,17 +1,31 @@
- Dartling Schedule
+Dartling Schedule
+
+To do in Magic Boxes
+
+open model shows twin relationships as one line
 
 To do
 
 comment tests
 question tests
-  increment number
   not required category (Question is entry)
+response tests
+  increment number
 webLink tests 
   updatedOn must be set to true if anything changed in the webLink
+category tests
+  reflexive relationship
+  derived path (update json transfer)
+member following tests
+  twin relationships
+  
 persistance
 document code
+  http://www.dartlang.org/docs/language-tour/#comments
+  http://japhr.blogspot.ca/2012/03/pretty-dartdoc.html
+  http://www.dotnetcodegeeks.com/2012/03/10-best-practices-of-code-commenting.html
 post
-json pretty formating for Dartling
+json pretty formatting for Dartling
 Uri validation for well formed uri (not done in Uri)
   https://github.com/berkerpeksag/murl#readme
   ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
@@ -25,18 +39,25 @@ postal code type
 zip code type
 marketing
   https://talentopoly.com/posts/5440-episode_36_-_how_to_get_traction_for_your_projects
+  http://blog.stackoverflow.com/2011/05/community-promotion-ads/
 
 logging 
   http://www.trottercashion.com/2012/08/12/how-to-write-good-log-messages.html
 attribute validations (type, length)?
 constraints?
 get random entity
+get random value for different types (for test data)
 i18n
 indexes? (http://www.mattfleming.com/node/192)
 
 
+2012-08-11, 20:03
+CategoryQuestion domain with the Link model
+some renaming
+readme
+
 2012-08-09, 18:20
-Comment concept, Question conceptwith optional rship with Category
+Comment concept, Question concept with optional rship with Category
 
 2012-08-09, 15:15
 Interest concept with many-to-many relationship

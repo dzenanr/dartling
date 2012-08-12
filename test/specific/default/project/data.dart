@@ -26,7 +26,6 @@ class ProjectActionReaction implements ActionReaction {
 
   updateProjectDescription(String projectName, String projectDescription) {
     var project = projects.findByAttribute('name', projectName);
-    assert(project != null);
 
     models.startActionReaction(this);
     var action = new SetAttributeAction(
@@ -81,17 +80,14 @@ class ProjectPastReaction implements PastReaction {
 
 testProjectData(Repo repo, String modelCode) {
   var models;
-  var session;
-  var entries;
   var projects;
   var projectConcept;
   var projectCount = 0;
   var dartlingOid;
-  group('Testing Project', () {
+  group('Testing ${modelCode}', () {
     setUp(() {
-      models = repo.defaultDomainModels;
-      session = models.newSession();
-      entries = models.getModelEntries(modelCode);
+      models = repo.getDomainModels('Default');
+      var entries = models.getModelEntries(modelCode);
 
       projects = entries.projects;
       expect(projects, isNotNull);
@@ -100,7 +96,6 @@ testProjectData(Repo repo, String modelCode) {
       projectConcept = projects.concept;
       expect(projectConcept, isNotNull);
       expect(projectConcept.attributes, isNot(isEmpty));
-      expect(projectConcept.attributes.count, equals(2));
 
       var design = new Project(projectConcept);
       expect(design, isNotNull);
@@ -149,7 +144,7 @@ testProjectData(Repo repo, String modelCode) {
       expect(programmingProjects.source, isNot(isEmpty));
       expect(programmingProjects.source.count, equals(projectCount));
 
-      var programmingProject = new Project(entries.projectConcept);
+      var programmingProject = new Project(projectConcept);
       programmingProject.name = 'Dartling Testing';
       programmingProject.description = 'Programming unit tests.';
       programmingProjects.add(programmingProject);
@@ -165,7 +160,7 @@ testProjectData(Repo repo, String modelCode) {
       expect(project.name == 'Dartling');
     });
     test('Find Project by Id', () {
-      Id id = new Id(entries.projectConcept);
+      Id id = new Id(projectConcept);
       expect(id.count == 1);
       expect(id.parentCount == 0);
       expect(id.attributeCount == 1);
@@ -242,6 +237,7 @@ testProjectData(Repo repo, String modelCode) {
     });
     test('Project Action with Undo and Redo ', () {
       new ProjectPastReaction(models);
+      var session = models.newSession();
 
       var product1 = new Project(projectConcept);
       product1.name = 'Oracle';

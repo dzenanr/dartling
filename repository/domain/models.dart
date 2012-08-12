@@ -12,7 +12,7 @@ class DomainModels implements SourceOfActionReaction {
     _actionReactions = new List<ActionReaction>();
   }
 
-  bool add(ModelEntries modelEntries) {
+  add(ModelEntries modelEntries) {
     var code = modelEntries.model.code;
     var entries = _modelEntriesMap[code];
     if (entries == null) {

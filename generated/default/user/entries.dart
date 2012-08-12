@@ -1,6 +1,5 @@
 
-UserEntries fromJsonToUserEntries(Domain domain,
-                                  [String modelCode = 'default']) {
+UserEntries fromJsonToUserEntries(Domain domain, String modelCode) {
   /**
    *  || User (code)
    *  id email : String

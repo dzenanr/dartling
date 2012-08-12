@@ -22,9 +22,9 @@ testUserData(Repo repo, String modelCode) {
   var userConcept;
   var userCount = 0;
   var dzenanOid;
-  group('Testing User', () {
+  group('Testing ${modelCode}', () {
     setUp(() {
-      models = repo.defaultDomainModels;
+      models = repo.getDomainModels('Default');
       session = models.newSession();
       entries = models.getModelEntries(modelCode);
 

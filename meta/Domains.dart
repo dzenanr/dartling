@@ -1,8 +1,6 @@
 
 class Domains extends Entities<Domain> {
 
-  Domain get defaultDomain() => findByCode('default');
-
   Domain getDomain(String code) => findByCode(code);
 
 }
@@ -17,12 +15,12 @@ class Domain extends Entity<Domain> {
   Types types;
   Models models;
 
-  Domain([String code = 'default']) {
+  Domain([String code = 'Default']) {
     super.code = code;
     domains = new Domains();
     types = new Types();
     models = new Models();
-    if (code == 'default') {
+    if (code == 'Default') {
       description = 'Default domain to keep types and models.';
     }
 
@@ -35,8 +33,6 @@ class Domain extends Entity<Domain> {
     new Type(this, 'Uri');
     assert(types.count == 7);
   }
-
-  Model get defaultModel() => models.defaultModel;
 
   Domain getDomain(String code) => domains.findByCode(code);
 

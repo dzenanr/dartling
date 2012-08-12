@@ -1,5 +1,5 @@
 
-Model fromMagicBoxes(String json, Domain domain, [String modelCode = 'default']) {
+Model fromMagicBoxes(String json, Domain domain, String modelCode) {
   Map<String, Object> boardMap = JSON.parse(json);
   List<Map<String, Object>> boxes = boardMap["boxes"];
   List<Map<String, Object>> lines = boardMap["lines"];

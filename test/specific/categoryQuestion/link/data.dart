@@ -1,5 +1,5 @@
 
-testLinkData(Repo repo, String modelCode) {
+testLinkData(Repo repo, String domainCode, String modelCode) {
   var models;
   var session;
   var entries;
@@ -16,11 +16,12 @@ testLinkData(Repo repo, String modelCode) {
   var dartInterestCount = 0;
   var html5InterestCount = 0;
   var dzenanOid;
-  group('Testing Link', () {
+  group('Testing ${domainCode}.${modelCode}', () {
     setUp(() {
-      models = repo.defaultDomainModels;
+      models = repo.getDomainModels(domainCode);
       session = models.newSession();
       entries = models.getModelEntries(modelCode);
+      expect(entries, isNotNull);
 
       categoryConcept = entries.categoryConcept;
       expect(categoryConcept, isNotNull);

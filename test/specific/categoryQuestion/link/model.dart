@@ -2,8 +2,8 @@
 testLinkModel() {
   // Meta
 
-  Domain domain = new Domain();
-  Model model = new Model(domain);
+  Domain domain = new Domain('CategoryQuestion');
+  Model model = new Model(domain, 'Link');
   assert(domain.models.count == 1);
 
   Concept categoryConcept = new Concept(model, 'Category');
@@ -76,5 +76,5 @@ testLinkModel() {
   assert(tryDartWebLink.getParent('category').getAttribute('name') == 'Dart');
 
   // Display
-  categories.display('Link Model Creation', withOid: true);
+  categories.display('Link Model Creation');
 }

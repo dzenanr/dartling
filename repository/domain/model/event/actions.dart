@@ -1,5 +1,13 @@
 
-abstract class Action {
+abstract class ActionApi {
+
+  abstract bool doit();
+  abstract bool undo();
+  abstract bool redo();
+
+}
+
+abstract class Action implements ActionApi {
 
   String name;
   String category;

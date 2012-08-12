@@ -15,9 +15,6 @@ abstract class ProjectGen extends Entity<Project> {
 
   Project newEntity() => new Project(concept);
 
-  bool get onProgramming() =>
-      description.contains('Programming') ? true : false;
-
   /**
    * Compares two projects based on name.
    * If the result is less than 0 then the first entity is less than the second,
@@ -35,9 +32,5 @@ abstract class ProjectsGen extends Entities<Project> {
   ProjectsGen(Concept concept) : super.of(concept);
 
   Projects newEntities() => new Projects(concept);
-
-  Project findByNameId(String name) {
-    return findById(new Id(concept)..setAttribute('name', name));
-  }
 
 }
