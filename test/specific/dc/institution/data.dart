@@ -26,7 +26,7 @@ testInstitutionData(Repo repo, String modelCode) {
   var data ;
   group('Testing Institution', () {
     setUp(() {
-<<<<<<< HEAD:test/domain/model/institution/data.dart
+//<<<<<<< HEAD:test/domain/model/institution/data.dart
 //<<<<<<< HEAD:test/institution/data.dart
       entry = fromJsonToEcoleEntry();
       data = entry.data;
@@ -43,7 +43,7 @@ testInstitutionData(Repo repo, String modelCode) {
 //>>>>>>> 1b9b79fd25ffc25d4e7f19d2a04b1994890a7273:test/domain/model/institution/data.dart
 
       ecoleCount = 0;
-=======
+//=======
       models = repo.defaultDomainModels;
       session = models.newSession();
       entries = models.getModelEntries(modelCode);
