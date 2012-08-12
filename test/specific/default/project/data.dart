@@ -239,17 +239,17 @@ testProjectData(Repo repo, String modelCode) {
       new ProjectPastReaction(models);
       var session = models.newSession();
 
-      var product1 = new Project(projectConcept);
-      product1.name = 'Oracle';
+      var project1 = new Project(projectConcept);
+      project1.name = 'Data modeling';
 
-      var action1 = new AddAction(session, projects, product1);
+      var action1 = new AddAction(session, projects, project1);
       action1.doit();
       expect(projects.count, equals(++projectCount));
 
-      var product2 = new Project(projectConcept);
-      product2.name = 'MySql';
+      var project2 = new Project(projectConcept);
+      project2.name = 'Database design';
 
-      var action2 = new AddAction(session, projects, product2);
+      var action2 = new AddAction(session, projects, project2);
       action2.doit();
       expect(projects.count, equals(++projectCount));
 
