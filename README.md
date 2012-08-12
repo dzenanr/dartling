@@ -29,14 +29,6 @@ Projects orderedProjects =
 
 Dartling has actions and transactions to support unrestricted undos and redos. A transaction is an action that contains other actions.
 
-var product = new Project(projectConcept);
-product.name = 'Dartling';
-product.description = 'Programming Dartling.';
-var action = new AddAction(session, projects, product);
-action.doit();
-action.undo();
-action.redo();
-
 Advanced Example
 
 The domain (CategoryQuestion) model (Link) has the most commonly used patterns.
