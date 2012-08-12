@@ -1,6 +1,7 @@
 
 
 Dartling
+
 3-clause license ("New BSD License" or "Modified BSD License")
 
 Dartling (https://github.com/dzenanr/Dartling) is a domain model framework for web application prototypes. A model consists of concepts, concept attributes and concept neighbors (two neighbors make a relationship between two concepts). 
