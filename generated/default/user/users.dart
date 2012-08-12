@@ -1,9 +1,9 @@
 
-abstract class MemberGen extends Entity<Member> {
+abstract class UserGen extends Entity<User> {
 
-  MemberGen(Concept concept) : super.of(concept);
+  UserGen(Concept concept) : super.of(concept);
 
-  MemberGen.withIds(Concept concept, String code, String email) : super.of(concept) {
+  UserGen.withIds(Concept concept, String code, String email) : super.of(concept) {
     this.code = code;
     setAttribute('email', email);
   }
@@ -35,15 +35,15 @@ abstract class MemberGen extends Entity<Member> {
   String get about() => getAttribute('about');
   set about(String a) => setAttribute('about', a);
 
-  Member newEntity() => new Member(concept);
+  User newEntity() => new User(concept);
 
 }
 
-abstract class MembersGen extends Entities<Member> {
+abstract class UsersGen extends Entities<User> {
 
-  MembersGen(Concept concept) : super.of(concept);
+  UsersGen(Concept concept) : super.of(concept);
 
-  Members newEntities() => new Members(concept);
+  Users newEntities() => new Users(concept);
 
 }
 

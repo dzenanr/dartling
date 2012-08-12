@@ -1,25 +1,25 @@
 
-abstract class SourceOfActionReaction {
+abstract class SourceOfActionReactionApi {
 
-  abstract startActionReaction(ActionReaction reaction);
-  abstract cancelActionReaction(ActionReaction reaction);
-  abstract notifyActionReactions(Action action);
+  abstract startActionReaction(ActionReactionApi reaction);
+  abstract cancelActionReaction(ActionReactionApi reaction);
+  abstract notifyActionReactions(ActionApi action);
 }
 
-abstract class SourceOfPastReaction {
+abstract class SourceOfPastReactionApi {
 
-  abstract startPastReaction(PastReaction reaction);
-  abstract cancelPastReaction(PastReaction reaction);
+  abstract startPastReaction(PastReactionApi reaction);
+  abstract cancelPastReaction(PastReactionApi reaction);
   abstract notifyNoPast();
   abstract notifyYesPast();
 }
 
-abstract class ActionReaction {
+abstract class ActionReactionApi {
 
-  abstract react(Action action);
+  abstract react(ActionApi action);
 }
 
-abstract class PastReaction {
+abstract class PastReactionApi {
 
   abstract reactNoPast();
   abstract reactYesPast();

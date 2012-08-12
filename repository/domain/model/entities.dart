@@ -1,10 +1,10 @@
 
-abstract class EntitiesApi<T extends Entity<T>> implements Iterable<T> {
+abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
 
-  abstract Entities<T> newEntities();
+  abstract EntitiesApi<T> newEntities();
   abstract Concept get concept();
-  abstract Entities<T> get source();
-  abstract Errors get errors();
+  abstract EntitiesApi<T> get source();
+  abstract ErrorsApi get errors();
   abstract int get count();
   abstract bool get empty();
 
@@ -13,7 +13,6 @@ abstract class EntitiesApi<T extends Entity<T>> implements Iterable<T> {
   abstract bool preRemove(T entity);
   abstract bool remove(T entity);
 
-  abstract Iterator<T> iterator();
   abstract void forEach(Function f);
   abstract bool every(Function f);
   abstract bool some(Function f);
@@ -22,18 +21,18 @@ abstract class EntitiesApi<T extends Entity<T>> implements Iterable<T> {
   abstract T last();
   abstract T find(Oid oid);
   abstract T findByCode(String code);
-  abstract T findById(Id id);
+  abstract T findById(IdApi id);
   abstract T findByAttributeId(String code, Object attribute);
   abstract T findByAttribute(String code, Object attribute);
 
-  abstract Entities<T> select(Function f);
-  abstract Entities<T> selectByParent(String code, Object parent);
-  abstract Entities<T> selectByAttribute(String code, Object attribute);
-  abstract Entities<T> order();
-  abstract Entities<T> orderByFunction(Function f);
+  abstract EntitiesApi<T> select(Function f);
+  abstract EntitiesApi<T> selectByParent(String code, Object parent);
+  abstract EntitiesApi<T> selectByAttribute(String code, Object attribute);
+  abstract EntitiesApi<T> order();
+  abstract EntitiesApi<T> orderByFunction(Function f);
 
   abstract void clear();
-  abstract Entities<T> copy();
+  abstract EntitiesApi<T> copy();
   abstract List<T> get list();
 
 }
@@ -134,7 +133,6 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
     // required validation
     for (Attribute a in _concept.attributes) {
       if (a.increment != null) {
-        print('attribute increment');
         _lastIncrement == _lastIncrement + a.increment;
         entity.setAttribute(a.code, _lastIncrement);
       } else if (a.required && entity.getAttribute(a.code) == null) {
@@ -429,7 +427,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
   /**
   * Displays (prints) a title, then entities.
   */
-  display([String title='Entities', bool withOid=true]) {
+  display([String title='Entities', bool withOid=true, bool withChildren=true]) {
     if (title != '') {
       print('');
       print('======================================');
@@ -438,7 +436,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
       print('');
     }
     for (T e in _entityList) {
-      e.display('', withOid);
+      e.display('', withOid, withChildren);
     }
   }
 

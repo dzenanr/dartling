@@ -1,5 +1,28 @@
 
-class Id implements Comparable, Hashable {
+abstract class IdApi implements Comparable, Hashable {
+
+  abstract Concept get concept();
+
+  abstract int get parentCount();
+  abstract int get attributeCount();
+  abstract int get count();
+
+  abstract EntityApi getParent(String code);
+  abstract setParent(String code, EntityApi parent);
+
+  abstract Object getAttribute(String code);
+  abstract setAttribute(String code, Object attribute);
+
+  abstract bool equalParents(IdApi id);
+  abstract bool equalAttributes(IdApi id);
+  abstract bool equals(Object other);
+
+  abstract int compareParents(IdApi id);
+  abstract int compareAttributes(IdApi id);
+
+}
+
+class Id implements IdApi {
 
   Concept _concept;
 
@@ -68,7 +91,7 @@ class Id implements Comparable, Hashable {
    * two objects cannot be equal. Two ids are
    * equal if they have the same content.
    */
-   bool equals(other) {
+   bool equals(Object other) {
      if (other is Id) {
        var id = other;
        if (_concept != id.concept) {

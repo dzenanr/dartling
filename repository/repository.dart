@@ -1,5 +1,13 @@
 
-class Repo {
+abstract class RepoApi {
+
+  abstract add(DomainModelsApi domainModels);
+  abstract Domains get domains();
+  abstract DomainModelsApi getDomainModels(String domainCode);
+
+}
+
+class Repo implements RepoApi {
 
   Domains _domains;
 
@@ -9,20 +17,20 @@ class Repo {
     _domainModelsMap = new Map<String, DomainModels>();
   }
 
-  bool add(DomainModels domainModels) {
-    var code = domainModels.domain.code;
-    var models = getDomainModels(code);
+  add(DomainModels domainModels) {
+    var domainCode = domainModels.domain.code;
+    var models = getDomainModels(domainCode);
     if (models == null) {
-      _domainModelsMap[code] = domainModels;
+      _domainModelsMap[domainCode] = domainModels;
     } else {
-      throw new CodeException('$code domain code exists already in the repository.');
+      throw new CodeException(
+          '$domainCode domain code exists already in the repository.');
     }
   }
 
   Domains get domains() => _domains;
 
-  DomainModels get defaultDomainModels() => _domainModelsMap['default'];
-
-  DomainModels getDomainModels(String code) => _domainModelsMap[code];
+  DomainModels getDomainModels(String domainCode) =>
+      _domainModelsMap[domainCode];
 
 }

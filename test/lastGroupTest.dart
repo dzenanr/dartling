@@ -1,11 +1,11 @@
 
-lastGroupTest(Repo repo, String modelCode) {
+lastGroupTest(Repo repo, String domainCode, String modelCode) {
   var models;
   var session;
   var entries;
-  group('Group Title', () {
+  group('Testing ${domainCode}.${modelCode}', () {
     setUp(() {
-      models = repo.defaultDomainModels;
+      models = repo.getDomainModels(domainCode);
       session = models.newSession();
       entries = models.getModelEntries(modelCode);
 

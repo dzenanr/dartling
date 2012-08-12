@@ -1,7 +1,7 @@
 
-abstract class EntityApi<T extends Entity<T>> implements Comparable {
+abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 
-  abstract Entity<T> newEntity();
+  abstract EntityApi<T> newEntity();
   abstract Concept get concept();
   abstract Oid get oid();
   abstract String get code();
@@ -11,17 +11,15 @@ abstract class EntityApi<T extends Entity<T>> implements Comparable {
   abstract bool setAttribute(String name, Object value);
   abstract String getStringFromAttribute(String name);
   abstract bool setStringToAttribute(String name, String string);
-  abstract Entity getParent(String name);
-  abstract bool setParent(String name, Entity entity);
-  abstract Entities getChild(String name);
-  abstract bool setChild(String name, Entities entities);
+  abstract EntityApi getParent(String name);
+  abstract bool setParent(String name, EntityApi entity);
+  abstract EntitiesApi getChild(String name);
+  abstract bool setChild(String name, EntitiesApi entities);
 
-  abstract Id get id();
+  abstract IdApi get id();
   abstract T copy();
   abstract bool equalOids(T entity);
-  abstract bool equals(other);
-  abstract int compareTo(T entity);
-  abstract String toString();
+  abstract bool equals(Object other);
 
 }
 
@@ -308,7 +306,7 @@ class Entity<T extends Entity<T>> implements EntityApi {
    * two objects cannot be equal. Two entities are
    * equal if they have the same content, except oid.
    */
-   bool equals(other) {
+   bool equals(Object other) {
      if (_concept == null) {
        throw new ConceptException('Entity concept is not defined.');
      }
@@ -372,7 +370,7 @@ class Entity<T extends Entity<T>> implements EntityApi {
   /**
    * Displays (prints) an entity with its attributes, parents and children.
    */
-  display([String space='', bool withOid=true]) {
+  display([String space='', bool withOid=true, bool withChildren=true]) {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
@@ -409,14 +407,16 @@ class Entity<T extends Entity<T>> implements EntityApi {
       }
     });
 
-    _childMap.forEach((k,v) {
-      print('${s}$k:');
-      if (_concept.isChildSensitive(k)) {
-        print('**********');
-      } else {
-        v.display(s, withOid);
-      }
-    });
+    if (withChildren) {
+      _childMap.forEach((k,v) {
+        print('${s}$k:');
+        if (_concept.isChildSensitive(k)) {
+          print('**********');
+        } else {
+          v.display(s, withOid);
+        }
+      });
+    }
 
     print('');
   }

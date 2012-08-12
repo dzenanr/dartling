@@ -1,5 +1,5 @@
 
-Model fromMagicBoxes(String json, Domain domain, [String modelCode = 'default']) {
+Model fromMagicBoxes(String json, Domain domain, String modelCode) {
   Map<String, Object> boardMap = JSON.parse(json);
   List<Map<String, Object>> boxes = boardMap["boxes"];
   List<Map<String, Object>> lines = boardMap["lines"];
@@ -29,6 +29,12 @@ Model fromMagicBoxes(String json, Domain domain, [String modelCode = 'default'])
         attribute.sequence = itemSequence;
         String itemInit = item["init"];
         if (itemInit == null || itemInit.trim() == '') {
+          attribute.init = null;
+        } else if (itemInit  == 'sensitive') {
+          attribute.sensitive = true;
+          attribute.init = null;
+        } else if (itemInit  == 'increment') {
+          attribute.increment = 1;
           attribute.init = null;
         } else {
           attribute.init = itemInit;

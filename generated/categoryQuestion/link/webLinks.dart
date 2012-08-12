@@ -12,8 +12,8 @@ abstract class WebLinkGen extends Entity<WebLink> {
   Category get category() => getParent('category');
   set category(Category p) => setParent('category', p);
 
-  String get name() => getAttribute('name');
-  set name(String a) => setAttribute('name', a);
+  String get subject() => getAttribute('subject');
+  set subject(String a) => setAttribute('subject', a);
 
   Uri get url() => getAttribute('url');
   set url(Uri a) => setAttribute('url', a);
@@ -21,16 +21,25 @@ abstract class WebLinkGen extends Entity<WebLink> {
   String get description() => getAttribute('description');
   set description(String a) => setAttribute('description', a);
 
+  Date get createdOn() => getAttribute('createdOn');
+  set createdOn(Date a) => setAttribute('createdOn', a);
+
+  Date get updatedOn() => getAttribute('updatedOn');
+  set updatedOn(Date a) => setAttribute('updatedOn', a);
+
+  bool get approved() => getAttribute('approved');
+  set approved(bool a) => setAttribute('approved', a);
+
   WebLink newEntity() => new WebLink(concept);
 
   /**
-   * Compares two web links based on name.
+   * Compares two web links based on subject.
    * If the result is less than 0 then the first entity is less than the second,
    * if it is equal to 0 they are equal and
    * if the result is greater than 0 then the first is greater than the second.
    */
   int compareTo(WebLink other) {
-    return name.compareTo(other.name);
+    return subject.compareTo(other.subject);
   }
 
 }

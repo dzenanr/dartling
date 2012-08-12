@@ -1,8 +1,6 @@
 
 class Models extends Entities<Model> {
 
-  Model get defaultModel() => findByCode('default');
-
 }
 
 class Model extends Entity<Model> {
@@ -14,7 +12,7 @@ class Model extends Entity<Model> {
 
   Concepts concepts;
 
-  Model(this.domain, [String code = 'default']) {
+  Model(this.domain, String code) {
     super.code = code;
     domain.models.add(this);
     concepts = new Concepts();

@@ -1,44 +1,55 @@
 
-class DomainModels implements SourceOfActionReaction {
+abstract class DomainModelsApi implements SourceOfActionReactionApi {
+
+  abstract add(ModelEntriesApi modelEntries);
+  abstract Domain get domain();
+  abstract ModelEntriesApi getModelEntries(String modelCode);
+  abstract DomainSessionApi newSession();
+
+}
+
+class DomainModels implements DomainModelsApi {
 
   Domain _domain;
 
   Map<String, ModelEntries> _modelEntriesMap;
   // for transactions to be able to use multiple models
-  List<ActionReaction> _actionReactions;
+  List<ActionReactionApi> _actionReactions;
 
   DomainModels(this._domain) {
     _modelEntriesMap = new Map<String, ModelEntries>();
-    _actionReactions = new List<ActionReaction>();
+    _actionReactions = new List<ActionReactionApi>();
   }
 
-  bool add(ModelEntries modelEntries) {
-    var code = modelEntries.model.code;
-    var entries = _modelEntriesMap[code];
+  add(ModelEntries modelEntries) {
+    var modelCode = modelEntries.model.code;
+    var entries = _modelEntriesMap[modelCode];
     if (entries == null) {
-      _modelEntriesMap[code] = modelEntries;
+      _modelEntriesMap[modelCode] = modelEntries;
     } else {
       throw new CodeException(
-        'The $code code exists already in the ${_domain.code} domain data.');
+        'The $modelCode code exists already in the ${_domain.code} domain data.');
     }
   }
 
   Domain get domain() => _domain;
 
-  ModelEntries getModelEntries(String code) => _modelEntriesMap[code];
+  ModelEntries getModelEntries(String modelCode) =>
+      _modelEntriesMap[modelCode];
 
   DomainSession newSession() {
     return new DomainSession(this);
   }
 
-  startActionReaction(ActionReaction reaction) => _actionReactions.add(reaction);
-  cancelActionReaction(ActionReaction reaction) {
+  startActionReaction(ActionReactionApi reaction) =>
+      _actionReactions.add(reaction);
+  cancelActionReaction(ActionReactionApi reaction) {
     int index = _actionReactions.indexOf(reaction, 0);
     _actionReactions.removeRange(index, 1);
   }
 
   notifyActionReactions(Action action) {
-    for (ActionReaction reaction in _actionReactions) {
+    for (ActionReactionApi reaction in _actionReactions) {
       reaction.react(action);
     }
   }

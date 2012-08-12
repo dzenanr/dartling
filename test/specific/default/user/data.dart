@@ -1,5 +1,5 @@
 
-class MemberReaction implements ActionReaction {
+class UserReaction implements ActionReactionApi {
 
   bool reactedOnAdd = false;
   bool reactedOnUpdate = false;
@@ -18,37 +18,36 @@ testUserData(Repo repo, String modelCode) {
   var models;
   var session;
   var entries;
-  var members;
-  var memberConcept;
-  var memberCount = 0;
+  var users;
+  var userConcept;
+  var userCount = 0;
   var dzenanOid;
-  group('Testing User', () {
+  group('Testing ${modelCode}', () {
     setUp(() {
-      models = repo.defaultDomainModels;
+      models = repo.getDomainModels('Default');
       session = models.newSession();
       entries = models.getModelEntries(modelCode);
 
-      members = entries.members;
-      expect(members, isNotNull);
-      expect(members.count, equals(memberCount));
+      users = entries.users;
+      expect(users, isNotNull);
+      expect(users.count, equals(userCount));
 
-      memberConcept = members.concept;
-      expect(memberConcept, isNotNull);
-      expect(memberConcept.attributes, isNot(isEmpty));
-      expect(memberConcept.attributes.count == 9);
-      memberConcept.attributes.findByCode('password').sensitive = true;
+      userConcept = users.concept;
+      expect(userConcept, isNotNull);
+      expect(userConcept.attributes, isNot(isEmpty));
+      userConcept.attributes.findByCode('password').sensitive = true;
 
-      var claudeb = new Member(memberConcept);
+      var claudeb = new User(userConcept);
       expect(claudeb, isNotNull);
       claudeb.code = 'claudeb';
       claudeb.password = 'claudeb8527';
       claudeb.firstName = 'Claude';
       claudeb.lastName = 'Begin';
       claudeb.email = 'claude.begin@gmail.com';
-      members.add(claudeb);
-      expect(members.count, equals(++memberCount));
+      users.add(claudeb);
+      expect(users.count, equals(++userCount));
 
-      var dzenan = new Member(memberConcept);
+      var dzenan = new User(userConcept);
       expect(dzenan, isNotNull);
       dzenan.code = 'dzenanr';
       dzenan.password = 'drifting09';
@@ -68,24 +67,24 @@ testUserData(Repo repo, String modelCode) {
     University of Minnesota. My research interests are in the 
     spiral development of domain models and dynamic web applications
     with NoSQL databases.''';
-      members.add(dzenan);
-      expect(members.count, equals(++memberCount));
+      users.add(dzenan);
+      expect(users.count, equals(++userCount));
       dzenanOid = dzenan.oid;
       expect(dzenanOid, isNotNull);
-      var dr = members.find(dzenanOid);
+      var dr = users.find(dzenanOid);
       expect(dr, isNotNull);
 
-      var charlem = new Member(memberConcept);
+      var charlem = new User(userConcept);
       expect(charlem, isNotNull);
       charlem.code = 'charlem';
       charlem.password = 'ccNo77voice';
       charlem.firstName = 'Charle';
       charlem.lastName = 'Mantha';
       charlem.email = 'charlem@hotmail.com';
-      members.add(charlem);
-      expect(members.count, equals(++memberCount));
+      users.add(charlem);
+      expect(users.count, equals(++userCount));
 
-      var amracr = new Member(memberConcept);
+      var amracr = new User(userConcept);
       expect(amracr, isNotNull);
       amracr.code = 'acr';
       amracr.password = 'a2c4r0';
@@ -93,125 +92,125 @@ testUserData(Repo repo, String modelCode) {
       amracr.lastName = 'Curovac Ridjanovic';
       amracr.email = 'amracr@gmail.com';
       amracr.receiveEmail = true;
-      members.add(amracr);
-      expect(members.count, equals(++memberCount));
+      users.add(amracr);
+      expect(users.count, equals(++userCount));
     });
     tearDown(() {
-      members.clear();
-      expect(members.count, equals(0));
-      memberCount = 0;
+      users.clear();
+      expect(users.count, equals(0));
+      userCount = 0;
     });
-    test('Add Member Required Error', () {
-      var robertm = new Member(memberConcept);
+    test('Add User Required Error', () {
+      var robertm = new User(userConcept);
       expect(robertm, isNotNull);
       robertm.firstName = 'Robert';
       robertm.email = 'robertm@gmail.com';
-      members.add(robertm);
-      expect(members.count, equals(memberCount));
-      expect(members.errors.count, equals(2));
-      expect(members.errors.list[0].category, equals('required'));
-      expect(members.errors.list[1].category, equals('required'));
-      //members.errors.display('Add Member Required Error');
+      users.add(robertm);
+      expect(users.count, equals(userCount));
+      expect(users.errors.count, equals(2));
+      expect(users.errors.list[0].category, equals('required'));
+      expect(users.errors.list[1].category, equals('required'));
+      //users.errors.display('Add User Required Error');
     });
-    test('Add Member Unique Error', () {
-      var robertm = new Member(memberConcept);
+    test('Add User Unique Error', () {
+      var robertm = new User(userConcept);
       expect(robertm, isNotNull);
       robertm.firstName = 'Robert';
       robertm.lastName = 'Mantha';
       robertm.email = 'charlem@hotmail.com';
-      expect(memberConcept.getAttribute('email').identifier, isTrue);
+      expect(userConcept.getAttribute('email').identifier, isTrue);
       expect(robertm.id.count, equals(1));
       expect(robertm.id.getAttribute('email'), equals(robertm.email));
-      members.add(robertm);
-      expect(members.count, equals(memberCount));
-      expect(members.errors.count, equals(2));
-      expect(members.errors.list[0].category, equals('required'));
-      expect(members.errors.list[1].category, equals('unique'));
-      //members.errors.display('Add Member Unique Error');
+      users.add(robertm);
+      expect(users.count, equals(userCount));
+      expect(users.errors.count, equals(2));
+      expect(users.errors.list[0].category, equals('required'));
+      expect(users.errors.list[1].category, equals('unique'));
+      //users.errors.display('Add User Unique Error');
     });
-    test('Add Member Required and Unique Error', () {
-      var robertm = new Member(memberConcept);
+    test('Add User Required and Unique Error', () {
+      var robertm = new User(userConcept);
       expect(robertm, isNotNull);
       robertm.firstName = 'Robert';
       robertm.email = 'charlem@hotmail.com';
-      members.add(robertm);
-      expect(members.count, equals(memberCount));
-      expect(members.errors.count, equals(3));
-      expect(members.errors.list[0].category, equals('required'));
-      expect(members.errors.list[1].category, equals('required'));
-      expect(members.errors.list[2].category, equals('unique'));
-      //members.errors.display('Add Member Required and Unique Error');
+      users.add(robertm);
+      expect(users.count, equals(userCount));
+      expect(users.errors.count, equals(3));
+      expect(users.errors.list[0].category, equals('required'));
+      expect(users.errors.list[1].category, equals('required'));
+      expect(users.errors.list[2].category, equals('unique'));
+      //users.errors.display('Add User Required and Unique Error');
     });
-    test('Select Members by Attribute then Remove', () {
-      //members.display('Members Before Remove');
-      Members selectedMembers =
-          members.selectByAttribute('lastName', 'Ridjanovic');
-      expect(selectedMembers, isNotNull);
-      expect(selectedMembers, isNot(isEmpty));
-      selectedMembers.display('Selected Members Before Remove');
-      expect(selectedMembers.count, equals(1));
-      expect(selectedMembers.source, isNotNull);
-      expect(selectedMembers.source, isNot(isEmpty));
-      expect(selectedMembers.source.count, equals(memberCount));
+    test('Select Users by Attribute then Remove', () {
+      //users.display('Users Before Remove');
+      Users selectedUsers =
+          users.selectByAttribute('lastName', 'Ridjanovic');
+      expect(selectedUsers, isNotNull);
+      expect(selectedUsers, isNot(isEmpty));
+      selectedUsers.display('Selected Users Before Remove');
+      expect(selectedUsers.count, equals(1));
+      expect(selectedUsers.source, isNotNull);
+      expect(selectedUsers.source, isNot(isEmpty));
+      expect(selectedUsers.source.count, equals(userCount));
 
-      expect(members.count, equals(memberCount));
+      expect(users.count, equals(userCount));
       expect(dzenanOid, isNotNull);
-      var dzenan = selectedMembers.find(dzenanOid);
+      var dzenan = selectedUsers.find(dzenanOid);
       expect(dzenan, isNotNull);
-      selectedMembers.remove(dzenan);
-      expect(selectedMembers.count, equals(0));
-      expect(members.count, equals(memberCount - 1));
+      selectedUsers.remove(dzenan);
+      expect(selectedUsers.count, equals(0));
+      expect(users.count, equals(userCount - 1));
 
-      selectedMembers.display('Selected Members After Remove');
-      members.display('All Members After Remove');
+      selectedUsers.display('Selected Users After Remove');
+      users.display('All Users After Remove');
     });
-    test('Select Members by (get) Function', () {
-      var ridjanovicMembers = members.select((m) => m.ridjanovic);
-      expect(ridjanovicMembers, isNotNull);
-      expect(ridjanovicMembers, isNot(isEmpty));
-      expect(ridjanovicMembers.length, equals(2));
+    test('Select Users by (get) Function', () {
+      var ridjanovicUsers = users.select((m) => m.ridjanovic);
+      expect(ridjanovicUsers, isNotNull);
+      expect(ridjanovicUsers, isNot(isEmpty));
+      expect(ridjanovicUsers.length, equals(2));
     });
-    test('Select Members by (bool) Attribute, which is (get) Function', () {
-      var receiveEmailMembers = members.select((m) => m.receiveEmail);
-      expect(receiveEmailMembers, isNotNull);
-      expect(receiveEmailMembers, isNot(isEmpty));
-      expect(receiveEmailMembers.length, equals(2));
+    test('Select Users by (bool) Attribute, which is (get) Function', () {
+      var receiveEmailUsers = users.select((m) => m.receiveEmail);
+      expect(receiveEmailUsers, isNotNull);
+      expect(receiveEmailUsers, isNot(isEmpty));
+      expect(receiveEmailUsers.length, equals(2));
     });
-    test('Order Members by Last then First Name', () {
-      Members orderedMembers = members.order();
-      expect(orderedMembers, isNotNull);
-      expect(orderedMembers, isNot(isEmpty));
-      expect(orderedMembers.count, equals(memberCount));
-      expect(orderedMembers.source, isNotNull);
-      expect(orderedMembers.source, isNot(isEmpty));
-      expect(orderedMembers.source.count, equals(memberCount));
+    test('Order Users by Last then First Name', () {
+      Users orderedUsers = users.order();
+      expect(orderedUsers, isNotNull);
+      expect(orderedUsers, isNot(isEmpty));
+      expect(orderedUsers.count, equals(userCount));
+      expect(orderedUsers.source, isNotNull);
+      expect(orderedUsers.source, isNot(isEmpty));
+      expect(orderedUsers.source.count, equals(userCount));
 
-      orderedMembers.display('Members Ordered by Last then First Name');
+      orderedUsers.display('Users Ordered by Last then First Name');
     });
-    test('Order Members by Code', () {
-      Members orderedMembers =
-          members.orderByFunction((m,n) => m.compareCode(n));
-      expect(orderedMembers, isNotNull);
-      expect(orderedMembers, isNot(isEmpty));
-      expect(orderedMembers.count, equals(memberCount));
-      expect(orderedMembers.source, isNotNull);
-      expect(orderedMembers.source, isNot(isEmpty));
-      expect(orderedMembers.source.count, equals(memberCount));
+    test('Order Users by Code', () {
+      Users orderedUsers =
+          users.orderByFunction((m,n) => m.compareCode(n));
+      expect(orderedUsers, isNotNull);
+      expect(orderedUsers, isNot(isEmpty));
+      expect(orderedUsers.count, equals(userCount));
+      expect(orderedUsers.source, isNotNull);
+      expect(orderedUsers.source, isNot(isEmpty));
+      expect(orderedUsers.source.count, equals(userCount));
 
-      orderedMembers.display('Members Ordered by Code');
+      orderedUsers.display('Users Ordered by Code');
     });
-    test('New Member with Ids', () {
-      var ogdenr = new Member.withIds(
-          memberConcept, 'ogdenr', 'ogden.ridjanovic@gmail.com');
+    test('New User with Ids', () {
+      var ogdenr = new User.withIds(
+          userConcept, 'ogdenr', 'ogden.ridjanovic@gmail.com');
       expect(ogdenr, isNotNull);
       ogdenr.password = 'toto9tutu';
       ogdenr.firstName = 'Ogden';
       ogdenr.lastName = 'Ridjanovic';
       ogdenr.receiveEmail = false;
-      members.add(ogdenr);
-      expect(members.count, equals(++memberCount));
+      users.add(ogdenr);
+      expect(users.count, equals(++userCount));
 
-      members.display('Members Including Ogden');
+      users.display('Users Including Ogden');
     });
     test('New Date from String', () {
       Date date;
@@ -245,10 +244,10 @@ testUserData(Repo repo, String modelCode) {
       }
     });
     test('True for Some Projects', () {
-      expect(members.some((m) => m.about == null), isTrue);
+      expect(users.some((m) => m.about == null), isTrue);
     });
-    test('New Member Undo', () {
-      var robertm = new Member(memberConcept);
+    test('New User Undo', () {
+      var robertm = new User(userConcept);
       expect(robertm, isNotNull);
       robertm.code = 'rwm';
       robertm.password = 'r1w2m32';
@@ -256,18 +255,18 @@ testUserData(Repo repo, String modelCode) {
       robertm.lastName = 'Mantha';
       robertm.email = 'robert.mantha@abc.com';
 
-      var action = new AddAction(session, members, robertm);
+      var action = new AddAction(session, users, robertm);
       action.doit();
-      expect(members.count, equals(++memberCount));
+      expect(users.count, equals(++userCount));
 
       session.past.undo();
-      expect(members.count, equals(--memberCount));
+      expect(users.count, equals(--userCount));
 
       session.past.redo();
-      expect(members.count, equals(++memberCount));
+      expect(users.count, equals(++userCount));
     });
-    test('Update Member Undo', () {
-      var acr = members.findByCode('acr');
+    test('Update User Undo', () {
+      var acr = users.findByCode('acr');
       expect(acr, isNotNull);
 
       var action =
@@ -280,8 +279,8 @@ testUserData(Repo repo, String modelCode) {
       session.past.redo();
       expect(acr.about, equals(action.after));
     });
-    test('Member Undo', () {
-      var mauricel = new Member(memberConcept);
+    test('User Undo', () {
+      var mauricel = new User(userConcept);
       expect(mauricel, isNotNull);
       mauricel.code = 'mauricel';
       mauricel.password = 'mauriceltom0';
@@ -289,58 +288,58 @@ testUserData(Repo repo, String modelCode) {
       mauricel.lastName = 'Laundry';
       mauricel.email = 'mlaundry@gmail.com';
 
-      var action = new AddAction(session, members, mauricel);
+      var action = new AddAction(session, users, mauricel);
       action.doit();
-      expect(members.count, equals(++memberCount));
-      members.display('After Add on Members');
+      expect(users.count, equals(++userCount));
+      users.display('After Add on Users');
 
       session.past.undo();
-      expect(members.count, equals(--memberCount));
-      members.display('After Undo on Members');
+      expect(users.count, equals(--userCount));
+      users.display('After Undo on Users');
 
       session.past.redo();
-      expect(members.count, equals(++memberCount));
-      members.display('After Undoing Undo on Members');
+      expect(users.count, equals(++userCount));
+      users.display('After Undoing Undo on Users');
 
       var about = 'Maurice is a calm fellow, with good spirit.';
       action = new SetAttributeAction(session, mauricel, 'about', about);
       action.doit();
-      members.display('After Update on Member');
+      users.display('After Update on User');
 
       session.past.undo();
       expect(mauricel.about, isNot(equals(about)));
-      members.display('After Undo on Member');
+      users.display('After Undo on User');
 
       session.past.redo();
       expect(mauricel.about, equals(about));
-      members.display('After Undoing Undo on Member');
+      users.display('After Undoing Undo on User');
     });
-    test('Reactions to Member Actions', () {
-      var reaction = new MemberReaction();
+    test('Reactions to User Actions', () {
+      var reaction = new UserReaction();
       expect(reaction, isNotNull);
 
       models.startActionReaction(reaction);
-      var member = new Member(memberConcept);
-      expect(member, isNotNull);
-      member.code = 'amemberurr';
-      member.password = 'membermy8527';
-      member.firstName = 'John';
-      member.lastName = 'Smith';
-      member.email = 'john.smith@gmail.com';
+      var user = new User(userConcept);
+      expect(user, isNotNull);
+      user.code = 'amemberurr';
+      user.password = 'membermy8527';
+      user.firstName = 'John';
+      user.lastName = 'Smith';
+      user.email = 'john.smith@gmail.com';
 
-      var action = new AddAction(session, members, member);
+      var action = new AddAction(session, users, user);
       action.doit();
-      expect(members.count, equals(++memberCount));
+      expect(users.count, equals(++userCount));
       expect(reaction.reactedOnAdd, isTrue);
 
       var about = 'He is a good fellow, with good sense of humor.';
-      action = new SetAttributeAction(session, member, 'about', about);
+      action = new SetAttributeAction(session, user, 'about', about);
       action.doit();
       expect(reaction.reactedOnUpdate, isTrue);
       models.cancelActionReaction(reaction);
     });
-    test('Add Member Pre Validation', () {
-      var robertm = new Member(memberConcept);
+    test('Add User Pre Validation', () {
+      var robertm = new User(userConcept);
       expect(robertm, isNotNull);
       robertm.code = 'robertm';
       robertm.password = 'rvvm3w';
@@ -348,11 +347,11 @@ testUserData(Repo repo, String modelCode) {
       robertm.lastName = 'Mantha';
       robertm.email = 'robertm@gmail.com';
       robertm.role = 'prof';
-      members.add(robertm);
-      expect(members.count, equals(memberCount));
-      expect(members.errors.list, hasLength(1));
-      expect(members.errors.list[0].category, equals('pre'));
-      //members.errors.display('Add Member Pre Error');
+      users.add(robertm);
+      expect(users.count, equals(userCount));
+      expect(users.errors.list, hasLength(1));
+      expect(users.errors.list[0].category, equals('pre'));
+      //users.errors.display('Add User Pre Error');
     });
 
   });

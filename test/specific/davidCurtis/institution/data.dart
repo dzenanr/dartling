@@ -1,5 +1,5 @@
 
-class EcoleReaction implements ActionReaction {
+class EcoleReaction implements ActionReactionApi {
 
   bool reactedOnAdd = false;
   bool reactedOnUpdate = false;
@@ -14,7 +14,7 @@ class EcoleReaction implements ActionReaction {
 
 }
 
-testInstitutionData(Repo repo, String modelCode) {
+testInstitutionData(Repo repo, String domainCode, String modelCode) {
   var models;
   var session;
   var entries;
@@ -22,6 +22,7 @@ testInstitutionData(Repo repo, String modelCode) {
   var ecoleConcept;
   var ecoleCount = 0;
   var uLavalOid;
+<<<<<<< HEAD:test/specific/dc/institution/data.dart
   var entry ;
   var data ;
   group('Testing Institution', () {
@@ -45,6 +46,11 @@ testInstitutionData(Repo repo, String modelCode) {
       ecoleCount = 0;
 //=======
       models = repo.defaultDomainModels;
+=======
+  group('Testing ${domainCode}.${modelCode}', () {
+    setUp(() {
+      models = repo.getDomainModels(domainCode);
+>>>>>>> 58ab40c018dab9b7746e596f6f689652c19b2db8:test/specific/davidCurtis/institution/data.dart
       session = models.newSession();
       entries = models.getModelEntries(modelCode);
 >>>>>>> c7aa936db6f8e4b3d402245179b2b27147c2f469:test/specific/dc/institution/data.dart

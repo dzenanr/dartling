@@ -1,5 +1,13 @@
 
-class ModelEntries {
+abstract class ModelEntriesApi {
+
+  abstract Map<String, EntitiesApi> newEntries();
+  abstract Model get model();
+  abstract EntitiesApi getEntry(String entryConceptCode);
+
+}
+
+class ModelEntries implements ModelEntriesApi {
 
   Model _model;
 
@@ -11,15 +19,16 @@ class ModelEntries {
 
   Map<String, Entities> newEntries() {
     var entries = new Map<String, Entities>();
-    _model.entryConcepts.forEach((c)
-      {var entryEntities = new Entities.of(c);
-      entries[c.code] = entryEntities;
+    _model.entryConcepts.forEach((entryConcept)
+      {var entryEntities = new Entities.of(entryConcept);
+      entries[entryConcept.code] = entryEntities;
       });
     return entries;
   }
 
   Model get model() => _model;
 
-  Entities getEntry(String code) => _entryEntitiesMap[code];
+  Entities getEntry(String entryConceptCode) =>
+      _entryEntitiesMap[entryConceptCode];
 
 }

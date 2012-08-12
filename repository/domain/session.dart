@@ -1,5 +1,12 @@
 
-class DomainSession {
+abstract class DomainSessionApi {
+
+  abstract DomainModelsApi get domainModels();
+  abstract PastApi get past();
+
+}
+
+class DomainSession implements DomainSessionApi {
 
   DomainModels _domainModels;
   Past _past;
