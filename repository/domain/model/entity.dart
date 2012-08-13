@@ -44,54 +44,50 @@ class Entity<T extends Entity<T>> implements EntityApi {
     _childMap = new Map<String, Entities>();
 
     for (Attribute a in _concept.attributes) {
-      if (a.init != null) {
-        if (a.type.base == 'Date' && a.init == 'now') {
+      if (a.init == null) {
+        _attributeMap[a.code] = null;
+      } else if (a.type.base == 'Date' && a.init == 'now') {
           _attributeMap[a.code] = new Date.now();
-        } else if (a.type.base == 'bool' && a.init == 'true') {
+      } else if (a.type.base == 'bool' && a.init == 'true') {
           _attributeMap[a.code] = true;
-        } else if (a.type.base == 'bool' && a.init == 'false') {
+      } else if (a.type.base == 'bool' && a.init == 'false') {
           _attributeMap[a.code] = false;
-        } else if (a.type.base == 'int') {
-          try {
-            _attributeMap[a.code] = Math.parseInt(a.init);
-          } catch (final BadNumberFormatException e) {
-            throw new TypeException(
+      } else if (a.type.base == 'int') {
+        try {
+          _attributeMap[a.code] = Math.parseInt(a.init);
+        } catch (final BadNumberFormatException e) {
+          throw new TypeException(
               '${a.code} attribute init (default) value is not int: $e');
           }
-        } else if (a.type.base == 'double') {
+      } else if (a.type.base == 'double') {
+        try {
+          _attributeMap[a.code] = Math.parseDouble(a.init);
+        } catch (final BadNumberFormatException e) {
+          throw new TypeException(
+              '${a.code} attribute init (default) value is not double: $e');
+        }
+      } else if (a.type.base == 'num') {
+        try {
+          _attributeMap[a.code] = Math.parseInt(a.init);
+        } catch (final BadNumberFormatException e1) {
           try {
             _attributeMap[a.code] = Math.parseDouble(a.init);
-          } catch (final BadNumberFormatException e) {
+          } catch (final BadNumberFormatException e2) {
             throw new TypeException(
-              '${a.code} attribute init (default) value is not double: $e');
-          }
-        } else if (a.type.base == 'num') {
-          try {
-            _attributeMap[a.code] = Math.parseInt(a.init);
-          } catch (final BadNumberFormatException e1) {
-            try {
-              _attributeMap[a.code] = Math.parseDouble(a.init);
-            } catch (final BadNumberFormatException e2) {
-              throw new TypeException(
                 '${a.code} attribute init (default) value is not num: $e1; $e2');
-            }
           }
-        } else if (a.type.base == 'Uri') {
-          try {
-            _attributeMap[a.code] = new Uri.fromString(a.init);
-          } catch (final IllegalArgumentException e) {
-            throw new TypeException(
-              '${a.code} attribute init (default) value is not Uri: $e');
-          }
-        } else {
-          _attributeMap[a.code] = a.init;
         }
-      } else if (a.increment != null) {
-        _attributeMap[a.code] = a.increment;
+      } else if (a.type.base == 'Uri') {
+        try {
+          _attributeMap[a.code] = new Uri.fromString(a.init);
+        } catch (final IllegalArgumentException e) {
+          throw new TypeException(
+              '${a.code} attribute init (default) value is not Uri: $e');
+        }
       } else {
-        _attributeMap[a.code] = null;
+          _attributeMap[a.code] = a.init;
       }
-    }
+    } // for
 
     for (Parent parent in _concept.parents) {
       _parentMap[parent.code] = null;

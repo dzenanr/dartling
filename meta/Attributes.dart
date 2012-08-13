@@ -7,7 +7,7 @@ class Attribute extends Property {
 
   bool guid = false;
   var init;
-  num increment;
+  int increment;
   int sequence;
   bool _derive = false;
   bool essential = true;

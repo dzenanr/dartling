@@ -17,20 +17,25 @@ class LinkEntries extends ModelEntries {
     if (concept.entry) {
       entries[concept.code] = new Comments(concept);
     }
+    concept = model.concepts.findByCode('Question');
+    if (concept.entry) {
+      entries[concept.code] = new Questions(concept);
+    }
     return entries;
   }
 
   Categories get categories() => getEntry('Category');
   Members get members() => getEntry('Member');
   Comments get comments() => getEntry('Comment');
+  Questions get questions() => getEntry('Question');
 
   Concept get categoryConcept() => categories.concept;
   Concept get memberConcept() => members.concept;
   Concept get commentConcept() => comments.concept;
+  Concept get questionConcept() => questions.concept;
 
   Concept get webLinkConcept() => model.concepts.findByCode('WebLink');
   Concept get interestConcept() => model.concepts.findByCode('Interest');
-  Concept get questionConcept() => model.concepts.findByCode('Question');
 
 }
 

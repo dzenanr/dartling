@@ -3,9 +3,7 @@ class Ecole extends EcoleGen {
 
   Ecole(Concept concept) : super(concept);
 
-  Ecole.withId(Concept concept, int numero) : super(concept) {
-    setAttribute('numero', numero);
-  }
+  Ecole.withId(Concept concept, int numero) : super.withId(concept, numero);
 
   /**
    * Compares two ecoles based on adress.

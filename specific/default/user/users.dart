@@ -3,10 +3,8 @@ class User extends UserGen {
 
   User(Concept concept) : super(concept);
 
-  User.withIds(Concept concept, String code, String email) : super(concept) {
-    this.code = code;
-    setAttribute('email', email);
-  }
+  User.withIds(Concept concept, String code, String email) :
+    super.withIds(concept, code, email);
 
   bool get ridjanovic() => lastName.contains('Ridjanovic') ? true : false;
 

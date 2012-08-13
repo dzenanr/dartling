@@ -5,15 +5,6 @@ To do in Magic Boxes
 open model shows twin relationships as one line
 
 To do
-
-CategoryQuestion.Link model:
-comment tests
-question tests
-  not required category (Question is entry)
-response tests
-  increment number
-webLink tests 
-  updatedOn must be set to true if anything changed in the webLink
   
 persistance
   without DOM
@@ -56,6 +47,16 @@ get random entity
 get random value for different types (for test data)
 i18n
 indexes? (http://www.mattfleming.com/node/192)
+
+
+2012-08-13, 08:31
+increment handling in preAdd
+add comment test
+question tests
+  not required category (Question is entry)
+  increment number
+webLink tests 
+  updatedOn set to now if description or approved changed
 
 
 2012-08-12, 13:19

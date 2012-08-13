@@ -1,6 +1,6 @@
 Questions
 
-Can I debug in command-line application?
+Can I debug a command-line application?
  
 How to properly document code in Dart language?
 

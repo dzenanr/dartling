@@ -3,12 +3,8 @@ class Member extends MemberGen {
 
   Member(Concept concept) : super(concept);
 
-  Member.withIds(Concept concept, String code, String email) : super(concept) {
-    this.code = code;
-    setAttribute('email', email);
-    Concept interestConcept = concept.model.concepts.findByCode('Interest');
-    setChild('interests', new Interests(interestConcept));
-  }
+  Member.withIds(Concept concept, String code, String email) :
+    super.withIds(concept, code, email);
 
   bool get ridjanovic() => lastName.contains('Ridjanovic') ? true : false;
 

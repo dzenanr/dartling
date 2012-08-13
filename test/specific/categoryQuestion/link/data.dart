@@ -515,6 +515,110 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       dzenan.interests.errors.display('Dzenan: Add Interest Unique Error');
       html5.interests.errors.display('HTML5: Add Interest Unique Error');
     });
+    test('Add New Comment', () {
+      var commentConcept = entries.commentConcept;
+      expect(commentConcept, isNotNull);
+      var comment = new Comment(commentConcept);
+      expect(comment, isNotNull);
+      comment.text =
+          'Dartling is in pre-beta version now.';
+      var comments = entries.comments;
+      comments.add(comment);
+      expect(comments.errors.count, equals(0));
+      expect(comments.count, equals(1));
+      //comments.display('Comments');
+    });
+    test('Add New Questions with Number Increment of 1', () {
+      var questionConcept = entries.questionConcept;
+      expect(questionConcept, isNotNull);
+      var questions = entries.questions;
+      expect(questions, isNotNull);
+      questions.clear();
+      expect(questions.count, equals(0));
+
+      var question = new Question(questionConcept);
+      expect(question, isNotNull);
+      question.text =
+          'Is Dartling a main memory based model framework?';
+      questions.add(question);
+      expect(questions.errors.count, equals(0));
+      expect(questions.count, equals(1));
+      expect(question.category, isNull);
+      expect(question.number, equals(1));
+
+      question = new Question(questionConcept);
+      expect(question, isNotNull);
+      question.text =
+          'Can I debug a command-line application in Dart?';
+      questions.add(question);
+      expect(questions.errors.count, equals(0));
+      expect(questions.count, equals(2));
+      expect(question.category, isNull);
+      expect(question.number, equals(2));
+
+      //questions.display('Questions');
+    });
+    test('Add New Questions with Number Increment of 10', () {
+      var questionConcept = entries.questionConcept;
+      expect(questionConcept, isNotNull);
+      var questions = entries.questions;
+      expect(questions, isNotNull);
+      questions.clear();
+      expect(questions.count, equals(0));
+
+      var numberAttribute = questionConcept.attributes.findByCode('number');
+      expect(numberAttribute, isNotNull);
+      numberAttribute.increment = 10;
+
+      var question = new Question(questionConcept);
+      expect(question, isNotNull);
+      question.text =
+          'Is Dartling a main memory based model framework?';
+      questions.add(question);
+      expect(questions.errors.count, equals(0));
+      expect(questions.count, equals(1));
+      expect(question.category, isNull);
+      expect(question.number, equals(10));
+
+      question = new Question(questionConcept);
+      expect(question, isNotNull);
+      question.text =
+          'Can I debug a command-line application in Dart?';
+      questions.add(question);
+      expect(questions.errors.count, equals(0));
+      expect(questions.count, equals(2));
+      expect(question.category, isNull);
+      expect(question.number, equals(20));
+
+      //questions.display('Questions with Number Increment of 10');
+    });
+    test('Update Web Link Description with UpdatedOn Change', () {
+      var dartCategory = categories.findByAttribute('name', 'Dart');
+      expect(dartCategory, isNotNull);
+      var dartBugsWebLink =
+          dartCategory.webLinks.findByAttribute('subject', 'Dart Bugs');
+      expect(dartBugsWebLink, isNotNull);
+      expect(dartBugsWebLink.updatedOn, isNull);
+
+      //dartBugsWebLink.display('--- ');
+      dartBugsWebLink.description = 'To report bugs in Dart.';
+      expect(dartBugsWebLink.updatedOn, isNotNull);
+      //dartBugsWebLink.display('+++ ');
+    });
+    test('Approve Web Link with UpdatedOn Change', () {
+      var dartCategory = categories.findByAttribute('name', 'Dart');
+      expect(dartCategory, isNotNull);
+      var dartBugsWebLink =
+          dartCategory.webLinks.findByAttribute('subject', 'Dart Bugs');
+      expect(dartBugsWebLink, isNotNull);
+      expect(dartBugsWebLink.updatedOn, isNull);
+      expect(dartBugsWebLink.approved, isFalse);
+
+      //dartBugsWebLink.display('--- ');
+      dartBugsWebLink.approved = true;
+      expect(dartBugsWebLink.updatedOn, isNotNull);
+      //dartBugsWebLink.display('+++ ');
+    });
 
   });
 }

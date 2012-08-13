@@ -26,6 +26,7 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
   var data ;
   var domainData;
   var modelData;
+  /*
   group('Testing Institution', () {
     setUp(() {
       domainData = repo.domains;
@@ -37,13 +38,13 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
       expect(ecoleConcept, isNotNull);
       expect(ecoleConcept.attributes, isNot(isEmpty));
       expect(ecoleConcept.attributes.count, equals(3));
-     
+
       session = domainData.newSession();
       modelData = domainData.getModelData(modelCode);
       ecoleCount = 0;
 
       models = repo.getDomainModels(domainCode);
-
+*/
   group('Testing ${domainCode}.${modelCode}', () {
     setUp(() {
       models = repo.getDomainModels(domainCode);
@@ -207,3 +208,4 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
     });
 
   });
+}

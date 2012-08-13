@@ -46,7 +46,6 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
   Map<String, T> _idEntityMap;
   Entities<T> _source;
   Errors _errors;
-  num _lastIncrement = 0;
 
   String min = '0';
   String max = 'N';
@@ -130,11 +129,19 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
       }
     }
 
-    // required validation
+    // increment and required validation
     for (Attribute a in _concept.attributes) {
       if (a.increment != null) {
-        _lastIncrement == _lastIncrement + a.increment;
-        entity.setAttribute(a.code, _lastIncrement);
+        if (count == 0) {
+          entity.setAttribute(a.code, a.increment);
+        } else if (a.type.base == 'int') {
+          var lastEntity = last();
+          var incrementAttribute = lastEntity.getAttribute(a.code);
+          entity.setAttribute(a.code, incrementAttribute + a.increment);
+        } else {
+          throw new TypeException(
+              '${a.code} attribute value cannot be incremented.');
+        }
       } else if (a.required && entity.getAttribute(a.code) == null) {
         Error error = new Error('required');
         error.message = '${entity.concept.code}.${a.code} attribute is null.';
@@ -276,11 +283,6 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
   }
 
   T findByAttributeId(String code, Object attribute) {
-    /*
-    Id id = new Id(_concept);
-    id.setAttribute(code, attribute);
-    return findById(id);
-    */
     return findById(new Id(_concept)..setAttribute(code, attribute));
   }
 
