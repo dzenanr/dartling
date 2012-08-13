@@ -12,4 +12,6 @@ abstract class Neighbor extends Property {
     super(sourceConcept, code) {
   }
 
+  bool get external() => !internal;
+
 }

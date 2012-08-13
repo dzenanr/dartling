@@ -271,6 +271,18 @@ testProjectData(Repo repo, String modelCode) {
       expect(projects.count, equals(++projectCount));
       session.past.display();
     });
+    test('From Project Model to JSON', () {
+      var entries = models.getModelEntries(modelCode);
+      expect(entries, isNotNull);
+      var json = entries.toJson();
+      expect(json, isNotNull);
+      print('==============================================================');
+      print('JSON');
+      print('==============================================================');
+      print(json);
+      print('--------------------------------------------------------------');
+      print('');
+    });
 
   });
 }

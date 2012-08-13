@@ -353,6 +353,16 @@ testUserData(Repo repo, String modelCode) {
       expect(users.errors.list[0].category, equals('pre'));
       //users.errors.display('Add User Pre Error');
     });
+    test('From User Model to JSON', () {
+      var json = entries.toJson();
+      expect(json, isNotNull);
+      print('==============================================================');
+      print('JSON');
+      print('==============================================================');
+      print(json);
+      print('--------------------------------------------------------------');
+      print('');
+    });
 
   });
 }

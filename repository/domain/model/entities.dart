@@ -35,6 +35,8 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   abstract EntitiesApi<T> copy();
   abstract List<T> get list();
 
+  abstract List<Map<String, Object>> toJson();
+
 }
 
 class Entities<T extends Entity<T>> implements EntitiesApi<T> {
@@ -458,6 +460,14 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
     _idEntityMap.forEach((k,v) {
       print('id $k: $v');
     });
+  }
+
+  List<Map<String, Object>> toJson() {
+    List<Map<String, Object>> entityList = new List<Map<String, Object>>();
+    for (Entity entity in _entityList) {
+      entityList.add(entity.toJson());
+    }
+    return entityList;
   }
 
 }

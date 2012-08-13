@@ -35,6 +35,8 @@ money type
 telephone type
 postal code type
 zip code type
+encryption for sensitive data
+  http://www.howstuffworks.com/encryption.htm
 marketing
   https://talentopoly.com/posts/5440-episode_36_-_how_to_get_traction_for_your_projects
   http://blog.stackoverflow.com/2011/05/community-promotion-ads/
@@ -48,6 +50,9 @@ get random value for different types (for test data)
 i18n
 indexes? (http://www.mattfleming.com/node/192)
 
+
+2012-08-13, 16:35
+from model (entries) to json
 
 
 2012-08-13, 08:39

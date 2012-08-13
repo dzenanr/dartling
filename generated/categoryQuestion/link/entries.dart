@@ -42,9 +42,9 @@ class LinkEntries extends ModelEntries {
 LinkEntries fromJsonToLinkEntries(Domain domain, modelCode) {
   /**
    *  Graphical model:
-   *  [https://dl.dropbox.com/u/161496/dart/mb/model/Link1.png]
+   *  [https://dl.dropbox.com/u/161496/dart/mb/model/Link2.png]
    *  JSON:
-   *  [https://dl.dropbox.com/u/161496/dart/mb/model/Link1.txt]
+   *  [https://dl.dropbox.com/u/161496/dart/mb/model/Link2.txt]
    *
    *  || Member (code)
    *  id email : String

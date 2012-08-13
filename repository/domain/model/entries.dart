@@ -4,6 +4,7 @@ abstract class ModelEntriesApi {
   abstract Map<String, EntitiesApi> newEntries();
   abstract Model get model();
   abstract EntitiesApi getEntry(String entryConceptCode);
+  abstract String toJson();
 
 }
 
@@ -31,4 +32,26 @@ class ModelEntries implements ModelEntriesApi {
   Entities getEntry(String entryConceptCode) =>
       _entryEntitiesMap[entryConceptCode];
 
+  String toJson() {
+    Map<String, Object> modelMap = new Map<String, Object>();
+    modelMap["domain"] = _model.domain.code;
+    modelMap["model"] = _model.code;
+    modelMap["entries"] = entriesToJson();
+    return JSON.stringify(modelMap);
+  }
+
+  List<Map<String, Object>> entriesToJson() {
+    List<Map<String, Object>> entriesList = new List<Map<String, Object>>();
+    for (Concept entryConcept in _model.entryConcepts) {
+      Entities entryEntities = getEntry(entryConcept.code);
+      Map<String, Object> entriesMap = new Map<String, Object>();
+      entriesMap["concept"] = entryConcept.code;
+      entriesMap["entities"] = entryEntities.toJson();
+      entriesList.add(entriesMap);
+    }
+    return entriesList;
+  }
+
 }
+
+

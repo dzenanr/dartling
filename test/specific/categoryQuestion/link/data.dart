@@ -619,6 +619,16 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       expect(dartBugsWebLink.updatedOn, isNotNull);
       //dartBugsWebLink.display('+++ ');
     });
+    test('From Link Model to JSON', () {
+      var json = entries.toJson();
+      expect(json, isNotNull);
+      print('==============================================================');
+      print('JSON');
+      print('==============================================================');
+      print(json);
+      print('--------------------------------------------------------------');
+      print('');
+    });
 
   });
 }

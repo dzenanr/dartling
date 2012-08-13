@@ -21,6 +21,8 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
   abstract bool equalOids(T entity);
   abstract bool equals(Object other);
 
+  abstract Map<String, Object> toJson();
+
 }
 
 class Entity<T extends Entity<T>> implements EntityApi {
@@ -415,6 +417,24 @@ class Entity<T extends Entity<T>> implements EntityApi {
     }
 
     print('');
+  }
+
+  Map<String, Object> toJson() {
+    Map<String, Object> entityMap = new Map<String, Object>();
+    for (Parent parent in _concept.parents) {
+      Entity parentEntity = getParent(parent.code);
+      if (parentEntity != null) {
+        entityMap[parent.code] = parentEntity.oid.toString();
+      } else {
+        entityMap[parent.code] = 'null';
+      }
+    }
+    entityMap['oid'] = oid.toString();
+    entityMap['code'] = code;
+    _attributeMap.getKeys().forEach((k) =>
+        entityMap[k] = getStringFromAttribute(k));
+    _childMap.getKeys().forEach((k) => entityMap[k] = getChild(k).toJson());
+    return entityMap;
   }
 
 }

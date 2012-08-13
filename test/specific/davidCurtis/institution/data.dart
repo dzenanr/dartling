@@ -187,6 +187,16 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
 
       models.cancelActionReaction(reaction);
     });
+    test('From Institution Model to JSON', () {
+      var json = entries.toJson();
+      expect(json, isNotNull);
+      print('==============================================================');
+      print('JSON');
+      print('==============================================================');
+      print(json);
+      print('--------------------------------------------------------------');
+      print('');
+    });
 
   });
 }

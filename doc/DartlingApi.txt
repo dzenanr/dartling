@@ -28,6 +28,7 @@ abstract class ModelEntriesApi {
   abstract Map<String, EntitiesApi> newEntries();
   abstract Model get model();
   abstract EntitiesApi getEntry(String entryConceptCode);
+  abstract String toJson();
 
 }
 
@@ -66,6 +67,8 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   abstract void clear();
   abstract EntitiesApi<T> copy();
   abstract List<T> get list();
+  
+  abstract List<Map<String, Object>> toJson();
 
 }
 
@@ -90,6 +93,8 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
   abstract T copy();
   abstract bool equalOids(T entity);
   abstract bool equals(Object other);
+  
+  abstract Map<String, Object> toJson();
 
 }
 
