@@ -26,25 +26,6 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
   var data ;
   var domainData;
   var modelData;
-  /*
-  group('Testing Institution', () {
-    setUp(() {
-      domainData = repo.domains;
-      entry = fromJsonToInstitutionEntries(domainData,modelCode);
-      data = entry.data;
-      session = entry.newSession();
-
-      ecoleConcept = data.ecoleConcept;
-      expect(ecoleConcept, isNotNull);
-      expect(ecoleConcept.attributes, isNot(isEmpty));
-      expect(ecoleConcept.attributes.count, equals(3));
-
-      session = domainData.newSession();
-      modelData = domainData.getModelData(modelCode);
-      ecoleCount = 0;
-
-      models = repo.getDomainModels(domainCode);
-*/
   group('Testing ${domainCode}.${modelCode}', () {
     setUp(() {
       models = repo.getDomainModels(domainCode);
