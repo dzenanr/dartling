@@ -16,7 +16,6 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 
   abstract IdApi get id();
   abstract T copy();
-  abstract bool equalOids(T entity);
   abstract Map<String, Object> toJson();
 
 }
@@ -284,7 +283,7 @@ class Entity<T extends Entity<T>> implements EntityApi {
   /**
   * Two entities are equal if their oids are equal.
   */
-  bool equalOids(T entity) {
+  bool equals(T entity) {
     if (oid.equals(entity.oid)) {
       return true;
     }
@@ -292,39 +291,30 @@ class Entity<T extends Entity<T>> implements EntityApi {
   }
 
   /**
-   * Checks if the entity is equal in content to the given object.
-   * If the given object is not of the T type,
-   * two objects cannot be equal. Two entities are
-   * equal if they have the same content, except oid.
+   * Checks if the entity is equal in content to the given entity.
+   * Two entities are equal if they have the same content, ignoring oid.
    */
-   bool equals(Object other) {
+   bool equalContent(T entity) {
      if (_concept == null) {
        throw new ConceptException('Entity concept is not defined.');
      }
-     if (other is T) {
-       var entity = other;
-       if (_code != entity.code) {
+     if (_code != entity.code) {
+       return false;
+     }
+     for (Attribute a in _concept.attributes) {
+       if (_attributeMap[a.code] != entity.getAttribute(a.code)) {
          return false;
        }
-       for (Attribute a in _concept.attributes) {
-         if (_attributeMap[a.code] != entity.getAttribute(a.code)) {
-           return false;
-         }
+     }
+     for (Parent parent in _concept.parents) {
+       if (_parentMap[parent.code] != entity.getParent(parent.code)) {
+         return false;
        }
-
-       for (Parent parent in _concept.parents) {
-         if (_parentMap[parent.code] != entity.getParent(parent.code)) {
-           return false;
-         }
+     }
+     for (Child child in _concept.children) {
+       if (_childMap[child.code] != entity.getChild(child.code)) {
+         return false;
        }
-
-       for (Child child in _concept.children) {
-         if (_childMap[child.code] != entity.getChild(child.code)) {
-           return false;
-         }
-       }
-     } else {
-       return false;
      }
      return true;
    }

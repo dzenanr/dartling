@@ -55,6 +55,15 @@ class UserEntries extends ModelEntries {
     return entries;
   }
 
+  Entity newEntity(String conceptCode) {
+    var concept = model.concepts.findByCode(conceptCode);
+    if (concept.code == 'User') {
+      return new User(concept);
+    } else {
+      throw new ConceptException('${concept.code} concept does not exist.');
+    }
+  }
+
   Users get users() => getEntry('User');
 
   Concept get userConcept() => users.concept;

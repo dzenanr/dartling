@@ -70,6 +70,15 @@ class InstitutionEntries extends ModelEntries {
     return entries;
   }
 
+  Entity newEntity(String conceptCode) {
+    var concept = model.concepts.findByCode(conceptCode);
+    if (concept.code == 'Ecole') {
+      return new Ecole(concept);
+    } else {
+      throw new ConceptException('${concept.code} concept does not exist.');
+    }
+  }
+
   Ecoles get ecoles() => getEntry('Ecole');
 
   Concept get ecoleConcept() => ecoles.concept;

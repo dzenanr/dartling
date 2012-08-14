@@ -47,6 +47,10 @@ i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
 
+
+2012-08-14, 17:32
+API changes
+
 2012-08-14, 16:30
 post, postAdd, postRemove (in API also)
 from jason to model (entries) without tests

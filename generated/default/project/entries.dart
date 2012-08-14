@@ -35,6 +35,15 @@ class ProjectEntries extends ModelEntries {
     return entries;
   }
 
+  Entity newEntity(String conceptCode) {
+    var concept = model.concepts.findByCode(conceptCode);
+    if (concept.code == 'Project') {
+      return new Project(concept);
+    } else {
+      throw new ConceptException('${concept.code} concept does not exist.');
+    }
+  }
+
   Projects get projects() => getEntry('Project');
 
   Concept get projectConcept() => projects.concept;

@@ -24,7 +24,7 @@ class LinkEntries extends ModelEntries {
     return entries;
   }
 
-  EntitiesApi newEntities(String conceptCode) {
+  Entities newEntities(String conceptCode) {
     var concept = model.concepts.findByCode(conceptCode);
     if (!concept.entry) {
       if (concept.code == 'Interests') {
@@ -35,20 +35,20 @@ class LinkEntries extends ModelEntries {
     }
   }
 
-  EntityApi newEntity(String conceptCode) {
+  Entity newEntity(String conceptCode) {
     var concept = model.concepts.findByCode(conceptCode);
     if (concept.code == 'Category') {
-      return  new Category(concept);
+      return new Category(concept);
     } else if (concept.code == 'Comment') {
-      return  new Comment(concept);
+      return new Comment(concept);
     } else if (concept.code == 'Member') {
-      return  new Member(concept);
+      return new Member(concept);
     } else if (concept.code == 'Question') {
-      return  new Question(concept);
+      return new Question(concept);
     } else if (concept.code == 'Interest') {
-      return  new Interest(concept);
+      return new Interest(concept);
     } else if (concept.code == 'WebLink') {
-      return  new WebLink(concept);
+      return new WebLink(concept);
     } else {
       throw new ConceptException('${concept.code} concept does not exist.');
     }
