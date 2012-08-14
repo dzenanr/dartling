@@ -1,8 +1,8 @@
 
 abstract class Property extends Entity<Property> {
 
-  String min = '0';
-  String max = '1';
+  String minc = '0';
+  String maxc = '1';
   bool _id = false;
   bool update = true;
   bool sensitive = false;
@@ -13,20 +13,20 @@ abstract class Property extends Entity<Property> {
     super.code = code;
   }
 
-  bool get maxMany() => max != '0' && max != '1' ? true : false;
+  bool get maxMany() => maxc != '0' && maxc != '1' ? true : false;
 
   bool get identifier() => _id;
   set identifier(bool i) {
     _id = i;
     if (i) {
-      min = '1';
-      max = '1';
+      minc = '1';
+      maxc = '1';
     }
   }
 
-  bool get required() => min == '1' ? true : false;
+  bool get required() => minc == '1' ? true : false;
   set required(bool r) {
-    r ? min = '1' : min = '0';
+    r ? minc = '1' : minc = '0';
   }
 
 }

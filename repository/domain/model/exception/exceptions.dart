@@ -45,6 +45,12 @@ class OrderException extends DartlingException {
 
 }
 
+class ParentException extends DartlingException {
+
+  const ParentException(String msg) : super(msg);
+
+}
+
 class RemoveException extends ActionException {
 
   const RemoveException(String msg) : super(msg);

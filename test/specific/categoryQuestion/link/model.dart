@@ -17,7 +17,7 @@ testLinkModel() {
   webLinkConcept.entry = false;
   webLinkConcept.description = 'Web links of interest.';
   assert(model.concepts.count == 2);
-  new Attribute(webLinkConcept, 'name').identifier = true;
+  new Attribute(webLinkConcept, 'subject').identifier = true;
   new Attribute(webLinkConcept, 'url');
   new Attribute(webLinkConcept, 'description');
   assert(webLinkConcept.attributes.count == 3);
@@ -56,23 +56,23 @@ testLinkModel() {
   assert(dartWebLinks.count == 0);
 
   Entity dartHomeWebLink = new Entity.of(webLinkConcept);
-  dartHomeWebLink.setAttribute('name', 'Dart Home');
+  dartHomeWebLink.setAttribute('subject', 'Dart Home');
   dartHomeWebLink.setAttribute('url', 'http://www.dartlang.org/');
   dartHomeWebLink.setAttribute('description',
     'Dart brings structure to web app engineering with a new language, libraries, and tools.');
+  dartHomeWebLink.setParent('category', dartCategory);
   dartWebLinks.add(dartHomeWebLink);
   assert(dartWebLinks.count == 1);
-  dartHomeWebLink.setParent('category', dartCategory);
   assert(dartHomeWebLink.getParent('category').getAttribute('name') == 'Dart');
 
   Entity tryDartWebLink = new Entity.of(webLinkConcept);
-  tryDartWebLink.setAttribute('name', 'Try Dart');
+  tryDartWebLink.setAttribute('subject', 'Try Dart');
   tryDartWebLink.setAttribute('url', 'http://try.dartlang.org/');
   tryDartWebLink.setAttribute('description',
     'Try out the Dart Language from the comfort of your web browser.');
+  tryDartWebLink.setParent('category', dartCategory);
   dartWebLinks.add(tryDartWebLink);
   assert(dartWebLinks.count == 2);
-  tryDartWebLink.setParent('category', dartCategory);
   assert(tryDartWebLink.getParent('category').getAttribute('name') == 'Dart');
 
   // Display

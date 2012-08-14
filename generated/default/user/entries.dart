@@ -12,7 +12,7 @@ UserEntries fromJsonToUserEntries(Domain domain, String modelCode) {
    *  at karma : num (init : 1)
    *  at about : String
    */
-  var json = '''
+  var modelInJson = '''
       {"width":990,"height":580,
        "lines":[],
        "boxes":[
@@ -41,7 +41,7 @@ UserEntries fromJsonToUserEntries(Domain domain, String modelCode) {
         }]
       }
   ''';
-  return new UserEntries(fromMagicBoxes(json, domain, modelCode));
+  return new UserEntries(fromMagicBoxes(modelInJson, domain, modelCode));
 }
 
 class UserEntries extends ModelEntries {

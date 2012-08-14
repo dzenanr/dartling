@@ -13,6 +13,7 @@ abstract class DomainModelsApi implements SourceOfActionReactionApi {
   abstract Domain get domain();
   abstract ModelEntriesApi getModelEntries(String modelCode);
   abstract DomainSessionApi newSession();
+  abstract fromJson(String json);
 
 }
 
@@ -25,7 +26,6 @@ abstract class DomainSessionApi {
 
 abstract class ModelEntriesApi {
 
-  abstract Map<String, EntitiesApi> newEntries();
   abstract Model get model();
   abstract EntitiesApi getEntry(String entryConceptCode);
   abstract String toJson();
@@ -34,7 +34,6 @@ abstract class ModelEntriesApi {
 
 abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
 
-  abstract EntitiesApi<T> newEntities();
   abstract Concept get concept();
   abstract EntitiesApi<T> get source();
   abstract ErrorsApi get errors();
@@ -43,8 +42,10 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
 
   abstract bool preAdd(T entity);
   abstract bool add(T entity);
+  abstract bool postAdd(T entity);
   abstract bool preRemove(T entity);
   abstract bool remove(T entity);
+  abstract bool postRemove(T entity);
 
   abstract void forEach(Function f);
   abstract bool every(Function f);
@@ -67,16 +68,13 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   abstract void clear();
   abstract EntitiesApi<T> copy();
   abstract List<T> get list();
-  
   abstract List<Map<String, Object>> toJson();
 
 }
 
 abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 
-  abstract EntityApi<T> newEntity();
   abstract Concept get concept();
-  abstract Oid get oid();
   abstract String get code();
   abstract void set code(String code);
 
@@ -92,8 +90,6 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
   abstract IdApi get id();
   abstract T copy();
   abstract bool equalOids(T entity);
-  abstract bool equals(Object other);
-  
   abstract Map<String, Object> toJson();
 
 }

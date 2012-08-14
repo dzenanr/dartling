@@ -1,7 +1,6 @@
 
 abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
 
-  abstract EntitiesApi<T> newEntities();
   abstract Concept get concept();
   abstract EntitiesApi<T> get source();
   abstract ErrorsApi get errors();
@@ -10,8 +9,10 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
 
   abstract bool preAdd(T entity);
   abstract bool add(T entity);
+  abstract bool postAdd(T entity);
   abstract bool preRemove(T entity);
   abstract bool remove(T entity);
+  abstract bool postRemove(T entity);
 
   abstract void forEach(Function f);
   abstract bool every(Function f);
@@ -34,7 +35,6 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   abstract void clear();
   abstract EntitiesApi<T> copy();
   abstract List<T> get list();
-
   abstract List<Map<String, Object>> toJson();
 
 }
@@ -49,9 +49,10 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
   Entities<T> _source;
   Errors _errors;
 
-  String min = '0';
-  String max = 'N';
+  String minc = '0';
+  String maxc = 'N';
   bool pre = true;
+  bool post = true;
   bool propagateToSource = true;
 
   Entities() {
@@ -59,9 +60,11 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
     _oidEntityMap = new Map<Oid, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
+    _errors = new Errors();
 
     propagateToSource = false;
     pre = false;
+    post = false;
   }
 
   Entities.of(this._concept) {
@@ -112,20 +115,20 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
         'An entity cannot be added to ${_concept.plural}.');
     }
 
-    bool validation = true;
+    bool result = true;
 
     // max validation
-    if (max != 'N') {
+    if (maxc != 'N') {
       int maxInt;
       try {
-        maxInt = Math.parseInt(max);
+        maxInt = Math.parseInt(maxc);
         if (count == maxInt) {
           Error error = new Error('max');
-          error.message = '${_concept.code}.max is $max.';
+          error.message = '${_concept.code}.max is $maxc.';
           _errors.add(error);
-          validation = false;
+          result = false;
         }
-      } catch (final BadNumberFormatException e) {
+      } catch (final FormatException e) {
         throw new AddException(
           'Entities max is neither N nor a positive integer string.');
       }
@@ -148,7 +151,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
         Error error = new Error('required');
         error.message = '${entity.concept.code}.${a.code} attribute is null.';
         _errors.add(error);
-        validation = false;
+        result = false;
       }
     }
     for (Parent p in _concept.parents) {
@@ -156,7 +159,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
         Error error = new Error('required');
         error.message = '${entity.concept.code}.${p.code} parent is null.';
         _errors.add(error);
-        validation = false;
+        result = false;
       }
     }
 
@@ -165,20 +168,21 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
       Error error = new Error('unique');
       error.message = '${entity.concept.code}.code is not unique.';
       _errors.add(error);
-      validation = false;
+      result = false;
     }
     if (entity.id != null && findById(entity.id) != null) {
       Error error = new Error('unique');
       error.message =
           '${entity.concept.code}.id ${entity.id.toString()} is not unique.';
       _errors.add(error);
-      validation = false;
+      result = false;
     }
 
-    return validation;
+    return result;
   }
 
   bool add(T entity) {
+    bool added = false;
     if (preAdd(entity)) {
       _entityList.add(entity);
       _oidEntityMap[entity.oid] = entity;
@@ -192,9 +196,43 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
       if (_source != null && propagateToSource) {
         _source.add(entity);
       }
+      if (postAdd(entity)) {
+        added = true;
+      } else {
+        var beforePre = pre;
+        var beforePost = post;
+        pre = false;
+        post = false;
+        if (!remove(entity)) {
+          var msg = '${entity.concept.code} entity (${entity.oid}) '
+            'was added, post was not successful, remove was not successful';
+          throw new RemoveException(msg);
+        }
+        pre = beforePre;
+        post = beforePost;
+      }
+    }
+    return added;
+  }
+
+  bool postAdd(T entity) {
+    if (!post) {
       return true;
     }
-    return false;
+
+    if (entity.concept == null) {
+      throw new ConceptException(
+        'Entity(oid: ${entity.oid}) concept is not defined.');
+    }
+    if (_concept == null) {
+      throw new ConceptException('Entities.add: concept is not defined.');
+    }
+
+    bool result = true;
+
+    //...
+
+    return result;
   }
 
   bool preRemove(T entity) {
@@ -214,29 +252,30 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
         'An entity cannot be removed from ${_concept.plural}.');
     }
 
-    bool validation = true;
+    bool result = true;
 
     // min validation
-    if (min != '0') {
+    if (minc != '0') {
       int minInt;
       try {
-        minInt = Math.parseInt(min);
+        minInt = Math.parseInt(minc);
         if (count == minInt) {
           Error error = new Error('min');
-          error.message = '${_concept.code}.min is $min.';
+          error.message = '${_concept.code}.min is $minc.';
           _errors.add(error);
-          validation = false;
+          result = false;
         }
-      } catch (final BadNumberFormatException e) {
+      } catch (final FormatException e) {
         throw new RemoveException(
           'Entities min is not a positive integer string.');
       }
     }
 
-    return validation;
+    return result;
   }
 
   bool remove(T entity) {
+    bool removed = false;
     if (preRemove(entity)) {
       for (T element in _entityList) {
         if (element == entity) {
@@ -255,9 +294,43 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
       if (_source != null && propagateToSource) {
         _source.remove(entity);
       }
+      if (postRemove(entity)) {
+        removed = true;
+      } else {
+        var beforePre = pre;
+        var beforePost = post;
+        pre = false;
+        post = false;
+        if (!add(entity)) {
+          var msg = '${entity.concept.code} entity (${entity.oid}) '
+            'was removed, post was not successful, add was not successful';
+          throw new AddException(msg);
+        }
+        pre = beforePre;
+        post = beforePost;
+      }
+    }
+    return removed;
+  }
+
+  bool postRemove(T entity) {
+    if (!post) {
       return true;
     }
-    return false;
+
+    if (entity.concept == null) {
+      throw new ConceptException(
+        'Entity(oid: ${entity.oid}) concept is not defined.');
+    }
+    if (_concept == null) {
+      throw new ConceptException('Entities.add: concept is not defined.');
+    }
+
+    bool result = true;
+
+    //...
+
+    return result;
   }
 
   bool contains(T entity) {

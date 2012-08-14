@@ -23,7 +23,7 @@ Model fromMagicBoxes(String json, Domain domain, String modelCode) {
         } else if (itemCategory == 'identifier') {
           attribute.identifier = true;
         } else if (itemCategory == 'required') {
-          attribute.min = '1';
+          attribute.minc = '1';
         }
         int itemSequence = item["sequence"];
         attribute.sequence = itemSequence;
@@ -126,12 +126,12 @@ Model fromMagicBoxes(String json, Domain domain, String modelCode) {
     neighbor12.opposite = neighbor21;
     neighbor21.opposite = neighbor12;
 
-    neighbor12.min = box1box2Min;
-    neighbor12.max = box1box2Max;
+    neighbor12.minc = box1box2Min;
+    neighbor12.maxc = box1box2Max;
     neighbor12.identifier = box1box2Id;
 
-    neighbor21.min = box2box1Min;
-    neighbor21.max = box2box1Max;
+    neighbor21.minc = box2box1Min;
+    neighbor21.maxc = box2box1Max;
     neighbor21.identifier = box2box1Id;
 
     neighbor12.internal = lineInternal;

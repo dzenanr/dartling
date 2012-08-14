@@ -34,6 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import('../unittest/unittest.dart');
 #import('dart:json');
+#import('dart:math');
 #import('dart:uri');
 
 #source('generated/categoryQuestion/link/categories.dart');

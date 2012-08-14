@@ -24,9 +24,39 @@ class LinkEntries extends ModelEntries {
     return entries;
   }
 
+  EntitiesApi newEntities(String conceptCode) {
+    var concept = model.concepts.findByCode(conceptCode);
+    if (!concept.entry) {
+      if (concept.code == 'Interests') {
+        return  new Interests(concept);
+      } else if (concept.code == 'WebLink') {
+        return  new WebLinks(concept);
+      }
+    }
+  }
+
+  EntityApi newEntity(String conceptCode) {
+    var concept = model.concepts.findByCode(conceptCode);
+    if (concept.code == 'Category') {
+      return  new Category(concept);
+    } else if (concept.code == 'Comment') {
+      return  new Comment(concept);
+    } else if (concept.code == 'Member') {
+      return  new Member(concept);
+    } else if (concept.code == 'Question') {
+      return  new Question(concept);
+    } else if (concept.code == 'Interest') {
+      return  new Interest(concept);
+    } else if (concept.code == 'WebLink') {
+      return  new WebLink(concept);
+    } else {
+      throw new ConceptException('${concept.code} concept does not exist.');
+    }
+  }
+
   Categories get categories() => getEntry('Category');
-  Members get members() => getEntry('Member');
   Comments get comments() => getEntry('Comment');
+  Members get members() => getEntry('Member');
   Questions get questions() => getEntry('Question');
 
   Concept get categoryConcept() => categories.concept;
@@ -34,8 +64,8 @@ class LinkEntries extends ModelEntries {
   Concept get commentConcept() => comments.concept;
   Concept get questionConcept() => questions.concept;
 
-  Concept get webLinkConcept() => model.concepts.findByCode('WebLink');
   Concept get interestConcept() => model.concepts.findByCode('Interest');
+  Concept get webLinkConcept() => model.concepts.findByCode('WebLink');
 
 }
 
@@ -101,7 +131,7 @@ LinkEntries fromJsonToLinkEntries(Domain domain, modelCode) {
    * http://www.cerny-online.com/cerny.js/
    * http://jsonprettyprint.com/
    */
-  var json = '''
+  var modelInJson = '''
 {
    "width":990,
    "height":580,
@@ -423,7 +453,7 @@ LinkEntries fromJsonToLinkEntries(Domain domain, modelCode) {
    ]
 }
   ''';
-  return new LinkEntries(fromMagicBoxes(json, domain, modelCode));
+  return new LinkEntries(fromMagicBoxes(modelInJson, domain, modelCode));
 }
 
 

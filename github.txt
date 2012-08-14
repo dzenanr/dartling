@@ -136,4 +136,10 @@ http://learn.github.com/p/diff.html
 all changes since the last commit
 git diff HEAD
 
+----------------------------------------------------------------------
+
+Branching
+
+http://nvie.com/posts/a-successful-git-branching-model/
+
 

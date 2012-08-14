@@ -5,6 +5,7 @@ abstract class DomainModelsApi implements SourceOfActionReactionApi {
   abstract Domain get domain();
   abstract ModelEntriesApi getModelEntries(String modelCode);
   abstract DomainSessionApi newSession();
+  abstract fromJson(String json);
 
 }
 
@@ -28,7 +29,7 @@ class DomainModels implements DomainModelsApi {
       _modelEntriesMap[modelCode] = modelEntries;
     } else {
       throw new CodeException(
-        'The $modelCode code exists already in the ${_domain.code} domain data.');
+        'The ${modelCode} model exists already in the ${_domain.code} domain.');
     }
   }
 
@@ -52,6 +53,22 @@ class DomainModels implements DomainModelsApi {
     for (ActionReactionApi reaction in _actionReactions) {
       reaction.react(action);
     }
+  }
+
+  fromJson(String json) {
+    Map<String, Object> modelMap = JSON.parse(json);
+    var domainCode = modelMap['domain'];
+    if (_domain.code != domainCode) {
+      throw new CodeException('The ${domainCode} domain does not exist.');
+    }
+    var modelCode = modelMap['model'];
+    if (!modelMap.containsKey(modelCode)) {
+      throw new CodeException(
+        'The ${modelCode} model does not exist in the ${_domain.code} domain.');
+    }
+    ModelEntries modelEntries = getModelEntries(modelCode);
+    List<Map<String, Object>> entriesList = modelMap['entries'];
+    modelEntries.entriesFromJson(entriesList);
   }
 
 }

@@ -1,9 +1,7 @@
 
 abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 
-  abstract EntityApi<T> newEntity();
   abstract Concept get concept();
-  abstract Oid get oid();
   abstract String get code();
   abstract void set code(String code);
 
@@ -19,8 +17,6 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
   abstract IdApi get id();
   abstract T copy();
   abstract bool equalOids(T entity);
-  abstract bool equals(Object other);
-
   abstract Map<String, Object> toJson();
 
 }
@@ -28,7 +24,7 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 class Entity<T extends Entity<T>> implements EntityApi {
 
   Concept _concept;
-  Oid _oid;
+  Oid oid;
   String _code;
   Map<String, Object> _attributeMap;
   // cannot use T since a parent is of a different type
@@ -36,11 +32,11 @@ class Entity<T extends Entity<T>> implements EntityApi {
   Map<String, Entities> _childMap;
 
   Entity() {
-    _oid = new Oid();
+    oid = new Oid();
   }
 
   Entity.of(this._concept) {
-    _oid = new Oid();
+    oid = new Oid();
     _attributeMap = new Map<String, Object>();
     _parentMap = new Map<String, Entity>();
     _childMap = new Map<String, Entities>();
@@ -57,24 +53,24 @@ class Entity<T extends Entity<T>> implements EntityApi {
       } else if (a.type.base == 'int') {
         try {
           _attributeMap[a.code] = Math.parseInt(a.init);
-        } catch (final BadNumberFormatException e) {
+        } catch (final FormatException e) {
           throw new TypeException(
               '${a.code} attribute init (default) value is not int: $e');
-          }
+        }
       } else if (a.type.base == 'double') {
         try {
           _attributeMap[a.code] = Math.parseDouble(a.init);
-        } catch (final BadNumberFormatException e) {
+        } catch (final FormatException e) {
           throw new TypeException(
               '${a.code} attribute init (default) value is not double: $e');
         }
       } else if (a.type.base == 'num') {
         try {
           _attributeMap[a.code] = Math.parseInt(a.init);
-        } catch (final BadNumberFormatException e1) {
+        } catch (final FormatException e1) {
           try {
             _attributeMap[a.code] = Math.parseDouble(a.init);
-          } catch (final BadNumberFormatException e2) {
+          } catch (final FormatException e2) {
             throw new TypeException(
                 '${a.code} attribute init (default) value is not num: $e1; $e2');
           }
@@ -96,16 +92,13 @@ class Entity<T extends Entity<T>> implements EntityApi {
     }
 
     for (Child child in _concept.children) {
-      var entities = new Entities();
-      entities._concept = child.destinationConcept;
-      _childMap[child.code] = entities;
+      _childMap[child.code] = new Entities.of(child.destinationConcept);
     }
   }
 
   Entity<T> newEntity() => new Entity.of(_concept);
 
   Concept get concept() => _concept;
-  Oid get oid() => _oid;
   String get code() => _code;
   void set code(String code) {
     if (_code != null) {
@@ -168,22 +161,22 @@ class Entity<T extends Entity<T>> implements EntityApi {
     } else if (attribute.type.base == 'int') {
       try {
         return setAttribute(name, Math.parseInt(string));
-      } catch (final BadNumberFormatException e) {
+      } catch (final FormatException e) {
         throw new TypeException('${attribute.code} attribute value is not int: $e');
       }
     } else if (attribute.type.base == 'double') {
       try {
         return setAttribute(name, Math.parseDouble(string));
-      } catch (final BadNumberFormatException e) {
+      } catch (final FormatException e) {
         throw new TypeException('${attribute.code} attribute value is not double: $e');
       }
     } else if (attribute.type.base == 'num') {
       try {
         return setAttribute(name, Math.parseInt(string));
-      } catch (final BadNumberFormatException e1) {
+      } catch (final FormatException e1) {
         try {
           return setAttribute(name, Math.parseDouble(string));
-        } catch (final BadNumberFormatException e2) {
+        } catch (final FormatException e2) {
           throw new TypeException(
             '${attribute.code} attribute value is not num: $e1; $e2');
         }
@@ -268,34 +261,34 @@ class Entity<T extends Entity<T>> implements EntityApi {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
-    T e = newEntity();
-    e._oid = _oid;
+    T entity = newEntity();
+    entity.oid = oid;
     if (_code != null) {
-      e.code = _code;
+      entity.code = _code;
     }
     for (Attribute a in _concept.attributes) {
-      e.setAttribute(a.code, _attributeMap[a.code]);
+      entity.setAttribute(a.code, _attributeMap[a.code]);
     }
 
     for (Parent parent in _concept.parents) {
-      e.setParent(parent.code, _parentMap[parent.code]);
+      entity.setParent(parent.code, _parentMap[parent.code]);
     }
 
     for (Child child in _concept.children) {
-      e.setChild(child.code, _childMap[child.code]);
+      entity.setChild(child.code, _childMap[child.code]);
     }
 
-    return e;
+    return entity;
   }
 
   /**
   * Two entities are equal if their oids are equal.
   */
   bool equalOids(T entity) {
-    if (_oid != entity.oid) {
-      return false;
+    if (oid.equals(entity.oid)) {
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**
@@ -362,7 +355,7 @@ class Entity<T extends Entity<T>> implements EntityApi {
    * Returns a string that represents this entity by using oid and code.
    */
   String toString() {
-    return '${_oid.toString()}';
+    return '${oid.toString()}';
   }
 
   /**
@@ -380,7 +373,7 @@ class Entity<T extends Entity<T>> implements EntityApi {
     print('${s}${toString()}                       ');
     print('${s}------------------------------------');
     if (withOid) {
-      print('${s}oid: $_oid');
+      print('${s}oid: $oid');
     }
     if (_code != null) {
       print('${s}code: $_code');

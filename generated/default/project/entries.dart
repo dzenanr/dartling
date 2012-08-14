@@ -5,7 +5,7 @@ ProjectEntries fromJsonToProjectEntries(Domain domain, String modelCode) {
    *  id name
    *  at description
    */
-  var json = '''
+  var modelInJson = '''
       {"width":990,"height":580,
        "lines":[],
        "boxes":[
@@ -21,7 +21,7 @@ ProjectEntries fromJsonToProjectEntries(Domain domain, String modelCode) {
         }]
       }
   ''';
-  return new ProjectEntries(fromMagicBoxes(json, domain, modelCode));
+  return new ProjectEntries(fromMagicBoxes(modelInJson, domain, modelCode));
 }
 
 class ProjectEntries extends ModelEntries {

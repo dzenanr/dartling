@@ -5,12 +5,10 @@ To do in Magic Boxes
 open model shows twin relationships as one line
 
 To do
-  
-persistance
-  without DOM
-  with DOM
-  server-side
 
+from json tests
+
+Duration (time span) type
 add advanced model patterns to CategoryQuestion.Link model:
 category tests
   reflexive relationship
@@ -22,14 +20,12 @@ document code
   http://www.dartlang.org/docs/language-tour/#comments
   http://japhr.blogspot.ca/2012/03/pretty-dartdoc.html
   http://www.dotnetcodegeeks.com/2012/03/10-best-practices-of-code-commenting.html
-post
 json pretty formatting for Dartling
 Uri validation for well formed uri (not done in Uri)
   https://github.com/berkerpeksag/murl#readme
   ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
   http://msdn.microsoft.com/en-us/library/system.uri.iswellformedoriginalstring.aspx
-Dynamic type?
-Duration (time span) type
+Dynamic type???
 email type
 money type
 telephone type
@@ -48,12 +44,16 @@ constraints?
 get random entity
 get random value for different types (for test data)
 i18n
-indexes? (http://www.mattfleming.com/node/192)
+indexes?? (http://www.mattfleming.com/node/192)
 
+
+2012-08-14, 16:30
+post, postAdd, postRemove (in API also)
+from jason to model (entries) without tests
+API changes
 
 2012-08-13, 16:35
-from model (entries) to json
-
+to json from model (entries), entities, entity
 
 2012-08-13, 08:39
 tag s05: spiral 05: Dartling without persistence

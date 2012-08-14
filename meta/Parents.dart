@@ -11,7 +11,8 @@ class Parent extends Neighbor {
     super(sourceConcept, destinationConcept, code) {
     sourceConcept.parents.add(this);
     destinationConcept.sourceParents.add(this);
-    min = '1';
+    minc = '1';
+    maxc = '1';
   }
 
 }

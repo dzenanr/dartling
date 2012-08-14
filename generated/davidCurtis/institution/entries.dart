@@ -14,7 +14,7 @@ InstitutionEntries fromJsonToInstitutionEntries(Domain domain,
    * http://www.cerny-online.com/cerny.js/
    * http://jsonprettyprint.com/
    */
-  var json = '''
+  var modelInJson = '''
 {
    "width":990,
    "height":580,
@@ -56,7 +56,7 @@ InstitutionEntries fromJsonToInstitutionEntries(Domain domain,
    ]
 }
   ''';
-  return new InstitutionEntries(fromMagicBoxes(json, domain, modelCode));
+  return new InstitutionEntries(fromMagicBoxes(modelInJson, domain, modelCode));
 }
 
 class InstitutionEntries extends ModelEntries {
