@@ -1,9 +1,4 @@
 
-LinkEntries fromJsonToLinkEntries(Domain domain, modelCode) {
-  return new LinkEntries(fromMagicBoxes(categoryQuestionLinkModelInJson,
-                                        domain, modelCode));
-}
-
 class LinkEntries extends ModelEntries {
 
   LinkEntries(Model model) : super(model);

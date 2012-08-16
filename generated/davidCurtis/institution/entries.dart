@@ -1,10 +1,4 @@
 
-InstitutionEntries fromJsonToInstitutionEntries(Domain domain,
-                                                String modelCode) {
-  return new InstitutionEntries(fromMagicBoxes(davidCurtisInstitutionModelInJson,
-                                               domain, modelCode));
-}
-
 class InstitutionEntries extends ModelEntries {
 
   InstitutionEntries(Model model) : super(model);

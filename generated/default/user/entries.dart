@@ -1,8 +1,4 @@
 
-UserEntries fromJsonToUserEntries(Domain domain, String modelCode) {
-  return new UserEntries(fromMagicBoxes(defaultUserModelInJson, domain, modelCode));
-}
-
 class UserEntries extends ModelEntries {
 
   UserEntries(Model model) : super(model);

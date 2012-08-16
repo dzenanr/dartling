@@ -1,4 +1,9 @@
 
+LinkEntries fromJsonToLinkEntries(Domain domain, modelCode) {
+  return new LinkEntries(fromMagicBoxes(categoryQuestionLinkModelInJson,
+                                        domain, modelCode));
+}
+
   /**
    *  Graphical model:
    *  [https://dl.dropbox.com/u/161496/dart/mb/model/Link2.png]

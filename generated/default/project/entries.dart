@@ -1,9 +1,4 @@
 
-ProjectEntries fromJsonToProjectEntries(Domain domain, String modelCode) {
-  return new ProjectEntries(fromMagicBoxes(defaultProjectModelInJson,
-                                           domain, modelCode));
-}
-
 class ProjectEntries extends ModelEntries {
 
   ProjectEntries(Model model) : super(model);

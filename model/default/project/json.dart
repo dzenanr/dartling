@@ -1,4 +1,9 @@
 
+ProjectEntries fromJsonToProjectEntries(Domain domain, String modelCode) {
+  return new ProjectEntries(fromMagicBoxes(defaultProjectModelInJson,
+                                           domain, modelCode));
+}
+
 /**
  *  || Project
  *  id name

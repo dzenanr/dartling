@@ -34,7 +34,11 @@ is generated in MagicBoxes and used in Dartling to create its meta model. The me
 
 Dartling Project Structure
 
-The Dartling project has three generic (generated, meta, repository) and two specific folders (specific, test). Code in the generated folder will be generated soon. It will be generated from a domain model. The specific folder is a place for the customization of the domain model. Tests are created in the test folder.
+The Dartling project has three generic (generated, meta, repository) and four specific folders (data, model, specific, test). 
+
+Code in the generated folder will be generated soon. It will be generated from a domain model. 
+
+The data folder contains data (in JSON) of models. The model folder contains models (in JSON) from Magic Boxes. The specific folder is a place for the customization of models. Tests are created in the test folder.
 
 More details: http://goo.gl/7YGAq
 

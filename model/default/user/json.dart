@@ -1,4 +1,8 @@
 
+UserEntries fromJsonToUserEntries(Domain domain, String modelCode) {
+  return new UserEntries(fromMagicBoxes(defaultUserModelInJson, domain, modelCode));
+}
+
 /**
  *  || User (code)
  *  id email : String
