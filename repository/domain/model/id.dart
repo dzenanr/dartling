@@ -172,18 +172,28 @@ class Id implements IdApi {
     throw new IdException('${_concept.code}.id is not defined.');
   }
 
+  String _dropEnd(String text, String end) {
+    String withoutEnd = text;
+    int endPosition = text.lastIndexOf(end);
+    if (endPosition > 0) {
+      // Drop the end.
+      withoutEnd = text.substring(0, endPosition);
+    }
+    return withoutEnd;
+  }
+
    /**
    * Returns a string that represents this id.
    */
   String toString() {
      String result = '' ;
      if (parentCount > 0) {
-       _parentMap.forEach((k,v) => result = '$result ${v}');
+       _parentMap.forEach((k,v) => result = '$result ${v},');
      }
      if (attributeCount > 0) {
-       _attributeMap.forEach((k,v) => result = '$result ${v}');
+       _attributeMap.forEach((k,v) => result = '$result ${v},');
      }
-    return '(${result.trim()})';
+    return '(${_dropEnd(result.trim(), ',')})';
   }
 
   int hashCode() => toString().hashCode();

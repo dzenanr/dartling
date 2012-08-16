@@ -132,7 +132,7 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       dzenan.karma = 17.9;
       //dzenan.about = 'I like to walk, hike and stop to have a good bite and drink.';
       dzenan.about = '''I like to walk, hike and stop to have a good bite and drink.
-    In addition, my name is Denan Ri?anovi? (Dzenan Ridjanovic).
+    In addition, my name is Dženan Riđanović. (Dzenan Ridjanovic).
     I am an associate professor in the Business School at the
     Laval University (Universit Laval), Quebec, Canada.
     I received a B.Sc. in informatics from the University of Sarajevo,
@@ -623,13 +623,10 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       entries.display(json, 'Link Model in JSON');
     });
     test('From JSON to Link Model', () {
-      var json = entries.toJson();
-      expect(json, isNotNull);
-
       expect(entries.empty, isFalse);
       entries.clear();
       expect(entries.empty, isTrue);
-      entries.fromJson(json);
+      entries.fromJsonToData();
       expect(entries.empty, isFalse);
       categories.display('Categories: From JSON to Link Model');
       members.display('Members: From JSON to Link Model');
