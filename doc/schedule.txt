@@ -48,9 +48,9 @@ i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
 
-2012-08-16, ??
+2012-08-16, 10:13
 raw string for json to avoid escape error
-
+id to string with comma separation of combination members
 
 2012-08-15, 22:30
 README
