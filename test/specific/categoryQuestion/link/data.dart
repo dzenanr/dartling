@@ -25,11 +25,11 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
 
       categoryConcept = entries.categoryConcept;
       expect(categoryConcept, isNotNull);
-      expect(categoryConcept.attributes, isNot(isEmpty));
+      expect(categoryConcept.attributes.empty, isFalse);
 
       webLinkConcept = entries.webLinkConcept;
       expect(webLinkConcept, isNotNull);
-      expect(webLinkConcept.attributes, isNot(isEmpty));
+      expect(webLinkConcept.attributes.empty, isFalse);
       expect(webLinkConcept.parents.count, equals(1));
 
       categories = entries.categories;
@@ -66,8 +66,7 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       dartHomeWebLink.subject = 'Dart Home';
       dartHomeWebLink.url = new Uri.fromString('http://www.dartlang.org/');
       dartHomeWebLink.description =
-          'Dart brings structure to web app engineering '
-          'with a new language, libraries, and tools.';
+          'Dart is a new web language with libraries and tools.';
       dartHomeWebLink.category = dartCategory;
       expect(dartHomeWebLink.category, isNotNull);
       dartCategory.webLinks.add(dartHomeWebLink);
@@ -110,12 +109,11 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
 
       memberConcept = entries.memberConcept;
       expect(memberConcept, isNotNull);
-      expect(memberConcept.attributes, isNot(isEmpty));
-      //memberConcept.attributes.findByCode('password').sensitive = true;
+      expect(memberConcept.attributes.list, isNot(isEmpty));
 
       interestConcept = entries.interestConcept;
       expect(interestConcept, isNotNull);
-      expect(interestConcept.attributes, isNot(isEmpty));
+      expect(interestConcept.attributes.list, isNot(isEmpty));
       expect(interestConcept.parents.count, equals(2));
 
       members = entries.members;
@@ -132,14 +130,15 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       dzenan.receiveEmail = true;
       dzenan.role = 'admin';
       dzenan.karma = 17.9;
-      dzenan.about = '''I like to walk, hike and stop to have a good bite and drink. 
-    In addition, my name is Denan Ri?anovi? (Dzenan Ridjanovic). 
-    I am an associate professor in the Business School at the 
-    Laval University (Universit Laval), Quebec, Canada. 
-    I received a B.Sc. in informatics from the University of Sarajevo, 
-    an M.Sc. in computer science from the University of Maryland, 
-    and a Ph.D. in management information systems from the 
-    University of Minnesota. My research interests are in the 
+      //dzenan.about = 'I like to walk, hike and stop to have a good bite and drink.';
+      dzenan.about = '''I like to walk, hike and stop to have a good bite and drink.
+    In addition, my name is Denan Ri?anovi? (Dzenan Ridjanovic).
+    I am an associate professor in the Business School at the
+    Laval University (Universit Laval), Quebec, Canada.
+    I received a B.Sc. in informatics from the University of Sarajevo,
+    an M.Sc. in computer science from the University of Maryland,
+    and a Ph.D. in management information systems from the
+    University of Minnesota. My research interests are in the
     spiral development of domain models and dynamic web applications
     with NoSQL databases.''';
       members.add(dzenan);
@@ -171,9 +170,8 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       expect(dartCategory.interests.count, equals(++dartInterestCount));
     });
     tearDown(() {
-      categories.clear();
+      entries.clear();
       expect(categories.count, equals(0));
-      members.clear();
       expect(members.count, equals(0));
       categoryCount = 0;
       dartWebLinkCount = 0;
@@ -201,10 +199,10 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
     test('Order Categories by Id (code not used, id is name)', () {
       Categories orderedCategories = categories.order();
       expect(orderedCategories, isNotNull);
-      expect(orderedCategories, isNot(isEmpty));
+      expect(orderedCategories.list, isNot(isEmpty));
       expect(orderedCategories.count, equals(categoryCount));
       expect(orderedCategories.source, isNotNull);
-      expect(orderedCategories.source, isNot(isEmpty));
+      expect(orderedCategories.source.list, isNot(isEmpty));
       expect(orderedCategories.source.count, equals(categoryCount));
 
       orderedCategories.display(
@@ -218,10 +216,10 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
 
       WebLinks orderedDartWebLinks = dartWebLinks.order();
       expect(orderedDartWebLinks, isNotNull);
-      expect(orderedDartWebLinks, isNot(isEmpty));
+      expect(orderedDartWebLinks.list, isNot(isEmpty));
       expect(orderedDartWebLinks.count, equals(dartWebLinkCount));
       expect(orderedDartWebLinks.source, isNotNull);
-      expect(orderedDartWebLinks.source, isNot(isEmpty));
+      expect(orderedDartWebLinks.source.list, isNot(isEmpty));
       expect(orderedDartWebLinks.source.count,
         equals(dartWebLinkCount));
 
@@ -622,12 +620,26 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
     test('From Link Model to JSON', () {
       var json = entries.toJson();
       expect(json, isNotNull);
-      print('==============================================================');
-      print('JSON');
-      print('==============================================================');
-      print(json);
-      print('--------------------------------------------------------------');
-      print('');
+      entries.display(json, 'Link Model in JSON');
+    });
+    test('From JSON to Link Model', () {
+      var json = entries.toJson();
+      expect(json, isNotNull);
+
+      expect(entries.empty, isFalse);
+      entries.clear();
+      expect(entries.empty, isTrue);
+      entries.fromJson(json);
+      expect(entries.empty, isFalse);
+      categories.display('Categories: From JSON to Link Model');
+      members.display('Members: From JSON to Link Model');
+
+      var comments = entries.comments;
+      expect(comments, isNotNull);
+      expect(comments.empty, isTrue);
+      var questions = entries.questions;
+      expect(questions, isNotNull);
+      expect(questions.empty, isTrue);
     });
 
   });

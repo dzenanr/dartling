@@ -1,5 +1,5 @@
 
-class Oid implements Comparable, Hashable {
+class Oid implements Comparable {
 
   static int _increment = 0;
 
@@ -36,7 +36,5 @@ class Oid implements Comparable, Hashable {
   int compareTo(Oid oid) => _timeStamp.compareTo(oid._timeStamp);
 
   String toString() => _timeStamp.toString();
-
-  int hashCode() => _timeStamp;
 
 }

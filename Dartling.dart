@@ -37,6 +37,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import('dart:math');
 #import('dart:uri');
 
+#source('data/categoryQuestion/link/json.dart');
+#source('data/davidCurtis/institution/json.dart');
+#source('data/default/project/json.dart');
+#source('data/default/user/json.dart');
+
 #source('generated/categoryQuestion/link/categories.dart');
 #source('generated/categoryQuestion/link/comments.dart');
 #source('generated/categoryQuestion/link/entries.dart');
@@ -62,6 +67,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('meta/parents.dart');
 #source('meta/property.dart');
 #source('meta/types.dart');
+
+#source('model/categoryQuestion/link/json.dart');
+#source('model/davidCurtis/institution/json.dart');
+#source('model/default/project/json.dart');
+#source('model/default/user/json.dart');
 
 #source('repository/domain/model/event/actions.dart');
 #source('repository/domain/model/event/reactions.dart');
@@ -166,5 +176,6 @@ void main() {
 
   testLinkModel();
 
-  //lastSingleTest(repository, defaultDomainCode, projectModelCode);
+  //lastSingleTest(repository, categoryQuestionDomainCode, linkModelCode);
+  //lastGroupTest(repository, categoryQuestionDomainCode, linkModelCode);
 }

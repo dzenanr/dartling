@@ -40,7 +40,7 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
 
       ecoleConcept = ecoles.concept;
       expect(ecoleConcept, isNotNull);
-      expect(ecoleConcept.attributes, isNot(isEmpty));
+      expect(ecoleConcept.attributes.list, isNot(isEmpty));
       expect(ecoleConcept.attributes.count, equals(3));
 
       var lavalHighScool = new Ecole(ecoleConcept);
@@ -82,10 +82,10 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
       Ecoles selectedEcoles =
           ecoles.selectByAttribute('nom', 'Laval School');
       expect(selectedEcoles, isNotNull);
-      expect(selectedEcoles, isNot(isEmpty));
+      expect(selectedEcoles.list, isNot(isEmpty));
       expect(selectedEcoles.count, equals(1));
       expect(selectedEcoles.source, isNotNull);
-      expect(selectedEcoles.source, isNot(isEmpty));
+      expect(selectedEcoles.source.list, isNot(isEmpty));
       expect(selectedEcoles.source.count, equals(ecoleCount));
 
       selectedEcoles.display('Selected Ecoles');
@@ -94,10 +94,10 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
       Ecoles selectedEcoles =
           ecoles.selectByAttribute('nom', 'Laval Univ');
       expect(selectedEcoles, isNotNull);
-      expect(selectedEcoles, isNot(isEmpty));
+      expect(selectedEcoles.list, isNot(isEmpty));
       expect(selectedEcoles.count, equals(1));
       expect(selectedEcoles.source, isNotNull);
-      expect(selectedEcoles.source, isNot(isEmpty));
+      expect(selectedEcoles.source.list, isNot(isEmpty));
       expect(selectedEcoles.source.count, equals(ecoleCount));
 
       selectedEcoles.display('Selected Ecoles Before Remove');
@@ -115,10 +115,10 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
     test('Order Ecoles by Numero', () {
       Ecoles orderedEcoles = ecoles.order();
       expect(orderedEcoles, isNotNull);
-      expect(orderedEcoles, isNot(isEmpty));
+      expect(orderedEcoles.list, isNot(isEmpty));
       expect(orderedEcoles.count, equals(ecoleCount));
       expect(orderedEcoles.source, isNotNull);
-      expect(orderedEcoles.source, isNot(isEmpty));
+      expect(orderedEcoles.source.list, isNot(isEmpty));
       expect(orderedEcoles.source.count, equals(ecoleCount));
       orderedEcoles.display('Ecoles Ordered by Numero');
     });
@@ -126,10 +126,10 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
       Ecoles orderedEcoles =
           ecoles.orderByFunction((m,n) => m.compareNom(n));
       expect(orderedEcoles, isNotNull);
-      expect(orderedEcoles, isNot(isEmpty));
+      expect(orderedEcoles.list, isNot(isEmpty));
       expect(orderedEcoles.count, equals(ecoleCount));
       expect(orderedEcoles.source, isNotNull);
-      expect(orderedEcoles.source, isNot(isEmpty));
+      expect(orderedEcoles.source.list, isNot(isEmpty));
       expect(orderedEcoles.source.count, equals(ecoleCount));
       orderedEcoles.display('Ecoles Ordered by Nom');
     });
@@ -138,10 +138,10 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
       Ecoles orderedEcoles =
           ecoles.orderByFunction((m,n) => m.compareAdress(n));
       expect(orderedEcoles, isNotNull);
-      expect(orderedEcoles, isNot(isEmpty));
+      expect(orderedEcoles.list, isNot(isEmpty));
       expect(orderedEcoles.count, equals(ecoleCount));
       expect(orderedEcoles.source, isNotNull);
-      expect(orderedEcoles.source, isNot(isEmpty));
+      expect(orderedEcoles.source.list, isNot(isEmpty));
       expect(orderedEcoles.source.count, equals(ecoleCount));
       orderedEcoles.display('Ecoles Ordered by Address');
     });
@@ -190,12 +190,16 @@ testInstitutionData(Repo repo, String domainCode, String modelCode) {
     test('From Institution Model to JSON', () {
       var json = entries.toJson();
       expect(json, isNotNull);
-      print('==============================================================');
-      print('JSON');
-      print('==============================================================');
-      print(json);
-      print('--------------------------------------------------------------');
-      print('');
+      entries.display(json, 'Institution Model in JSON');
+    });
+    test('From JSON to Institution Model', () {
+      expect(ecoles.list, isNot(isEmpty));
+      ecoles.clear();
+      expect(ecoles.list, isEmpty);
+      entries.fromJsonToData();
+
+      expect(ecoles.list, isNot(isEmpty));
+      ecoles.display('From JSON to Institution Model');
     });
 
   });

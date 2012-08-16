@@ -6,7 +6,11 @@ open model shows twin relationships as one line
 
 To do
 
-from json tests
+to json, print, copy, paste, from json: Invalid esacape sequence in string literal
+to json -> from json: no exception
+
+entity code cannot be updated
+what happens with the id entity map in entities when entity id is updated?
 
 Duration (time span) type
 add advanced model patterns to CategoryQuestion.Link model:
@@ -47,6 +51,9 @@ i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
 
+2012-08-15, 21:55
+API changes
+from json to model
 
 2012-08-14, 17:32
 API changes

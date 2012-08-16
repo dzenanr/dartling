@@ -13,7 +13,6 @@ abstract class DomainModelsApi implements SourceOfActionReactionApi {
   abstract Domain get domain();
   abstract ModelEntriesApi getModelEntries(String modelCode);
   abstract DomainSessionApi newSession();
-  abstract fromJson(String json);
 
 }
 
@@ -27,8 +26,13 @@ abstract class DomainSessionApi {
 abstract class ModelEntriesApi {
 
   abstract Model get model();
+  abstract bool get empty();
+  abstract EntityApi find(Oid oid);
   abstract EntitiesApi getEntry(String entryConceptCode);
+  abstract clear();
+
   abstract String toJson();
+  abstract fromJson(String json);
 
 }
 
@@ -54,6 +58,7 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   abstract bool contains(T entity);
   abstract T last();
   abstract T find(Oid oid);
+  abstract T deepFind(Oid oid);
   abstract T findByCode(String code);
   abstract T findById(IdApi id);
   abstract T findByAttributeId(String code, Object attribute);
@@ -89,7 +94,6 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 
   abstract IdApi get id();
   abstract T copy();
-  abstract bool equalOids(T entity);
   abstract Map<String, Object> toJson();
 
 }
@@ -100,20 +104,12 @@ abstract class IdApi implements Comparable, Hashable {
 
   abstract int get parentCount();
   abstract int get attributeCount();
-  abstract int get count();
 
   abstract EntityApi getParent(String code);
   abstract setParent(String code, EntityApi parent);
 
   abstract Object getAttribute(String code);
   abstract setAttribute(String code, Object attribute);
-
-  abstract bool equalParents(IdApi id);
-  abstract bool equalAttributes(IdApi id);
-  abstract bool equals(Object other);
-
-  abstract int compareParents(IdApi id);
-  abstract int compareAttributes(IdApi id);
 
 }
 
@@ -145,12 +141,10 @@ abstract class PastApi implements SourceOfPastReactionApi {
   abstract add(ActionApi action);
   abstract clear();
   abstract bool get empty();
+  
   abstract bool doit();
   abstract bool undo();
   abstract bool redo();
-  abstract bool doAll();
-  abstract bool undoAll();
-  abstract bool redoAll();
 
 }
 

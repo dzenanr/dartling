@@ -21,6 +21,7 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   abstract bool contains(T entity);
   abstract T last();
   abstract T find(Oid oid);
+  abstract T deepFind(Oid oid);
   abstract T findByCode(String code);
   abstract T findById(IdApi id);
   abstract T findByAttributeId(String code, Object attribute);
@@ -43,7 +44,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
 
   Concept _concept;
   List<T> _entityList;
-  Map<Oid, T> _oidEntityMap;
+  Map<int, T> _oidEntityMap;
   Map<String, T> _codeEntityMap;
   Map<String, T> _idEntityMap;
   Entities<T> _source;
@@ -57,7 +58,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
 
   Entities() {
     _entityList = new List<T>();
-    _oidEntityMap = new Map<Oid, T>();
+    _oidEntityMap = new Map<int, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
     _errors = new Errors();
@@ -69,7 +70,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
 
   Entities.of(this._concept) {
     _entityList = new List<T>();
-    _oidEntityMap = new Map<Oid, T>();
+    _oidEntityMap = new Map<int, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
     _errors = new Errors();
@@ -185,7 +186,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
     bool added = false;
     if (preAdd(entity)) {
       _entityList.add(entity);
-      _oidEntityMap[entity.oid] = entity;
+      _oidEntityMap[entity.oid.timeStamp] = entity;
       if (entity.code != null) {
         _codeEntityMap[entity.code] = entity;
       }
@@ -281,7 +282,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
         if (element == entity) {
           int index = _entityList.indexOf(element, 0);
           _entityList.removeRange(index, 1);
-          _oidEntityMap.remove(entity.oid);
+          _oidEntityMap.remove(entity.oid.timeStamp);
           if (entity.code != null) {
             _codeEntityMap.remove(entity.code);
           }
@@ -334,7 +335,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
   }
 
   bool contains(T entity) {
-    T element = _oidEntityMap[entity.oid];
+    T element = _oidEntityMap[entity.oid.timeStamp];
     if (entity == element) {
       return true;
     }
@@ -346,7 +347,25 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
   }
 
   T find(Oid oid) {
-    return _oidEntityMap[oid];
+    return _oidEntityMap[oid.timeStamp];
+  }
+
+  T deepFind(Oid oid) {
+    if (empty) {
+      return null;
+    }
+    Entity foundEntity = find(oid);
+    if (foundEntity != null) {
+      return foundEntity;
+    }
+    if (!_concept.children.empty) {
+      for (Entity entity in _entityList) {
+        for (Child child in _concept.children) {
+          Entities childEntities = entity.getChild(child.code);
+          return childEntities.deepFind(oid);
+        }
+      }
+    }
   }
 
   T findByCode(String code) {

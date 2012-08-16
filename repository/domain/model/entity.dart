@@ -103,9 +103,6 @@ class Entity<T extends Entity<T>> implements EntityApi {
     if (_code != null) {
       throw new CodeException('Entity code cannot be updated.');
     }
-    if (code == null) {
-      throw new CodeException('Entity code cannot be nullified.');
-    }
     _code = code;
   }
 
@@ -119,6 +116,13 @@ class Entity<T extends Entity<T>> implements EntityApi {
       String msg = '${_concept.code}.$name is not correct attribute name.';
       throw new UpdateException(msg);
     }
+    /*
+     * validation done in Entities.preAdd
+    if (value == null && attribute.minc != '0') {
+      String msg = '${_concept.code}.$name cannot be null.';
+      throw new UpdateException(msg);
+    }
+    */
     if (!attribute.derive && attribute.update) {
       _attributeMap[name] = value;
       return true;
@@ -131,10 +135,6 @@ class Entity<T extends Entity<T>> implements EntityApi {
 
   String getStringFromAttribute(String name) => _attributeMap[name].toString();
   bool setStringToAttribute(String name, String string) {
-    if (string == null) {
-      throw new IllegalArgumentException(
-        'Entity.setStringToAttribute argument is null.');
-    }
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
@@ -143,11 +143,16 @@ class Entity<T extends Entity<T>> implements EntityApi {
       String msg = '${_concept.code}.$name is not correct attribute name.';
       throw new UpdateException(msg);
     }
+
+    if (string == null  || string == 'null') {
+      return setAttribute(name, null);
+    }
     if (attribute.type.base == 'Date') {
       try {
+        assert(string != null);
         return setAttribute(name, new Date.fromString(string));
       } catch (final IllegalArgumentException e) {
-        throw new TypeException('${attribute.code} attribute value is not Date: $e');
+        throw new TypeException('${_concept.code}.${attribute.code} attribute value is not Date: $e');
       }
     } else if (attribute.type.base == 'bool') {
       if (string == 'true') {
@@ -345,7 +350,11 @@ class Entity<T extends Entity<T>> implements EntityApi {
    * Returns a string that represents this entity by using oid and code.
    */
   String toString() {
-    return '${oid.toString()}';
+    if (code == null) {
+      return '{oid:${oid.toString()}}';
+    } else {
+      return '{oid:${oid.toString()}, code:${code}}';
+    }
   }
 
   /**

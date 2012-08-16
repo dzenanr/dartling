@@ -1,0 +1,37 @@
+
+
+I have converted a model into json. It is a valid json string. 
+When I convert the same json string into a model, I get the model.
+
+However, if I print the same json string, then copy it in a String variable and 
+then convert the string into a model, I get the following error:
+
+Caught Invalid esacape sequence in string literal
+  #0      _JsonParser._error (dart:json:308:5)
+  #1      _JsonParser._parseString (dart:json:225:27)
+  #2      _JsonParser._parseValue (dart:json:131:48)
+  #3      _JsonParser._parseObject (dart:json:158:34)
+  #4      _JsonParser._parseValue (dart:json:136:40)
+  #5      _JsonParser._parseList (dart:json:172:29)
+  #6      _JsonParser._parseValue (dart:json:137:40)
+  #7      _JsonParser._parseObject (dart:json:158:34)
+  #8      _JsonParser._parseValue (dart:json:136:40)
+  #9      _JsonParser._parseList (dart:json:172:29)
+  #10     _JsonParser._parseValue (dart:json:137:40)
+  #11     _JsonParser._parseObject (dart:json:158:34)
+  
+  ____________________________________________________________
+ 
+ bool empty() { 
+  _model.entryConcepts.forEach((entryConcept) {
+      var entryEntities = new Entities.of(entryConcept);
+      if (!entryEntities.empty) {
+        return false;
+      }
+    });
+    return true;
+ }
+ 
+ It is true even for not empty model!?
+ 
+ 

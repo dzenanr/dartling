@@ -1,62 +1,8 @@
 
 InstitutionEntries fromJsonToInstitutionEntries(Domain domain,
                                                 String modelCode) {
-  /**
-   *  || Ecole
-   *  id numero
-   *  rq nom
-   *  at adress
-   */
-
-  /*
-   * http://www.json.org/
-   * http://jsonformatter.curiousconcept.com/
-   * http://www.cerny-online.com/cerny.js/
-   * http://jsonprettyprint.com/
-   */
-  var modelInJson = '''
-{
-   "width":990,
-   "height":580,
-   "lines":[
-
-   ],
-   "boxes":[
-      {
-         "entry":true,
-         "name":"Ecole",
-         "x":342,
-         "y":252,
-         "width":120,
-         "height":120,
-         "items":[
-            {
-               "sequence":10,
-               "category":"identifier",
-               "name":"numero",
-               "type":"int",
-               "init":""
-            },
-            {
-               "sequence":20,
-               "category":"required",
-               "name":"nom",
-               "type":"String",
-               "init":""
-            },
-            {
-               "sequence":30,
-               "category":"attribute",
-               "name":"adress",
-               "type":"String",
-               "init":""
-            }
-         ]
-      }
-   ]
-}
-  ''';
-  return new InstitutionEntries(fromMagicBoxes(modelInJson, domain, modelCode));
+  return new InstitutionEntries(fromMagicBoxes(davidCurtisInstitutionModelInJson,
+                                               domain, modelCode));
 }
 
 class InstitutionEntries extends ModelEntries {
@@ -70,6 +16,15 @@ class InstitutionEntries extends ModelEntries {
     return entries;
   }
 
+  Entities newEntities(String conceptCode) {
+    var concept = model.concepts.findByCode(conceptCode);
+    if (concept.code == 'Ecole') {
+      return new Ecoles(concept);
+    } else {
+      throw new ConceptException('${concept.code} concept does not exist.');
+    }
+  }
+
   Entity newEntity(String conceptCode) {
     var concept = model.concepts.findByCode(conceptCode);
     if (concept.code == 'Ecole') {
@@ -79,8 +34,19 @@ class InstitutionEntries extends ModelEntries {
     }
   }
 
+  fromJsonToData() {
+    fromJson(davidCurtisInstitutionDataInJson);
+  }
+
   Ecoles get ecoles() => getEntry('Ecole');
 
   Concept get ecoleConcept() => ecoles.concept;
 
 }
+
+
+
+
+
+
+

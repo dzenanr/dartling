@@ -25,8 +25,10 @@ testUserData(Repo repo, String modelCode) {
   group('Testing ${modelCode}', () {
     setUp(() {
       models = repo.getDomainModels('Default');
+      expect(models, isNotNull);
       session = models.newSession();
       entries = models.getModelEntries(modelCode);
+      expect(entries, isNotNull);
 
       users = entries.users;
       expect(users, isNotNull);
@@ -34,7 +36,7 @@ testUserData(Repo repo, String modelCode) {
 
       userConcept = users.concept;
       expect(userConcept, isNotNull);
-      expect(userConcept.attributes, isNot(isEmpty));
+      expect(userConcept.attributes.list, isNot(isEmpty));
       userConcept.attributes.findByCode('password').sensitive = true;
 
       var claudeb = new User(userConcept);
@@ -146,11 +148,11 @@ testUserData(Repo repo, String modelCode) {
       Users selectedUsers =
           users.selectByAttribute('lastName', 'Ridjanovic');
       expect(selectedUsers, isNotNull);
-      expect(selectedUsers, isNot(isEmpty));
+      expect(selectedUsers.list, isNot(isEmpty));
       selectedUsers.display('Selected Users Before Remove');
       expect(selectedUsers.count, equals(1));
       expect(selectedUsers.source, isNotNull);
-      expect(selectedUsers.source, isNot(isEmpty));
+      expect(selectedUsers.source.list, isNot(isEmpty));
       expect(selectedUsers.source.count, equals(userCount));
 
       expect(users.count, equals(userCount));
@@ -167,22 +169,22 @@ testUserData(Repo repo, String modelCode) {
     test('Select Users by (get) Function', () {
       var ridjanovicUsers = users.select((m) => m.ridjanovic);
       expect(ridjanovicUsers, isNotNull);
-      expect(ridjanovicUsers, isNot(isEmpty));
+      expect(ridjanovicUsers.list, isNot(isEmpty));
       expect(ridjanovicUsers.length, equals(2));
     });
     test('Select Users by (bool) Attribute, which is (get) Function', () {
       var receiveEmailUsers = users.select((m) => m.receiveEmail);
       expect(receiveEmailUsers, isNotNull);
-      expect(receiveEmailUsers, isNot(isEmpty));
+      expect(receiveEmailUsers.list, isNot(isEmpty));
       expect(receiveEmailUsers.length, equals(2));
     });
     test('Order Users by Last then First Name', () {
       Users orderedUsers = users.order();
       expect(orderedUsers, isNotNull);
-      expect(orderedUsers, isNot(isEmpty));
+      expect(orderedUsers.list, isNot(isEmpty));
       expect(orderedUsers.count, equals(userCount));
       expect(orderedUsers.source, isNotNull);
-      expect(orderedUsers.source, isNot(isEmpty));
+      expect(orderedUsers.source.list, isNot(isEmpty));
       expect(orderedUsers.source.count, equals(userCount));
 
       orderedUsers.display('Users Ordered by Last then First Name');
@@ -191,10 +193,10 @@ testUserData(Repo repo, String modelCode) {
       Users orderedUsers =
           users.orderByFunction((m,n) => m.compareCode(n));
       expect(orderedUsers, isNotNull);
-      expect(orderedUsers, isNot(isEmpty));
+      expect(orderedUsers.list, isNot(isEmpty));
       expect(orderedUsers.count, equals(userCount));
       expect(orderedUsers.source, isNotNull);
-      expect(orderedUsers.source, isNot(isEmpty));
+      expect(orderedUsers.source.list, isNot(isEmpty));
       expect(orderedUsers.source.count, equals(userCount));
 
       orderedUsers.display('Users Ordered by Code');
@@ -356,12 +358,16 @@ testUserData(Repo repo, String modelCode) {
     test('From User Model to JSON', () {
       var json = entries.toJson();
       expect(json, isNotNull);
-      print('==============================================================');
-      print('JSON');
-      print('==============================================================');
-      print(json);
-      print('--------------------------------------------------------------');
-      print('');
+      entries.display(json, 'User Model in JSON');
+    });
+    test('From JSON to User Model', () {
+      expect(users.list, isNot(isEmpty));
+      users.clear();
+      expect(users.list, isEmpty);
+      entries.fromJsonToData();
+
+      expect(users.list, isNot(isEmpty));
+      users.display('From JSON to User Model');
     });
 
   });

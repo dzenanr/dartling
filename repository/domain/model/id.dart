@@ -5,20 +5,12 @@ abstract class IdApi implements Comparable, Hashable {
 
   abstract int get parentCount();
   abstract int get attributeCount();
-  abstract int get count();
 
   abstract EntityApi getParent(String code);
   abstract setParent(String code, EntityApi parent);
 
   abstract Object getAttribute(String code);
   abstract setAttribute(String code, Object attribute);
-
-  abstract bool equalParents(IdApi id);
-  abstract bool equalAttributes(IdApi id);
-  abstract bool equals(Object other);
-
-  abstract int compareParents(IdApi id);
-  abstract int compareAttributes(IdApi id);
 
 }
 
@@ -86,24 +78,17 @@ class Id implements IdApi {
    }
 
   /**
-   * Checks if the id is equal in content to the given object.
-   * If the given object is not of the Id type,
-   * two objects cannot be equal. Two ids are
-   * equal if they have the same content.
+   * Checks if the id is equal in content to the given id.
+   * Two ids are equal if they have the same content.
    */
-   bool equals(Object other) {
-     if (other is Id) {
-       var id = other;
-       if (_concept != id.concept) {
-         return false;
-       }
-       if (!equalParents(id)) {
-         return false;
-       }
-       if (!equalAttributes(id)) {
-         return false;
-       }
-     } else {
+   bool equals(Id id) {
+     if (_concept != id.concept) {
+       return false;
+     }
+     if (!equalParents(id)) {
+       return false;
+     }
+     if (!equalAttributes(id)) {
        return false;
      }
      return true;

@@ -18,12 +18,10 @@ abstract class PastApi implements SourceOfPastReactionApi {
   abstract add(ActionApi action);
   abstract clear();
   abstract bool get empty();
+
   abstract bool doit();
   abstract bool undo();
   abstract bool redo();
-  abstract bool doAll();
-  abstract bool undoAll();
-  abstract bool redoAll();
 
 }
 

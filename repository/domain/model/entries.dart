@@ -2,8 +2,13 @@
 abstract class ModelEntriesApi {
 
   abstract Model get model();
+  abstract bool get empty();
+  abstract EntityApi find(Oid oid);
   abstract EntitiesApi getEntry(String entryConceptCode);
+  abstract clear();
+
   abstract String toJson();
+  abstract fromJson(String json);
 
 }
 
@@ -13,8 +18,11 @@ class ModelEntries implements ModelEntriesApi {
 
   Map<String, Entities> _entryEntitiesMap;
 
+  List _nullParents;
+
   ModelEntries(this._model) {
     _entryEntitiesMap = newEntries();
+    _nullParents = new List();
   }
 
   Map<String, Entities> newEntries() {
@@ -46,18 +54,46 @@ class ModelEntries implements ModelEntriesApi {
 
   Model get model() => _model;
 
+  bool get empty() {
+    for (Concept entryConcept in _model.entryConcepts) {
+      Entities entryEntities = getEntry(entryConcept.code);
+      if (!entryEntities.empty) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  Entity find(Oid oid) {
+    Entity entity;
+    for (Concept entryConcept in _model.entryConcepts) {
+      Entities entryEntities = getEntry(entryConcept.code);
+      entity = entryEntities.deepFind(oid);
+      if (entity != null) {
+        return entity;
+      }
+    }
+  }
+
   Entities getEntry(String entryConceptCode) =>
       _entryEntitiesMap[entryConceptCode];
+
+  clear() {
+    _model.entryConcepts.forEach((entryConcept) {
+      var entryEntities = getEntry(entryConcept.code);
+      entryEntities.clear();
+    });
+  }
 
   String toJson() {
     Map<String, Object> modelMap = new Map<String, Object>();
     modelMap['domain'] = _model.domain.code;
     modelMap['model'] = _model.code;
-    modelMap['entries'] = entriesToJson();
+    modelMap['entries'] = _entriesToJson();
     return JSON.stringify(modelMap);
   }
 
-  List<Map<String, Object>> entriesToJson() {
+  List<Map<String, Object>> _entriesToJson() {
     List<Map<String, Object>> entriesList = new List<Map<String, Object>>();
     for (Concept entryConcept in _model.entryConcepts) {
       Entities entryEntities = getEntry(entryConcept.code);
@@ -69,30 +105,81 @@ class ModelEntries implements ModelEntriesApi {
     return entriesList;
   }
 
-  entriesFromJson(List<Map<String, Object>> entriesList) {
-    for (Map<String, Object> entriesMap in entriesList) {
-      String conceptCode = entriesMap['concept'];
-      var concept = model.concepts.findByCode(conceptCode);
-      if (concept == null) {
-        throw new ConceptException('${concept.code} concept does not exist.');
+  fromJson(String json) {
+    Map<String, Object> modelMap = JSON.parse(json);
+    var domain = modelMap['domain'];
+    var model = modelMap['model'];
+    if (_model.domain.code != domain) {
+      throw new CodeException(
+          'The $domain domain does not exist.');
+    }
+    if (_model.code != model) {
+      throw new CodeException(
+          'The $model model does not exist.');
+    }
+    _modelFromJson(modelMap);
+  }
+
+  _modelFromJson(Map<String, Object> modelMap) {
+    List<Map<String, Object>> entriesList = modelMap['entries'];
+    _entriesFromJson(entriesList);
+    _updateNullParents();
+  }
+
+  _updateNullParents() {
+    for (List nullParent in _nullParents) {
+      Oid parentOid = nullParent[0];
+      Entity entity = nullParent[1];
+      Parent parent = nullParent[2];
+      Entity parentEntity = find(parentOid);
+      if (parentEntity == null) {
+        var msg =
+        '${entity.concept.code}.${parent.code} ${parent.destinationConcept.code}'
+         ' parent entity is not found for the ${parentOid} parent oid.';
+        throw new ParentException(msg);
       }
-      Entities entryEntities = getEntry(conceptCode);
-      List<Map<String, Object>> entitiesList = entriesMap['entities'];
-      entryEntities = entitiesFromJson(entitiesList, concept);
+      entity.setParent(parent.code, parentEntity);
     }
   }
 
-  Entities entitiesFromJson(List<Map<String, Object>> entitiesList,
+  _entriesFromJson(List<Map<String, Object>> entriesList) {
+    for (Map<String, Object> entriesMap in entriesList) {
+      String entryConceptCode = entriesMap['concept'];
+      var concept = model.concepts.findByCode(entryConceptCode);
+      if (concept == null) {
+        throw new ConceptException('${concept.code} concept does not exist.');
+      }
+      Entities entryEntities = getEntry(entryConceptCode);
+      if (entryEntities.count > 0) {
+        throw new JsonException(
+            '$entryConceptCode entry receiving entities are not empty');
+      }
+      List<Map<String, Object>> entitiesList = entriesMap['entities'];
+      entryEntities.addFrom(_entitiesFromJson(entitiesList, concept));
+      //assert(entryEntities.count > 0);
+    }
+  }
+
+  Entities _entitiesFromJson(List<Map<String, Object>> entitiesList,
                             Concept concept) {
+    assert(concept != null);
+    assert(concept.code != null);
     Entities entities = newEntities(concept.code);
     for (Map<String, Object> entityMap in entitiesList) {
-      Entity entity = entityFromJson(entityMap, concept);
+      Entity entity = _entityFromJson(entityMap, concept);
+      assert(entity != null);
+      entities.pre = false;
+      entities.post = false;
       entities.add(entity);
+      entities.pre = true;
+      entities.post = true;
+      //entities.errors.display('_entitiesFromJson: ${concept.code} ${entity}');
+      //assert(entities.count > 0);
     }
     return entities;
   }
 
-  Entity entityFromJson(Map<String, Object> entityMap, Concept concept) {
+  Entity _entityFromJson(Map<String, Object> entityMap, Concept concept) {
     Entity entity = newEntity(concept.code);
     int timeStamp;
     try {
@@ -107,12 +194,16 @@ class ModelEntries implements ModelEntriesApi {
     }
     for (Child child in concept.children) {
       List<Map<String, Object>> entitiesList = entityMap[child.code];
-      var entities = entitiesFromJson(entitiesList, concept);
-      entity.setChild(child.code, entities);
+      if (entitiesList != null) {
+        var childConcept = child.destinationConcept;
+        var entities = _entitiesFromJson(entitiesList, childConcept);
+        assert(entities != null);
+        entity.setChild(child.code, entities);
+      }
     }
     for (Parent parent in concept.parents) {
-      String parentOid = entityMap[parent.code];
-      if (parentOid == 'null') {
+      String parentOidString = entityMap[parent.code];
+      if (parentOidString == 'null') {
         if (parent.minc == '0') {
           entity.setParent(parent.code, null);
         } else {
@@ -121,15 +212,13 @@ class ModelEntries implements ModelEntriesApi {
         }
       } else {
         try {
-          int parentTimeStamp = Math.parseInt(parentOid);
-          Oid oid = new Oid.ts(parentTimeStamp);
-          Concept parentConcept = parent.destinationConcept;
-          Entity parentEntity = findParentEntity(parentConcept, oid);
-          if (parentEntity == null) {
-            throw new ParentException(
-              '${parentConcept.code} parent entity is not found for the ${oid} oid.');
-          }
-          entity.setParent(parent.code, parentEntity);
+          int parentTimeStamp = Math.parseInt(parentOidString);
+          Oid parentOid = new Oid.ts(parentTimeStamp);
+          List nullParent = new List(3);
+          nullParent[0] = parentOid;
+          nullParent[1] = entity;
+          nullParent[2] = parent;
+          _nullParents.add(nullParent);
         } catch (final FormatException e) {
           throw new TypeException(
               '${parent.code} parent oid value is not int: $e');
@@ -139,14 +228,14 @@ class ModelEntries implements ModelEntriesApi {
     return entity;
   }
 
-  Entity findParentEntity(Concept parentConcept, Oid oid) {
+  Entity _findParentEntity(Concept parentConcept, Oid oid) {
     if (parentConcept.entry) {
       var entities = getEntry(parentConcept.code);
       return entities.find(oid);
     } else {
       _model.entryConcepts.forEach((entryConcept) {
         var entryEntities = getEntry(entryConcept.code);
-        var parentEntity = findEntityFromEntities(entryEntities, oid);
+        var parentEntity = _findEntityFromEntities(entryEntities, oid);
         if (parentEntity != null) {
           return parentEntity;
         }
@@ -155,13 +244,13 @@ class ModelEntries implements ModelEntriesApi {
     // return null;
   }
 
-  Entity findEntityFromEntities(Entities entities, oid) {
+  Entity _findEntityFromEntities(Entities entities, oid) {
     Entity foundEntity = entities.find(oid);
     if (foundEntity != null) {
       return foundEntity;
     }
     for (Entity entity in entities) {
-      foundEntity = findEntityFromEntity(entity, oid);
+      foundEntity = _findEntityFromEntity(entity, oid);
       if (foundEntity != null) {
         return foundEntity;
       }
@@ -169,15 +258,24 @@ class ModelEntries implements ModelEntriesApi {
     // return null;
   }
 
-  Entity findEntityFromEntity(Entity entity, oid) {
+  Entity _findEntityFromEntity(Entity entity, oid) {
     for (Child child in entity.concept.children) {
       Entities childEntities = entity.getChild(child.code);
-      var foundEntity = findEntityFromEntities(childEntities, oid);
+      var foundEntity = _findEntityFromEntities(childEntities, oid);
       if (foundEntity != null) {
         return foundEntity;
       }
     }
     // return null;
+  }
+
+  display(String json, [String title='Model in JSON']) {
+    print('==============================================================');
+    print('$title');
+    print('==============================================================');
+    print(json);
+    print('--------------------------------------------------------------');
+    print('');
   }
 
 }

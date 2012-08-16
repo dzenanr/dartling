@@ -87,7 +87,9 @@ testProjectData(Repo repo, String modelCode) {
   group('Testing ${modelCode}', () {
     setUp(() {
       models = repo.getDomainModels('Default');
+      expect(models, isNotNull);
       var entries = models.getModelEntries(modelCode);
+      expect(entries, isNotNull);
 
       projects = entries.projects;
       expect(projects, isNotNull);
@@ -95,7 +97,7 @@ testProjectData(Repo repo, String modelCode) {
 
       projectConcept = projects.concept;
       expect(projectConcept, isNotNull);
-      expect(projectConcept.attributes, isNot(isEmpty));
+      expect(projectConcept.attributes.list, isNot(isEmpty));
 
       var design = new Project(projectConcept);
       expect(design, isNotNull);
@@ -130,7 +132,7 @@ testProjectData(Repo repo, String modelCode) {
     test('Select Projects by Function', () {
       var programmingProjects = projects.select((p) => p.onProgramming);
       expect(programmingProjects, isNotNull);
-      expect(programmingProjects, isNot(isEmpty));
+      expect(programmingProjects.list, isNot(isEmpty));
       expect(programmingProjects.length, equals(2));
 
       programmingProjects.display('Programming Entities');
@@ -138,10 +140,10 @@ testProjectData(Repo repo, String modelCode) {
     test('Select Projects by Function then Add', () {
       Projects programmingProjects = projects.select((p) => p.onProgramming);
       expect(programmingProjects, isNotNull);
-      expect(programmingProjects, isNot(isEmpty));
+      expect(programmingProjects.list, isNot(isEmpty));
       expect(programmingProjects.count, equals(2));
       expect(programmingProjects.source, isNotNull);
-      expect(programmingProjects.source, isNot(isEmpty));
+      expect(programmingProjects.source.list, isNot(isEmpty));
       expect(programmingProjects.source.count, equals(projectCount));
 
       var programmingProject = new Project(projectConcept);
@@ -187,10 +189,10 @@ testProjectData(Repo repo, String modelCode) {
       Projects orderedProjects =
           projects.orderByFunction((m,n) => m.compareName(n));
       expect(orderedProjects, isNotNull);
-      expect(orderedProjects, isNot(isEmpty));
+      expect(orderedProjects.list, isNot(isEmpty));
       expect(orderedProjects.count, equals(projectCount));
       expect(orderedProjects.source, isNotNull);
-      expect(orderedProjects.source, isNot(isEmpty));
+      expect(orderedProjects.source.list, isNot(isEmpty));
       expect(orderedProjects.source.count, equals(projectCount));
 
       orderedProjects.display('Ordered Projects');
@@ -207,7 +209,7 @@ testProjectData(Repo repo, String modelCode) {
     test('Copy Projects', () {
       Projects copiedProjects = projects.copy();
       expect(copiedProjects, isNotNull);
-      expect(copiedProjects, isNot(isEmpty));
+      expect(copiedProjects.list, isNot(isEmpty));
       expect(copiedProjects.count, equals(projectCount));
       expect(copiedProjects, isNot(same(projects)));
       expect(copiedProjects, isNot(equals(projects)));
@@ -276,12 +278,18 @@ testProjectData(Repo repo, String modelCode) {
       expect(entries, isNotNull);
       var json = entries.toJson();
       expect(json, isNotNull);
-      print('==============================================================');
-      print('JSON');
-      print('==============================================================');
-      print(json);
-      print('--------------------------------------------------------------');
-      print('');
+      entries.display(json, 'Project Model in JSON');
+    });
+    test('From JSON to Project Model', () {
+      var entries = models.getModelEntries(modelCode);
+      expect(entries, isNotNull);
+      expect(projects.list, isNot(isEmpty));
+      projects.clear();
+      expect(projects.list, isEmpty);
+      entries.fromJsonToData();
+
+      expect(projects.list, isNot(isEmpty));
+      projects.display('From JSON to Project Model');
     });
 
   });

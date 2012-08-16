@@ -1,27 +1,7 @@
 
 ProjectEntries fromJsonToProjectEntries(Domain domain, String modelCode) {
-  /**
-   *  || Project
-   *  id name
-   *  at description
-   */
-  var modelInJson = '''
-      {"width":990,"height":580,
-       "lines":[],
-       "boxes":[
-        {"entry":true,"name":"Project",
-         "x":179,"y":226,"width":120,"height":120,
-         "items":[
-          {"sequence":10,"category":"identifier","name":"name",
-           "type":"String","init":""
-          },
-          {"sequence":20,"category":"attribute","name":"description",
-           "type":"String","init":""
-          }]
-        }]
-      }
-  ''';
-  return new ProjectEntries(fromMagicBoxes(modelInJson, domain, modelCode));
+  return new ProjectEntries(fromMagicBoxes(defaultProjectModelInJson,
+                                           domain, modelCode));
 }
 
 class ProjectEntries extends ModelEntries {
@@ -35,6 +15,15 @@ class ProjectEntries extends ModelEntries {
     return entries;
   }
 
+  Entities newEntities(String conceptCode) {
+    var concept = model.concepts.findByCode(conceptCode);
+    if (concept.code == 'Project') {
+      return new Projects(concept);
+    } else {
+      throw new ConceptException('${concept.code} concept does not exist.');
+    }
+  }
+
   Entity newEntity(String conceptCode) {
     var concept = model.concepts.findByCode(conceptCode);
     if (concept.code == 'Project') {
@@ -44,8 +33,16 @@ class ProjectEntries extends ModelEntries {
     }
   }
 
+  fromJsonToData() {
+    fromJson(defaultProjectDataInJson);
+  }
+
   Projects get projects() => getEntry('Project');
 
   Concept get projectConcept() => projects.concept;
 
 }
+
+
+
+
