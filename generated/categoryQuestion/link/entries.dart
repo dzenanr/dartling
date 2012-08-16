@@ -41,15 +41,6 @@ class LinkEntries extends ModelEntries {
     } else {
       throw new ConceptException('${concept.code} concept does not exist.');
     }
-    /*
-    if (!concept.entry) {
-      if (concept.code == 'Interests') {
-        return  new Interests(concept);
-      } else if (concept.code == 'WebLink') {
-        return  new WebLinks(concept);
-      }
-    }
-    */
   }
 
   Entity newEntity(String conceptCode) {
