@@ -6,9 +6,6 @@ open model shows twin relationships as one line
 
 To do
 
-entity code cannot be updated
-what happens with the id entity map in entities when entity id is updated?
-
 Duration (time span) type
 add advanced model patterns to CategoryQuestion.Link model:
 category tests
@@ -53,11 +50,13 @@ indexes?? (http://www.mattfleming.com/node/192)
 
 
 2012-08-17
-in meta, the concept oid update can be changed from false to true 
-in meta, the concept code update can be changed from false to true 
-in meta, the id property update can be changed from false to true 
-entities update to remove the before entity and add the after entity, 
-  in order to update oid, code and id entity maps.
+entity oid, code and id cannot be updated
+what happens with the id entity map in entities when the entity id is updated?
+  in meta, the concept oid update can be changed from false to true 
+  in meta, the concept code update can be changed from false to true 
+  in meta, the id property update can be changed from false to true 
+  entities update to remove the before entity and add the after entity, 
+    in order to update oid, code and id entity maps.
 
 2012-08-16, 10:13
 raw string for json to avoid escape error
