@@ -372,6 +372,47 @@ testProjectData(Repo repo, String modelCode) {
       }
       expect(idsEqual, isTrue);
     });
+    test('Copy Equality Problem', () {
+      var marketing = new Project.withId(projectConcept, 'Dartling Marketing');
+      expect(marketing, isNotNull);
+      marketing.description = 'Making Dartling known to the Dart community.';
+      projects.add(marketing);
+      expect(projects.count, equals(++projectCount));
+
+      marketing.display('before copy: ');
+      var afterUpdateMarketing = marketing.copy();
+      afterUpdateMarketing.display('after copy: ');
+      expect(marketing.oid, equals(afterUpdateMarketing.oid));
+      expect(marketing.code, equals(afterUpdateMarketing.code));
+      expect(marketing.name, equals(afterUpdateMarketing.name));
+      expect(marketing.description, equals(afterUpdateMarketing.description));
+
+      expect(marketing.id, isNotNull);
+      expect(afterUpdateMarketing.id, isNotNull);
+      // should be equals
+      expect(marketing.id, isNot(equals(afterUpdateMarketing.id)));
+      /*
+       * ==
+       *
+       * If x===y, return true.
+       * Otherwise, if either x or y is null, return false.
+       * Otherwise, return the result of x.equals(y).
+       */
+      var idsEqual = false;
+      if (marketing.id == afterUpdateMarketing.id) { // not equal !?
+        idsEqual = true;
+      }
+      // should be isTrue
+      expect(idsEqual, isFalse);
+
+      idsEqual = false;
+      if (marketing.id.equals(afterUpdateMarketing.id)) {
+        idsEqual = true;
+      }
+      expect(idsEqual, isTrue);
+
+      // when the problem is resolved, change code in Entities.update
+    });
     test('Update New Project Description with Failure', () {
       var marketing = new Project.withId(projectConcept, 'Dartling Marketing');
       expect(marketing, isNotNull);
