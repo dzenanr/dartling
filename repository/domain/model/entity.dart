@@ -342,6 +342,48 @@ class Entity<T extends Entity<T>> implements EntityApi {
   }
 
   /**
+   * ==
+  *
+   * If x===y, return true.
+   * Otherwise, if either x or y is null, return false.
+   * Otherwise, return the result of x.equals(y).
+   *
+   * The newest spec is:
+   * a) if either x or y is null, do a ===
+   * b) otherwise call operator ==
+   */
+  /*
+  bool operator ==(Object other) {
+    if (other is Entity) {
+      Entity entity = other;
+      if (this===entity) {
+        return true;
+      } else {
+        if (this == null || entity == null) {
+          return false;
+        } else {
+          return equals(entity);
+        }
+      }
+    } else {
+      return false;
+    }
+  }
+  */
+  bool operator ==(Object other) {
+    if (other is Entity) {
+      Entity entity = other;
+      if (this == null || entity == null) {
+        return this===entity;
+      } else {
+        return equals(entity);
+      }
+    } else {
+      return false;
+    }
+  }
+
+  /**
    * Checks if the entity is equal in content to the given entity.
    * Two entities are equal if they have the same content, ignoring oid.
    */

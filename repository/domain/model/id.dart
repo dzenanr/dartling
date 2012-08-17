@@ -95,6 +95,48 @@ class Id implements IdApi {
    }
 
    /**
+    * ==
+    *
+    * If x===y, return true.
+    * Otherwise, if either x or y is null, return false.
+    * Otherwise, return the result of x.equals(y).
+    *
+    * The newest spec is:
+    * a) if either x or y is null, do a ===
+    * b) otherwise call operator ==
+    */
+   /*
+   bool operator ==(Object other) {
+     if (other is Id) {
+       Id id = other;
+       if (this===id) {
+         return true;
+       } else {
+         if (this == null || id == null) {
+           return false;
+         } else {
+           return equals(id);
+         }
+       }
+     } else {
+       return false;
+     }
+   }
+   */
+   bool operator ==(Object other) {
+     if (other is Id) {
+       Id id = other;
+       if (this == null || id == null) {
+         return this===id;
+       } else {
+         return equals(id);
+       }
+     } else {
+       return false;
+     }
+   }
+
+   /**
     * Compares two ids based on parents.
     * If the result is less than 0 then the first id is less than the second,
     * if it is equal to 0 they are equal and

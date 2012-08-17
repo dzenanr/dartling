@@ -63,9 +63,9 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
     _idEntityMap = new Map<String, T>();
     _errors = new Errors();
 
-    propagateToSource = false;
     pre = false;
     post = false;
+    propagateToSource = false;
   }
 
   Entities.of(this._concept) {
@@ -380,8 +380,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
   bool update(T beforeEntity, T afterEntity) {
     if (beforeEntity.oid == afterEntity.oid &&
         beforeEntity.code == afterEntity.code &&
-        //beforeEntity.id == afterEntity.id) { // not equal !?
-        beforeEntity.id.equals(afterEntity.id)) {
+        beforeEntity.id == afterEntity.id) {
       throw new UpdateException(
           '${_concept.codeInPlural}.update can only be used '
           'if oid, code or id set.');
@@ -433,11 +432,13 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
   Entities<T> select(Function f) {
     Entities<T> selectedEntities = newEntities();
     selectedEntities.pre = false;
+    selectedEntities.post = false;
     selectedEntities.propagateToSource = false;
     // filter returns a new list
     List<T> selectedList = _entityList.filter(f);
     selectedEntities._addFromList(selectedList);
     selectedEntities.pre = true;
+    selectedEntities.post = true;
     selectedEntities.propagateToSource = true;
     selectedEntities._source = this;
     return selectedEntities;
@@ -450,6 +451,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
     }
     Entities<T> selectedEntities = newEntities();
     selectedEntities.pre = false;
+    selectedEntities.post = false;
     selectedEntities.propagateToSource = false;
     for (T entity in _entityList) {
       for (Parent p in _concept.parents) {
@@ -461,6 +463,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
       }
     }
     selectedEntities.pre = true;
+    selectedEntities.post = true;
     selectedEntities.propagateToSource = true;
     selectedEntities._source = this;
     return selectedEntities;
@@ -473,6 +476,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
     }
     Entities<T> selectedEntities = newEntities();
     selectedEntities.pre = false;
+    selectedEntities.post = false;
     selectedEntities.propagateToSource = false;
     for (T entity in _entityList) {
       for (Attribute a in _concept.attributes) {
@@ -484,6 +488,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
       }
     }
     selectedEntities.pre = true;
+    selectedEntities.post = true;
     selectedEntities.propagateToSource = true;
     selectedEntities._source = this;
     return selectedEntities;
@@ -496,12 +501,14 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
   Entities<T> order() {
     Entities<T> orderedEntities = newEntities();
     orderedEntities.pre = false;
+    orderedEntities.post = false;
     orderedEntities.propagateToSource = false;
     List<T> sortedList = list;
     // in place sort
     sortedList.sort((m,n) => m.compareTo(n));
     orderedEntities._addFromList(sortedList);
     orderedEntities.pre = true;
+    orderedEntities.post = true;
     orderedEntities.propagateToSource = false;
     orderedEntities._source = this;
     return orderedEntities;
@@ -510,12 +517,14 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
   Entities<T> orderByFunction(Function f) {
     Entities<T> orderedEntities = newEntities();
     orderedEntities.pre = false;
+    orderedEntities.post = false;
     orderedEntities.propagateToSource = false;
     List<T> sortedList = list;
     // in place sort
     sortedList.sort(f);
     orderedEntities._addFromList(sortedList);
     orderedEntities.pre = true;
+    orderedEntities.post = true;
     orderedEntities.propagateToSource = false;
     orderedEntities._source = this;
     return orderedEntities;
@@ -539,10 +548,14 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
     }
     Entities<T> copiedEntities = newEntities();
     copiedEntities.pre = false;
+    copiedEntities.post = false;
+    copiedEntities.propagateToSource = false;
     for (Entity entity in this) {
       copiedEntities.add(entity.copy());
     }
     copiedEntities.pre = true;
+    copiedEntities.post = true;
+    copiedEntities.propagateToSource = true;
     return copiedEntities;
   }
 

@@ -6,6 +6,9 @@ open model shows twin relationships as one line
 
 To do
 
+test Copy Projects:
+expect(copiedProjects, isNot(equals(projects))); // does not pass
+
 Duration (time span) type
 add advanced model patterns to CategoryQuestion.Link model:
 category tests
@@ -48,6 +51,9 @@ get random value for different types (for test data)
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
+
+2012-08-17, 17:07
+overriding the == operator in Id, Oid and Entity.
 
 2012-08-17, 15:41
 Copy Equality Problem test in test/specific/default/project.data

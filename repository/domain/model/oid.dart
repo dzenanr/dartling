@@ -28,6 +28,48 @@ class Oid implements Comparable {
   }
 
   /**
+   * ==
+  *
+   * If x===y, return true.
+   * Otherwise, if either x or y is null, return false.
+   * Otherwise, return the result of x.equals(y).
+   *
+   * The newest spec is:
+   * a) if either x or y is null, do a ===
+   * b) otherwise call operator ==
+   */
+  /*
+  bool operator ==(Object other) {
+    if (other is Oid) {
+      Oid oid = other;
+      if (this===oid) {
+        return true;
+      } else {
+        if (this == null || oid == null) {
+          return false;
+        } else {
+          return equals(oid);
+        }
+      }
+    } else {
+      return false;
+    }
+  }
+  */
+  bool operator ==(Object other) {
+    if (other is Oid) {
+      Oid oid = other;
+      if (this == null || oid == null) {
+        return this===oid;
+      } else {
+        return equals(oid);
+      }
+    } else {
+      return false;
+    }
+  }
+
+  /**
    * Compares two oids based on unique numbers. If the result is less than 0
    * then the first entity is less than the second, if it is equal to 0 they
    * are equal and if the result is greater than 0 then the first is greater
