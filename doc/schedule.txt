@@ -38,6 +38,10 @@ marketing
   https://talentopoly.com/posts/5440-episode_36_-_how_to_get_traction_for_your_projects
   http://blog.stackoverflow.com/2011/05/community-promotion-ads/
 
+deep copy
+attach/detach
+model integration
+many-to-many between models
 logging 
   http://www.trottercashion.com/2012/08/12/how-to-write-good-log-messages.html
 attribute validations (type, length)?
@@ -47,6 +51,13 @@ get random value for different types (for test data)
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
+
+2012-08-17
+in meta, the concept oid update can be changed from false to true 
+in meta, the concept code update can be changed from false to true 
+in meta, the id property update can be changed from false to true 
+entities update to remove the before entity and add the after entity, 
+  in order to update oid, code and id entity maps.
 
 2012-08-16, 10:13
 raw string for json to avoid escape error

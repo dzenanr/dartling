@@ -113,7 +113,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
     }
     if (!_concept.add) {
       throw new AddException(
-        'An entity cannot be added to ${_concept.plural}.');
+        'An entity cannot be added to ${_concept.codeInPlural}.');
     }
 
     bool result = true;
@@ -250,7 +250,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
     }
     if (!_concept.remove) {
       throw new RemoveException(
-        'An entity cannot be removed from ${_concept.plural}.');
+        'An entity cannot be removed from ${_concept.codeInPlural}.');
     }
 
     bool result = true;
@@ -366,6 +366,48 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
         }
       }
     }
+  }
+
+
+  /**
+   * Updates removes the before entity and adds the after entity, in order to
+   * update oid, code and id entity maps.
+   *
+   * Used only if oid, code or id are set to a new value in the after entity.
+   * They can be set only with the help of meta:
+   * concept.updateOid, concept.updateCode or property.update.
+   */
+  bool update(T beforeEntity, T afterEntity) {
+    if (beforeEntity.oid == afterEntity.oid &&
+        beforeEntity.code == afterEntity.code &&
+        //beforeEntity.id == afterEntity.id) { // not equal !?
+        beforeEntity.id.equals(afterEntity.id)) {
+      throw new UpdateException(
+          '${_concept.codeInPlural}.update can only be used '
+          'if oid, code or id set.');
+    }
+    if (remove(beforeEntity)) {
+      if (add(afterEntity)) {
+        return true;
+      } else {
+        if (add(beforeEntity)) {
+          Error error = new Error('update');
+          error.message =
+            '${_concept.codeInPlural}.update fails to add after update entity.';
+          _errors.add(error);
+        } else {
+          throw new UpdateException(
+              '${_concept.codeInPlural}.update fails '
+              'to add back before update entity.');
+        }
+      }
+    } else {
+      Error error = new Error('update');
+      error.message =
+        '${_concept.codeInPlural}.update fails to remove before update entity.';
+      _errors.add(error);
+    }
+    return false;
   }
 
   T findByCode(String code) {

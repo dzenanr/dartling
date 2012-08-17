@@ -45,6 +45,12 @@ class JsonException extends DartlingException {
 
 }
 
+class OidException extends DartlingException {
+
+  const OidException(String msg) : super(msg);
+
+}
+
 class OrderException extends DartlingException {
 
   const OrderException(String msg) : super(msg);

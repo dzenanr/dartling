@@ -50,7 +50,7 @@ class ProjectActionReaction implements ActionReactionApi {
       p.display();
       reactedOnUpdate = true;
     }
-    print('!!! Action Reaction for ${projects.concept.plural} !!!');
+    print('!!! Action Reaction for ${projects.concept.codeInPlural} !!!');
     print('');
     print('$action');
     print('');
@@ -290,6 +290,101 @@ testProjectData(Repo repo, String modelCode) {
 
       expect(projects.list, isNot(isEmpty));
       projects.display('From JSON to Project Model');
+    });
+    test('Update New Project Id with Try', () {
+      var marketing = new Project.withId(projectConcept, 'Dartling Marketing');
+      expect(marketing, isNotNull);
+      marketing.description = 'Making Dartling known to the Dart community.';
+      projects.add(marketing);
+      expect(projects.count, equals(++projectCount));
+
+      var beforeNameUpdate = marketing.name;
+      try {
+        marketing.name = 'Marketing Dartling';
+      } catch (final UpdateException e) {
+        expect(marketing.name, equals(beforeNameUpdate));
+      }
+    });
+    test('Update New Project Id without Try', () {
+      var marketing = new Project.withId(projectConcept, 'Dartling Marketing');
+      expect(marketing, isNotNull);
+      marketing.description = 'Making Dartling known to the Dart community.';
+      projects.add(marketing);
+      expect(projects.count, equals(++projectCount));
+
+      var beforeNameUpdate = marketing.name;
+      expect(() => marketing.name = 'Marketing Dartling', throws);
+      expect(marketing.name, equals(beforeNameUpdate));
+    });
+    test('Update New Project Id with Success', () {
+      var marketing = new Project.withId(projectConcept, 'Dartling Marketing');
+      expect(marketing, isNotNull);
+      marketing.description = 'Making Dartling known to the Dart community.';
+      projects.add(marketing);
+      expect(projects.count, equals(++projectCount));
+      //projects.display('Before Update New Project Id with Success');
+
+      var afterUpdateMarketing = marketing.copy();
+      var nameAttribute = marketing.concept.attributes.findByCode('name');
+      expect(nameAttribute.update, isFalse);
+      nameAttribute.update = true;
+      var newName = 'Marketing Dartling';
+      afterUpdateMarketing.name = newName;
+      expect(afterUpdateMarketing.name, equals(newName));
+      nameAttribute.update = false;
+      var updated = projects.update(marketing, afterUpdateMarketing);
+      expect(updated, isTrue);
+      //projects.display('After Update New Project Id with Success');
+
+      var marketingDartling = projects.findByAttributeId('name', newName);
+      expect(marketingDartling, isNotNull);
+      expect(marketingDartling.name, equals(newName));
+    });
+    test('Copy Equality', () {
+      var marketing = new Project.withId(projectConcept, 'Dartling Marketing');
+      expect(marketing, isNotNull);
+      marketing.description = 'Making Dartling known to the Dart community.';
+      projects.add(marketing);
+      expect(projects.count, equals(++projectCount));
+
+      marketing.display('before copy: ');
+      var afterUpdateMarketing = marketing.copy();
+      afterUpdateMarketing.display('after copy: ');
+      expect(marketing.oid, equals(afterUpdateMarketing.oid));
+      expect(marketing.code, equals(afterUpdateMarketing.code));
+      expect(marketing.name, equals(afterUpdateMarketing.name));
+      expect(marketing.description, equals(afterUpdateMarketing.description));
+
+      expect(marketing.id, isNotNull);
+      expect(afterUpdateMarketing.id, isNotNull);
+      //expect(marketing.id, equals(afterUpdateMarketing.id));  // does not pass !?
+      /*
+       * ==
+       *
+       * If x===y, return true.
+       * Otherwise, if either x or y is null, return false.
+       * Otherwise, return the result of x.equals(y).
+       */
+      var idsEqual = false;
+      //if (marketing.id == afterUpdateMarketing.id) { // not equal !?
+      if (marketing.id.equals(afterUpdateMarketing.id)) {
+        idsEqual = true;
+      }
+      expect(idsEqual, isTrue);
+    });
+    test('Update New Project Description with Failure', () {
+      var marketing = new Project.withId(projectConcept, 'Dartling Marketing');
+      expect(marketing, isNotNull);
+      marketing.description = 'Making Dartling known to the Dart community.';
+      projects.add(marketing);
+      expect(projects.count, equals(++projectCount));
+
+      var beforeDescriptionUpdate = marketing.description;
+      var afterUpdateMarketing = marketing.copy();
+      var newDescription = 'Writing papers about Dartling';
+      afterUpdateMarketing.description = newDescription;
+      expect(afterUpdateMarketing.description, equals(newDescription));
+      expect(() => projects.update(marketing, afterUpdateMarketing), throws);
     });
 
   });

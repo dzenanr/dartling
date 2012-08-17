@@ -138,7 +138,14 @@ class ModelEntries implements ModelEntriesApi {
          ' parent entity is not found for the ${parentOid} parent oid.';
         throw new ParentException(msg);
       }
-      entity.setParent(parent.code, parentEntity);
+      if (parent.identifier) {
+        var beforUpdate = parent.update;
+        parent.update = true;
+        entity.setParent(parent.code, parentEntity);
+        parent.update = beforUpdate;
+      } else {
+        entity.setParent(parent.code, parentEntity);
+      }
     }
   }
 
@@ -156,7 +163,6 @@ class ModelEntries implements ModelEntriesApi {
       }
       List<Map<String, Object>> entitiesList = entriesMap['entities'];
       entryEntities.addFrom(_entitiesFromJson(entitiesList, concept));
-      //assert(entryEntities.count > 0);
     }
   }
 
@@ -173,8 +179,8 @@ class ModelEntries implements ModelEntriesApi {
       entities.add(entity);
       entities.pre = true;
       entities.post = true;
-      //entities.errors.display('_entitiesFromJson: ${concept.code} ${entity}');
-      //assert(entities.count > 0);
+      //entities.errors.display('_entitiesFromJson errors:
+      //    ${concept.code} ${entity}');
     }
     return entities;
   }
@@ -187,11 +193,28 @@ class ModelEntries implements ModelEntriesApi {
     } catch (final FormatException e) {
       throw new TypeException('${entityMap['oid']} oid is not int: $e');
     }
+
+    var beforeUpdateOid = entity.concept.updateOid;
+    entity.concept.updateOid = true;
     entity.oid = new Oid.ts(timeStamp);
+    entity.concept.updateOid = beforeUpdateOid;
+
+    var beforeUpdateCode = entity.concept.updateCode;
+    entity.concept.updateCode = true;
     entity.code = entityMap['code'];
+    entity.concept.updateCode = beforeUpdateCode;
+
     for (Attribute attribute in concept.attributes) {
-      entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
+      if (attribute.identifier) {
+        var beforUpdate = attribute.update;
+        attribute.update = true;
+        entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
+        attribute.update = beforUpdate;
+      } else {
+        entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
+      }
     }
+
     for (Child child in concept.children) {
       List<Map<String, Object>> entitiesList = entityMap[child.code];
       if (entitiesList != null) {
@@ -201,14 +224,12 @@ class ModelEntries implements ModelEntriesApi {
         entity.setChild(child.code, entities);
       }
     }
+
     for (Parent parent in concept.parents) {
       String parentOidString = entityMap[parent.code];
       if (parentOidString == 'null') {
-        if (parent.minc == '0') {
-          entity.setParent(parent.code, null);
-        } else {
-          throw new ParentException(
-              '${parent.code} parent cannot be null.');
+        if (parent.minc != '0') {
+          throw new ParentException('${parent.code} parent cannot be null.');
         }
       } else {
         try {

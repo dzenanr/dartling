@@ -21,6 +21,7 @@ abstract class Property extends Entity<Property> {
     if (i) {
       minc = '1';
       maxc = '1';
+      update = false;
     }
   }
 

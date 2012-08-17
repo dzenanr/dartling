@@ -23,7 +23,9 @@ class Attribute extends Property {
   bool get derive() => _derive;
   set derive(bool derive) {
     _derive = derive;
-    update = false;
+    if (_derive) {
+      update = false;
+    }
   }
 
   //Concept get concept() => sourceConcept;

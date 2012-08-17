@@ -1,0 +1,7 @@
+
+Why don't we see more main memory databases where you program if there are no 
+limits to memory, and the main memory database software takes care in background 
+about persistency of data?
+
+https://plus.google.com/u/0/105888615414982242080/posts/atzbTnCzgRB
+

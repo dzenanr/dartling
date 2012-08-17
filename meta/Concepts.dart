@@ -11,10 +11,12 @@ class Concept extends Entity<Concept> {
   String min = '0';
   String max = 'N';
 
+  bool updateOid = false;
+  bool updateCode = false;
   bool add = true;
   bool remove = true;
 
-  String _plural;
+  String _codeInPlural;
   String description;
 
   Model model;
@@ -97,17 +99,17 @@ class Concept extends Entity<Concept> {
     return textInPlural;
   }
 
-  String get plural() {
-    if (_plural != null) {
-      return _plural;
+  String get codeInPlural() {
+    if (_codeInPlural != null) {
+      return _codeInPlural;
     } else {
-      _plural = _convertToPlural(code);
-      return _plural;
+      _codeInPlural = _convertToPlural(code);
+      return _codeInPlural;
     }
   }
 
-  set plural(String pluralConceptName) {
-    _plural = pluralConceptName;
+  set codeInPlural(String pluralConceptName) {
+    _codeInPlural = pluralConceptName;
   }
 
 }

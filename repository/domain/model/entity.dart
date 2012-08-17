@@ -23,7 +23,7 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 class Entity<T extends Entity<T>> implements EntityApi {
 
   Concept _concept;
-  Oid oid;
+  Oid _oid;
   String _code;
   Map<String, Object> _attributeMap;
   // cannot use T since a parent is of a different type
@@ -31,11 +31,11 @@ class Entity<T extends Entity<T>> implements EntityApi {
   Map<String, Entities> _childMap;
 
   Entity() {
-    oid = new Oid();
+    _oid = new Oid();
   }
 
   Entity.of(this._concept) {
-    oid = new Oid();
+    _oid = new Oid();
     _attributeMap = new Map<String, Object>();
     _parentMap = new Map<String, Entity>();
     _childMap = new Map<String, Entities>();
@@ -98,12 +98,23 @@ class Entity<T extends Entity<T>> implements EntityApi {
   Entity<T> newEntity() => new Entity.of(_concept);
 
   Concept get concept() => _concept;
+
+  Oid get oid() => _oid;
+  void set oid(Oid oid) {
+    if (_concept.updateOid) {
+      _oid = oid;
+    } else {
+      throw new OidException('Entity oid cannot be updated.');
+    }
+  }
+
   String get code() => _code;
   void set code(String code) {
-    if (_code != null) {
+    if (_code == null || _concept.updateCode) {
+      _code = code;
+    } else {
       throw new CodeException('Entity code cannot be updated.');
     }
-    _code = code;
   }
 
   Object getAttribute(String name) => _attributeMap[name];
@@ -123,7 +134,10 @@ class Entity<T extends Entity<T>> implements EntityApi {
       throw new UpdateException(msg);
     }
     */
-    if (!attribute.derive && attribute.update) {
+    if (getAttribute(name) == null) {
+      _attributeMap[name] = value;
+      return true;
+    } else if (!attribute.derive && attribute.update) {
       _attributeMap[name] = value;
       return true;
     } else {
@@ -206,13 +220,21 @@ class Entity<T extends Entity<T>> implements EntityApi {
       String msg = '${_concept.code}.$name is not correct parent entity name.';
       throw new UpdateException(msg);
     }
-    if (parent.update) {
+
+    if (getParent(name) == null) {
+      _parentMap[name] = entity;
+      return true;
+    } else if (parent.identifier) {
+      String msg = '${_concept.code}.${parent.code} is not updateable.';
+      throw new UpdateException(msg);
+    } else if (parent.update) {
       _parentMap[name] = entity;
       return true;
     } else {
       String msg = '${_concept.code}.${parent.code} is not updateable.';
       throw new UpdateException(msg);
     }
+
     return false;
   }
 
@@ -266,16 +288,40 @@ class Entity<T extends Entity<T>> implements EntityApi {
       throw new ConceptException('Entity concept is not defined.');
     }
     T entity = newEntity();
-    entity.oid = oid;
+    assert(entity.concept != null);
+
+    var beforeUpdateOid = entity.concept.updateOid;
+    entity.concept.updateOid = true;
+    entity.oid = _oid;
+    entity.concept.updateOid = beforeUpdateOid;
+
     if (_code != null) {
+      var beforeUpdateCode = entity.concept.updateCode;
+      entity.concept.updateCode = true;
       entity.code = _code;
+      entity.concept.updateCode = beforeUpdateCode;
     }
-    for (Attribute a in _concept.attributes) {
-      entity.setAttribute(a.code, _attributeMap[a.code]);
+
+    for (Attribute attribute in _concept.attributes) {
+      if (attribute.identifier) {
+        var beforUpdate = attribute.update;
+        attribute.update = true;
+        entity.setAttribute(attribute.code, _attributeMap[attribute.code]);
+        attribute.update = beforUpdate;
+      } else {
+        entity.setAttribute(attribute.code, _attributeMap[attribute.code]);
+      }
     }
 
     for (Parent parent in _concept.parents) {
-      entity.setParent(parent.code, _parentMap[parent.code]);
+      if (parent.identifier) {
+        var beforUpdate = parent.update;
+        parent.update = true;
+        entity.setParent(parent.code, _parentMap[parent.code]);
+        parent.update = beforUpdate;
+      } else {
+        entity.setParent(parent.code, _parentMap[parent.code]);
+      }
     }
 
     for (Child child in _concept.children) {
@@ -289,7 +335,7 @@ class Entity<T extends Entity<T>> implements EntityApi {
   * Two entities are equal if their oids are equal.
   */
   bool equals(T entity) {
-    if (oid.equals(entity.oid)) {
+    if (_oid.equals(entity.oid)) {
       return true;
     }
     return false;
@@ -351,9 +397,9 @@ class Entity<T extends Entity<T>> implements EntityApi {
    */
   String toString() {
     if (code == null) {
-      return '{oid:${oid.toString()}}';
+      return '{oid:${_oid.toString()}}';
     } else {
-      return '{oid:${oid.toString()}, code:${code}}';
+      return '{oid:${_oid.toString()}, code:${code}}';
     }
   }
 
@@ -372,7 +418,7 @@ class Entity<T extends Entity<T>> implements EntityApi {
     print('${s}${toString()}                       ');
     print('${s}------------------------------------');
     if (withOid) {
-      print('${s}oid: $oid');
+      print('${s}oid: ${_oid}');
     }
     if (_code != null) {
       print('${s}code: $_code');
@@ -421,7 +467,7 @@ class Entity<T extends Entity<T>> implements EntityApi {
         entityMap[parent.code] = 'null';
       }
     }
-    entityMap['oid'] = oid.toString();
+    entityMap['oid'] = _oid.toString();
     entityMap['code'] = code;
     _attributeMap.getKeys().forEach((k) =>
         entityMap[k] = getStringFromAttribute(k));

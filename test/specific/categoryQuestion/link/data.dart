@@ -626,6 +626,7 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       expect(entries.empty, isFalse);
       entries.clear();
       expect(entries.empty, isTrue);
+
       entries.fromJsonToData();
       expect(entries.empty, isFalse);
       categories.display('Categories: From JSON to Link Model');

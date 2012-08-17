@@ -1,37 +1,25 @@
 
 
-I have converted a model into json. It is a valid json string. 
-When I convert the same json string into a model, I get the model.
+I copy an entity and obtain a different entity object. 
+When I compare entity attributes, they are all equal. 
+When I compare ids of the two entities they are not equal:
 
-However, if I print the same json string, then copy it in a String variable and 
-then convert the string into a model, I get the following error:
+  expect(marketing.id, isNotNull); // pass
+  expect(afterUpdateMarketing.id, isNotNull); // pass   
+  expect(marketing.id, equals(afterUpdateMarketing.id));  // does not pass !?
 
-Caught Invalid esacape sequence in string literal
-  #0      _JsonParser._error (dart:json:308:5)
-  #1      _JsonParser._parseString (dart:json:225:27)
-  #2      _JsonParser._parseValue (dart:json:131:48)
-  #3      _JsonParser._parseObject (dart:json:158:34)
-  #4      _JsonParser._parseValue (dart:json:136:40)
-  #5      _JsonParser._parseList (dart:json:172:29)
-  #6      _JsonParser._parseValue (dart:json:137:40)
-  #7      _JsonParser._parseObject (dart:json:158:34)
-  #8      _JsonParser._parseValue (dart:json:136:40)
-  #9      _JsonParser._parseList (dart:json:172:29)
-  #10     _JsonParser._parseValue (dart:json:137:40)
-  #11     _JsonParser._parseObject (dart:json:158:34)
-  
-  ____________________________________________________________
- 
- bool empty() { 
-  _model.entryConcepts.forEach((entryConcept) {
-      var entryEntities = new Entities.of(entryConcept);
-      if (!entryEntities.empty) {
-        return false;
-      }
-    });
-    return true;
- }
- 
- It is true even for not empty model!?
- 
- 
+However, if I compare the ids directly by using the id equals method, they are equal:
+      
+  var idsEqual = false;
+  if (marketing.id.equals(afterUpdateMarketing.id)) {
+    idsEqual = true;
+  }
+  expect(idsEqual, isTrue); // pass
+    
+Finally, when I use ==, the ids are not equal:
+
+  var idsEqual = false;
+  if (marketing.id == afterUpdateMarketing.id) { 
+    idsEqual = true;
+  }
+  expect(idsEqual, isTrue); // does not pass !?
