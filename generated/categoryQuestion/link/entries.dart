@@ -71,14 +71,6 @@ class LinkEntries extends ModelEntries {
   Members get members() => getEntry('Member');
   Questions get questions() => getEntry('Question');
 
-  Concept get categoryConcept() => categories.concept;
-  Concept get memberConcept() => members.concept;
-  Concept get commentConcept() => comments.concept;
-  Concept get questionConcept() => questions.concept;
-
-  Concept get interestConcept() => model.concepts.findByCode('Interest');
-  Concept get webLinkConcept() => model.concepts.findByCode('WebLink');
-
 }
 
 

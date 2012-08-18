@@ -2,10 +2,12 @@
 abstract class ModelEntriesApi {
 
   abstract Model get model();
-  abstract bool get empty();
+  abstract Concept getConcept(String conceptCode);
   abstract EntitiesApi getEntry(String entryConceptCode);
-  abstract EntityApi findInInternalTree(Concept entryConcept, Oid oid);
   abstract EntityApi find(Oid oid);
+  abstract EntityApi findInInternalTree(Concept entryConcept, Oid oid);
+
+  abstract bool get empty();
   abstract clear();
 
   abstract String toJson();
@@ -55,6 +57,25 @@ class ModelEntries implements ModelEntriesApi {
 
   Model get model() => _model;
 
+  Concept getConcept(String conceptCode) {
+    return _model.getConcept(conceptCode);
+  }
+
+  Entities getEntry(String entryConceptCode) =>
+      _entryEntitiesMap[entryConceptCode];
+
+  Entity find(Oid oid) {
+    Entity entity;
+    for (Concept entryConcept in _model.entryConcepts) {
+      return findInInternalTree(entryConcept, oid);
+    }
+  }
+
+  Entity findInInternalTree(Concept entryConcept, Oid oid) {
+    Entities entryEntities = getEntry(entryConcept.code);
+    return entryEntities.deepFind(oid);
+  }
+
   bool get empty() {
     for (Concept entryConcept in _model.entryConcepts) {
       Entities entryEntities = getEntry(entryConcept.code);
@@ -63,21 +84,6 @@ class ModelEntries implements ModelEntriesApi {
       }
     }
     return true;
-  }
-
-  Entities getEntry(String entryConceptCode) =>
-      _entryEntitiesMap[entryConceptCode];
-
-  Entity findInInternalTree(Concept entryConcept, Oid oid) {
-    Entities entryEntities = getEntry(entryConcept.code);
-    return entryEntities.deepFind(oid);
-  }
-
-  Entity find(Oid oid) {
-    Entity entity;
-    for (Concept entryConcept in _model.entryConcepts) {
-      return findInInternalTree(entryConcept, oid);
-    }
   }
 
   clear() {

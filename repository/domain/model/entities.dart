@@ -6,6 +6,7 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   abstract ErrorsApi get errors();
   abstract int get count();
   abstract bool get empty();
+  abstract void clear();
 
   abstract bool preAdd(T entity);
   abstract bool add(T entity);
@@ -33,7 +34,6 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   abstract EntitiesApi<T> order();
   abstract EntitiesApi<T> orderByFunction(Function f);
 
-  abstract void clear();
   abstract EntitiesApi<T> copy();
   abstract List<T> get list();
   abstract List<Map<String, Object>> toJson();

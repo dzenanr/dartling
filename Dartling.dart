@@ -37,6 +37,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import('dart:math');
 #import('dart:uri');
 
+#source('amodel/categoryQuestion/link/json.dart');
+#source('amodel/davidCurtis/institution/json.dart');
+#source('amodel/default/project/json.dart');
+#source('amodel/default/user/json.dart');
+
 #source('data/categoryQuestion/link/json.dart');
 #source('data/davidCurtis/institution/json.dart');
 #source('data/default/project/json.dart');
@@ -67,11 +72,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('meta/parents.dart');
 #source('meta/property.dart');
 #source('meta/types.dart');
-
-#source('model/categoryQuestion/link/json.dart');
-#source('model/davidCurtis/institution/json.dart');
-#source('model/default/project/json.dart');
-#source('model/default/user/json.dart');
 
 #source('repository/domain/model/event/actions.dart');
 #source('repository/domain/model/event/reactions.dart');

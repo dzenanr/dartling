@@ -23,11 +23,11 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       entries = models.getModelEntries(modelCode);
       expect(entries, isNotNull);
 
-      categoryConcept = entries.categoryConcept;
+      categoryConcept = entries.getConcept('Category');
       expect(categoryConcept, isNotNull);
       expect(categoryConcept.attributes.empty, isFalse);
 
-      webLinkConcept = entries.webLinkConcept;
+      webLinkConcept = entries.getConcept('WebLink');
       expect(webLinkConcept, isNotNull);
       expect(webLinkConcept.attributes.empty, isFalse);
       expect(webLinkConcept.parents.count, equals(1));
@@ -106,11 +106,11 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       dartCategory.webLinks.add(dartBugssWebLink);
       expect(dartCategory.webLinks.count, equals(++dartWebLinkCount));
 
-      memberConcept = entries.memberConcept;
+      memberConcept = entries.getConcept('Member');
       expect(memberConcept, isNotNull);
       expect(memberConcept.attributes.list, isNot(isEmpty));
 
-      interestConcept = entries.interestConcept;
+      interestConcept = entries.getConcept('Interest');
       expect(interestConcept, isNotNull);
       expect(interestConcept.attributes.list, isNot(isEmpty));
       expect(interestConcept.parents.count, equals(2));
@@ -179,7 +179,7 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       html5InterestCount = 0;
     });
     test('Find Category and Web Link by Id', () {
-      Id categoryId = new Id(entries.categoryConcept);
+      Id categoryId = new Id(entries.getConcept('Category'));
       categoryId.setAttribute('name', 'Dart');
       Category dartCategory = categories.findById(categoryId);
       expect(dartCategory, isNotNull);
@@ -187,7 +187,7 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
 
       WebLinks dartWebLinks = dartCategory.webLinks;
       expect(dartWebLinks.count == dartWebLinkCount);
-      Id dartHomeId = new Id(entries.webLinkConcept);
+      Id dartHomeId = new Id(entries.getConcept('WebLink'));
       dartHomeId.setParent('category', dartCategory);
       dartHomeId.setAttribute('subject', 'Dart Home');
       WebLink dartHomeWebLink = dartWebLinks.findById(dartHomeId);
@@ -510,7 +510,7 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       html5.interests.errors.display('HTML5: Add Interest Unique Error');
     });
     test('Add New Comment', () {
-      var commentConcept = entries.commentConcept;
+      var commentConcept = entries.getConcept('Comment');
       expect(commentConcept, isNotNull);
       var comment = new Comment(commentConcept);
       expect(comment, isNotNull);
@@ -523,7 +523,7 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       //comments.display('Comments');
     });
     test('Add New Questions with Number Increment of 1', () {
-      var questionConcept = entries.questionConcept;
+      var questionConcept = entries.getConcept('Question');
       expect(questionConcept, isNotNull);
       var questions = entries.questions;
       expect(questions, isNotNull);
@@ -553,7 +553,7 @@ testLinkData(Repo repo, String domainCode, String modelCode) {
       //questions.display('Questions');
     });
     test('Add New Questions with Number Increment of 10', () {
-      var questionConcept = entries.questionConcept;
+      var questionConcept = entries.getConcept('Question');
       expect(questionConcept, isNotNull);
       var questions = entries.questions;
       expect(questions, isNotNull);

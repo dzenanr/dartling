@@ -10,9 +10,9 @@ class Type extends Entity<Type> {
 
   Domain domain;
 
-  Type(this.domain, String code) {
-    super.code = code;
-    base = code;
+  Type(this.domain, String typeCode) {
+    super.code = typeCode;
+    base = typeCode;
     domain.types.add(this);
   }
 

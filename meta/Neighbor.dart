@@ -8,10 +8,10 @@ abstract class Neighbor extends Property {
   // the source concept is inherited from Property
   Concept destinationConcept;
 
-  Neighbor(Concept sourceConcept, this.destinationConcept, String code) :
-    super(sourceConcept, code) {
+  Neighbor(Concept sourceConcept, this.destinationConcept, String neighborCode) :
+    super(sourceConcept, neighborCode) {
   }
 
-  //bool get external() => !internal;
+  bool get external() => !internal;
 
 }

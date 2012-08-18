@@ -34,8 +34,6 @@ class InstitutionEntries extends ModelEntries {
 
   Ecoles get ecoles() => getEntry('Ecole');
 
-  Concept get ecoleConcept() => ecoles.concept;
-
 }
 
 

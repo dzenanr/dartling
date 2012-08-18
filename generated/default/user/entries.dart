@@ -34,8 +34,6 @@ class UserEntries extends ModelEntries {
 
   Users get users() => getEntry('User');
 
-  Concept get userConcept() => users.concept;
-
 }
 
 

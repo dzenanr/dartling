@@ -28,8 +28,8 @@ class Concept extends Entity<Concept> {
   Parents sourceParents;
   Children sourceChildren;
 
-  Concept(this.model, String code) {
-    super.code = code;
+  Concept(this.model, String conceptCode) {
+    super.code = conceptCode;
     model.concepts.add(this);
 
     attributes = new Attributes();
@@ -41,33 +41,38 @@ class Concept extends Entity<Concept> {
     sourceChildren = new Children();
   }
 
-  Attribute getAttribute(String code) => attributes.findByCode(code);
+  Attribute getAttribute(String attributeCode) =>
+      attributes.findByCode(attributeCode);
 
-  Parent getDestinationParent(String code) => parents.findByCode(code);
-  Child getDestinationChild(String code) => children.findByCode(code);
+  Parent getDestinationParent(String parentCode) =>
+      parents.findByCode(parentCode);
+  Child getDestinationChild(String childCode) =>
+      children.findByCode(childCode);
 
-  Parent getSourceParent(String code) => sourceParents.findByCode(code);
-  Child getSourceChild(String code) => sourceChildren.findByCode(code);
+  Parent getSourceParent(String parentCode) =>
+      sourceParents.findByCode(parentCode);
+  Child getSourceChild(String childCode) =>
+      sourceChildren.findByCode(childCode);
 
-  bool isAttributeSensitive(String code) {
-    Attribute a = attributes.findByCode(code);
+  bool isAttributeSensitive(String attributeCode) {
+    Attribute a = attributes.findByCode(attributeCode);
     return a!= null && a.sensitive ? true : false;
   }
 
-  bool isParentSensitive(String code) {
-    Parent p = parents.findByCode(code);
+  bool isParentSensitive(String parentCode) {
+    Parent p = parents.findByCode(parentCode);
     return p!= null && p.sensitive ? true : false;
   }
 
-  bool isChildSensitive(String code) {
-    Child c = children.findByCode(code);
+  bool isChildSensitive(String childCode) {
+    Child c = children.findByCode(childCode);
     return c!= null && c.sensitive ? true : false;
   }
 
-  bool isPropertySensitive(String code) {
-    return isAttributeSensitive(code) ||
-        isParentSensitive(code) ||
-        isChildSensitive(code);
+  bool isPropertySensitive(String propertyCode) {
+    return isAttributeSensitive(propertyCode) ||
+        isParentSensitive(propertyCode) ||
+        isChildSensitive(propertyCode);
   }
 
   String _dropEnd(String text, String end) {

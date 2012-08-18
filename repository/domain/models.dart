@@ -3,6 +3,7 @@ abstract class DomainModelsApi implements SourceOfActionReactionApi {
 
   abstract add(ModelEntriesApi modelEntries);
   abstract Domain get domain();
+  abstract Model getModel(String modelCode);
   abstract ModelEntriesApi getModelEntries(String modelCode);
   abstract DomainSessionApi newSession();
 
@@ -39,6 +40,10 @@ class DomainModels implements DomainModelsApi {
   }
 
   Domain get domain() => _domain;
+
+  Model getModel(String modelCode) {
+    return _domain.getModel(modelCode);
+  }
 
   ModelEntries getModelEntries(String modelCode) =>
       _modelEntriesMap[modelCode];

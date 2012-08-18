@@ -9,8 +9,8 @@ abstract class Property extends Entity<Property> {
 
   Concept sourceConcept;
 
-  Property(this.sourceConcept, String code) {
-    super.code = code;
+  Property(this.sourceConcept, String propertyCode) {
+    super.code = propertyCode;
   }
 
   bool get maxMany() => maxc != '0' && maxc != '1' ? true : false;

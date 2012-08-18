@@ -34,8 +34,6 @@ class ProjectEntries extends ModelEntries {
 
   Projects get projects() => getEntry('Project');
 
-  Concept get projectConcept() => projects.concept;
-
 }
 
 

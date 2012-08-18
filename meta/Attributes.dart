@@ -14,7 +14,8 @@ class Attribute extends Property {
 
   Type type;
 
-  Attribute(Concept sourceConcept, String code) : super(sourceConcept, code) {
+  Attribute(Concept sourceConcept, String attributeCode) :
+    super(sourceConcept, attributeCode) {
     sourceConcept.attributes.add(this);
     // default type is String
     type = sourceConcept.model.domain.getType('String');
@@ -28,6 +29,6 @@ class Attribute extends Property {
     }
   }
 
-  //Concept get concept() => sourceConcept;
+  //Concept get concept() => sourceConcept; // produces an error
 
 }

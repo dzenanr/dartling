@@ -15,12 +15,12 @@ class Domain extends Entity<Domain> {
   Types types;
   Models models;
 
-  Domain([String code = 'Default']) {
-    super.code = code;
+  Domain([String domainCode = 'Default']) {
+    super.code = domainCode;
     domains = new Domains();
     types = new Types();
     models = new Models();
-    if (code == 'Default') {
+    if (domainCode == 'Default') {
       description = 'Default domain to keep types and models.';
     }
 
@@ -34,10 +34,10 @@ class Domain extends Entity<Domain> {
     assert(types.count == 7);
   }
 
-  Domain getDomain(String code) => domains.findByCode(code);
+  Domain getDomain(String domainCode) => domains.findByCode(domainCode);
 
-  Model getModel(String code) => models.findByCode(code);
+  Model getModel(String modelCode) => models.findByCode(modelCode);
 
-  Type getType(String code) => types.findByCode(code);
+  Type getType(String typeCode) => types.findByCode(typeCode);
 
 }
