@@ -112,4 +112,17 @@ class Concept extends Entity<Concept> {
     _codeInPlural = pluralConceptName;
   }
 
+  Concept get entryConcept() {
+    if (entry) {
+      return this;
+    } else {
+      for (Parent parent in parents) {
+        if (parent.internal) {
+          return parent.destinationConcept.entryConcept;
+        }
+      }
+      throw new ParentException('No internal parent for the ${code} concept');
+    }
+  }
+
 }

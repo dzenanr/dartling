@@ -21,6 +21,7 @@ document code
   http://www.dartlang.org/docs/language-tour/#comments
   http://japhr.blogspot.ca/2012/03/pretty-dartdoc.html
   http://www.dotnetcodegeeks.com/2012/03/10-best-practices-of-code-commenting.html
+  http://www.flyingmachinestudios.com/doctemplate/
 json pretty formatting for Dartling
 Uri validation for well formed uri (not done in Uri)
   https://github.com/berkerpeksag/murl#readme
@@ -51,6 +52,11 @@ get random value for different types (for test data)
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
+
+2012-08-18, 13:09
+Concept.entryConcept
+ModelEntries.findByEntryConcept
+ModelEntries._updateNullParents(): findByEntryConcept used
 
 2012-08-17, 17:07
 overriding the == operator in Id, Oid and Entity.

@@ -75,6 +75,15 @@ class ModelEntries implements ModelEntriesApi {
     }
   }
 
+  Entity findByEntryConcept(Concept entryConcept, Oid oid) {
+    Entities entryEntities = getEntry(entryConcept.code);
+    Entity entity = entryEntities.deepFind(oid);
+    if (entity != null) {
+      return entity;
+    }
+  }
+
+
   Entities getEntry(String entryConceptCode) =>
       _entryEntitiesMap[entryConceptCode];
 
@@ -131,7 +140,9 @@ class ModelEntries implements ModelEntriesApi {
       Oid parentOid = nullParent[0];
       Entity entity = nullParent[1];
       Parent parent = nullParent[2];
-      Entity parentEntity = find(parentOid);
+      Concept parentConcept = parent.destinationConcept;
+      Entity parentEntity =
+          findByEntryConcept(parentConcept.entryConcept, parentOid);
       if (parentEntity == null) {
         var msg =
         '${entity.concept.code}.${parent.code} ${parent.destinationConcept.code}'
