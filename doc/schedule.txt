@@ -53,6 +53,10 @@ i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
 
+2012-08-18, 14:09
+ModelEntries API
+ModelEntries.findByEntryConcept -> ModelEntries.findInInternalTree
+
 2012-08-18, 13:09
 Concept.entryConcept
 ModelEntries.findByEntryConcept

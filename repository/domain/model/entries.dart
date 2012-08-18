@@ -3,8 +3,9 @@ abstract class ModelEntriesApi {
 
   abstract Model get model();
   abstract bool get empty();
-  abstract EntityApi find(Oid oid);
   abstract EntitiesApi getEntry(String entryConceptCode);
+  abstract EntityApi findInInternalTree(Concept entryConcept, Oid oid);
+  abstract EntityApi find(Oid oid);
   abstract clear();
 
   abstract String toJson();
@@ -64,28 +65,20 @@ class ModelEntries implements ModelEntriesApi {
     return true;
   }
 
+  Entities getEntry(String entryConceptCode) =>
+      _entryEntitiesMap[entryConceptCode];
+
+  Entity findInInternalTree(Concept entryConcept, Oid oid) {
+    Entities entryEntities = getEntry(entryConcept.code);
+    return entryEntities.deepFind(oid);
+  }
+
   Entity find(Oid oid) {
     Entity entity;
     for (Concept entryConcept in _model.entryConcepts) {
-      Entities entryEntities = getEntry(entryConcept.code);
-      entity = entryEntities.deepFind(oid);
-      if (entity != null) {
-        return entity;
-      }
+      return findInInternalTree(entryConcept, oid);
     }
   }
-
-  Entity findByEntryConcept(Concept entryConcept, Oid oid) {
-    Entities entryEntities = getEntry(entryConcept.code);
-    Entity entity = entryEntities.deepFind(oid);
-    if (entity != null) {
-      return entity;
-    }
-  }
-
-
-  Entities getEntry(String entryConceptCode) =>
-      _entryEntitiesMap[entryConceptCode];
 
   clear() {
     _model.entryConcepts.forEach((entryConcept) {
@@ -142,7 +135,7 @@ class ModelEntries implements ModelEntriesApi {
       Parent parent = nullParent[2];
       Concept parentConcept = parent.destinationConcept;
       Entity parentEntity =
-          findByEntryConcept(parentConcept.entryConcept, parentOid);
+          findInInternalTree(parentConcept.entryConcept, parentOid);
       if (parentEntity == null) {
         var msg =
         '${entity.concept.code}.${parent.code} ${parent.destinationConcept.code}'

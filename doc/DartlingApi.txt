@@ -27,8 +27,9 @@ abstract class ModelEntriesApi {
 
   abstract Model get model();
   abstract bool get empty();
-  abstract EntityApi find(Oid oid);
   abstract EntitiesApi getEntry(String entryConceptCode);
+  abstract EntityApi findInInternalTree(Concept entryConcept, Oid oid);
+  abstract EntityApi find(Oid oid);
   abstract clear();
 
   abstract String toJson();
