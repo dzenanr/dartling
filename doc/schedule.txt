@@ -6,6 +6,8 @@ open model shows twin relationships as one line
 
 To do
 
+git clone dartling error (see the doc/error.txt file)
+
 test Copy Projects:
 expect(copiedProjects, isNot(equals(projects))); // does not pass
 
@@ -52,6 +54,9 @@ get random value for different types (for test data)
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
+
+2012-08-18, 16:19
+no specif folder in the test folder
 
 2012-08-18, 14:09
 ModelEntries API

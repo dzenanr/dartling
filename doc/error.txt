@@ -23,3 +23,23 @@ Finally, when I use ==, the ids are not equal:
     idsEqual = true;
   }
   expect(idsEqual, isTrue); // does not pass !?
+  
+______________________________________________________________________________
+
+In the develoment folder of Dartling no errors.
+
+git clone dartling (either read-only or read-write) to a different folder
+open folder in Dart Editor (the same version)
+error:
+
+'file:///C:/Users/ridjanod/git/test/Dartling/repository/domain/model/event/actions.dart': Error: line 28 pos 16: class 'Action' is already defined
+abstract class Action implements ActionApi {
+               ^
+'file:///C:/Users/ridjanod/git/test/Dartling/Dartling.dart': Error: line 76 pos 1: library handler failed
+#source('repository/domain/model/event/actions.dart');
+^
+_____________________________________________________________________________
+
+
+
+

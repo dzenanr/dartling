@@ -99,13 +99,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('specific/default/project/projects.dart');
 #source('specific/default/user/users.dart');
 
-#source('test/specific/categoryQuestion/link/data.dart');
-#source('test/specific/categoryQuestion/link/model.dart');
+#source('test/categoryQuestion/link/data.dart');
+#source('test/categoryQuestion/link/model.dart');
 
-#source('test/specific/davidCurtis/institution/data.dart');
+#source('test/davidCurtis/institution/data.dart');
 
-#source('test/specific/default/project/data.dart');
-#source('test/specific/default/user/data.dart');
+#source('test/default/project/data.dart');
+#source('test/default/user/data.dart');
 
 #source('test/lastGroupTest.dart');
 #source('test/lastSingleTest.dart');
