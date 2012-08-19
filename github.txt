@@ -142,4 +142,9 @@ Branching
 
 http://nvie.com/posts/a-successful-git-branching-model/
 
+----------------------------------------------------------------------
+
+Renaming github repository
+
+http://stackoverflow.com/questions/5751585/change-repo-name-in-github/5751588#5751588
 
