@@ -30,38 +30,42 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#library('Dartling');
+#library('dartling');
 
 #import('../unittest/unittest.dart');
 #import('dart:json');
 #import('dart:math');
 #import('dart:uri');
 
-#source('amodel/categoryQuestion/link/json.dart');
-#source('amodel/davidCurtis/institution/json.dart');
+#source('amodel/category_question/link/json.dart');
+#source('amodel/david_curtis/institution/json.dart');
 #source('amodel/default/project/json.dart');
 #source('amodel/default/user/json.dart');
 
-#source('data/categoryQuestion/link/json.dart');
-#source('data/davidCurtis/institution/json.dart');
+#source('data/category_question/link/json.dart');
+#source('data/david_curtis/institution/json.dart');
 #source('data/default/project/json.dart');
 #source('data/default/user/json.dart');
 
-#source('generated/categoryQuestion/link/categories.dart');
-#source('generated/categoryQuestion/link/comments.dart');
-#source('generated/categoryQuestion/link/entries.dart');
-#source('generated/categoryQuestion/link/interests.dart');
-#source('generated/categoryQuestion/link/members.dart');
-#source('generated/categoryQuestion/link/questions.dart');
-#source('generated/categoryQuestion/link/webLinks.dart');
+#source('generated/category_question/link/categories.dart');
+#source('generated/category_question/link/comments.dart');
+#source('generated/category_question/link/entries.dart');
+#source('generated/category_question/link/interests.dart');
+#source('generated/category_question/link/members.dart');
+#source('generated/category_question/link/questions.dart');
+#source('generated/category_question/link/webLinks.dart');
+#source('generated/category_question/models.dart');
+#source('generated/repository.dart');
 
-#source('generated/davidCurtis/institution/ecoles.dart');
-#source('generated/davidCurtis/institution/entries.dart');
+#source('generated/david_curtis/institution/ecoles.dart');
+#source('generated/david_curtis/institution/entries.dart');
+#source('generated/david_curtis/models.dart');
 
 #source('generated/default/project/entries.dart');
 #source('generated/default/project/projects.dart');
 #source('generated/default/user/entries.dart');
 #source('generated/default/user/users.dart');
+#source('generated/default/models.dart');
 
 #source('meta/attributes.dart');
 #source('meta/children.dart');
@@ -87,95 +91,42 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('repository/domain/session.dart');
 #source('repository/repository.dart');
 
-#source('specific/categoryQuestion/link/categories.dart');
-#source('specific/categoryQuestion/link/comments.dart');
-#source('specific/categoryQuestion/link/interests.dart');
-#source('specific/categoryQuestion/link/members.dart');
-#source('specific/categoryQuestion/link/questions.dart');
-#source('specific/categoryQuestion/link/webLinks.dart');
+#source('specific/category_question/link/categories.dart');
+#source('specific/category_question/link/comments.dart');
+#source('specific/category_question/link/interests.dart');
+#source('specific/category_question/link/members.dart');
+#source('specific/category_question/link/questions.dart');
+#source('specific/category_question/link/webLinks.dart');
 
-#source('specific/davidCurtis/institution/ecoles.dart');
+#source('specific/david_curtis/institution/ecoles.dart');
 
 #source('specific/default/project/projects.dart');
 #source('specific/default/user/users.dart');
 
-#source('test/categoryQuestion/link/data.dart');
-#source('test/categoryQuestion/link/model.dart');
+#source('test/category_question/link/data.dart');
+#source('test/category_question/link/model.dart');
 
-#source('test/davidCurtis/institution/data.dart');
+#source('test/david_curtis/institution/data.dart');
 
 #source('test/default/project/data.dart');
 #source('test/default/user/data.dart');
 
-#source('test/lastGroupTest.dart');
-#source('test/lastSingleTest.dart');
-
-var repository;
-
-initRepo() {
-  var domains = new Domains();
-  repository = new Repo(domains);
-
-  var categoryQuestionDomain = new Domain('CategoryQuestion');
-  domains.add(categoryQuestionDomain);
-
-  var davidCurtisDomain = new Domain('DavidCurtis');
-  domains.add(davidCurtisDomain);
-
-  var defaultDomain = new Domain();
-  domains.add(defaultDomain);
-
-  var categoryQuestionModels = new DomainModels(categoryQuestionDomain);
-  repository.add(categoryQuestionModels);
-
-  var davidCurtisModels = new DomainModels(davidCurtisDomain);
-  repository.add(davidCurtisModels);
-
-  var defaultModels = new DomainModels(defaultDomain);
-  repository.add(defaultModels);
-}
+#source('test/last_group_test.dart');
+#source('test/last_single_test.dart');
 
 void main() {
-  initRepo();
+  var repo = new DartlingRepo();
 
-  var categoryQuestionDomainCode = 'CategoryQuestion';
-  var categoryQuestionDomain =
-      repository.domains.getDomain(categoryQuestionDomainCode);
-  var categoryQuestionModels =
-      repository.getDomainModels(categoryQuestionDomainCode);
-
-  var davidCurtisDomainCode = 'DavidCurtis';
-  var davidCurtisDomain = repository.domains.getDomain(davidCurtisDomainCode);
-  var davidCurtisModels = repository.getDomainModels(davidCurtisDomainCode);
-
-  var defaultDomainCode = 'Default';
-  var defaultDomain = repository.domains.getDomain(defaultDomainCode);
-  var defaultModels = repository.getDomainModels(defaultDomainCode);
-
-  var linkModelCode = 'Link';
-  var linkEntries = fromJsonToLinkEntries(categoryQuestionDomain, linkModelCode);
-  categoryQuestionModels.add(linkEntries);
-  testLinkData(repository, categoryQuestionDomainCode, linkModelCode);
-
-  var institutionModelCode = 'Institution';
-  var institutionEntries =
-      fromJsonToInstitutionEntries(davidCurtisDomain, institutionModelCode);
-  davidCurtisModels.add(institutionEntries);
-  testInstitutionData(repository, davidCurtisDomainCode, institutionModelCode);
-
-  var projectModelCode = 'Project';
-  var projectEntries = fromJsonToProjectEntries(
-      defaultDomain, projectModelCode);
-  defaultModels.add(projectEntries);
-  testProjectData(repository, projectModelCode);
-
-  var userModelCode = 'User';
-  var userEntries = fromJsonToUserEntries(defaultDomain, userModelCode);
-  defaultModels.add(userEntries);
-  testUserData(repository, userModelCode);
-
+  testLinkData(repo, DartlingRepo.categoryQuestionDomainCode,
+      DartlingRepo.categoryQuestionLinkModelCode);
   testLinkModel();
 
-  //lastSingleTest(repository, defaultDomainCode, projectModelCode);
-  //lastGroupTest(repository, categoryQuestionDomainCode, linkModelCode);
+  testInstitutionData(repo, DartlingRepo.davidCurtisDomainCode,
+      DartlingRepo.davidCurtisInstitutionModelCode);
+
+  testProjectData(repo, DartlingRepo.defaultProjectModelCode);
+  testUserData(repo, DartlingRepo.defaultUserModelCode);
+
+  //lastSingleTest(repo, '', '');
+  //lastGroupTest(repo, '', '');
 }

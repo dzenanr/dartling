@@ -85,6 +85,14 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
   int get length() => count;
   bool get empty() => _entityList.isEmpty();
 
+  void clear() {
+    _entityList.clear();
+    _oidEntityMap.clear();
+    _codeEntityMap.clear();
+    _idEntityMap.clear();
+    _errors.clear();
+  }
+
   Iterator<T> iterator() => _entityList.iterator();
 
   void forEach(Function f) {
@@ -528,14 +536,6 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
     orderedEntities.propagateToSource = false;
     orderedEntities._source = this;
     return orderedEntities;
-  }
-
-  void clear() {
-    _entityList.clear();
-    _oidEntityMap.clear();
-    _codeEntityMap.clear();
-    _idEntityMap.clear();
-    _errors.clear();
   }
 
   /**
