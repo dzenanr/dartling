@@ -53,6 +53,10 @@ get random value for different types (for test data)
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
+
+2012-08-19, 17:25
+test user data: var setAttributeAction instead of reusing the add action
+
 2012-08-19, 16:56
 Entities: 
 var incrementAttribute = lastEntity.getAttribute(a.code);

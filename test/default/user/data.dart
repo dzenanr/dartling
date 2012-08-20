@@ -281,8 +281,8 @@ testDefaultUserData(Repo repo, String modelCode) {
       mauricel.lastName = 'Laundry';
       mauricel.email = 'mlaundry@gmail.com';
 
-      var action = new AddAction(session, users, mauricel);
-      action.doit();
+      var addAction = new AddAction(session, users, mauricel);
+      addAction.doit();
       expect(users.count, equals(++userCount));
       users.display('After Add on Users');
 
@@ -295,8 +295,9 @@ testDefaultUserData(Repo repo, String modelCode) {
       users.display('After Undoing Undo on Users');
 
       var about = 'Maurice is a calm fellow, with good spirit.';
-      action = new SetAttributeAction(session, mauricel, 'about', about);
-      action.doit();
+      var setAttributeAction =
+          new SetAttributeAction(session, mauricel, 'about', about);
+      setAttributeAction.doit();
       users.display('After Update on User');
 
       session.past.undo();
@@ -320,14 +321,14 @@ testDefaultUserData(Repo repo, String modelCode) {
       user.lastName = 'Smith';
       user.email = 'john.smith@gmail.com';
 
-      var action = new AddAction(session, users, user);
-      action.doit();
+      var addAction = new AddAction(session, users, user);
+      addAction.doit();
       expect(users.count, equals(++userCount));
       expect(reaction.reactedOnAdd, isTrue);
 
       var about = 'He is a good fellow, with good sense of humor.';
-      action = new SetAttributeAction(session, user, 'about', about);
-      action.doit();
+      var setAttributeAction = new SetAttributeAction(session, user, 'about', about);
+      setAttributeAction.doit();
       expect(reaction.reactedOnUpdate, isTrue);
       models.cancelActionReaction(reaction);
     });
