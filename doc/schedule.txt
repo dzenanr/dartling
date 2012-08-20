@@ -54,16 +54,19 @@ i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
 
-2012-08-19, 17:25
+2012-08-20, 19:44
+pubspec.yaml
+
+2012-08-20, 17:25
 test user data: var setAttributeAction instead of reusing the add action
 
-2012-08-19, 16:56
+2012-08-20, 16:56
 Entities: 
 var incrementAttribute = lastEntity.getAttribute(a.code);
 ->
 int incrementAttribute = lastEntity.getAttribute(a.code);
 
-2012-08-19, 16:35
+2012-08-20, 16:35
 category_question folder name -> categoryquestion
 composite domain and model names to lower case
 gen generated and specific code

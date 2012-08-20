@@ -91,6 +91,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('repository/domain/session.dart');
 #source('repository/gen/generated.dart');
 #source('repository/gen/specific.dart');
+#source('repository/gen/test.dart');
 #source('repository/repository.dart');
 
 #source('specific/categoryquestion/link/categories.dart');
@@ -145,6 +146,6 @@ genCode() {
 }
 
 void main() {
-  //genCode();
+  genCode();
   testData();
 }

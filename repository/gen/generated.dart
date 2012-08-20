@@ -2,8 +2,6 @@
 
 String genGeneratedRepository(Repo repo) {
   var sc = ' \n';
-  sc = '${sc}// code generated for the ${repo.code} repository \n';
-  sc = '${sc} \n';
   sc = '${sc}// generated/repository.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${repo.code}Repo extends Repo { \n';

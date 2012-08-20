@@ -1,0 +1,13 @@
+pub: The Dart Package Manager
+
+http://www.dartlang.org/docs/pub-package-manager/
+
+export DART_SDK=/C:/Users/ridjanod/dart/DartEditor/darteditor-win32-64/dart/dart-sdk
+$DART_SDK/bin/pub install
+$DART_SDK/bin/pub.bat install
+
+C:\Users\ridjanod\dart\DartEditor\darteditor-win32-64\dart\dart-sdk\bin\pub.bat install
+
+C:\\Users\\ridjanod\\dart\\DartEditor\\darteditor-win32-64\\dart\\dart-sdk\\bin\\pub.bat install
+
+C:/Users/ridjanod/dart/DartEditor/darteditor-win32-64/dart/dart-sdk/bin/pub.bat install

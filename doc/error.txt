@@ -102,6 +102,10 @@ Thus, if someone else clones my project, that person will think that the project
 is buggy, while I do not have errors in the latest version of Dartling.
 
 Really strange.
+
+-----------------------
+
+Resolved with the new version of dart Editor.
 _____________________________________________________________________________
 
 
