@@ -150,7 +150,7 @@ class Entities<T extends Entity<T>> implements EntitiesApi<T> {
           entity.setAttribute(a.code, a.increment);
         } else if (a.type.base == 'int') {
           var lastEntity = last();
-          var incrementAttribute = lastEntity.getAttribute(a.code);
+          int incrementAttribute = lastEntity.getAttribute(a.code);
           entity.setAttribute(a.code, incrementAttribute + a.increment);
         } else {
           throw new TypeException(
