@@ -1,42 +1,43 @@
 
-class ProjectEntries extends ModelEntries {
+class InstitutionEntries extends ModelEntries {
 
-  ProjectEntries(Model model) : super(model);
+  InstitutionEntries(Model model) : super(model);
 
   Map<String, Entities> newEntries() {
     var entries = new Map<String, Entities>();
-    var concept = model.concepts.findByCode('Project');
-    entries[concept.code] = new Projects(concept);
+    var concept = model.concepts.findByCode('Ecole');
+    entries[concept.code] = new Ecoles(concept);
     return entries;
   }
 
   Entities newEntities(String conceptCode) {
     var concept = model.concepts.findByCode(conceptCode);
-    if (concept == null) {
+    if (concept.code == 'Ecole') {
+      return new Ecoles(concept);
+    } else {
       throw new ConceptException('${concept.code} concept does not exist.');
-    }
-    if (concept.code == 'Project') {
-      return new Projects(concept);
     }
   }
 
   Entity newEntity(String conceptCode) {
     var concept = model.concepts.findByCode(conceptCode);
-    if (concept == null) {
+    if (concept.code == 'Ecole') {
+      return new Ecole(concept);
+    } else {
       throw new ConceptException('${concept.code} concept does not exist.');
-    }
-    if (concept.code == 'Project') {
-      return new Project(concept);
     }
   }
 
   fromJsonToData() {
-    fromJson(defaultProjectDataInJson);
+    fromJson(davidcurtisInstitutionDataInJson);
   }
 
-  Projects get projects() => getEntry('Project');
+  Ecoles get ecoles() => getEntry('Ecole');
 
 }
+
+
+
 
 
 

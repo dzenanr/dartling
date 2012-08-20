@@ -1,11 +1,12 @@
 
 /**
- *  || Project
- *  id name
- *  at description
+ *  || Ecole
+ *  id numero
+ *  rq nom
+ *  at adress
  */
 
-var defaultProjectModelInJson = @'''
+var davidcurtisInstitutionModelInJson = @'''
 {
    "width":990,
    "height":580,
@@ -15,23 +16,30 @@ var defaultProjectModelInJson = @'''
    "boxes":[
       {
          "entry":true,
-         "name":"Project",
-         "x":179,
-         "y":226,
+         "name":"Ecole",
+         "x":342,
+         "y":252,
          "width":120,
          "height":120,
          "items":[
             {
                "sequence":10,
                "category":"identifier",
-               "name":"name",
-               "type":"String",
+               "name":"numero",
+               "type":"int",
                "init":""
             },
             {
                "sequence":20,
+               "category":"required",
+               "name":"nom",
+               "type":"String",
+               "init":""
+            },
+            {
+               "sequence":30,
                "category":"attribute",
-               "name":"description",
+               "name":"adress",
                "type":"String",
                "init":""
             }

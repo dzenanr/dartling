@@ -1,30 +1,30 @@
 
 class DartlingRepo extends Repo {
 
-  static final categoryQuestionDomainCode = 'CategoryQuestion';
-  static final categoryQuestionLinkModelCode = 'Link';
+  static final categoryquestionDomainCode = 'CategoryQuestion';
+  static final categoryquestionLinkModelCode = 'Link';
 
-  static final davidCurtisDomainCode = 'DavidCurtis';
-  static final davidCurtisInstitutionModelCode = 'Institution';
+  static final davidcurtisDomainCode = 'DavidCurtis';
+  static final davidcurtisInstitutionModelCode = 'Institution';
 
   static final defaultDomainCode = 'Default';
   static final defaultProjectModelCode = 'Project';
   static final defaultUserModelCode = 'User';
 
-  DartlingRepo() : super(new Domains()) {
+  DartlingRepo([String code='Dartling']) : super(new Domains(), code) {
     _init();
   }
 
   _initCategoryQuestionDomain() {
-    var categoryQuestionDomain = new Domain(categoryQuestionDomainCode);
-    domains.add(categoryQuestionDomain);
-    add(new CategoryQuestionModels(categoryQuestionDomain));
+    var categoryquestionDomain = new Domain(categoryquestionDomainCode);
+    domains.add(categoryquestionDomain);
+    add(new CategoryQuestionModels(categoryquestionDomain));
   }
 
   _initDavidCurtisDomain() {
-    var davidCurtisDomain = new Domain(davidCurtisDomainCode);
-    domains.add(davidCurtisDomain);
-    add(new DavidCurtisModels(davidCurtisDomain));
+    var davidcurtisDomain = new Domain(davidcurtisDomainCode);
+    domains.add(davidcurtisDomain);
+    add(new DavidCurtisModels(davidcurtisDomain));
   }
 
   _initDefaultDomain() {

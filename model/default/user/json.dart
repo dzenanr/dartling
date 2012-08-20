@@ -12,7 +12,7 @@
  *  at about : String
  */
 
-var defaultUserModelInJson = '''
+var defaultUserModelInJson = @'''
 {
    "width":990,
    "height":580,

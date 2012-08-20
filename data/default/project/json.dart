@@ -1,5 +1,5 @@
 
-var defaultProjectDataInJson = '''
+var defaultProjectDataInJson = @'''
 {
    "domain":"Default",
    "entries":[

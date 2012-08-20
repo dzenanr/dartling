@@ -14,7 +14,7 @@ class UserReaction implements ActionReactionApi {
 
 }
 
-testUserData(Repo repo, String modelCode) {
+testDefaultUserData(Repo repo, String modelCode) {
   var models;
   var session;
   var entries;

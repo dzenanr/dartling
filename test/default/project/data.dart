@@ -78,7 +78,7 @@ class ProjectPastReaction implements PastReactionApi {
 
 }
 
-testProjectData(Repo repo, String modelCode) {
+testDefaultProjectData(Repo repo, String modelCode) {
   var models;
   var projects;
   var projectConcept;
@@ -86,7 +86,7 @@ testProjectData(Repo repo, String modelCode) {
   var dartlingOid;
   group('Testing ${modelCode}', () {
     setUp(() {
-      models = repo.getDomainModels('Default');
+      models = repo.getDomainModels(DartlingRepo.defaultDomainCode);
       expect(models, isNotNull);
       var entries = models.getModelEntries(modelCode);
       expect(entries, isNotNull);

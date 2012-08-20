@@ -54,6 +54,26 @@ class Concept extends Entity<Concept> {
   Child getSourceChild(String childCode) =>
       sourceChildren.findByCode(childCode);
 
+  List<Property> get properties() {
+    List<Property> properties = new List<Property>();
+    properties.addAll(attributes.list);
+    properties.addAll(parents.list);
+    return properties;
+  }
+
+  bool get identifier() {
+    for (Property property in properties) {
+      if (property.identifier) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  Id get id() {
+    return new Id(this);
+  }
+
   bool isAttributeSensitive(String attributeCode) {
     Attribute a = attributes.findByCode(attributeCode);
     return a!= null && a.sensitive ? true : false;

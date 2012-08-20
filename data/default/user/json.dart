@@ -1,5 +1,5 @@
 
-var defaultUserDataInJson = '''
+var defaultUserDataInJson = @'''
 {
    "domain":"Default",
    "entries":[

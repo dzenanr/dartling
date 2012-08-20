@@ -37,24 +37,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import('dart:math');
 #import('dart:uri');
 
-#source('data/category_question/link/json.dart');
-#source('data/david_curtis/institution/json.dart');
+#source('data/categoryquestion/link/json.dart');
+#source('data/davidcurtis/institution/json.dart');
 #source('data/default/project/json.dart');
 #source('data/default/user/json.dart');
 
-#source('generated/category_question/link/categories.dart');
-#source('generated/category_question/link/comments.dart');
-#source('generated/category_question/link/entries.dart');
-#source('generated/category_question/link/interests.dart');
-#source('generated/category_question/link/members.dart');
-#source('generated/category_question/link/questions.dart');
-#source('generated/category_question/link/webLinks.dart');
-#source('generated/category_question/models.dart');
+#source('generated/categoryquestion/link/categories.dart');
+#source('generated/categoryquestion/link/comments.dart');
+#source('generated/categoryquestion/link/entries.dart');
+#source('generated/categoryquestion/link/interests.dart');
+#source('generated/categoryquestion/link/members.dart');
+#source('generated/categoryquestion/link/questions.dart');
+#source('generated/categoryquestion/link/webLinks.dart');
+#source('generated/categoryquestion/models.dart');
 #source('generated/repository.dart');
 
-#source('generated/david_curtis/institution/ecoles.dart');
-#source('generated/david_curtis/institution/entries.dart');
-#source('generated/david_curtis/models.dart');
+#source('generated/davidcurtis/institution/ecoles.dart');
+#source('generated/davidcurtis/institution/entries.dart');
+#source('generated/davidcurtis/models.dart');
 
 #source('generated/default/project/entries.dart');
 #source('generated/default/project/projects.dart');
@@ -72,8 +72,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('meta/property.dart');
 #source('meta/types.dart');
 
-#source('model/category_question/link/json.dart');
-#source('model/david_curtis/institution/json.dart');
+#source('model/categoryquestion/link/json.dart');
+#source('model/davidcurtis/institution/json.dart');
 #source('model/default/project/json.dart');
 #source('model/default/user/json.dart');
 
@@ -89,44 +89,62 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('repository/domain/model/oid.dart');
 #source('repository/domain/models.dart');
 #source('repository/domain/session.dart');
+#source('repository/gen/generated.dart');
+#source('repository/gen/specific.dart');
 #source('repository/repository.dart');
 
-#source('specific/category_question/link/categories.dart');
-#source('specific/category_question/link/comments.dart');
-#source('specific/category_question/link/interests.dart');
-#source('specific/category_question/link/members.dart');
-#source('specific/category_question/link/questions.dart');
-#source('specific/category_question/link/webLinks.dart');
+#source('specific/categoryquestion/link/categories.dart');
+#source('specific/categoryquestion/link/comments.dart');
+#source('specific/categoryquestion/link/interests.dart');
+#source('specific/categoryquestion/link/members.dart');
+#source('specific/categoryquestion/link/questions.dart');
+#source('specific/categoryquestion/link/webLinks.dart');
 
-#source('specific/david_curtis/institution/ecoles.dart');
+#source('specific/davidcurtis/institution/ecoles.dart');
 
 #source('specific/default/project/projects.dart');
 #source('specific/default/user/users.dart');
 
-#source('test/category_question/link/data.dart');
-#source('test/category_question/link/model.dart');
+#source('test/categoryquestion/link/data.dart');
+#source('test/categoryquestion/link/model.dart');
 
-#source('test/david_curtis/institution/data.dart');
+#source('test/davidcurtis/institution/data.dart');
 
 #source('test/default/project/data.dart');
 #source('test/default/user/data.dart');
 
-#source('test/last_group_test.dart');
-#source('test/last_single_test.dart');
+#source('test/lastgrouptest.dart');
+#source('test/lastsingletest.dart');
 
-void main() {
+testData() {
   var repo = new DartlingRepo();
+  testCategoryQuestionLinkData(repo, DartlingRepo.categoryquestionDomainCode,
+      DartlingRepo.categoryquestionLinkModelCode);
+  testCategoryQuestionLinkModel();
 
-  testLinkData(repo, DartlingRepo.categoryQuestionDomainCode,
-      DartlingRepo.categoryQuestionLinkModelCode);
-  testLinkModel();
+  testDavidCurtisInstitutionData(repo, DartlingRepo.davidcurtisDomainCode,
+      DartlingRepo.davidcurtisInstitutionModelCode);
 
-  testInstitutionData(repo, DartlingRepo.davidCurtisDomainCode,
-      DartlingRepo.davidCurtisInstitutionModelCode);
-
-  testProjectData(repo, DartlingRepo.defaultProjectModelCode);
-  testUserData(repo, DartlingRepo.defaultUserModelCode);
+  testDefaultProjectData(repo, DartlingRepo.defaultProjectModelCode);
+  testDefaultUserData(repo, DartlingRepo.defaultUserModelCode);
 
   //lastSingleTest(repo, '', '');
   //lastGroupTest(repo, '', '');
+}
+
+genCode() {
+  var domains = new Domains();
+  var defaultDomain = new Domain();
+  domains.add(defaultDomain);
+  Model projectModel =
+      fromMagicBoxes(defaultProjectModelInJson, defaultDomain, 'Project');
+  //the model already added in the fromMagicBoxes function
+  //defaultDomain.models.add(projectModel); // no need to add the model
+  var repo = new Repo(domains);
+  repo.gen();
+}
+
+void main() {
+  //genCode();
+  testData();
 }

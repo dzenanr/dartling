@@ -4,10 +4,12 @@ To do
 
 git clone dartling error (see the doc/error.txt file)
 
+gen tests
+gen dartling.dart from the minimal dartling.dart
+
 test Copy Projects:
 expect(copiedProjects, isNot(equals(projects))); // does not pass
 
-Duration (time span) type
 add advanced model patterns to CategoryQuestion.Link model:
 category tests
   reflexive relationship
@@ -26,6 +28,7 @@ Uri validation for well formed uri (not done in Uri)
   ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
   http://msdn.microsoft.com/en-us/library/system.uri.iswellformedoriginalstring.aspx
 Dynamic type???
+Duration (time span) type
 email type
 money type
 telephone type
@@ -50,6 +53,11 @@ get random value for different types (for test data)
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
+
+2012-08-19, 16:35
+category_question folder name -> categoryquestion
+composite domain and model names to lower case
+gen generated and specific code
 
 2012-08-19, 20:47
 resolved twin problem in mb
