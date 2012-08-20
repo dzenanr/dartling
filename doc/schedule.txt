@@ -1,9 +1,5 @@
 Dartling Schedule
 
-To do in Magic Boxes
-
-open model shows twin relationships as one line
-
 To do
 
 git clone dartling error (see the doc/error.txt file)
@@ -54,6 +50,10 @@ get random value for different types (for test data)
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
+
+2012-08-19, 20:47
+resolved twin problem in mb
+new version of CategoryQuestion_Link.txt
 
 2012-08-19, 18:24
 Dartling.dart -> dartling.dart by moving it to testb and back
