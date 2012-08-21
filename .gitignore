@@ -1,3 +1,5 @@
+packages/*
+pubspec.lock
 dartling.dart.js
 dartling.dart.js.map
 *~

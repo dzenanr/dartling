@@ -11,7 +11,7 @@ class DartlingRepo extends Repo {
   static final defaultProjectModelCode = 'Project';
   static final defaultUserModelCode = 'User';
 
-  DartlingRepo([String code='Dartling']) : super(new Domains(), code) {
+  DartlingRepo([String code='Dartling']) : super(code) {
     _init();
   }
 

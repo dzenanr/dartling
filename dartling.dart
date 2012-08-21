@@ -32,6 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #library('dartling');
 
+//#import('package:unittest/unittest.dart');
 #import('../unittest/unittest.dart');
 #import('dart:json');
 #import('dart:math');
@@ -89,6 +90,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('repository/domain/model/oid.dart');
 #source('repository/domain/models.dart');
 #source('repository/domain/session.dart');
+#source('repository/gen/dartling.dart');
 #source('repository/gen/generated.dart');
 #source('repository/gen/specific.dart');
 #source('repository/gen/test.dart');
@@ -117,6 +119,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('test/lastgrouptest.dart');
 #source('test/lastsingletest.dart');
 
+genCode() {
+  var repo = new Repo();
+  var defaultDomain = new Domain();
+  Model projectModel =
+      fromMagicBoxes(defaultProjectModelInJson, defaultDomain, 'Project');
+  repo.domains.add(defaultDomain);
+  repo.gen();
+}
+
 testData() {
   var repo = new DartlingRepo();
   testCategoryQuestionLinkData(repo, DartlingRepo.categoryquestionDomainCode,
@@ -126,26 +137,16 @@ testData() {
   testDavidCurtisInstitutionData(repo, DartlingRepo.davidcurtisDomainCode,
       DartlingRepo.davidcurtisInstitutionModelCode);
 
-  testDefaultProjectData(repo, DartlingRepo.defaultProjectModelCode);
-  testDefaultUserData(repo, DartlingRepo.defaultUserModelCode);
+  testDefaultProjectData(repo, DartlingRepo.defaultDomainCode,
+      DartlingRepo.defaultProjectModelCode);
+  testDefaultUserData(repo, DartlingRepo.defaultDomainCode,
+      DartlingRepo.defaultUserModelCode);
 
   //lastSingleTest(repo, '', '');
   //lastGroupTest(repo, '', '');
 }
 
-genCode() {
-  var domains = new Domains();
-  var defaultDomain = new Domain();
-  domains.add(defaultDomain);
-  Model projectModel =
-      fromMagicBoxes(defaultProjectModelInJson, defaultDomain, 'Project');
-  //the model already added in the fromMagicBoxes function
-  //defaultDomain.models.add(projectModel); // no need to add the model
-  var repo = new Repo(domains);
-  repo.gen();
-}
-
 void main() {
-  genCode();
+  //genCode();
   testData();
 }

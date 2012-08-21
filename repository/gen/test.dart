@@ -20,9 +20,10 @@ String genTestData(String domain, String model) {
   sc = '${sc}    tearDown(() { \n';
   sc = '${sc}      entries.clear(); \n';
   sc = '${sc}    }); \n';
-  sc = '${sc}    test("Test Title", () { \n';
-  sc = '${sc} \n';
+  sc = '${sc}    test("Empty Entries Test", () { \n';
+  sc = '${sc}      expect(entries.empty, isTrue); \n';
   sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   sc = '${sc}  }); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';

@@ -14,7 +14,7 @@ class UserReaction implements ActionReactionApi {
 
 }
 
-testDefaultUserData(Repo repo, String modelCode) {
+testDefaultUserData(Repo repo, String domainCode, String modelCode) {
   var models;
   var session;
   var entries;
@@ -24,7 +24,7 @@ testDefaultUserData(Repo repo, String modelCode) {
   var dzenanOid;
   group('Testing ${modelCode}', () {
     setUp(() {
-      models = repo.getDomainModels('Default');
+      models = repo.getDomainModels(domainCode);
       expect(models, isNotNull);
       session = models.newSession();
       entries = models.getModelEntries(modelCode);

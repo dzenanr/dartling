@@ -15,14 +15,13 @@ String genGeneratedRepository(Repo repo) {
     }
     sc = '${sc} \n';
   }
-  sc = '${sc}  ${repo.code}Repo([String code="Dartling"]) : '
-       'super(code, new Domains()) { \n';
+  sc = '${sc}  ${repo.code}Repo([String code="Dartling"]) : super(code) { \n';
   sc = '${sc}    _init(); \n';
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 
   for (Domain domain in repo.domains) {
-    sc = '${sc}  _ini${domain.code}Domain() { \n';
+    sc = '${sc}  _init${domain.code}Domain() { \n';
     sc = '${sc}    var ${domain.code.toLowerCase()}Domain = '
          'new Domain(${domain.code.toLowerCase()}DomainCode); \n';
     sc = '${sc}    domains.add(${domain.code.toLowerCase()}Domain); \n';
@@ -198,7 +197,7 @@ String genGeneratedConcept(String domain, String model, Concept concept) {
       sc = '${sc}  ${destinationConcept.code} get ${parent.code}() => '
            'getParent("${parent.code}"); \n ';
       sc = '${sc} set ${parent.code}(${destinationConcept.code} p) => '
-           'setParent("${parent.code}, p"); \n ';
+           'setParent("${parent.code}", p); \n ';
       sc = '${sc} \n';
     }
   }
@@ -207,7 +206,7 @@ String genGeneratedConcept(String domain, String model, Concept concept) {
       sc = '${sc}  ${attribute.type.base} get ${attribute.code}() => '
            'getAttribute("${attribute.code}"); \n ';
       sc = '${sc} set ${attribute.code}(${attribute.type.base} a) => '
-           'setAttribute("${attribute.code}, a"); \n ';
+           'setAttribute("${attribute.code}", a); \n ';
       sc = '${sc} \n';
     }
   }

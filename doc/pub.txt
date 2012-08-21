@@ -1,13 +1,35 @@
 pub: The Dart Package Manager
 
 http://www.dartlang.org/docs/pub-package-manager/
+Google: windows set environment variable
+http://www.itechtalk.com/thread3595.html
 
-export DART_SDK=/C:/Users/ridjanod/dart/DartEditor/darteditor-win32-64/dart/dart-sdk
-$DART_SDK/bin/pub install
-$DART_SDK/bin/pub.bat install
+USER VAR
+DART_SDK :
+C:\dart\editor\dart-sdk
+SYSTEM PATH
+PATH
+add at the end: 
+;%DART_SDK%\bin
+restart
 
-C:\Users\ridjanod\dart\DartEditor\darteditor-win32-64\dart\dart-sdk\bin\pub.bat install
+command black window
+cd git/dart/dartling
+pubspec.yaml is in the dartling folder
+dependencies:
+  unittest:
+    sdk: unittest
+from the dartling folder:
+pub install
 
-C:\\Users\\ridjanod\\dart\\DartEditor\\darteditor-win32-64\\dart\\dart-sdk\\bin\\pub.bat install
+the packages folder appears in the dartling folder:
+packages
+  unittest
+    
+in dartling.dart:
+#import('package:unittest/unittest.dart');
 
-C:/Users/ridjanod/dart/DartEditor/darteditor-win32-64/dart/dart-sdk/bin/pub.bat install
+in Dart Editor:
+Tools/Preferences
+Package directory: C:\Users\ridjanod\git\dart\dartling\packages
+

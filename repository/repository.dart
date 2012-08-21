@@ -4,6 +4,7 @@ abstract class RepoApi {
   abstract add(DomainModelsApi domainModels);
   abstract Domains get domains();
   abstract DomainModelsApi getDomainModels(String domainCode);
+  abstract gen();
 
 }
 
@@ -15,7 +16,12 @@ class Repo implements RepoApi {
 
   Map<String, DomainModels> _domainModelsMap;
 
-  Repo(this._domains, [this.code='Dartling']) {
+  Repo([this.code='Dartling']) {
+    _domains = new Domains();
+    _domainModelsMap = new Map<String, DomainModels>();
+  }
+
+  Repo.from(this._domains, [this.code='Dartling']) {
     _domainModelsMap = new Map<String, DomainModels>();
   }
 
@@ -36,6 +42,8 @@ class Repo implements RepoApi {
       _domainModelsMap[domainCode];
 
   gen() {
+    title('dartling.dart with imports, sources and the main method');
+    print(genDartlingMain(this));
     title('Generated code, which should not be changed, ',
           'for the generated folder in the ${code} repository.');
     print(genGeneratedRepository(this));
@@ -70,7 +78,7 @@ class Repo implements RepoApi {
       title('Code generated for the test folder in the ${code} repository.');
       for (Model model in domain.models) {
         subTitle('Code template for the ${model.code} model tests.');
-        print(genTestData(domain.code.toLowerCase(), model.code.toLowerCase()));
+        print(genTestData(domain.code, model.code));
       }
     }
   }
