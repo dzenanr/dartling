@@ -1,0 +1,6 @@
+Dart Changes
+
+http://news.dartlang.org/2012/06/darts-catch-syntax-revisited.html
+
+http://news.dartlang.org/2012/07/draft-spec-changes-to-library-and.html
+
