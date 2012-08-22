@@ -2,9 +2,9 @@ Dartling Schedule
 
 To do
 
-git clone dartling error (see the doc/error.txt file)
-
-gen tests
+test dartling package (error in windows)
+gen real tests
+update README with skeleton and projects 
 
 test Copy Projects:
 expect(copiedProjects, isNot(equals(projects))); // does not pass
