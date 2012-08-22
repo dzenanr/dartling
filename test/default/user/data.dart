@@ -236,7 +236,7 @@ testDefaultUserData(Repo repo, String domainCode, String modelCode) {
         print('');
       }
     });
-    test('True for Some Projects', () {
+    test('True for Some Users', () {
       expect(users.some((m) => m.about == null), isTrue);
     });
     test('New User Undo', () {

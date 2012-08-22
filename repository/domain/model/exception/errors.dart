@@ -44,6 +44,7 @@ class Errors implements ErrorsApi {
   }
 
   int get count() => _errorList.length;
+  int get length() => count;
 
   List<Error> get list() => _errorList;
 

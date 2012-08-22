@@ -5,7 +5,6 @@ To do
 git clone dartling error (see the doc/error.txt file)
 
 gen tests
-gen dartling.dart from the minimal dartling.dart
 
 test Copy Projects:
 expect(copiedProjects, isNot(equals(projects))); // does not pass
@@ -53,6 +52,10 @@ get random value for different types (for test data)
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
+
+2012-08-22, 14:41
+small changes in tests
+errors: length added
 
 2012-08-21, 16:00
 generate dartling.dart

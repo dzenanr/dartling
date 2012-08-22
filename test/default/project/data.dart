@@ -159,9 +159,9 @@ testDefaultProjectData(Repo repo, String domainCode, String modelCode) {
     });
     test('Find Project by Id', () {
       Id id = new Id(projectConcept);
-      expect(id.count == 1);
-      expect(id.parentCount == 0);
-      expect(id.attributeCount == 1);
+      expect(id.count, equals(1));
+      expect(id.parentCount, equals(0));
+      expect(id.attributeCount, equals(1));
       var searchName = 'Dartling';
       id.setAttribute('name', searchName);
       //var project = projects.findById(id);
@@ -232,7 +232,6 @@ testDefaultProjectData(Repo repo, String domainCode, String modelCode) {
       expect(reaction.reactedOnUpdate, isTrue);
     });
     test('Project Action with Undo and Redo ', () {
-      new ProjectPastReaction(models);
       var session = models.newSession();
 
       var project1 = new Project(projectConcept);

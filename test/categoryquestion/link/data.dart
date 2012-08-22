@@ -354,6 +354,7 @@ testCategoryQuestionLinkData(Repo repo, String domainCode, String modelCode) {
       transaction.add(action1);
       transaction.add(action2);
       var done = transaction.doit();
+      expect(done, isFalse);
       expect(categories.count, equals(categoryCount));
       categories.display('Transaction (with Id Error) Done');
 
