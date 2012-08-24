@@ -38,86 +38,81 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import('dart:math');
 #import('dart:uri');
 
-#source('data/categoryquestion/link/json.dart');
-#source('data/davidcurtis/institution/json.dart');
-#source('data/default/project/json.dart');
-#source('data/default/user/json.dart');
+#source('repo/code/generated/categoryquestion/link/categories.dart');
+#source('repo/code/generated/categoryquestion/link/comments.dart');
+#source('repo/code/generated/categoryquestion/link/entries.dart');
+#source('repo/code/generated/categoryquestion/link/interests.dart');
+#source('repo/code/generated/categoryquestion/link/members.dart');
+#source('repo/code/generated/categoryquestion/link/questions.dart');
+#source('repo/code/generated/categoryquestion/link/webLinks.dart');
+#source('repo/code/generated/categoryquestion/models.dart');
 
-#source('generated/categoryquestion/link/categories.dart');
-#source('generated/categoryquestion/link/comments.dart');
-#source('generated/categoryquestion/link/entries.dart');
-#source('generated/categoryquestion/link/interests.dart');
-#source('generated/categoryquestion/link/members.dart');
-#source('generated/categoryquestion/link/questions.dart');
-#source('generated/categoryquestion/link/webLinks.dart');
-#source('generated/categoryquestion/models.dart');
-#source('generated/repository.dart');
+#source('repo/code/generated/davidcurtis/institution/ecoles.dart');
+#source('repo/code/generated/davidcurtis/institution/entries.dart');
+#source('repo/code/generated/davidcurtis/models.dart');
+#source('repo/code/generated/default/project/entries.dart');
+#source('repo/code/generated/default/project/projects.dart');
+#source('repo/code/generated/default/user/entries.dart');
+#source('repo/code/generated/default/user/users.dart');
+#source('repo/code/generated/default/models.dart');
+#source('repo/code/generated/repository.dart');
 
-#source('generated/davidcurtis/institution/ecoles.dart');
-#source('generated/davidcurtis/institution/entries.dart');
-#source('generated/davidcurtis/models.dart');
+#source('repo/code/specific/categoryquestion/link/categories.dart');
+#source('repo/code/specific/categoryquestion/link/comments.dart');
+#source('repo/code/specific/categoryquestion/link/interests.dart');
+#source('repo/code/specific/categoryquestion/link/members.dart');
+#source('repo/code/specific/categoryquestion/link/questions.dart');
+#source('repo/code/specific/categoryquestion/link/webLinks.dart');
+#source('repo/code/specific/davidcurtis/institution/ecoles.dart');
+#source('repo/code/specific/default/project/projects.dart');
+#source('repo/code/specific/default/user/users.dart');
 
-#source('generated/default/project/entries.dart');
-#source('generated/default/project/projects.dart');
-#source('generated/default/user/entries.dart');
-#source('generated/default/user/users.dart');
-#source('generated/default/models.dart');
+#source('repo/code/specific/tests/categoryquestion/link/data.dart');
+#source('repo/code/specific/tests/categoryquestion/link/model.dart');
+#source('repo/code/specific/tests/davidcurtis/institution/data.dart');
+#source('repo/code/specific/tests/default/project/data.dart');
+#source('repo/code/specific/tests/default/user/data.dart');
+#source('repo/code/specific/tests/lastgrouptest.dart');
+#source('repo/code/specific/tests/lastsingletest.dart');
 
-#source('meta/attributes.dart');
-#source('meta/children.dart');
-#source('meta/concepts.dart');
-#source('meta/domains.dart');
-#source('meta/models.dart');
-#source('meta/neighbor.dart');
-#source('meta/parents.dart');
-#source('meta/property.dart');
-#source('meta/types.dart');
+#source('repo/data/categoryquestion/link/json.dart');
+#source('repo/data/davidcurtis/institution/json.dart');
+#source('repo/data/default/project/json.dart');
+#source('repo/data/default/user/json.dart');
+#source('repo/data/model/categoryquestion/link/json.dart');
+#source('repo/data/model/davidcurtis/institution/json.dart');
+#source('repo/data/model/default/project/json.dart');
+#source('repo/data/model/default/user/json.dart');
 
-#source('model/categoryquestion/link/json.dart');
-#source('model/davidcurtis/institution/json.dart');
-#source('model/default/project/json.dart');
-#source('model/default/user/json.dart');
+#source('repo/domain/model/event/actions.dart');
+#source('repo/domain/model/event/reactions.dart');
+#source('repo/domain/model/exception/errors.dart');
+#source('repo/domain/model/exception/exceptions.dart');
+#source('repo/domain/model/transfer/json.dart');
+#source('repo/domain/model/entities.dart');
+#source('repo/domain/model/entity.dart');
+#source('repo/domain/model/entries.dart');
+#source('repo/domain/model/id.dart');
+#source('repo/domain/model/oid.dart');
+#source('repo/domain/models.dart');
+#source('repo/domain/session.dart');
 
-#source('repository/domain/model/event/actions.dart');
-#source('repository/domain/model/event/reactions.dart');
-#source('repository/domain/model/exception/errors.dart');
-#source('repository/domain/model/exception/exceptions.dart');
-#source('repository/domain/model/transfer/json.dart');
-#source('repository/domain/model/entities.dart');
-#source('repository/domain/model/entity.dart');
-#source('repository/domain/model/entries.dart');
-#source('repository/domain/model/id.dart');
-#source('repository/domain/model/oid.dart');
-#source('repository/domain/models.dart');
-#source('repository/domain/session.dart');
-#source('repository/gen/dartling.dart');
-#source('repository/gen/generated.dart');
-#source('repository/gen/specific.dart');
-#source('repository/gen/test.dart');
-#source('repository/repository.dart');
+#source('repo/gen/dartling.dart');
+#source('repo/gen/generated.dart');
+#source('repo/gen/specific.dart');
+#source('repo/gen/tests.dart');
 
-#source('specific/categoryquestion/link/categories.dart');
-#source('specific/categoryquestion/link/comments.dart');
-#source('specific/categoryquestion/link/interests.dart');
-#source('specific/categoryquestion/link/members.dart');
-#source('specific/categoryquestion/link/questions.dart');
-#source('specific/categoryquestion/link/webLinks.dart');
+#source('repo/meta/attributes.dart');
+#source('repo/meta/children.dart');
+#source('repo/meta/concepts.dart');
+#source('repo/meta/domains.dart');
+#source('repo/meta/models.dart');
+#source('repo/meta/neighbor.dart');
+#source('repo/meta/parents.dart');
+#source('repo/meta/property.dart');
+#source('repo/meta/types.dart');
 
-#source('specific/davidcurtis/institution/ecoles.dart');
-
-#source('specific/default/project/projects.dart');
-#source('specific/default/user/users.dart');
-
-#source('test/categoryquestion/link/data.dart');
-#source('test/categoryquestion/link/model.dart');
-
-#source('test/davidcurtis/institution/data.dart');
-
-#source('test/default/project/data.dart');
-#source('test/default/user/data.dart');
-
-#source('test/lastgrouptest.dart');
-#source('test/lastsingletest.dart');
+#source('repo/repository.dart');
 
 genCode() {
   var repo = new Repo();
@@ -126,6 +121,7 @@ genCode() {
       fromMagicBoxes(defaultProjectModelInJson, defaultDomain, 'Project');
   repo.domains.add(defaultDomain);
   repo.gen();
+  //repo.gen(specific:false);
 }
 
 testData() {
@@ -147,6 +143,6 @@ testData() {
 }
 
 void main() {
-  //genCode();
+  genCode();
   testData();
 }
