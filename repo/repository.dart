@@ -65,6 +65,8 @@ class Repo implements RepoApi {
             'for the repo/code/specific folder in the ${code} repository.');
       for (Domain domain in domains) {
         for (Model model in domain.models) {
+          subTitle('The ${domain.code}${model.code} repository.');
+          print(genSpecificDomainModelRepository(domain.code, model));
           for (Concept concept in model.concepts) {
             subTitle('Specific code base, for the ${concept.code} concept.');
             print(genSpecificConcept(domain.code.toLowerCase(),

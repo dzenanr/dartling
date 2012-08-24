@@ -2,6 +2,8 @@ Dartling Schedule
 
 To do
 
+gen specific domain models and model entries ??
+
 test dartling package (error in windows)
 gen real tests
 update README with skeleton and projects 
@@ -38,6 +40,7 @@ encryption for sensitive data
 marketing
   https://talentopoly.com/posts/5440-episode_36_-_how_to_get_traction_for_your_projects
   http://blog.stackoverflow.com/2011/05/community-promotion-ads/
+  http://radar.oreilly.com/2012/08/building-conference-programs.html
 
 deep copy
 attach/detach
@@ -52,6 +55,8 @@ get random value for different types (for test data)
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
+2012-08-24, 18:49
+gen specific domain model repository (used in parkings)
 
 2012-08-24, 15:49
 folder reorganization now within repo

@@ -61,8 +61,8 @@ String genDartlingMain(Repo repo) {
   sc = '${sc}#source("../dartling/repo/domain/session.dart"); \n';
   sc = '${sc} \n';
 
+  sc = '${sc}#source("../dartling/repo/gen/dartling.dart"); \n';
   sc = '${sc}#source("../dartling/repo/gen/generated.dart"); \n';
-  sc = '${sc}#source("../dartling/repo/gen/main.dart"); \n';
   sc = '${sc}#source("../dartling/repo/gen/specific.dart"); \n';
   sc = '${sc}#source("../dartling/repo/gen/tests.dart"); \n';
   sc = '${sc} \n';
@@ -104,6 +104,8 @@ String genDartlingMain(Repo repo) {
         '${model.code.toLowerCase()}/${concept.codeInPlural.toLowerCase()}.'
         'dart"); \n';
       }
+      sc = '${sc}#source("repo/code/specific/${domain.code.toLowerCase()}/'
+      '${model.code.toLowerCase()}/repository.dart"); \n';
     }
   }
   sc = '${sc} \n';
