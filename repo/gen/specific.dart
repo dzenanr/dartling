@@ -1,31 +1,13 @@
 
-String genSpecificDomainModelData(String domainCode, Model model) {
+String genSpecificInitDomainModelData(String domainCode, Model model) {
   var sc = ' \n';
   sc = '${sc}// repo/code/specific/${domainCode.toLowerCase()}/'
        '${model.code.toLowerCase()}/init.dart \n';
   sc = '${sc} \n';
-  sc = '${sc}class ${domainCode}${model.code}Data { \n';
-  sc = '${sc} \n';
-  sc = '${sc}  ${model.code}Entries entries; \n';
-  sc = '${sc} \n';
-  sc = '${sc}  ${domainCode}${model.code}Data(this.entries) { \n';
-  sc = '${sc}    init(); \n';
-  sc = '${sc}  } \n';
-  sc = '${sc} \n';
-  sc = '${sc}  init() { \n';
+  sc = '${sc}init${domainCode}${model.code}(var entries) { \n';
   for (Concept entryConcept in model.entryConcepts) {
     sc = '${sc}   //_init${entryConcept.codeInPlural}(); \n';
   }
-  sc = '${sc}  } \n';
-  sc = '${sc} \n';
-  sc = '${sc}  display() { \n';
-  for (Concept entryConcept in model.entryConcepts) {
-    sc = '${sc}    entries.${entryConcept.codeInPlural.toLowerCase()}.'
-         'display("${entryConcept.codeInPlural}"); \n';
-  }
-  sc = '${sc}  } \n';
-
-  sc = '${sc} \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 

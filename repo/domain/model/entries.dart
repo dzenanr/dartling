@@ -38,7 +38,7 @@ class ModelEntries implements ModelEntriesApi {
   }
 
   EntitiesApi newEntities(String conceptCode) {
-    var concept = model.concepts.findByCode(conceptCode);
+    var concept = _model.concepts.findByCode(conceptCode);
     if (concept == null) {
       throw new ConceptException('${concept.code} concept does not exist.');
     }
@@ -48,7 +48,7 @@ class ModelEntries implements ModelEntriesApi {
   }
 
   EntityApi newEntity(String conceptCode) {
-    var concept = model.concepts.findByCode(conceptCode);
+    var concept = _model.concepts.findByCode(conceptCode);
     if (concept == null) {
       throw new ConceptException('${concept.code} concept does not exist.');
     }
@@ -300,11 +300,18 @@ class ModelEntries implements ModelEntriesApi {
     // return null;
   }
 
-  displayJson(String json, [String title='Model in JSON']) {
+  display() {
+    for (Concept entryConcept in _model.entryConcepts) {
+      Entities entryEntities = getEntry(entryConcept.code);
+      entryEntities.display(entryConcept.codeInPlural);
+    }
+  }
+
+  displayJson() {
     print('==============================================================');
-    print('$title');
+    print('${_model.domain.code} ${_model.code} Model in JSON');
     print('==============================================================');
-    print(json);
+    print(toJson());
     print('--------------------------------------------------------------');
     print('');
   }

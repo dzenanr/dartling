@@ -44,9 +44,9 @@ class Repo implements RepoApi {
   gen([bool specific=true]) {
     title('Generated code, which you must not change, ',
           'for the repo/code/generated folder in the ${code} repository.');
-    subTitle('The ${code} repository.');
-    print(genGeneratedRepository(this));
     for (Domain domain in domains) {
+      subTitle('The ${domain.code} domain repository.');
+      print(genGeneratedRepository(domain));
       subTitle('The ${domain.code} domain models.');
       print(genGeneratedModels(domain));
       for (Model model in domain.models) {
@@ -66,7 +66,7 @@ class Repo implements RepoApi {
       for (Domain domain in domains) {
         for (Model model in domain.models) {
           subTitle('The ${domain.code}${model.code} initial data.');
-          print(genSpecificDomainModelData(domain.code, model));
+          print(genSpecificInitDomainModelData(domain.code, model));
           for (Concept concept in model.concepts) {
             subTitle('Specific code base, for the ${concept.code} concept.');
             print(genSpecificConcept(domain.code.toLowerCase(),

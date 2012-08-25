@@ -93,8 +93,9 @@ String genDartling(Repo repo) {
     }
     sc = '${sc}#source("repo/code/generated/${domain.code.toLowerCase()}/'
          'models.dart"); \n';
+    sc = '${sc}#source("repo/code/generated/${domain.code.toLowerCase()}/'
+         'repository.dart"); \n';
   }
-  sc = '${sc}#source("repo/code/generated/repository.dart"); \n';
   sc = '${sc} \n';
 
   for (Domain domain in repo.domains) {
@@ -136,29 +137,44 @@ String genDartling(Repo repo) {
 
   sc = '${sc}genCode() { \n';
   sc = '${sc}  var repo = new Repo(); \n';
-  sc = '${sc}  // change "Domain" to "YourDomainName" \n';
-  sc = '${sc}  var domain = new Domain("Domain"); \n';
-  sc = '${sc}  // change domain to yourdomainname \n';
-  sc = '${sc}  // change the first Model to YourModelName \n';
-  sc = '${sc}  // change "Model" to "YourModelName" \n';
-  sc = '${sc}  Model model = \n';
-  sc = '${sc}      fromMagicBoxes(domainModelModelInJson, domain, "Model"); \n';
-  sc = '${sc}  repo.domains.add(domain); \n';
+  sc = '${sc} \n';
+  for (Domain domain in repo.domains) {
+    sc = '${sc}  // change "Dartling" to "YourDomainName" \n';
+    sc = '${sc}  var ${domain.code.toLowerCase()}Domain = '
+         'new Domain("${domain.code}"); \n';
+    sc = '${sc} \n';
+    for (Model model in domain.models) {
+      sc = '${sc}  // change dartling to yourdomainname \n';
+      sc = '${sc}  // change skeleton to yourmodelname \n';
+      sc = '${sc}  // change "Skeleton" to "YourModelName" \n';
+      sc = '${sc}  Model ${domain.code.toLowerCase()}'
+           '${model.code.toLowerCase()}Model = \n';
+      sc = '${sc}      fromMagicBoxes(${domain.code.toLowerCase()}'
+           '${model.code.toLowerCase()}ModelInJson, '
+           '${domain.code.toLowerCase()}Domain, "${model.code}"); \n';
+      sc = '${sc} \n';
+    }
+    sc = '${sc}  repo.domains.add(${domain.code.toLowerCase()}Domain); \n';
+    sc = '${sc} \n';
+  }
   sc = '${sc}  repo.gen(); \n';
   sc = '${sc}  //repo.gen(specific:false); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
   sc = '${sc}testData() { \n';
-  sc = '${sc}  var repo = new DartlingRepo(); \n';
   for (Domain domain in repo.domains) {
-    for (Model model in domain.models) {
-      sc = '${sc}  test${domain.code}${model.code}Data(repo, '
-           '${repo.code}Repo.${domain.code.toLowerCase()}DomainCode, \n';
-      sc = '${sc}      ${repo.code}Repo.${domain.code.toLowerCase()}'
-           '${model.code}ModelCode); \n';
-    }
+    sc = '${sc}  var ${domain.code.toLowerCase()}Repo = '
+         'new ${domain.code}Repo(); \n';
     sc = '${sc} \n';
+    for (Model model in domain.models) {
+      sc = '${sc}  test${domain.code}${model.code}Data('
+           '${domain.code.toLowerCase()}Repo, '
+           '${domain.code}Repo.${domain.code.toLowerCase()}DomainCode, \n';
+      sc = '${sc}      ${domain.code}Repo.${domain.code.toLowerCase()}'
+           '${model.code.toLowerCase()}ModelCode); \n';
+      sc = '${sc} \n';
+    }
   }
   sc = '${sc}  //lastSingleTest(repo, "", ""); \n';
   sc = '${sc}  //lastSingleTest(repo, "", ""); \n';
@@ -166,27 +182,28 @@ String genDartling(Repo repo) {
   sc = '${sc} \n';
 
   sc = '${sc}initData() { \n';
-  sc = '${sc}   var repo = new DartlingRepo(); \n';
   for (Domain domain in repo.domains) {
-    sc = '${sc}   var ${domain.code.toLowerCase()}Models = '
-         'repo.getDomainModels(DartlingRepo.'
+    sc = '${sc}   var ${domain.code.toLowerCase()}Repo = '
+         'new ${domain.code}Repo(); \n';
+    sc = '${sc}   var ${domain.code.toLowerCase()}Models = \n';
+    sc = '${sc}       ${domain.code.toLowerCase()}Repo.'
+         'getDomainModels(${domain.code}Repo.'
          '${domain.code.toLowerCase()}DomainCode); \n';
-    for (Model model in domain.models) {
-      sc = '${sc}   var ${domain.code.toLowerCase()}${model.code}Entries = \n';
-      sc = '${sc}     ${domain.code.toLowerCase()}Models.'
-           'getModelEntries(DartlingRepo.${domain.code.toLowerCase()}'
-           '${model.code}ModelCode); \n';
-      sc = '${sc}   var ${domain.code.toLowerCase()}${model.code}Data = new '
-           '${domain.code}${model.code}Data(${domain.code.toLowerCase()}'
-           '${model.code}Entries); \n';
-      sc = '${sc}   ${domain.code.toLowerCase()}${model.code}Data.display(); \n';
-      sc = '${sc}   // from what has been initialized \n';
-      sc = '${sc}   ${domain.code.toLowerCase()}${model.code}Entries.'
-           'displayJson(${domain.code.toLowerCase()}${model.code}Entries.'
-           'toJson(), \n';
-      sc = '${sc}     "${domain.code} ${model.code} Model in JSON"); \n';
-    }
     sc = '${sc} \n';
+    for (Model model in domain.models) {
+      sc = '${sc}   var ${domain.code.toLowerCase()}${model.code.toLowerCase()}'
+           'Entries = \n';
+      sc = '${sc}       ${domain.code.toLowerCase()}Models.'
+           'getModelEntries(${domain.code}Repo.${domain.code.toLowerCase()}'
+           '${model.code.toLowerCase()}ModelCode); \n';
+      sc = '${sc}   init${domain.code}${model.code}('
+           '${domain.code.toLowerCase()}${model.code.toLowerCase()}'
+           'Entries); \n';
+      sc = '${sc}   ${domain.code.toLowerCase()}${model.code.toLowerCase()}'
+           'Entries.display(); \n';
+      sc = '${sc}   ${domain.code.toLowerCase()}${model.code.toLowerCase()}'
+           'Entries.displayJson(); \n';
+    }
   }
   sc = '${sc}} \n';
   sc = '${sc} \n';

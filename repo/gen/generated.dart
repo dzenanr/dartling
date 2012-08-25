@@ -1,42 +1,30 @@
 
 
-String genGeneratedRepository(Repo repo) {
+String genGeneratedRepository(Domain domain) {
   var sc = ' \n';
-  sc = '${sc}// repo/code/generated/repository.dart \n';
+  sc = '${sc}// repo/code/generated/${domain.code.toLowerCase()}/repository.dart \n';
   sc = '${sc} \n';
-  sc = '${sc}class ${repo.code}Repo extends Repo { \n';
+  sc = '${sc}class ${domain.code}Repo extends Repo { \n';
   sc = '${sc} \n';
-  for (Domain domain in repo.domains) {
-    sc = '${sc}  static final ${domain.code.toLowerCase()}DomainCode = '
-         '"${domain.code}"; \n';
-    for (Model model in domain.models) {
-      sc = '${sc}  static final ${domain.code.toLowerCase()}'
-           '${model.code}ModelCode = "${model.code}"; \n';
-    }
-    sc = '${sc} \n';
+  sc = '${sc}  static final ${domain.code.toLowerCase()}DomainCode = '
+       '"${domain.code}"; \n';
+  for (Model model in domain.models) {
+    sc = '${sc}  static final ${domain.code.toLowerCase()}'
+         '${model.code.toLowerCase()}ModelCode = "${model.code}"; \n';
   }
-  sc = '${sc}  ${repo.code}Repo([String code="Dartling"]) : super(code) { \n';
-  sc = '${sc}    _init(); \n';
+  sc = '${sc} \n';
+  sc = '${sc}  ${domain.code}Repo([String code="${domain.code}Repo"]) : super(code) { \n';
+  sc = '${sc}    _init${domain.code}Domain(); \n';
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 
-  for (Domain domain in repo.domains) {
-    sc = '${sc}  _init${domain.code}Domain() { \n';
-    sc = '${sc}    var ${domain.code.toLowerCase()}Domain = '
-         'new Domain(${domain.code.toLowerCase()}DomainCode); \n';
-    sc = '${sc}    domains.add(${domain.code.toLowerCase()}Domain); \n';
-    sc = '${sc}    add(new ${domain.code}Models('
-         '${domain.code.toLowerCase()}Domain)); \n';
-    sc = '${sc}  } \n';
-    sc = '${sc} \n';
-  }
-
-  sc = '${sc}  _init() { \n';
-  for (Domain domain in repo.domains) {
-    sc = '${sc}    _init${domain.code}Domain(); \n';
-  }
+  sc = '${sc}  _init${domain.code}Domain() { \n';
+  sc = '${sc}    var ${domain.code.toLowerCase()}Domain = '
+       'new Domain(${domain.code.toLowerCase()}DomainCode); \n';
+  sc = '${sc}    domains.add(${domain.code.toLowerCase()}Domain); \n';
+  sc = '${sc}    add(new ${domain.code}Models('
+       '${domain.code.toLowerCase()}Domain)); \n';
   sc = '${sc}  } \n';
-
 
   sc = '${sc} \n';
   sc = '${sc}} \n';
