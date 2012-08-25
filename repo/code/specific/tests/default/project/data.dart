@@ -271,7 +271,7 @@ testDefaultProjectData(Repo repo, String domainCode, String modelCode) {
       expect(entries, isNotNull);
       var json = entries.toJson();
       expect(json, isNotNull);
-      entries.displayJson(json, 'Project Model in JSON');
+      entries.displayJson();
     });
     test('From JSON to Project Model', () {
       var entries = models.getModelEntries(modelCode);
