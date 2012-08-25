@@ -9,6 +9,11 @@ update README with skeleton and projects (carparking)
 test Copy Projects:
 expect(copiedProjects, isNot(equals(projects))); // does not pass
 
+action.doit when called directly by a user avoids a session doit
+  ok when session is null for undoing the action
+  not ok if session is not null
+    how to make a distinction between a user call and a session past call?
+
 add advanced model patterns to CategoryQuestion.Link model:
 category tests
   reflexive relationship
