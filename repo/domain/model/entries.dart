@@ -300,7 +300,7 @@ class ModelEntries implements ModelEntriesApi {
     // return null;
   }
 
-  display(String json, [String title='Model in JSON']) {
+  displayJson(String json, [String title='Model in JSON']) {
     print('==============================================================');
     print('$title');
     print('==============================================================');

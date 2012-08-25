@@ -65,8 +65,8 @@ class Repo implements RepoApi {
             'for the repo/code/specific folder in the ${code} repository.');
       for (Domain domain in domains) {
         for (Model model in domain.models) {
-          subTitle('The ${domain.code}${model.code} repository.');
-          print(genSpecificDomainModelRepository(domain.code, model));
+          subTitle('The ${domain.code}${model.code} initial data.');
+          print(genSpecificDomainModelData(domain.code, model));
           for (Concept concept in model.concepts) {
             subTitle('Specific code base, for the ${concept.code} concept.');
             print(genSpecificConcept(domain.code.toLowerCase(),
@@ -76,7 +76,7 @@ class Repo implements RepoApi {
         }
       }
       subTitle('The main.dart file with imports, sources and the main method');
-      print(genDartlingMain(this));
+      print(genDartling(this));
       for (Domain domain in domains) {
         title('Specific test code, which you should change, ',
             'for the repo/code/specific/tests folder in the ${code} repository.');

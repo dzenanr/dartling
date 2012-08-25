@@ -177,7 +177,7 @@ testDavidCurtisInstitutionData(Repo repo, String domainCode, String modelCode) {
     test('From Institution Model to JSON', () {
       var json = entries.toJson();
       expect(json, isNotNull);
-      entries.display(json, 'Institution Model in JSON');
+      entries.displayJson(json, 'Institution Model in JSON');
     });
     test('From JSON to Institution Model', () {
       expect(ecoles.list, isNot(isEmpty));

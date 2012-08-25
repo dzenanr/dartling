@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 ''';
 
-String genDartlingMain(Repo repo) {
+String genDartling(Repo repo) {
   var sc = '${license} \n';
   sc = '${sc}// dartling.dart \n';
   sc = '${sc} \n';
@@ -105,7 +105,7 @@ String genDartlingMain(Repo repo) {
         'dart"); \n';
       }
       sc = '${sc}#source("repo/code/specific/${domain.code.toLowerCase()}/'
-      '${model.code.toLowerCase()}/repository.dart"); \n';
+      '${model.code.toLowerCase()}/init.dart"); \n';
     }
   }
   sc = '${sc} \n';
@@ -165,9 +165,36 @@ String genDartlingMain(Repo repo) {
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
+  sc = '${sc}initData() { \n';
+  sc = '${sc}   var repo = new DartlingRepo(); \n';
+  for (Domain domain in repo.domains) {
+    sc = '${sc}   var ${domain.code.toLowerCase()}Models = '
+         'repo.getDomainModels(DartlingRepo.'
+         '${domain.code.toLowerCase()}DomainCode); \n';
+    for (Model model in domain.models) {
+      sc = '${sc}   var ${domain.code.toLowerCase()}${model.code}Entries = \n';
+      sc = '${sc}     ${domain.code.toLowerCase()}Models.'
+           'getModelEntries(DartlingRepo.${domain.code.toLowerCase()}'
+           '${model.code}ModelCode); \n';
+      sc = '${sc}   var ${domain.code.toLowerCase()}${model.code}Data = new '
+           '${domain.code}${model.code}Data(${domain.code.toLowerCase()}'
+           '${model.code}Entries); \n';
+      sc = '${sc}   ${domain.code.toLowerCase()}${model.code}Data.display(); \n';
+      sc = '${sc}   // from what has been initialized \n';
+      sc = '${sc}   ${domain.code.toLowerCase()}${model.code}Entries.'
+           'displayJson(${domain.code.toLowerCase()}${model.code}Entries.'
+           'toJson(), \n';
+      sc = '${sc}     "${domain.code} ${model.code} Model in JSON"); \n';
+    }
+    sc = '${sc} \n';
+  }
+  sc = '${sc}} \n';
+  sc = '${sc} \n';
+
   sc = '${sc}void main() { \n';
   sc = '${sc}  genCode(); \n';
   sc = '${sc}  //testData(); \n';
+  sc = '${sc}  //initData(); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 

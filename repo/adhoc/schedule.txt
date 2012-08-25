@@ -2,11 +2,9 @@ Dartling Schedule
 
 To do
 
-gen specific domain models and model entries ??
-
 test dartling package (error in windows)
 gen real tests
-update README with skeleton and projects 
+update README with skeleton and projects (parkings)
 
 test Copy Projects:
 expect(copiedProjects, isNot(equals(projects))); // does not pass
@@ -54,6 +52,11 @@ get random entity
 get random value for different types (for test data)
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
+
+
+2012-08-24, 20:48
+entries displayJson
+gen domain model init data
 
 2012-08-24, 18:49
 gen specific domain model repository (used in parkings)

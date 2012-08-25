@@ -350,7 +350,7 @@ testDefaultUserData(Repo repo, String domainCode, String modelCode) {
     test('From User Model to JSON', () {
       var json = entries.toJson();
       expect(json, isNotNull);
-      entries.display(json, 'User Model in JSON');
+      entries.displayJson(json, 'User Model in JSON');
     });
     test('From JSON to User Model', () {
       expect(users.list, isNot(isEmpty));

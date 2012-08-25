@@ -617,7 +617,7 @@ testCategoryQuestionLinkData(Repo repo, String domainCode, String modelCode) {
     test('From Link Model to JSON', () {
       var json = entries.toJson();
       expect(json, isNotNull);
-      entries.display(json, 'Link Model in JSON');
+      entries.displayJson(json, 'Link Model in JSON');
     });
     test('From JSON to Link Model', () {
       expect(entries.empty, isFalse);
