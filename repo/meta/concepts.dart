@@ -16,6 +16,7 @@ class Concept extends ConceptEntity<Concept> {
   bool add = true;
   bool remove = true;
 
+  String codeInPlural;
   String description;
 
   Model model;

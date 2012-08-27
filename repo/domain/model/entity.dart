@@ -118,7 +118,17 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     }
   }
 
-  String get codePlural() => _plural();
+  String get codePlural() {
+    if (_code != null) {
+      if (_concept != null) {
+        if (_concept.codeInPlural != null) {
+          return _concept.codeInPlural;
+        } else {
+          return _plural();
+        }
+      }
+    }
+  }
 
   String get codeFirstLetterLower() => _firstLetterLowerCase();
 
@@ -170,9 +180,9 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   }
 
   String _camelCaseLowerCaseUnderscore([plural=false]) {
-    var c = _code;;
+    var c = _code;
     if (plural) {
-      c = _plural();
+      c = codePlural;
     }
     if (c != null) {
       RegExp exp = const RegExp(@"([A-Z])");

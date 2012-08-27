@@ -46,7 +46,7 @@ class Users extends UsersGen {
       if (!validation) {
         Error error = new Error('pre');
         error.message =
-            '${concept.codePlural}.preAdd rejects the ${user.role} role.';
+            '${concept.codeInPlural}.preAdd rejects the ${user.role} role.';
         errors.add(error);
       }
     }

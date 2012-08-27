@@ -85,7 +85,7 @@ String genGeneratedEntries(Model model) {
     sc = '${sc}    concept = model.concepts.findByCode('
          '"${entryConcept.code}"); \n';
     sc = '${sc}    entries["${entryConcept.code}"] = '
-         'new ${entryConcept.codePlural}(concept); \n';
+         'new ${entryConcept.codeInPlural}(concept); \n';
   }
   sc = '${sc}    return entries; \n';
   sc = '${sc}  } \n';
@@ -99,7 +99,7 @@ String genGeneratedEntries(Model model) {
   sc = '${sc}    } \n';
   for (Concept concept in model.concepts) {
     sc = '${sc}    if (concept.code == "${concept.code}") { \n';
-    sc = '${sc}      return new ${concept.codePlural}(concept); \n';
+    sc = '${sc}      return new ${concept.codeInPlural}(concept); \n';
     sc = '${sc}    } \n';
   }
   sc = '${sc}  } \n';
@@ -125,7 +125,7 @@ String genGeneratedEntries(Model model) {
   sc = '${sc} \n';
 
   for (Concept entryConcept in model.entryConcepts) {
-    sc = '${sc}  ${entryConcept.codePlural} get '
+    sc = '${sc}  ${entryConcept.codeInPlural} get '
          '${entryConcept.codeLowerUnderscore}'
          '() => getEntry("${entryConcept.code}"); \n';
   }
@@ -158,7 +158,7 @@ String genGeneratedConcept(Concept concept) {
            'Concept = concept.model.concepts.findByCode('
            '"${destinationConcept.code}"); \n';
       sc = '${sc}    setChild("${child.code}", '
-           'new ${destinationConcept.codePlural}('
+           'new ${destinationConcept.codeInPlural}('
            '${destinationConcept.codeFirstLetterLower}Concept)); \n';
     }
     sc = '${sc}  } \n';
@@ -206,7 +206,7 @@ String genGeneratedConcept(Concept concept) {
            'Concept = concept.model.concepts.findByCode('
            '"${destinationConcept.code}"); \n';
       sc = '${sc}    setChild("${child.code}", '
-           'new ${destinationConcept.codePlural}('
+           'new ${destinationConcept.codeInPlural}('
            '${destinationConcept.codeFirstLetterLower}Concept)); \n';
     }
     sc = '${sc}  } \n';
@@ -230,7 +230,7 @@ String genGeneratedConcept(Concept concept) {
   }
   for (Child child in concept.children) {
     Concept destinationConcept = child.destinationConcept;
-    sc = '${sc}  ${destinationConcept.codePlural} get ${child.code}() => '
+    sc = '${sc}  ${destinationConcept.codeInPlural} get ${child.code}() => '
          'getChild("${child.code}"); \n ';
     /*
     sc = '${sc} set ${child.code}(${destinationConcept.codePlural} p) => '
@@ -257,14 +257,14 @@ String genGeneratedConcept(Concept concept) {
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
-  sc = '${sc}abstract class ${concept.codePlural}Gen extends '
+  sc = '${sc}abstract class ${concept.codeInPlural}Gen extends '
        'Entities<${concept.code}> { \n';
   sc = '${sc} \n';
-  sc = '${sc}  ${concept.codePlural}Gen(Concept concept) : '
+  sc = '${sc}  ${concept.codeInPlural}Gen(Concept concept) : '
        'super.of(concept); \n';
   sc = '${sc} \n';
-  sc = '${sc}  ${concept.codePlural} newEntities() => '
-       'new ${concept.codePlural}(concept); \n ';
+  sc = '${sc}  ${concept.codeInPlural} newEntities() => '
+       'new ${concept.codeInPlural}(concept); \n ';
   sc = '${sc} \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';

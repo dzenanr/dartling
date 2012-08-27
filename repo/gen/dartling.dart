@@ -87,7 +87,7 @@ String genDartling(Repo repo) {
       '${model.codeLowerUnderscore}/entries.dart"); \n';
       for (Concept concept in model.concepts) {
         sc = '${sc}#source("repo/code/generated/${domain.codeLowerUnderscore}/'
-        '${model.codeLowerUnderscore}/${concept.codePlural.toLowerCase()}.'
+        '${model.codeLowerUnderscore}/${concept.codePluralLowerUnderscore}.'
         'dart"); \n';
       }
     }
@@ -102,7 +102,7 @@ String genDartling(Repo repo) {
     for (Model model in domain.models) {
       for (Concept concept in model.concepts) {
         sc = '${sc}#source("repo/code/specific/${domain.codeLowerUnderscore}/'
-        '${model.codeLowerUnderscore}/${concept.codePlural.toLowerCase()}.'
+        '${model.codeLowerUnderscore}/${concept.codePluralLowerUnderscore}.'
         'dart"); \n';
       }
       sc = '${sc}#source("repo/code/specific/${domain.codeLowerUnderscore}/'

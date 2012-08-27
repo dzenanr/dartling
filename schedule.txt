@@ -64,6 +64,10 @@ i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
 
+2012-08-27, 12:53
+Concept: codeInPlural
+ConceptEntity: codePlural derived only if codeInPlural is null
+
 2012-08-27, 12:22
 ConceptEntity: derived code properties
 code generation
