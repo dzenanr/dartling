@@ -2,7 +2,8 @@ Dartling Schedule
 
 To do
 
-create institution_ecole project and remove it from dartling
+generate app.dart
+generate some basic tests
 create category_question project 
 
 test dartling package (error in windows)
@@ -23,6 +24,9 @@ category tests
   derived path (update json transfer)
 member following tests
   twin relationships
+  
+get random entity
+get random value for different types (for test data)
   
 document code
   http://www.dartlang.org/docs/language-tour/#comments
@@ -56,11 +60,14 @@ logging
   http://www.trottercashion.com/2012/08/12/how-to-write-good-log-messages.html
 attribute validations (type, length)?
 constraints?
-get random entity
-get random value for different types (for test data)
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
+
+2012-08-27, 12:22
+ConceptEntity: derived code properties
+code generation
+remove davidcurtis
 
 2012-08-26, 22:33
 code generation changes

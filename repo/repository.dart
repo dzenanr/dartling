@@ -51,10 +51,10 @@ class Repo implements RepoApi {
       print(genGeneratedModels(domain));
       for (Model model in domain.models) {
         subTitle('The ${model.code} model entries.');
-        print(genGeneratedEntries(domain, model));
+        print(genGeneratedEntries(model));
         for (Concept concept in model.concepts) {
           subTitle('The ${concept.code} concept.');
-          print(genGeneratedConcept(domain, model, concept));
+          print(genGeneratedConcept(concept));
         }
       }
     }
@@ -64,10 +64,10 @@ class Repo implements RepoApi {
       for (Domain domain in domains) {
         for (Model model in domain.models) {
           subTitle('The ${domain.code}${model.code} initial data.');
-          print(genSpecificInitDomainModelData(domain, model));
+          print(genSpecificInitDomainModelData(model));
           for (Concept concept in model.concepts) {
             subTitle('Specific code base, for the ${concept.code} concept.');
-            print(genSpecificConcept(domain, model, concept));
+            print(genSpecificConcept(concept));
           }
         }
       }
@@ -78,7 +78,7 @@ class Repo implements RepoApi {
             'for the repo/code/specific/tests folder in the ${code} repository.');
         for (Model model in domain.models) {
           subTitle('Code template for the ${model.code} model tests.');
-          print(genTestData(domain, model));
+          print(genTestData(model));
         }
       }
     }

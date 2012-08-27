@@ -2,15 +2,15 @@
 
 String genGeneratedRepository(Domain domain) {
   var sc = ' \n';
-  sc = '${sc}// repo/code/generated/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+  sc = '${sc}// repo/code/generated/${domain.codeLowerUnderscore}/'
        'repository.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${domain.code}Repo extends Repo { \n';
   sc = '${sc} \n';
-  sc = '${sc}  static final ${domain.codeWithFirstLetterInLowerCase}DomainCode = '
+  sc = '${sc}  static final ${domain.codeFirstLetterLower}DomainCode = '
        '"${domain.code}"; \n';
   for (Model model in domain.models) {
-    sc = '${sc}  static final ${domain.codeWithFirstLetterInLowerCase}'
+    sc = '${sc}  static final ${domain.codeFirstLetterLower}'
          '${model.code}ModelCode = "${model.code}"; \n';
   }
   sc = '${sc} \n';
@@ -21,12 +21,11 @@ String genGeneratedRepository(Domain domain) {
   sc = '${sc} \n';
 
   sc = '${sc}  _init${domain.code}Domain() { \n';
-  sc = '${sc}    var ${domain.codeWithFirstLetterInLowerCase}Domain = '
-       'new Domain(${domain.codeWithFirstLetterInLowerCase}DomainCode); \n';
-  sc = '${sc}    domains.add(${domain.codeWithFirstLetterInLowerCase}'
-       'Domain); \n';
+  sc = '${sc}    var ${domain.codeFirstLetterLower}Domain = '
+       'new Domain(${domain.codeFirstLetterLower}DomainCode); \n';
+  sc = '${sc}    domains.add(${domain.codeFirstLetterLower}Domain); \n';
   sc = '${sc}    add(new ${domain.code}Models('
-       '${domain.codeWithFirstLetterInLowerCase}Domain)); \n';
+       '${domain.codeFirstLetterLower}Domain)); \n';
   sc = '${sc}  } \n';
 
   sc = '${sc} \n';
@@ -38,7 +37,7 @@ String genGeneratedRepository(Domain domain) {
 
 String genGeneratedModels(Domain domain) {
   var sc = ' \n';
-  sc = '${sc}// repo/code/generated/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+  sc = '${sc}// repo/code/generated/${domain.codeLowerUnderscore}/'
        'models.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${domain.code}Models extends DomainModels { \n';
@@ -53,10 +52,9 @@ String genGeneratedModels(Domain domain) {
   for (Model model in domain.models) {
     sc = '${sc}  ${model.code}Entries fromJsonTo${model.code}Entries() { \n';
     sc = '${sc}    return new ${model.code}Entries(fromMagicBoxes( \n';
-    sc = '${sc}      ${domain.codeWithFirstLetterInLowerCase}${model.code}'
-         'ModelInJson, \n';
+    sc = '${sc}      ${domain.codeFirstLetterLower}${model.code}ModelJson, \n';
     sc = '${sc}      domain, \n';
-    sc = '${sc}      DartlingRepo.${domain.codeWithFirstLetterInLowerCase}'
+    sc = '${sc}      ${domain.code}Repo.${domain.codeFirstLetterLower}'
          '${model.code}ModelCode)); \n';
     sc = '${sc}  } \n';
     sc = '${sc} \n';
@@ -69,10 +67,11 @@ String genGeneratedModels(Domain domain) {
 }
 
 
-String genGeneratedEntries(Domain domain, Model model) {
+String genGeneratedEntries(Model model) {
+  Domain domain = model.domain;
   var sc = ' \n';
-  sc = '${sc}// repo/code/generated/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
-       '${model.codeWithCamelCaseInLowerCaseUnderscore}/entries.dart \n';
+  sc = '${sc}// repo/code/generated/${domain.codeLowerUnderscore}/'
+       '${model.codeLowerUnderscore}/entries.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${model.code}Entries extends ModelEntries { \n';
   sc = '${sc} \n';
@@ -86,7 +85,7 @@ String genGeneratedEntries(Domain domain, Model model) {
     sc = '${sc}    concept = model.concepts.findByCode('
          '"${entryConcept.code}"); \n';
     sc = '${sc}    entries["${entryConcept.code}"] = '
-         'new ${entryConcept.codeInPlural}(concept); \n';
+         'new ${entryConcept.codePlural}(concept); \n';
   }
   sc = '${sc}    return entries; \n';
   sc = '${sc}  } \n';
@@ -100,7 +99,7 @@ String genGeneratedEntries(Domain domain, Model model) {
   sc = '${sc}    } \n';
   for (Concept concept in model.concepts) {
     sc = '${sc}    if (concept.code == "${concept.code}") { \n';
-    sc = '${sc}      return new ${concept.codeInPlural}(concept); \n';
+    sc = '${sc}      return new ${concept.codePlural}(concept); \n';
     sc = '${sc}    } \n';
   }
   sc = '${sc}  } \n';
@@ -121,13 +120,13 @@ String genGeneratedEntries(Domain domain, Model model) {
   sc = '${sc} \n';
 
   sc = '${sc}  fromJsonToData() { \n';
-  sc = '${sc}    fromJson(${domain.code}${model.code}DataInJson); \n';
+  sc = '${sc}    fromJson(${domain.codeFirstLetterLower}${model.code}DataJson); \n';
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 
   for (Concept entryConcept in model.entryConcepts) {
-    sc = '${sc}  ${entryConcept.codeInPlural} get '
-         '${entryConcept.camelCaseToLowerCaseUnderscore(entryConcept.codeInPlural)}'
+    sc = '${sc}  ${entryConcept.codePlural} get '
+         '${entryConcept.codeLowerUnderscore}'
          '() => getEntry("${entryConcept.code}"); \n';
   }
 
@@ -138,12 +137,13 @@ String genGeneratedEntries(Domain domain, Model model) {
   return sc;
 }
 
-String genGeneratedConcept(Domain domain, Model model, Concept concept) {
+String genGeneratedConcept(Concept concept) {
+  Model model = concept.model;
+  Domain domain = model.domain;
   var sc = ' \n';
   sc = '${sc}// repo/code/generated/'
-       '${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
-       '${model.codeWithCamelCaseInLowerCaseUnderscore}'
-       '/${concept.camelCaseToLowerCaseUnderscore(concept.codeInPlural)}.dart \n';
+       '${domain.codeLowerUnderscore}/${model.codeLowerUnderscore}'
+       '/${concept.codePluralLowerUnderscore}.dart \n';
   sc = '${sc} \n';
   sc = '${sc}abstract class ${concept.code}Gen extends '
        'ConceptEntity<${concept.code}> { \n';
@@ -154,12 +154,12 @@ String genGeneratedConcept(Domain domain, Model model, Concept concept) {
     sc = '${sc}  ${concept.code}Gen(Concept concept) : super.of(concept) { \n';
     for (Child child in concept.children) {
       Concept destinationConcept = child.destinationConcept;
-      sc = '${sc}    Concept ${destinationConcept.codeWithFirstLetterInLowerCase}'
-           'Concept = '
-           'concept.model.concepts.findByCode("${destinationConcept.code}"); \n';
+      sc = '${sc}    Concept ${destinationConcept.codeFirstLetterLower}'
+           'Concept = concept.model.concepts.findByCode('
+           '"${destinationConcept.code}"); \n';
       sc = '${sc}    setChild("${child.code}", '
-           'new ${destinationConcept.codeInPlural}('
-           '${destinationConcept.codeWithFirstLetterInLowerCase}Concept)); \n';
+           'new ${destinationConcept.codePlural}('
+           '${destinationConcept.codeFirstLetterLower}Concept)); \n';
     }
     sc = '${sc}  } \n';
   }
@@ -202,12 +202,12 @@ String genGeneratedConcept(Domain domain, Model model, Concept concept) {
     }
     for (Child child in concept.children) {
       Concept destinationConcept = child.destinationConcept;
-      sc = '${sc}    Concept ${destinationConcept.codeWithFirstLetterInLowerCase}'
-           'Concept = '
-           'concept.model.concepts.findByCode("${destinationConcept.code}"); \n';
+      sc = '${sc}    Concept ${destinationConcept.codeFirstLetterLower}'
+           'Concept = concept.model.concepts.findByCode('
+           '"${destinationConcept.code}"); \n';
       sc = '${sc}    setChild("${child.code}", '
-           'new ${destinationConcept.codeInPlural}('
-           '${destinationConcept.codeWithFirstLetterInLowerCase}Concept)); \n';
+           'new ${destinationConcept.codePlural}('
+           '${destinationConcept.codeFirstLetterLower}Concept)); \n';
     }
     sc = '${sc}  } \n';
     sc = '${sc} \n';
@@ -216,25 +216,25 @@ String genGeneratedConcept(Domain domain, Model model, Concept concept) {
   for (Parent parent in concept.parents) {
     Concept destinationConcept = parent.destinationConcept;
     sc = '${sc}  ${destinationConcept.code} get ${parent.code}() => '
-    'getParent("${parent.code}"); \n ';
+         'getParent("${parent.code}"); \n ';
     sc = '${sc} set ${parent.code}(${destinationConcept.code} p) => '
-    'setParent("${parent.code}", p); \n ';
+         'setParent("${parent.code}", p); \n ';
     sc = '${sc} \n';
   }
   for (Attribute attribute in concept.attributes) {
     sc = '${sc}  ${attribute.type.base} get ${attribute.code}() => '
-    'getAttribute("${attribute.code}"); \n ';
+         'getAttribute("${attribute.code}"); \n ';
     sc = '${sc} set ${attribute.code}(${attribute.type.base} a) => '
-    'setAttribute("${attribute.code}", a); \n ';
+         'setAttribute("${attribute.code}", a); \n ';
     sc = '${sc} \n';
   }
   for (Child child in concept.children) {
     Concept destinationConcept = child.destinationConcept;
-    sc = '${sc}  ${destinationConcept.codeInPlural} get ${child.code}() => '
-    'getChild("${child.code}"); \n ';
+    sc = '${sc}  ${destinationConcept.codePlural} get ${child.code}() => '
+         'getChild("${child.code}"); \n ';
     /*
-    sc = '${sc} set ${child.code}(${destinationConcept.codeInPlural} p) => '
-    'setChild("${child.code}", p); \n ';
+    sc = '${sc} set ${child.code}(${destinationConcept.codePlural} p) => '
+         'setChild("${child.code}", p); \n ';
     */
     sc = '${sc} \n';
   }
@@ -257,14 +257,14 @@ String genGeneratedConcept(Domain domain, Model model, Concept concept) {
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
-  sc = '${sc}abstract class ${concept.codeInPlural}Gen extends '
+  sc = '${sc}abstract class ${concept.codePlural}Gen extends '
        'Entities<${concept.code}> { \n';
   sc = '${sc} \n';
-  sc = '${sc}  ${concept.codeInPlural}Gen(Concept concept) : '
+  sc = '${sc}  ${concept.codePlural}Gen(Concept concept) : '
        'super.of(concept); \n';
   sc = '${sc} \n';
-  sc = '${sc}  ${concept.codeInPlural} newEntities() => '
-       'new ${concept.codeInPlural}(concept); \n ';
+  sc = '${sc}  ${concept.codePlural} newEntities() => '
+       'new ${concept.codePlural}(concept); \n ';
   sc = '${sc} \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';

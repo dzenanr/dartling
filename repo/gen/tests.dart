@@ -1,8 +1,9 @@
 
-String genTestData(Domain domain, Model model) {
+String genTestData(Model model) {
+  Domain domain = model.domain;
   var sc = ' \n';
-  sc = '${sc}// repo/code/specific/tests/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
-       '${model.codeWithCamelCaseInLowerCaseUnderscore}/dart.dart \n';
+  sc = '${sc}// repo/code/specific/tests/${domain.codeLowerUnderscore}/'
+       '${model.codeLowerUnderscore}/data.dart \n';
   sc = '${sc} \n';
   sc = '${sc}test${domain.code}${model.code}Data('
        'Repo repo, String domainCode, String modelCode) { \n';

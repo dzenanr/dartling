@@ -303,13 +303,13 @@ class ModelEntries implements ModelEntriesApi {
   display() {
     for (Concept entryConcept in _model.entryConcepts) {
       Entities entryEntities = getEntry(entryConcept.code);
-      entryEntities.display(entryConcept.codeInPlural);
+      entryEntities.display(entryConcept.codePlural);
     }
   }
 
   displayJson() {
     print('==============================================================');
-    print('${_model.domain.code} ${_model.code} Model in JSON');
+    print('${_model.domain.code} ${_model.code} Data in JSON');
     print('==============================================================');
     print(toJson());
     print('--------------------------------------------------------------');

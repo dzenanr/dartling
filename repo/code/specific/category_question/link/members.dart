@@ -46,7 +46,7 @@ class Members extends MembersGen {
       if (!validation) {
         Error error = new Error('pre');
         error.message =
-            '${concept.codeInPlural}.preAdd rejects the ${member.role} role.';
+            '${concept.codePlural}.preAdd rejects the ${member.role} role.';
         errors.add(error);
       }
     }

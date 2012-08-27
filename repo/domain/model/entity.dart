@@ -25,8 +25,6 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   Concept _concept;
   Oid _oid;
   String _code;
-  String _codeWithFirstLetterInLowerCase;
-  String _codeWithCamelCaseInLowerCaseUnderscore;
 
   Map<String, Object> _attributeMap;
   // cannot use T since a parent is of a different type
@@ -115,26 +113,101 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   void set code(String code) {
     if (_code == null || _concept.updateCode) {
       _code = code;
-      if (code == null) {
-        _codeWithFirstLetterInLowerCase = null;
-        _codeWithCamelCaseInLowerCaseUnderscore = null;
-      } else {
-        _codeWithFirstLetterInLowerCase = firstLetterToLowerCase(code);
-        _codeWithCamelCaseInLowerCaseUnderscore =
-            camelCaseToLowerCaseUnderscore(code);
-      }
     } else {
       throw new CodeException('Entity code cannot be updated.');
     }
   }
 
-  String get codeWithFirstLetterInLowerCase() =>
-      _codeWithFirstLetterInLowerCase;
+  String get codePlural() => _plural();
 
-  String get codeWithCamelCaseInLowerCaseUnderscore() =>
-      _codeWithCamelCaseInLowerCaseUnderscore;
+  String get codeFirstLetterLower() => _firstLetterLowerCase();
 
+  String get codeLowerUnderscore() => _camelCaseLowerCaseUnderscore();
 
+  String get codePluralLowerUnderscore() =>
+      _camelCaseLowerCaseUnderscore(plural:true);
+
+  String _plural() {
+    String dropEnd(String end) {
+      String withoutEnd = _code;
+      int endPosition = _code.lastIndexOf(end);
+      if (endPosition > 0) {
+        // Drop the end.
+        withoutEnd = _code.substring(0, endPosition);
+      }
+      return withoutEnd;
+    }
+
+    if (_code != null) {
+      var result;
+      if (_code.length > 0) {
+        String lastLetter = _code.substring(_code.length - 1, _code.length);
+        if (lastLetter == 'x') {
+          result = '${_code}es';
+        } else if (lastLetter == 'z') {
+          result = '${_code}zes';
+        } else if (lastLetter == 'y') {
+          String withoutLast = dropEnd(lastLetter);
+          result = '${withoutLast}ies';
+        } else {
+          result = '${_code}s';
+        }
+      }
+      return result;
+    }
+  }
+
+  String _firstLetterLowerCase() {
+    if (_code != null) {
+      List<String> letterList = _code.splitChars();
+      letterList[0] = letterList[0].toLowerCase();
+      String result = '';
+      for (String letter in letterList) {
+        result = '${result}${letter}';
+      }
+      return result;
+    }
+  }
+
+  String _camelCaseLowerCaseUnderscore([plural=false]) {
+    var c = _code;;
+    if (plural) {
+      c = _plural();
+    }
+    if (c != null) {
+      RegExp exp = const RegExp(@"([A-Z])");
+      Iterable<Match> matches = exp.allMatches(c);
+      var indexes = new List<int>();
+      for (Match m in matches) {
+        indexes.add(m.end());
+      };
+      int previousIndex = 0;
+      var camelCaseWordList = new List<String>();
+      for (int index in indexes) {
+        String camelCaseWord = c.substring(previousIndex, index - 1);
+        camelCaseWordList.add(camelCaseWord);
+        previousIndex = index - 1;
+      }
+      String camelCaseWord = c.substring(previousIndex);
+      camelCaseWordList.add(camelCaseWord);
+
+      String previousCamelCaseWord;
+      String result = '';
+      for (String camelCaseWord in camelCaseWordList) {
+        if (camelCaseWord == '') {
+          previousCamelCaseWord = camelCaseWord;
+        } else {
+          if (previousCamelCaseWord == '') {
+            result = '${result}${camelCaseWord}';
+          } else {
+            result = '${result}_${camelCaseWord}';
+          }
+          previousCamelCaseWord = camelCaseWord;
+        }
+      }
+      return result.toLowerCase();
+    }
+  }
 
   Object getAttribute(String name) => _attributeMap[name];
   bool setAttribute(String name, Object value) {
@@ -453,58 +526,18 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     }
   }
 
-  String firstLetterToLowerCase(String text) {
-    List<String> textList = text.splitChars();
-    textList[0] = textList[0].toLowerCase();
-    String result = '';
-    for (String char in textList) {
-      result = '${result}${char}';
-    }
-    return result;
-  }
-
-  String camelCaseToLowerCaseUnderscore(String text) {
-    RegExp exp = const RegExp(@"([A-Z])");
-    Iterable<Match> matches = exp.allMatches(text);
-    var indexes = new List<int>();
-    for (Match m in matches) {
-      indexes.add(m.end());
-    };
-    int previousIndex = 0;
-    var camelCaseWordList = new List<String>();
-    for (int index in indexes) {
-      String camelCaseWord = text.substring(previousIndex, index - 1);
-      camelCaseWordList.add(camelCaseWord);
-      previousIndex = index - 1;
-    }
-    String camelCaseWord = text.substring(previousIndex);
-    camelCaseWordList.add(camelCaseWord);
-
-    String previousCamelCaseWord;
-    String result = '';
-    for (String camelCaseWord in camelCaseWordList) {
-      if (camelCaseWord == '') {
-        previousCamelCaseWord = camelCaseWord;
-      } else {
-        if (previousCamelCaseWord == '') {
-          result = '${result}${camelCaseWord}';
-        } else {
-          result = '${result}_${camelCaseWord}';
-        }
-        previousCamelCaseWord = camelCaseWord;
-      }
-    }
-    return result.toLowerCase();
-  }
-
   /**
    * Returns a string that represents this entity by using oid and code.
    */
   String toString() {
-    if (code == null) {
-      return '{${_concept.code}: {oid:${_oid.toString()}}}';
+    if (_concept != null) {
+      if (_code == null) {
+        return '{${_concept.code}: {oid:${_oid.toString()}}}';
+      } else {
+        return '{${_concept.code}: {oid:${_oid.toString()}, code:${_code}}}';
+      }
     } else {
-      return '{${_concept.code}: {oid:${_oid.toString()}, code:${code}}}';
+      print('ConceptEntity.toString(): entity concept is null.');
     }
   }
 
@@ -526,9 +559,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     print('${s}------------------------------------');
     print('${s}${toString()}                       ');
     print('${s}------------------------------------');
-    //if (_concept.entry && _concept.parents.count == 0) {
-      s = '$s  ';
-    //}
+    s = '$s  ';
     if (withOid) {
       print('${s}oid: ${_oid}');
     }

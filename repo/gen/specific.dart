@@ -1,12 +1,13 @@
 
-String genSpecificInitDomainModelData(Domain domain, Model model) {
+String genSpecificInitDomainModelData(Model model) {
+  Domain domain = model.domain;
   var sc = ' \n';
-  sc = '${sc}// repo/code/specific/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
-       '${model.codeWithCamelCaseInLowerCaseUnderscore}/init.dart \n';
+  sc = '${sc}// repo/code/specific/${domain.codeLowerUnderscore}/'
+       '${model.codeLowerUnderscore}/init.dart \n';
   sc = '${sc} \n';
   sc = '${sc}init${domain.code}${model.code}(var entries) { \n';
   for (Concept entryConcept in model.entryConcepts) {
-    sc = '${sc}   //_init${entryConcept.codeInPlural}(); \n';
+    sc = '${sc}   //_init${entryConcept.codePlural}(); \n';
   }
   sc = '${sc}} \n';
   sc = '${sc} \n';
@@ -14,11 +15,13 @@ String genSpecificInitDomainModelData(Domain domain, Model model) {
   return sc;
 }
 
-String genSpecificConcept(Domain domain, Model model, Concept concept) {
+String genSpecificConcept(Concept concept) {
+  Model model = concept.model;
+  Domain domain = model.domain;
   var sc = ' \n';
-  sc = '// repo/code/specific/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
-       '${model.codeWithCamelCaseInLowerCaseUnderscore}'
-       '/${concept.camelCaseToLowerCaseUnderscore(concept.codeInPlural)}.dart \n';
+  sc = '// repo/code/specific/${domain.codeLowerUnderscore}/'
+       '${model.codeLowerUnderscore}'
+       '/${concept.codePluralLowerUnderscore}.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${concept.code} extends ${concept.code}Gen { \n';
   sc = '${sc} \n';
@@ -66,9 +69,9 @@ String genSpecificConcept(Domain domain, Model model, Concept concept) {
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
-  sc = '${sc}class ${concept.codeInPlural} extends ${concept.codeInPlural}Gen { \n';
+  sc = '${sc}class ${concept.codePlural} extends ${concept.codePlural}Gen { \n';
   sc = '${sc} \n';
-  sc = '${sc}  ${concept.codeInPlural}(Concept concept) : super(concept); \n';
+  sc = '${sc}  ${concept.codePlural}(Concept concept) : super(concept); \n';
   sc = '${sc} \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';

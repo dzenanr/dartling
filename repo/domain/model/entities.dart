@@ -121,7 +121,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     }
     if (!_concept.add) {
       throw new AddException(
-        'An entity cannot be added to ${_concept.codeInPlural}.');
+        'An entity cannot be added to ${_concept.codePlural}.');
     }
 
     bool result = true;
@@ -258,7 +258,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     }
     if (!_concept.remove) {
       throw new RemoveException(
-        'An entity cannot be removed from ${_concept.codeInPlural}.');
+        'An entity cannot be removed from ${_concept.codePlural}.');
     }
 
     bool result = true;
@@ -390,7 +390,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
         beforeEntity.code == afterEntity.code &&
         beforeEntity.id == afterEntity.id) {
       throw new UpdateException(
-          '${_concept.codeInPlural}.update can only be used '
+          '${_concept.codePlural}.update can only be used '
           'if oid, code or id set.');
     }
     if (remove(beforeEntity)) {
@@ -400,18 +400,18 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
         if (add(beforeEntity)) {
           Error error = new Error('update');
           error.message =
-            '${_concept.codeInPlural}.update fails to add after update entity.';
+            '${_concept.codePlural}.update fails to add after update entity.';
           _errors.add(error);
         } else {
           throw new UpdateException(
-              '${_concept.codeInPlural}.update fails '
+              '${_concept.codePlural}.update fails '
               'to add back before update entity.');
         }
       }
     } else {
       Error error = new Error('update');
       error.message =
-        '${_concept.codeInPlural}.update fails to remove before update entity.';
+        '${_concept.codePlural}.update fails to remove before update entity.';
       _errors.add(error);
     }
     return false;
