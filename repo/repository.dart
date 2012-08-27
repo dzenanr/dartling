@@ -71,7 +71,7 @@ class Repo implements RepoApi {
           }
         }
       }
-      subTitle('The main.dart file with imports, sources and the main method');
+      subTitle('The dartling.dart file with imports, sources and the main method');
       print(genDartling(this));
       for (Domain domain in domains) {
         title('Specific test code, which you should change, ',
@@ -81,6 +81,8 @@ class Repo implements RepoApi {
           print(genTestData(model));
         }
       }
+      subTitle('The app.dart file with imports, sources and the main method');
+      print(genApp(this));
     }
   }
 

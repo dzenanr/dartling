@@ -90,6 +90,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('repo/domain/models.dart');
 #source('repo/domain/session.dart');
 
+#source('repo/gen/app.dart');
 #source('repo/gen/dartling.dart');
 #source('repo/gen/generated.dart');
 #source('repo/gen/specific.dart');

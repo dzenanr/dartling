@@ -1,47 +1,12 @@
 
-var license =
-'''
-/*
-http://opensource.org/licenses/
 
-http://en.wikipedia.org/wiki/BSD_license
-3-clause license ("New BSD License" or "Modified BSD License")
-
-Copyright (c) 2012, Dartling project authors
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of the Dartling nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-''';
-
-String genDartling(Repo repo) {
+String genApp(Repo repo) {
   var sc = '${license} \n';
-  sc = '${sc}// dartling.dart \n';
-  sc = '${sc} \n';
-  sc = '${sc}#library("dartling"); \n';
+  sc = '${sc}// app.dart \n';
   sc = '${sc} \n';
   sc = '${sc}//#import("package:unittest/unittest.dart"); \n';
   sc = '${sc}#import("../unittest/unittest.dart"); \n';
+  sc = '${sc}#import("dart:html"); \n';
   sc = '${sc}#import("dart:json"); \n';
   sc = '${sc}#import("dart:math"); \n';
   sc = '${sc}#import("dart:uri"); \n';
@@ -142,60 +107,8 @@ String genDartling(Repo repo) {
   }
   sc = '${sc} \n';
 
-  sc = '${sc}genCode() { \n';
-  sc = '${sc}  var repo = new Repo(); \n';
-  sc = '${sc} \n';
   for (Domain domain in repo.domains) {
-    sc = '${sc}  // change "Dartling" to "YourDomainName" \n';
-    sc = '${sc}  var ${domain.codeFirstLetterLower}Domain = '
-         'new Domain("${domain.code}"); \n';
-    sc = '${sc} \n';
-    for (Model model in domain.models) {
-      sc = '${sc}  // change dartling to yourDomainName \n';
-      sc = '${sc}  // change Skeleton to YourModelName \n';
-      sc = '${sc}  // change "Skeleton" to "YourModelName" \n';
-      sc = '${sc}  Model ${domain.codeFirstLetterLower}'
-           '${model.code}Model = \n';
-      sc = '${sc}      fromMagicBoxes(${domain.codeFirstLetterLower}'
-           '${model.code}ModelJson, '
-           '${domain.codeFirstLetterLower}'
-           'Domain, "${model.code}"); \n';
-      sc = '${sc} \n';
-    }
-    sc = '${sc}  repo.domains.add(${domain.codeFirstLetterLower}'
-         'Domain); \n';
-    sc = '${sc} \n';
-  }
-  sc = '${sc}  repo.gen(); \n';
-  sc = '${sc}  //repo.gen(specific:false); \n';
-  sc = '${sc}} \n';
-  sc = '${sc} \n';
-
-  sc = '${sc}testData() { \n';
-  for (Domain domain in repo.domains) {
-    sc = '${sc}  var ${domain.codeFirstLetterLower}Repo = '
-         'new ${domain.code}Repo(); \n';
-    sc = '${sc} \n';
-    for (Model model in domain.models) {
-      sc = '${sc}  test${domain.code}${model.code}Data('
-           '${domain.codeFirstLetterLower}Repo, '
-           '${domain.code}Repo.${domain.codeFirstLetterLower}'
-           'DomainCode, \n';
-      sc = '${sc}      ${domain.code}Repo.'
-           '${domain.codeFirstLetterLower}'
-           '${model.code}ModelCode); \n';
-      sc = '${sc} \n';
-    }
-  }
-  sc = '${sc}  //lastSingleTest(repo, "", ""); \n';
-  sc = '${sc}  //lastSingleTest(repo, "", ""); \n';
-  sc = '${sc}} \n';
-  sc = '${sc} \n';
-
-  sc = '${sc}initData() { \n';
-  for (Domain domain in repo.domains) {
-    sc = '${sc}   var ${domain.codeFirstLetterLower}Repo = '
-         'new ${domain.code}Repo(); \n';
+    sc = '${sc}initData(${domain.code}Repo ${domain.codeFirstLetterLower}Repo) { \n';
     sc = '${sc}   var ${domain.codeFirstLetterLower}Models = \n';
     sc = '${sc}       ${domain.codeFirstLetterLower}Repo.'
          'getDomainModels(${domain.code}Repo.'
@@ -221,9 +134,16 @@ String genDartling(Repo repo) {
   sc = '${sc} \n';
 
   sc = '${sc}void main() { \n';
-  sc = '${sc}  genCode(); \n';
-  sc = '${sc}  //testData(); \n';
-  sc = '${sc}  //initData(); \n';
+  for (Domain domain in repo.domains) {
+    sc = '${sc}  var ${domain.codeFirstLetterLower}Repo = '
+    'new ${domain.code}Repo(); \n';
+    sc = '${sc}  initData(${domain.codeFirstLetterLower}Repo); \n';
+    sc = '${sc} \n';
+    sc = '${sc}  // Get a reference to the canvas. \n';
+    sc = '${sc}  // CanvasElement canvas = document.query("#canvas"); \n';
+    sc = '${sc}  // Board board = new Board(canvas, '
+         '${domain.codeFirstLetterLower}Repo); \n';
+  }
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
