@@ -86,9 +86,12 @@ String genDartling(Repo repo) {
       sc = '${sc}#source("repo/code/generated/${domain.codeLowerUnderscore}/'
       '${model.codeLowerUnderscore}/entries.dart"); \n';
       for (Concept concept in model.concepts) {
+        var codesLowerUnderscore = concept.codesLowerUnderscore;
+        if (codesLowerUnderscore == null) {
+          codesLowerUnderscore = concept.codePluralLowerUnderscore;
+        }
         sc = '${sc}#source("repo/code/generated/${domain.codeLowerUnderscore}/'
-        '${model.codeLowerUnderscore}/${concept.codePluralLowerUnderscore}.'
-        'dart"); \n';
+        '${model.codeLowerUnderscore}/${codesLowerUnderscore}.dart"); \n';
       }
     }
     sc = '${sc}#source("repo/code/generated/${domain.codeLowerUnderscore}/'
@@ -101,9 +104,12 @@ String genDartling(Repo repo) {
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
       for (Concept concept in model.concepts) {
+        var codesLowerUnderscore = concept.codesLowerUnderscore;
+        if (codesLowerUnderscore == null) {
+          codesLowerUnderscore = concept.codePluralLowerUnderscore;
+        }
         sc = '${sc}#source("repo/code/specific/${domain.codeLowerUnderscore}/'
-        '${model.codeLowerUnderscore}/${concept.codePluralLowerUnderscore}.'
-        'dart"); \n';
+        '${model.codeLowerUnderscore}/${codesLowerUnderscore}.dart"); \n';
       }
       sc = '${sc}#source("repo/code/specific/${domain.codeLowerUnderscore}/'
       '${model.codeLowerUnderscore}/init.dart"); \n';

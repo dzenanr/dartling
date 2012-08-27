@@ -118,17 +118,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     }
   }
 
-  String get codePlural() {
-    if (_code != null) {
-      if (_concept != null) {
-        if (_concept.codeInPlural != null) {
-          return _concept.codeInPlural;
-        } else {
-          return _plural();
-        }
-      }
-    }
-  }
+  String get codePlural() => _plural();
 
   String get codeFirstLetterLower() => _firstLetterLowerCase();
 

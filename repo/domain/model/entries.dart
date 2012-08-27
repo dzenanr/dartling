@@ -303,7 +303,7 @@ class ModelEntries implements ModelEntriesApi {
   display() {
     for (Concept entryConcept in _model.entryConcepts) {
       Entities entryEntities = getEntry(entryConcept.code);
-      entryEntities.display(entryConcept.codeInPlural);
+      entryEntities.display(entryConcept.codes);
     }
   }
 

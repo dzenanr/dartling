@@ -16,7 +16,8 @@ class Concept extends ConceptEntity<Concept> {
   bool add = true;
   bool remove = true;
 
-  String codeInPlural;
+  String codes; // code plural
+  String codesLowerUnderscore; // lower letters and undescore separator
   String description;
 
   Model model;
