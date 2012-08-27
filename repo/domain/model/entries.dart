@@ -178,12 +178,9 @@ class ModelEntries implements ModelEntriesApi {
 
   Entities _entitiesFromJson(List<Map<String, Object>> entitiesList,
                             Concept concept) {
-    assert(concept != null);
-    assert(concept.code != null);
     Entities entities = newEntities(concept.code);
     for (Map<String, Object> entityMap in entitiesList) {
       ConceptEntity entity = _entityFromJson(entityMap, concept);
-      assert(entity != null);
       entities.pre = false;
       entities.post = false;
       entities.add(entity);

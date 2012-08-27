@@ -2,7 +2,6 @@ Dartling Schedule
 
 To do
 
-generate app.dart
 generate some basic tests
 create category_question project 
 
@@ -63,6 +62,14 @@ constraints?
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
+
+2012-08-27, 19:15
+concept codes used first, if null ten concept codePlural used
+code generation
+
+2012-08-27, 18:38
+entries display
+code generation
 
 2012-08-27, 15:08
 car_parking code generation 

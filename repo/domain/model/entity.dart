@@ -258,7 +258,8 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
         assert(string != null);
         return setAttribute(name, new Date.fromString(string));
       } catch (final IllegalArgumentException e) {
-        throw new TypeException('${_concept.code}.${attribute.code} attribute value is not Date: $e');
+        throw new TypeException('${_concept.code}.${attribute.code} '
+                                'attribute value is not Date: $e');
       }
     } else if (attribute.type.base == 'bool') {
       if (string == 'true') {
@@ -266,19 +267,22 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       } else if (string == 'false') {
         return setAttribute(name, false);
       } else {
-        throw new TypeException('${attribute.code} attribute value is not bool.');
+        throw new TypeException('${attribute.code} '
+                                'attribute value is not bool.');
       }
     } else if (attribute.type.base == 'int') {
       try {
         return setAttribute(name, Math.parseInt(string));
       } catch (final FormatException e) {
-        throw new TypeException('${attribute.code} attribute value is not int: $e');
+        throw new TypeException('${attribute.code} '
+                                'attribute value is not int: $e');
       }
     } else if (attribute.type.base == 'double') {
       try {
         return setAttribute(name, Math.parseDouble(string));
       } catch (final FormatException e) {
-        throw new TypeException('${attribute.code} attribute value is not double: $e');
+        throw new TypeException('${attribute.code} '
+                                'attribute value is not double: $e');
       }
     } else if (attribute.type.base == 'num') {
       try {
@@ -295,7 +299,8 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       try {
         return setAttribute(name, new Uri.fromString(string));
       } catch (final IllegalArgumentException e) {
-        throw new TypeException('${attribute.code} attribute value is not Uri: $e');
+        throw new TypeException('${attribute.code} '
+                                'attribute value is not Uri: $e');
       }
     } else { // other
       return setAttribute(name, string);
@@ -611,7 +616,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       }
     }
     entityMap['oid'] = _oid.toString();
-    entityMap['code'] = code;
+    entityMap['code'] = _code;
     _attributeMap.getKeys().forEach((k) =>
         entityMap[k] = getStringFromAttribute(k));
     _childMap.getKeys().forEach((k) => entityMap[k] = getChild(k).toJson());
