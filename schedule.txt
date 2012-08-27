@@ -2,6 +2,9 @@ Dartling Schedule
 
 To do
 
+create institution_ecole project and remove it from dartling
+create category_question project 
+
 test dartling package (error in windows)
 gen real tests
 update README with skeleton and projects (carparking)
@@ -58,6 +61,9 @@ get random value for different types (for test data)
 i18n
 indexes?? (http://www.mattfleming.com/node/192)
 
+
+2012-08-26, 22:33
+code generation changes
 
 2012-08-25, 14:35
 entries display

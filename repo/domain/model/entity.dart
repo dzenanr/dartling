@@ -25,6 +25,9 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   Concept _concept;
   Oid _oid;
   String _code;
+  String _codeWithFirstLetterInLowerCase;
+  String _codeWithCamelCaseInLowerCaseUnderscore;
+
   Map<String, Object> _attributeMap;
   // cannot use T since a parent is of a different type
   Map<String, ConceptEntity> _parentMap;
@@ -112,10 +115,26 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   void set code(String code) {
     if (_code == null || _concept.updateCode) {
       _code = code;
+      if (code == null) {
+        _codeWithFirstLetterInLowerCase = null;
+        _codeWithCamelCaseInLowerCaseUnderscore = null;
+      } else {
+        _codeWithFirstLetterInLowerCase = firstLetterToLowerCase(code);
+        _codeWithCamelCaseInLowerCaseUnderscore =
+            camelCaseToLowerCaseUnderscore(code);
+      }
     } else {
       throw new CodeException('Entity code cannot be updated.');
     }
   }
+
+  String get codeWithFirstLetterInLowerCase() =>
+      _codeWithFirstLetterInLowerCase;
+
+  String get codeWithCamelCaseInLowerCaseUnderscore() =>
+      _codeWithCamelCaseInLowerCaseUnderscore;
+
+
 
   Object getAttribute(String name) => _attributeMap[name];
   bool setAttribute(String name, Object value) {
@@ -432,6 +451,50 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       }
       return id.compareTo(entity.id);
     }
+  }
+
+  String firstLetterToLowerCase(String text) {
+    List<String> textList = text.splitChars();
+    textList[0] = textList[0].toLowerCase();
+    String result = '';
+    for (String char in textList) {
+      result = '${result}${char}';
+    }
+    return result;
+  }
+
+  String camelCaseToLowerCaseUnderscore(String text) {
+    RegExp exp = const RegExp(@"([A-Z])");
+    Iterable<Match> matches = exp.allMatches(text);
+    var indexes = new List<int>();
+    for (Match m in matches) {
+      indexes.add(m.end());
+    };
+    int previousIndex = 0;
+    var camelCaseWordList = new List<String>();
+    for (int index in indexes) {
+      String camelCaseWord = text.substring(previousIndex, index - 1);
+      camelCaseWordList.add(camelCaseWord);
+      previousIndex = index - 1;
+    }
+    String camelCaseWord = text.substring(previousIndex);
+    camelCaseWordList.add(camelCaseWord);
+
+    String previousCamelCaseWord;
+    String result = '';
+    for (String camelCaseWord in camelCaseWordList) {
+      if (camelCaseWord == '') {
+        previousCamelCaseWord = camelCaseWord;
+      } else {
+        if (previousCamelCaseWord == '') {
+          result = '${result}${camelCaseWord}';
+        } else {
+          result = '${result}_${camelCaseWord}';
+        }
+        previousCamelCaseWord = camelCaseWord;
+      }
+    }
+    return result.toLowerCase();
   }
 
   /**

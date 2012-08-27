@@ -1,10 +1,10 @@
 
-String genTestData(String domain, String model) {
+String genTestData(Domain domain, Model model) {
   var sc = ' \n';
-  sc = '${sc}// repo/code/specific/tests/${domain.toLowerCase()}/'
-       '${model.toLowerCase()}/dart.dart \n';
+  sc = '${sc}// repo/code/specific/tests/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+       '${model.codeWithCamelCaseInLowerCaseUnderscore}/dart.dart \n';
   sc = '${sc} \n';
-  sc = '${sc}test${domain}${model}Data('
+  sc = '${sc}test${domain.code}${model.code}Data('
        'Repo repo, String domainCode, String modelCode) { \n';
   sc = '${sc}  var models; \n';
   sc = '${sc}  var session; \n';

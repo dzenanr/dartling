@@ -1,10 +1,10 @@
 
-String genSpecificInitDomainModelData(String domainCode, Model model) {
+String genSpecificInitDomainModelData(Domain domain, Model model) {
   var sc = ' \n';
-  sc = '${sc}// repo/code/specific/${domainCode.toLowerCase()}/'
-       '${model.code.toLowerCase()}/init.dart \n';
+  sc = '${sc}// repo/code/specific/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+       '${model.codeWithCamelCaseInLowerCaseUnderscore}/init.dart \n';
   sc = '${sc} \n';
-  sc = '${sc}init${domainCode}${model.code}(var entries) { \n';
+  sc = '${sc}init${domain.code}${model.code}(var entries) { \n';
   for (Concept entryConcept in model.entryConcepts) {
     sc = '${sc}   //_init${entryConcept.codeInPlural}(); \n';
   }
@@ -14,10 +14,11 @@ String genSpecificInitDomainModelData(String domainCode, Model model) {
   return sc;
 }
 
-String genSpecificConcept(String domain, String model, Concept concept) {
+String genSpecificConcept(Domain domain, Model model, Concept concept) {
   var sc = ' \n';
-  sc = '// repo/code/specific/${domain}/${model}'
-       '/${concept.codeInPlural.toLowerCase()}.dart \n';
+  sc = '// repo/code/specific/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+       '${model.codeWithCamelCaseInLowerCaseUnderscore}'
+       '/${concept.camelCaseToLowerCaseUnderscore(concept.codeInPlural)}.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${concept.code} extends ${concept.code}Gen { \n';
   sc = '${sc} \n';

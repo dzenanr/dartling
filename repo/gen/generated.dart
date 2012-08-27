@@ -2,28 +2,31 @@
 
 String genGeneratedRepository(Domain domain) {
   var sc = ' \n';
-  sc = '${sc}// repo/code/generated/${domain.code.toLowerCase()}/repository.dart \n';
+  sc = '${sc}// repo/code/generated/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+       'repository.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${domain.code}Repo extends Repo { \n';
   sc = '${sc} \n';
-  sc = '${sc}  static final ${domain.code.toLowerCase()}DomainCode = '
+  sc = '${sc}  static final ${domain.codeWithFirstLetterInLowerCase}DomainCode = '
        '"${domain.code}"; \n';
   for (Model model in domain.models) {
-    sc = '${sc}  static final ${domain.code.toLowerCase()}'
-         '${model.code.toLowerCase()}ModelCode = "${model.code}"; \n';
+    sc = '${sc}  static final ${domain.codeWithFirstLetterInLowerCase}'
+         '${model.code}ModelCode = "${model.code}"; \n';
   }
   sc = '${sc} \n';
-  sc = '${sc}  ${domain.code}Repo([String code="${domain.code}Repo"]) : super(code) { \n';
+  sc = '${sc}  ${domain.code}Repo([String code="${domain.code}Repo"]) : '
+       'super(code) { \n';
   sc = '${sc}    _init${domain.code}Domain(); \n';
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 
   sc = '${sc}  _init${domain.code}Domain() { \n';
-  sc = '${sc}    var ${domain.code.toLowerCase()}Domain = '
-       'new Domain(${domain.code.toLowerCase()}DomainCode); \n';
-  sc = '${sc}    domains.add(${domain.code.toLowerCase()}Domain); \n';
+  sc = '${sc}    var ${domain.codeWithFirstLetterInLowerCase}Domain = '
+       'new Domain(${domain.codeWithFirstLetterInLowerCase}DomainCode); \n';
+  sc = '${sc}    domains.add(${domain.codeWithFirstLetterInLowerCase}'
+       'Domain); \n';
   sc = '${sc}    add(new ${domain.code}Models('
-       '${domain.code.toLowerCase()}Domain)); \n';
+       '${domain.codeWithFirstLetterInLowerCase}Domain)); \n';
   sc = '${sc}  } \n';
 
   sc = '${sc} \n';
@@ -35,7 +38,8 @@ String genGeneratedRepository(Domain domain) {
 
 String genGeneratedModels(Domain domain) {
   var sc = ' \n';
-  sc = '${sc}// repo/code/generated/${domain.code.toLowerCase()}/models.dart \n';
+  sc = '${sc}// repo/code/generated/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+       'models.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${domain.code}Models extends DomainModels { \n';
   sc = '${sc} \n';
@@ -49,9 +53,10 @@ String genGeneratedModels(Domain domain) {
   for (Model model in domain.models) {
     sc = '${sc}  ${model.code}Entries fromJsonTo${model.code}Entries() { \n';
     sc = '${sc}    return new ${model.code}Entries(fromMagicBoxes( \n';
-    sc = '${sc}      ${domain.code.toLowerCase()}${model.code}ModelInJson, \n';
+    sc = '${sc}      ${domain.codeWithFirstLetterInLowerCase}${model.code}'
+         'ModelInJson, \n';
     sc = '${sc}      domain, \n';
-    sc = '${sc}      DartlingRepo.${domain.code.toLowerCase()}'
+    sc = '${sc}      DartlingRepo.${domain.codeWithFirstLetterInLowerCase}'
          '${model.code}ModelCode)); \n';
     sc = '${sc}  } \n';
     sc = '${sc} \n';
@@ -64,9 +69,10 @@ String genGeneratedModels(Domain domain) {
 }
 
 
-String genGeneratedEntries(String domain, Model model) {
+String genGeneratedEntries(Domain domain, Model model) {
   var sc = ' \n';
-  sc = '${sc}// repo/code/generated/${domain}/${model.code.toLowerCase()}/entries.dart \n';
+  sc = '${sc}// repo/code/generated/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+       '${model.codeWithCamelCaseInLowerCaseUnderscore}/entries.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${model.code}Entries extends ModelEntries { \n';
   sc = '${sc} \n';
@@ -115,14 +121,14 @@ String genGeneratedEntries(String domain, Model model) {
   sc = '${sc} \n';
 
   sc = '${sc}  fromJsonToData() { \n';
-  sc = '${sc}    fromJson(${domain}${model.code}DataInJson); \n';
+  sc = '${sc}    fromJson(${domain.code}${model.code}DataInJson); \n';
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 
   for (Concept entryConcept in model.entryConcepts) {
     sc = '${sc}  ${entryConcept.codeInPlural} get '
-         '${entryConcept.codeInPlural.toLowerCase()}() => '
-         'getEntry("${entryConcept.code}"); \n';
+         '${entryConcept.camelCaseToLowerCaseUnderscore(entryConcept.codeInPlural)}'
+         '() => getEntry("${entryConcept.code}"); \n';
   }
 
   sc = '${sc} \n';
@@ -132,10 +138,12 @@ String genGeneratedEntries(String domain, Model model) {
   return sc;
 }
 
-String genGeneratedConcept(String domain, String model, Concept concept) {
+String genGeneratedConcept(Domain domain, Model model, Concept concept) {
   var sc = ' \n';
-  sc = '${sc}// repo/code/generated/${domain}/${model}'
-       '/${concept.codeInPlural.toLowerCase()}.dart \n';
+  sc = '${sc}// repo/code/generated/'
+       '${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+       '${model.codeWithCamelCaseInLowerCaseUnderscore}'
+       '/${concept.camelCaseToLowerCaseUnderscore(concept.codeInPlural)}.dart \n';
   sc = '${sc} \n';
   sc = '${sc}abstract class ${concept.code}Gen extends '
        'ConceptEntity<${concept.code}> { \n';
@@ -146,11 +154,12 @@ String genGeneratedConcept(String domain, String model, Concept concept) {
     sc = '${sc}  ${concept.code}Gen(Concept concept) : super.of(concept) { \n';
     for (Child child in concept.children) {
       Concept destinationConcept = child.destinationConcept;
-      sc = '${sc}    Concept ${destinationConcept.code.toLowerCase()}Concept = '
+      sc = '${sc}    Concept ${destinationConcept.codeWithFirstLetterInLowerCase}'
+           'Concept = '
            'concept.model.concepts.findByCode("${destinationConcept.code}"); \n';
       sc = '${sc}    setChild("${child.code}", '
            'new ${destinationConcept.codeInPlural}('
-           '${destinationConcept.code.toLowerCase()}Concept)); \n';
+           '${destinationConcept.codeWithFirstLetterInLowerCase}Concept)); \n';
     }
     sc = '${sc}  } \n';
   }
@@ -186,17 +195,19 @@ String genGeneratedConcept(String domain, String model, Concept concept) {
     if (id.attributeCount > 0) {
       for (Attribute attribute in concept.attributes) {
         if (attribute.identifier) {
-          sc = '${sc}    setAttribute("${attribute.code}", ${attribute.code}); \n';
+          sc = '${sc}    setAttribute("${attribute.code}", '
+               '${attribute.code}); \n';
         }
       }
     }
     for (Child child in concept.children) {
       Concept destinationConcept = child.destinationConcept;
-      sc = '${sc}    Concept ${destinationConcept.code.toLowerCase()}Concept = '
+      sc = '${sc}    Concept ${destinationConcept.codeWithFirstLetterInLowerCase}'
+           'Concept = '
            'concept.model.concepts.findByCode("${destinationConcept.code}"); \n';
       sc = '${sc}    setChild("${child.code}", '
            'new ${destinationConcept.codeInPlural}('
-           '${destinationConcept.code.toLowerCase()}Concept)); \n';
+           '${destinationConcept.codeWithFirstLetterInLowerCase}Concept)); \n';
     }
     sc = '${sc}  } \n';
     sc = '${sc} \n';

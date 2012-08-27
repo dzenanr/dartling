@@ -83,17 +83,17 @@ String genDartling(Repo repo) {
 
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
-      sc = '${sc}#source("repo/code/generated/${domain.code.toLowerCase()}/'
-      '${model.code.toLowerCase()}/entries.dart"); \n';
+      sc = '${sc}#source("repo/code/generated/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+      '${model.codeWithCamelCaseInLowerCaseUnderscore}/entries.dart"); \n';
       for (Concept concept in model.concepts) {
-        sc = '${sc}#source("repo/code/generated/${domain.code.toLowerCase()}/'
-        '${model.code.toLowerCase()}/${concept.codeInPlural.toLowerCase()}.'
+        sc = '${sc}#source("repo/code/generated/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+        '${model.codeWithCamelCaseInLowerCaseUnderscore}/${concept.codeInPlural.toLowerCase()}.'
         'dart"); \n';
       }
     }
-    sc = '${sc}#source("repo/code/generated/${domain.code.toLowerCase()}/'
+    sc = '${sc}#source("repo/code/generated/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
          'models.dart"); \n';
-    sc = '${sc}#source("repo/code/generated/${domain.code.toLowerCase()}/'
+    sc = '${sc}#source("repo/code/generated/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
          'repository.dart"); \n';
   }
   sc = '${sc} \n';
@@ -101,19 +101,19 @@ String genDartling(Repo repo) {
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
       for (Concept concept in model.concepts) {
-        sc = '${sc}#source("repo/code/specific/${domain.code.toLowerCase()}/'
-        '${model.code.toLowerCase()}/${concept.codeInPlural.toLowerCase()}.'
+        sc = '${sc}#source("repo/code/specific/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+        '${model.codeWithCamelCaseInLowerCaseUnderscore}/${concept.codeInPlural.toLowerCase()}.'
         'dart"); \n';
       }
-      sc = '${sc}#source("repo/code/specific/${domain.code.toLowerCase()}/'
-      '${model.code.toLowerCase()}/init.dart"); \n';
+      sc = '${sc}#source("repo/code/specific/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+      '${model.codeWithCamelCaseInLowerCaseUnderscore}/init.dart"); \n';
     }
   }
   sc = '${sc} \n';
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
-      sc = '${sc}#source("repo/code/specific/tests/${domain.code.toLowerCase()}/'
-      '${model.code.toLowerCase()}/data.dart"); \n';
+      sc = '${sc}#source("repo/code/specific/tests/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+      '${model.codeWithCamelCaseInLowerCaseUnderscore}/data.dart"); \n';
     }
   }
   sc = '${sc}#source("repo/code/specific/tests/lastgrouptest.dart"); \n';
@@ -122,15 +122,15 @@ String genDartling(Repo repo) {
 
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
-      sc = '${sc}#source("repo/data/${domain.code.toLowerCase()}/'
-           '${model.code.toLowerCase()}/json.dart"); \n';
+      sc = '${sc}#source("repo/data/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+           '${model.codeWithCamelCaseInLowerCaseUnderscore}/json.dart"); \n';
     }
   }
   sc = '${sc} \n';
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
-      sc = '${sc}#source("repo/data/model/${domain.code.toLowerCase()}/'
-           '${model.code.toLowerCase()}/json.dart"); \n';
+      sc = '${sc}#source("repo/data/model/${domain.codeWithCamelCaseInLowerCaseUnderscore}/'
+           '${model.codeWithCamelCaseInLowerCaseUnderscore}/json.dart"); \n';
     }
   }
   sc = '${sc} \n';
@@ -140,21 +140,23 @@ String genDartling(Repo repo) {
   sc = '${sc} \n';
   for (Domain domain in repo.domains) {
     sc = '${sc}  // change "Dartling" to "YourDomainName" \n';
-    sc = '${sc}  var ${domain.code.toLowerCase()}Domain = '
+    sc = '${sc}  var ${domain.codeWithFirstLetterInLowerCase}Domain = '
          'new Domain("${domain.code}"); \n';
     sc = '${sc} \n';
     for (Model model in domain.models) {
-      sc = '${sc}  // change dartling to yourdomainname \n';
-      sc = '${sc}  // change skeleton to yourmodelname \n';
+      sc = '${sc}  // change dartling to yourDomainName \n';
+      sc = '${sc}  // change Skeleton to YourModelName \n';
       sc = '${sc}  // change "Skeleton" to "YourModelName" \n';
-      sc = '${sc}  Model ${domain.code.toLowerCase()}'
-           '${model.code.toLowerCase()}Model = \n';
-      sc = '${sc}      fromMagicBoxes(${domain.code.toLowerCase()}'
-           '${model.code.toLowerCase()}ModelInJson, '
-           '${domain.code.toLowerCase()}Domain, "${model.code}"); \n';
+      sc = '${sc}  Model ${domain.codeWithFirstLetterInLowerCase}'
+           '${model.code}Model = \n';
+      sc = '${sc}      fromMagicBoxes(${domain.codeWithFirstLetterInLowerCase}'
+           '${model.code}ModelInJson, '
+           '${domain.codeWithFirstLetterInLowerCase}'
+           'Domain, "${model.code}"); \n';
       sc = '${sc} \n';
     }
-    sc = '${sc}  repo.domains.add(${domain.code.toLowerCase()}Domain); \n';
+    sc = '${sc}  repo.domains.add(${domain.codeWithFirstLetterInLowerCase}'
+         'Domain); \n';
     sc = '${sc} \n';
   }
   sc = '${sc}  repo.gen(); \n';
@@ -164,15 +166,17 @@ String genDartling(Repo repo) {
 
   sc = '${sc}testData() { \n';
   for (Domain domain in repo.domains) {
-    sc = '${sc}  var ${domain.code.toLowerCase()}Repo = '
+    sc = '${sc}  var ${domain.codeWithFirstLetterInLowerCase}Repo = '
          'new ${domain.code}Repo(); \n';
     sc = '${sc} \n';
     for (Model model in domain.models) {
       sc = '${sc}  test${domain.code}${model.code}Data('
-           '${domain.code.toLowerCase()}Repo, '
-           '${domain.code}Repo.${domain.code.toLowerCase()}DomainCode, \n';
-      sc = '${sc}      ${domain.code}Repo.${domain.code.toLowerCase()}'
-           '${model.code.toLowerCase()}ModelCode); \n';
+           '${domain.codeWithFirstLetterInLowerCase}Repo, '
+           '${domain.code}Repo.${domain.codeWithFirstLetterInLowerCase}'
+           'DomainCode, \n';
+      sc = '${sc}      ${domain.code}Repo.'
+           '${domain.codeWithFirstLetterInLowerCase}'
+           '${model.code}ModelCode); \n';
       sc = '${sc} \n';
     }
   }
@@ -183,25 +187,26 @@ String genDartling(Repo repo) {
 
   sc = '${sc}initData() { \n';
   for (Domain domain in repo.domains) {
-    sc = '${sc}   var ${domain.code.toLowerCase()}Repo = '
+    sc = '${sc}   var ${domain.codeWithFirstLetterInLowerCase}Repo = '
          'new ${domain.code}Repo(); \n';
-    sc = '${sc}   var ${domain.code.toLowerCase()}Models = \n';
-    sc = '${sc}       ${domain.code.toLowerCase()}Repo.'
+    sc = '${sc}   var ${domain.codeWithFirstLetterInLowerCase}Models = \n';
+    sc = '${sc}       ${domain.codeWithFirstLetterInLowerCase}Repo.'
          'getDomainModels(${domain.code}Repo.'
-         '${domain.code.toLowerCase()}DomainCode); \n';
+         '${domain.codeWithFirstLetterInLowerCase}DomainCode); \n';
     sc = '${sc} \n';
     for (Model model in domain.models) {
-      sc = '${sc}   var ${domain.code.toLowerCase()}${model.code.toLowerCase()}'
+      sc = '${sc}   var ${domain.codeWithFirstLetterInLowerCase}${model.code}'
            'Entries = \n';
-      sc = '${sc}       ${domain.code.toLowerCase()}Models.'
-           'getModelEntries(${domain.code}Repo.${domain.code.toLowerCase()}'
-           '${model.code.toLowerCase()}ModelCode); \n';
+      sc = '${sc}       ${domain.codeWithFirstLetterInLowerCase}Models.'
+           'getModelEntries(${domain.code}Repo.'
+           '${domain.codeWithFirstLetterInLowerCase}'
+           '${model.code}ModelCode); \n';
       sc = '${sc}   init${domain.code}${model.code}('
-           '${domain.code.toLowerCase()}${model.code.toLowerCase()}'
+           '${domain.codeWithFirstLetterInLowerCase}${model.code}'
            'Entries); \n';
-      sc = '${sc}   ${domain.code.toLowerCase()}${model.code.toLowerCase()}'
+      sc = '${sc}   ${domain.codeWithFirstLetterInLowerCase}${model.code}'
            'Entries.display(); \n';
-      sc = '${sc}   ${domain.code.toLowerCase()}${model.code.toLowerCase()}'
+      sc = '${sc}   ${domain.codeWithFirstLetterInLowerCase}${model.code}'
            'Entries.displayJson(); \n';
     }
   }

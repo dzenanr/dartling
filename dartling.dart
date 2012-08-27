@@ -38,18 +38,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import('dart:math');
 #import('dart:uri');
 
-#source('repo/code/generated/categoryquestion/link/categories.dart');
-#source('repo/code/generated/categoryquestion/link/comments.dart');
-#source('repo/code/generated/categoryquestion/link/entries.dart');
-#source('repo/code/generated/categoryquestion/link/interests.dart');
-#source('repo/code/generated/categoryquestion/link/members.dart');
-#source('repo/code/generated/categoryquestion/link/questions.dart');
-#source('repo/code/generated/categoryquestion/link/webLinks.dart');
-#source('repo/code/generated/categoryquestion/models.dart');
+#source('repo/code/generated/category_question/link/categories.dart');
+#source('repo/code/generated/category_question/link/comments.dart');
+#source('repo/code/generated/category_question/link/entries.dart');
+#source('repo/code/generated/category_question/link/interests.dart');
+#source('repo/code/generated/category_question/link/members.dart');
+#source('repo/code/generated/category_question/link/questions.dart');
+#source('repo/code/generated/category_question/link/webLinks.dart');
+#source('repo/code/generated/category_question/models.dart');
 
-#source('repo/code/generated/davidcurtis/institution/ecoles.dart');
-#source('repo/code/generated/davidcurtis/institution/entries.dart');
-#source('repo/code/generated/davidcurtis/models.dart');
+#source('repo/code/generated/david_curtis/institution/ecoles.dart');
+#source('repo/code/generated/david_curtis/institution/entries.dart');
+#source('repo/code/generated/david_curtis/models.dart');
 #source('repo/code/generated/default/project/entries.dart');
 #source('repo/code/generated/default/project/projects.dart');
 #source('repo/code/generated/default/user/entries.dart');
@@ -57,30 +57,30 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('repo/code/generated/default/models.dart');
 #source('repo/code/generated/repository.dart');
 
-#source('repo/code/specific/categoryquestion/link/categories.dart');
-#source('repo/code/specific/categoryquestion/link/comments.dart');
-#source('repo/code/specific/categoryquestion/link/interests.dart');
-#source('repo/code/specific/categoryquestion/link/members.dart');
-#source('repo/code/specific/categoryquestion/link/questions.dart');
-#source('repo/code/specific/categoryquestion/link/webLinks.dart');
-#source('repo/code/specific/davidcurtis/institution/ecoles.dart');
+#source('repo/code/specific/category_question/link/categories.dart');
+#source('repo/code/specific/category_question/link/comments.dart');
+#source('repo/code/specific/category_question/link/interests.dart');
+#source('repo/code/specific/category_question/link/members.dart');
+#source('repo/code/specific/category_question/link/questions.dart');
+#source('repo/code/specific/category_question/link/webLinks.dart');
+#source('repo/code/specific/david_curtis/institution/ecoles.dart');
 #source('repo/code/specific/default/project/projects.dart');
 #source('repo/code/specific/default/user/users.dart');
 
-#source('repo/code/specific/tests/categoryquestion/link/data.dart');
-#source('repo/code/specific/tests/categoryquestion/link/model.dart');
-#source('repo/code/specific/tests/davidcurtis/institution/data.dart');
+#source('repo/code/specific/tests/category_question/link/data.dart');
+#source('repo/code/specific/tests/category_question/link/model.dart');
+#source('repo/code/specific/tests/david_curtis/institution/data.dart');
 #source('repo/code/specific/tests/default/project/data.dart');
 #source('repo/code/specific/tests/default/user/data.dart');
-#source('repo/code/specific/tests/lastgrouptest.dart');
-#source('repo/code/specific/tests/lastsingletest.dart');
+#source('repo/code/specific/tests/last_group_test.dart');
+#source('repo/code/specific/tests/last_single_test.dart');
 
-#source('repo/data/categoryquestion/link/json.dart');
-#source('repo/data/davidcurtis/institution/json.dart');
+#source('repo/data/category_question/link/json.dart');
+#source('repo/data/david_curtis/institution/json.dart');
 #source('repo/data/default/project/json.dart');
 #source('repo/data/default/user/json.dart');
-#source('repo/data/model/categoryquestion/link/json.dart');
-#source('repo/data/model/davidcurtis/institution/json.dart');
+#source('repo/data/model/category_question/link/json.dart');
+#source('repo/data/model/david_curtis/institution/json.dart');
 #source('repo/data/model/default/project/json.dart');
 #source('repo/data/model/default/user/json.dart');
 
@@ -126,12 +126,12 @@ genCode() {
 
 testData() {
   var repo = new DartlingRepo();
-  testCategoryQuestionLinkData(repo, DartlingRepo.categoryquestionDomainCode,
-      DartlingRepo.categoryquestionLinkModelCode);
+  testCategoryQuestionLinkData(repo, DartlingRepo.categoryQuestionDomainCode,
+      DartlingRepo.categoryQuestionLinkModelCode);
   testCategoryQuestionLinkModel();
 
-  testDavidCurtisInstitutionData(repo, DartlingRepo.davidcurtisDomainCode,
-      DartlingRepo.davidcurtisInstitutionModelCode);
+  testDavidCurtisInstitutionData(repo, DartlingRepo.davidCurtisDomainCode,
+      DartlingRepo.davidCurtisInstitutionModelCode);
 
   testDefaultProjectData(repo, DartlingRepo.defaultDomainCode,
       DartlingRepo.defaultProjectModelCode);
