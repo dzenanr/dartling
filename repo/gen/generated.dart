@@ -84,8 +84,12 @@ String genGeneratedEntries(Model model) {
     var concept = model.concepts.findByCode('Project');
     sc = '${sc}    concept = model.concepts.findByCode('
          '"${entryConcept.code}"); \n';
+    var codes = entryConcept.codes;
+    if (codes == null) {
+      codes = entryConcept.codePlural;
+    }
     sc = '${sc}    entries["${entryConcept.code}"] = '
-         'new ${entryConcept.codes}(concept); \n';
+         'new ${codes}(concept); \n';
   }
   sc = '${sc}    return entries; \n';
   sc = '${sc}  } \n';
@@ -99,7 +103,11 @@ String genGeneratedEntries(Model model) {
   sc = '${sc}    } \n';
   for (Concept concept in model.concepts) {
     sc = '${sc}    if (concept.code == "${concept.code}") { \n';
-    sc = '${sc}      return new ${concept.codes}(concept); \n';
+    var codes = concept.codes;
+    if (codes == null) {
+      codes = concept.codePlural;
+    }
+    sc = '${sc}      return new ${codes}(concept); \n';
     sc = '${sc}    } \n';
   }
   sc = '${sc}  } \n';
@@ -125,8 +133,12 @@ String genGeneratedEntries(Model model) {
   sc = '${sc} \n';
 
   for (Concept entryConcept in model.entryConcepts) {
-    sc = '${sc}  ${entryConcept.codes} get '
-         '${entryConcept.codeLowerUnderscore}'
+    var codes = entryConcept.codes;
+    if (codes == null) {
+      codes = entryConcept.codePlural;
+    }
+    sc = '${sc}  ${codes} get '
+         '${entryConcept.codePluralLowerUnderscore}'
          '() => getEntry("${entryConcept.code}"); \n';
   }
 
@@ -160,8 +172,11 @@ String genGeneratedConcept(Concept concept) {
       sc = '${sc}    Concept ${destinationConcept.codeFirstLetterLower}'
            'Concept = concept.model.concepts.findByCode('
            '"${destinationConcept.code}"); \n';
-      sc = '${sc}    setChild("${child.code}", '
-           'new ${destinationConcept.codes}('
+      var codes = destinationConcept.codes;
+      if (codes == null) {
+        codes = destinationConcept.codePlural;
+      }
+      sc = '${sc}    setChild("${child.code}", new ${codes}('
            '${destinationConcept.codeFirstLetterLower}Concept)); \n';
     }
     sc = '${sc}  } \n';
@@ -208,8 +223,11 @@ String genGeneratedConcept(Concept concept) {
       sc = '${sc}    Concept ${destinationConcept.codeFirstLetterLower}'
            'Concept = concept.model.concepts.findByCode('
            '"${destinationConcept.code}"); \n';
-      sc = '${sc}    setChild("${child.code}", '
-           'new ${destinationConcept.codes}('
+      var codes = destinationConcept.codes;
+      if (codes == null) {
+        codes = destinationConcept.codePlural;
+      }
+      sc = '${sc}    setChild("${child.code}", new ${codes}('
            '${destinationConcept.codeFirstLetterLower}Concept)); \n';
     }
     sc = '${sc}  } \n';
@@ -233,12 +251,13 @@ String genGeneratedConcept(Concept concept) {
   }
   for (Child child in concept.children) {
     Concept destinationConcept = child.destinationConcept;
-    sc = '${sc}  ${destinationConcept.codes} get ${child.code}() => '
+    var codes = destinationConcept.codes;
+    if (codes == null) {
+      codes = destinationConcept.codePlural;
+    }
+    sc = '${sc}  ${codes} get ${child.code}() => '
          'getChild("${child.code}"); \n ';
-    /*
-    sc = '${sc} set ${child.code}(${destinationConcept.codePlural} p) => '
-         'setChild("${child.code}", p); \n ';
-    */
+    // set child?
     sc = '${sc} \n';
   }
 
@@ -260,14 +279,15 @@ String genGeneratedConcept(Concept concept) {
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
-  sc = '${sc}abstract class ${concept.codes}Gen extends '
-       'Entities<${concept.code}> { \n';
+  var codes = concept.codes;
+  if (codes == null) {
+    codes = concept.codePlural;
+  }
+  sc = '${sc}abstract class ${codes}Gen extends Entities<${concept.code}> { \n';
   sc = '${sc} \n';
-  sc = '${sc}  ${concept.codes}Gen(Concept concept) : '
-       'super.of(concept); \n';
+  sc = '${sc}  ${codes}Gen(Concept concept) : super.of(concept); \n';
   sc = '${sc} \n';
-  sc = '${sc}  ${concept.codes} newEntities() => '
-       'new ${concept.codes}(concept); \n ';
+  sc = '${sc}  ${codes} newEntities() => new ${codes}(concept); \n ';
   sc = '${sc} \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
