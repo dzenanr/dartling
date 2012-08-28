@@ -1,5 +1,4 @@
 
-
 String genApp(Repo repo) {
   var sc = '${license} \n';
   sc = '${sc}// app.dart \n';
@@ -52,12 +51,8 @@ String genApp(Repo repo) {
       sc = '${sc}#source("repo/code/generated/${domain.codeLowerUnderscore}/'
       '${model.codeLowerUnderscore}/entries.dart"); \n';
       for (Concept concept in model.concepts) {
-        var codesLowerUnderscore = concept.codesLowerUnderscore;
-        if (codesLowerUnderscore == null) {
-          codesLowerUnderscore = concept.codePluralLowerUnderscore;
-        }
         sc = '${sc}#source("repo/code/generated/${domain.codeLowerUnderscore}/'
-        '${model.codeLowerUnderscore}/${codesLowerUnderscore}.dart"); \n';
+        '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart"); \n';
       }
     }
     sc = '${sc}#source("repo/code/generated/${domain.codeLowerUnderscore}/'
@@ -70,12 +65,8 @@ String genApp(Repo repo) {
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
       for (Concept concept in model.concepts) {
-        var codesLowerUnderscore = concept.codesLowerUnderscore;
-        if (codesLowerUnderscore == null) {
-          codesLowerUnderscore = concept.codePluralLowerUnderscore;
-        }
         sc = '${sc}#source("repo/code/specific/${domain.codeLowerUnderscore}/'
-        '${model.codeLowerUnderscore}/${codesLowerUnderscore}.dart"); \n';
+        '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart"); \n';
       }
       sc = '${sc}#source("repo/code/specific/${domain.codeLowerUnderscore}/'
       '${model.codeLowerUnderscore}/init.dart"); \n';

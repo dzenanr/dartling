@@ -16,8 +16,8 @@ class Concept extends ConceptEntity<Concept> {
   bool add = true;
   bool remove = true;
 
-  String codes; // code plural
-  String codesLowerUnderscore; // lower letters and undescore separator
+  String _codes; // code (in) plural
+  String _codesLowerUnderscore; // lower letters and undescore separator
   String description;
 
   Model model;
@@ -40,6 +40,28 @@ class Concept extends ConceptEntity<Concept> {
 
     sourceParents = new Parents();
     sourceChildren = new Children();
+  }
+
+  String get codes() {
+    if (_codes == null) {
+      _codes = codePlural;
+    }
+    return _codes;
+  }
+
+  void set codes(String codes) {
+    _codes = codes;
+  }
+
+  String get codesLowerUnderscore() {
+    if (_codesLowerUnderscore == null) {
+      _codesLowerUnderscore = codePluralLowerUnderscore;
+    }
+    return _codesLowerUnderscore;
+  }
+
+  void set codesLowerUnderscore(String codesLowerUnderscore) {
+    _codesLowerUnderscore = codesLowerUnderscore;
   }
 
   Attribute getAttribute(String attributeCode) =>

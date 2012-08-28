@@ -120,12 +120,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       throw new ConceptException('Entities.add: concept is not defined.');
     }
     if (!_concept.add) {
-      var codes = _concept.codes;
-      if (codes == null) {
-        codes = _concept.codePlural;
-      }
-      throw new AddException(
-        'An entity cannot be added to ${codes}.');
+      throw new AddException('An entity cannot be added to ${_concept.codes}.');
     }
 
     bool result = true;
@@ -137,11 +132,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
         maxInt = Math.parseInt(maxc);
         if (count == maxInt) {
           Error error = new Error('max');
-          var codes = _concept.codes;
-          if (codes == null) {
-            codes = _concept.codePlural;
-          }
-          error.message = '${codes}.max is $maxc.';
+          error.message = '${_concept.codes}.max is $maxc.';
 
           _errors.add(error);
           result = false;
@@ -266,12 +257,8 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       throw new ConceptException('Entities.remove: concept is not defined.');
     }
     if (!_concept.remove) {
-      var codes = _concept.codes;
-      if (codes == null) {
-        codes = _concept.codePlural;
-      }
       throw new RemoveException(
-        'An entity cannot be removed from ${codes}.');
+        'An entity cannot be removed from ${_concept.codes}.');
     }
 
     bool result = true;
@@ -283,11 +270,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
         minInt = Math.parseInt(minc);
         if (count == minInt) {
           Error error = new Error('min');
-          var codes = _concept.codes;
-          if (codes == null) {
-            codes = _concept.codePlural;
-          }
-          error.message = '${codes}.min is $minc.';
+          error.message = '${_concept.codes}.min is $minc.';
           _errors.add(error);
           result = false;
         }
@@ -406,12 +389,8 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     if (beforeEntity.oid == afterEntity.oid &&
         beforeEntity.code == afterEntity.code &&
         beforeEntity.id == afterEntity.id) {
-      var codes = _concept.codes;
-      if (codes == null) {
-        codes = _concept.codePlural;
-      }
       throw new UpdateException(
-          '${codes}.update can only be used if oid, code or id set.');
+          '${_concept.codes}.update can only be used if oid, code or id set.');
     }
     if (remove(beforeEntity)) {
       if (add(afterEntity)) {
@@ -419,30 +398,18 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       } else {
         if (add(beforeEntity)) {
           Error error = new Error('update');
-          var codes = _concept.codes;
-          if (codes == null) {
-            codes = _concept.codePlural;
-          }
           error.message =
-            '${codes}.update fails to add after update entity.';
+            '${_concept.codes}.update fails to add after update entity.';
           _errors.add(error);
         } else {
-          var codes = _concept.codes;
-          if (codes == null) {
-            codes = _concept.codePlural;
-          }
           throw new UpdateException(
-              '${codes}.update fails to add back before update entity.');
+              '${_concept.codes}.update fails to add back before update entity.');
         }
       }
     } else {
       Error error = new Error('update');
-      var codes = _concept.codes;
-      if (codes == null) {
-        codes = _concept.codePlural;
-      }
       error.message =
-        '${codes}.update fails to remove before update entity.';
+        '${_concept.codes}.update fails to remove before update entity.';
       _errors.add(error);
     }
     return false;

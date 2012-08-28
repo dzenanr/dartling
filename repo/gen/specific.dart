@@ -7,11 +7,7 @@ String genSpecificInitDomainModelData(Model model) {
   sc = '${sc} \n';
   sc = '${sc}init${domain.code}${model.code}(var entries) { \n';
   for (Concept entryConcept in model.entryConcepts) {
-    var codes = entryConcept.codes;
-    if (codes == null) {
-      codes = entryConcept.codePlural;
-    }
-    sc = '${sc}   //_init${codes}(); \n';
+    sc = '${sc}   //_init${entryConcept.codes}(); \n';
   }
   sc = '${sc}} \n';
   sc = '${sc} \n';
@@ -23,12 +19,8 @@ String genSpecificConcept(Concept concept) {
   Model model = concept.model;
   Domain domain = model.domain;
   var sc = ' \n';
-  var codesLowerUnderscore = concept.codesLowerUnderscore;
-  if (codesLowerUnderscore == null) {
-    codesLowerUnderscore = concept.codePluralLowerUnderscore;
-  }
   sc = '// repo/code/specific/${domain.codeLowerUnderscore}/'
-       '${model.codeLowerUnderscore}/${codesLowerUnderscore}.dart \n';
+       '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${concept.code} extends ${concept.code}Gen { \n';
   sc = '${sc} \n';
@@ -76,13 +68,9 @@ String genSpecificConcept(Concept concept) {
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
-  var codes = concept.codes;
-  if (codes == null) {
-    codes = concept.codePlural;
-  }
-  sc = '${sc}class ${codes} extends ${codes}Gen { \n';
+  sc = '${sc}class ${concept.codes} extends ${concept.codes}Gen { \n';
   sc = '${sc} \n';
-  sc = '${sc}  ${codes}(Concept concept) : super(concept); \n';
+  sc = '${sc}  ${concept.codes}(Concept concept) : super(concept); \n';
   sc = '${sc} \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
