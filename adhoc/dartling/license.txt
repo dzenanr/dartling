@@ -1,4 +1,5 @@
-/*
+License
+
 http://opensource.org/licenses/
 
 http://en.wikipedia.org/wiki/BSD_license
@@ -28,51 +29,3 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-
-#library('dartling');
-
-//#import('package:unittest/unittest.dart');
-#import('../unittest/unittest.dart');
-#import('dart:json');
-#import('dart:math');
-#import('dart:uri');
-
-#source('data/domain/model/event/actions.dart');
-#source('data/domain/model/event/reactions.dart');
-#source('data/domain/model/exception/errors.dart');
-#source('data/domain/model/exception/exceptions.dart');
-#source('data/domain/model/transfer/json.dart');
-#source('data/domain/model/entities.dart');
-#source('data/domain/model/entity.dart');
-#source('data/domain/model/entries.dart');
-#source('data/domain/model/id.dart');
-#source('data/domain/model/oid.dart');
-#source('data/domain/models.dart');
-#source('data/domain/session.dart');
-
-#source('data/gen/app.dart');
-#source('data/gen/dartling.dart');
-#source('data/gen/generated.dart');
-#source('data/gen/specific.dart');
-#source('data/gen/tests.dart');
-
-#source('data/meta/attributes.dart');
-#source('data/meta/children.dart');
-#source('data/meta/concepts.dart');
-#source('data/meta/domains.dart');
-#source('data/meta/models.dart');
-#source('data/meta/neighbor.dart');
-#source('data/meta/parents.dart');
-#source('data/meta/property.dart');
-#source('data/meta/types.dart');
-
-#source('data/repository.dart');
-
-#source("view/component/entities.dart");
-#source("view/component/entity.dart");
-#source("view/component/param.dart");
-
-void main() {
-
-}

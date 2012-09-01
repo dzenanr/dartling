@@ -1,0 +1,38 @@
+pub: The Dart Package Manager
+
+http://www.dartlang.org/docs/pub-package-manager/
+https://docs.google.com/document/d/13y7yCwq9GtPChXtd6t0YMcUtMJLZq2IVwq546Dve_No/edit
+http://bob-package-layout.dart-lang.appspot.com/docs/pub-package-manager/package-layout.html
+Google: windows set environment variable
+http://www.itechtalk.com/thread3595.html
+http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx
+
+USER VAR
+DART_SDK :
+C:\dart\editor\dart-sdk
+SYSTEM PATH
+PATH
+add at the end: 
+;%DART_SDK%\bin
+restart
+
+command black window
+cd git/dart/dartling
+pubspec.yaml is in the dartling folder
+dependencies:
+  unittest:
+    sdk: unittest
+from the dartling folder:
+pub install
+
+the packages folder appears in the dartling folder:
+packages
+  unittest
+    
+in dartling.dart:
+#import('package:unittest/unittest.dart');
+
+in Dart Editor:
+Tools/Preferences
+Package directory: C:\Users\ridjanod\git\dart\dartling\packages
+

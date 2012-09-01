@@ -1,0 +1,7 @@
+Regular Expressions
+
+http://www.regular-expressions.info/tutorial.html
+http://weblogs.asp.net/jgalloway/archive/2005/09/27/426087.aspx
+
+
+

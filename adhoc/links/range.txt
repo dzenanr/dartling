@@ -1,0 +1,4 @@
+Range
+
+http://blog.lassus.se/2011/11/lets-create-us-some-dart-ranges.html
+https://github.com/olov/dart-range
