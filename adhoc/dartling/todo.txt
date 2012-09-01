@@ -1,5 +1,61 @@
-To Do
+Dartling To Do
 
-+ github
-+ finalize pub
-+ update README.md content and use markdown (md)
+finalize pub
+update README.md content and use markdown (md)
+
+util/text_handling
+
+unique model and concept names: DomainModel, DomainModelConcept ?
+
+default neighbor names in Magic Boxes
+add essential for items in Magic Boxes
+add abstract for boxes in Magic Boxes
+add all from Dartling to Magic Boxes
+
+generate some basic tests
+test dartling package (error in windows)
+
+action.doit when called directly by a user avoids a session doit
+  ok when session is null for undoing the action
+  not ok if session is not null
+    how to make a distinction between a user call and a session past call?
+  
+get random entity
+  http://api.dartlang.org/docs/continuous/dart_math/Random.html
+get random value for different types (for test data)
+  
+document code
+  http://www.dartlang.org/docs/language-tour/#comments
+  http://japhr.blogspot.ca/2012/03/pretty-dartdoc.html
+  http://www.dotnetcodegeeks.com/2012/03/10-best-practices-of-code-commenting.html
+  http://www.flyingmachinestudios.com/doctemplate/
+
+Uri validation for well formed uri (not done in Uri)
+  https://github.com/berkerpeksag/murl#readme
+  ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
+  http://msdn.microsoft.com/en-us/library/system.uri.iswellformedoriginalstring.aspx
+Dynamic type???
+Duration (time span) type
+email type
+money type
+telephone type
+postal code type
+zip code type
+encryption for sensitive data
+  http://www.howstuffworks.com/encryption.htm
+marketing
+  https://talentopoly.com/posts/5440-episode_36_-_how_to_get_traction_for_your_projects
+  http://blog.stackoverflow.com/2011/05/community-promotion-ads/
+  http://radar.oreilly.com/2012/08/building-conference-programs.html
+
+deep copy
+attach/detach
+model integration
+many-to-many between models
+logging 
+  http://www.trottercashion.com/2012/08/12/how-to-write-good-log-messages.html
+  https://github.com/solvr/log4dart
+attribute validations (type, length)?
+constraints?
+i18n
+indexes?? (http://www.mattfleming.com/node/192)
