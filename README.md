@@ -1,14 +1,15 @@
 
 
-Dartling
 
-Dartling (https://github.com/dzenanr/Dartling) is a domain model framework for web application prototypes. Its open source license is the 3-clause BSD license -- "New BSD License" or "Modified BSD License" (http://en.wikipedia.org/wiki/BSD_license).
+# Dartling
+
+[Dartling] (https://github.com/dzenanr/Dartling) is a domain model framework for web application prototypes. Its open source license is the 3-clause BSD license -- ["New BSD License" or "Modified BSD License"] (http://en.wikipedia.org/wiki/BSD_license).
 
 Dartling model consists of concepts, concept attributes and concept neighbors. Two neighbors make a relationship between two concepts. A relationship has two directions, each direction going from one concept to another neighbor concept. When both concepts are the same, the relationship is reflexive. When there are two relationships between the same but different concepts, the relationships are twins.
 
-A graphical model designed in MagicBoxes (https://github.com/dzenanr/MagicBoxes) is transformed into JSON (http://www.json.org/, http://jsonformatter.curiousconcept.com/) representation, imported to Dartling and converted to the meta model. Then, the model may be used without almost any additional programming for quick prototypes.
+A graphical model designed in [MagicBoxes](https://github.com/dzenanr/MagicBoxes) is transformed into [JSON] (http://www.json.org/) representation, imported to Dartling and converted to the meta model. Then, the model may be used without almost any additional programming for quick prototypes.
 
-Dartling API
+## Dartling API
 
 Dartling repository may have several domains. A domain may have several models. A model has entry points that are entities. From an entity in one of entry entities, child entities may be obtained. Data navigation is done by following parent or child neighbors.
 
@@ -16,29 +17,18 @@ You can add, remove, update, find, select and order data. Actions or transaction
 
 To understand what else you can do with Dartling examine its API defined in abstract classes with Api at the end of their names. The two most important ones are EntitiesApi and EntityApi.
 
-Intermediate Example
+## Example
 
-The Link model (https://dl.dropbox.com/u/161496/dart/mb/model/Link2.png) has the most commonly used patterns: optional relationship (0..N -- 0..1), id dependent relationship (0..N -- 1..1 id), and many-to-many relationship (represented as two one-to-many id dependent relationships).
+The [Link model](https://dl.dropbox.com/u/161496/dart/mb/model/Link2.png) has the most commonly used patterns: optional relationship (0..N -- 0..1), id dependent relationship (0..N -- 1..1 id), and many-to-many relationship (represented as two one-to-many id dependent relationships).
 
-The JSON text (https://dl.dropbox.com/u/161496/dart/mb/model/Link2.txt) is generated in MagicBoxes and used in Dartling to create its meta model and the model without data, which are created in tests.
+The [JSON text](https://dl.dropbox.com/u/161496/dart/mb/model/Link2.txt) is generated in Magic Boxes and used in Dartling to create its meta model. The meta model is used in almost all methods of the Dartling’s API.
 
-Advanced Example
+## Dartling Project Structure
 
-The Link model of the CategoryQuestion domain has also some advanced model patterns: mandatory relationship (0..N -- 1..1), reflexive relationship (0..N -- 0..1 on the same concept), and
-twin relationships (0..N -- 1..1 id 2 relationships between the same 2 concepts).
+The Dartling project has two folders: data and view. The data folder has the gen subfolder where the code is generated from a domain model and regenerated if the model changes. A programmer should not change anything in the gen folder.
 
-From the graphical model (https://dl.dropbox.com/u/161496/dart/mb/model/CategoryQuestion_Link.png), 
-the JSON text 
-(https://dl.dropbox.com/u/161496/dart/mb/model/CategoryQuestionLink.txt) 
-is generated in MagicBoxes and used in Dartling to create its meta model. The meta model is used in almost all methods of the Dartling’s API.
+The data folder contains JSON representation of a model and its data. The model.dart file contains a model from Magic Boxes. The data.dart file contains data of the model. 
 
-Dartling Project Structure
+[**More details**] (http://goo.gl/7YGAq)
 
-The Dartling project has three generic (generated, meta, repository) and four specific folders (data, model, specific, test). 
-
-Code in the generated folder will be generated soon. It will be generated from a domain model. 
-
-The data folder contains data (in JSON) of models. The model folder contains models (in JSON) from Magic Boxes. The specific folder is a place for the customization of models. Tests are created in the test folder.
-
-More details: http://goo.gl/7YGAq
 
