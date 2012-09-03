@@ -72,6 +72,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source("view/component/entities.dart");
 #source("view/component/entity.dart");
 #source("view/component/param.dart");
+#source("view/component/repo.dart");
 
 void main() {
 

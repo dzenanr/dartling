@@ -1,5 +1,6 @@
 Good API Designing by Joshua Bloch
 
+http://richardminerich.com/2012/08/what-is-good-api-design/
 http://lcsd05.cs.tamu.edu/slides/keynote.pdf
 http://www.youtube.com/watch?v=aAb7hSCtvGw
 http://hash-table.com/home/2012/07/20/how-to-design-a-good-api-and-why-it-matters/

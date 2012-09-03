@@ -11,17 +11,17 @@ class EntityTable {
 
   void show() {
     if (hidden) {
-      String section = '<br/> ';
-      section = '${section}<table>';
-      section = '${section}  <caption>';
+      String section = '<br/> \n';
+      section = '${section}<table> \n';
+      section = '${section}  <caption> \n';
       String title;
       if (view.title == null) {
         title = view.did.toUpperCase();
       } else {
         title = view.title;
       }
-      section = '${section}    ${title}';
-      section = '${section}  </caption>';
+      section = '${section}    ${title} \n';
+      section = '${section}  </caption> \n';
       List<Attribute> attributes;
       if (view.essentialOnly) {
         attributes = view.entity.concept.essentialAttributes;
@@ -33,17 +33,17 @@ class EntityTable {
       for (Attribute attribute in attributes) {
         label = attribute.codeFirstLetterUpper;
         value = view.entity.getAttribute(attribute.code);
-        section = '${section}  <tr>';
-        section = '${section}    <th>';
-        section = '${section}      ${label}';
-        section = '${section}    </th>';
-        section = '${section}    <td>';
-        section = '${section}      ${value}';
-        section = '${section}    </td>';
-        section = '${section}  </tr>';
+        section = '${section}  <tr> \n';
+        section = '${section}    <th> \n';
+        section = '${section}      ${label} \n';
+        section = '${section}    </th> \n';
+        section = '${section}    <td> \n';
+        section = '${section}      ${value} \n';
+        section = '${section}    </td> \n';
+        section = '${section}  </tr> \n';
       }
-      section = '${section}</table>';
-      section = '$section <br/> ';
+      section = '${section}</table> \n';
+      section = '$section <br/> \n';
 
       /*
        * Each web page loaded in the browser has its own document object.

@@ -139,6 +139,19 @@ Model fromMagicBoxes(String json, Domain domain, String modelCode) {
     neighbor12.internal = lineInternal;
     if (lineCategory == 'inheritance') {
       neighbor12.inheritance = true;
+    } else if (lineCategory == 'reflexive') {
+      neighbor12.reflexive = true;
+    } else if (lineCategory == 'twin') {
+      neighbor12.twin = true;
+    }
+
+    neighbor21.internal = lineInternal;
+    if (lineCategory == 'inheritance') {
+      neighbor21.inheritance = true;
+    } else if (lineCategory == 'reflexive') {
+      neighbor21.reflexive = true;
+    } else if (lineCategory == 'twin') {
+      neighbor21.twin = true;
     }
   }
 

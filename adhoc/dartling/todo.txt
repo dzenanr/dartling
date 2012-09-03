@@ -1,5 +1,9 @@
 Dartling To Do
 
+add the Show button for an entity in a table
+add the Add button after the entities table
+create EntityForm to update the selected entity
+
 finalize pub
 update README.md content and use markdown (md)
 

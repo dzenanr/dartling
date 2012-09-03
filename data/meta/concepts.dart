@@ -98,7 +98,7 @@ class Concept extends ConceptEntity<Concept> {
     return essentialList;
   }
 
-  List<Property> get properties {
+  List<Property> get singleValueProperties {
   List<Property> propertyList = new List<Property>();
     propertyList.addAll(attributes.list);
     propertyList.addAll(parents.list);
@@ -106,7 +106,7 @@ class Concept extends ConceptEntity<Concept> {
   }
 
   bool get identifier {
-  for (Property property in properties) {
+  for (Property property in singleValueProperties) {
       if (property.identifier) {
         return true;
       }
@@ -140,7 +140,7 @@ class Concept extends ConceptEntity<Concept> {
   }
 
   Concept get entryConcept {
-    if(entry) {
+    if (entry) {
       return this;
     } else {
       for (Parent parent in parents) {
@@ -150,6 +150,39 @@ class Concept extends ConceptEntity<Concept> {
       }
       throw new ParentException('No internal parent for the ${code} concept');
     }
+  }
+
+  String get entryConceptThisConceptInternalPath {
+    if (entry) {
+      return code;
+    } else {
+      for (Parent parent in parents) {
+        if (parent.internal) {
+          return
+              '${parent.destinationConcept.entryConceptThisConceptInternalPath}'
+              '${code}';
+        }
+      }
+      throw new ParentException('No internal parent for the ${code} concept');
+    }
+  }
+
+  List<String> get childCodeInternalPaths {
+    List<String> childList = new List<String>();
+    for (Child child in children) {
+      Concept sourceConcept = child.sourceConcept;
+      String entryConceptSourceConceptInternalPath =
+          sourceConcept.entryConceptThisConceptInternalPath;
+      Concept destinationConcept = child.destinationConcept;
+      String childCodeInternalPath =
+          '${entryConceptSourceConceptInternalPath}'
+          '_${child.code}_${destinationConcept.code}';
+      childList.add(childCodeInternalPath);
+      if (!child.reflexive) {
+        childList.addAll(child.destinationConcept.childCodeInternalPaths);
+      }
+    }
+    return childList;
   }
 
 }

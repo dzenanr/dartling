@@ -3,6 +3,8 @@ abstract class Neighbor extends Property {
 
   bool internal = true;
   bool inheritance = false;
+  bool reflexive = false;
+  bool twin = false;
   Neighbor opposite;
 
   // the source concept is inherited from Property

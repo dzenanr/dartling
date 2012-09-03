@@ -38,8 +38,6 @@ String genDartling(Repo repo) {
   var sc = '${license} \n';
   sc = '${sc}// dartling.dart \n';
   sc = '${sc} \n';
-  sc = '${sc}#library("dartling"); \n';
-  sc = '${sc} \n';
   sc = '${sc}//#import("package:unittest/unittest.dart"); \n';
   sc = '${sc}#import("../unittest/unittest.dart"); \n';
   sc = '${sc}#import("dart:json"); \n';

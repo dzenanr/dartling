@@ -1,6 +1,7 @@
 
 class View {
 
+  Repo repo;
   Entities entities;
   ConceptEntity entity;
 
@@ -10,6 +11,16 @@ class View {
   bool essentialOnly = false;
 
   View(this.document, this.did);
+
+  View.from(View otherView, this.did) {
+    repo = otherView.repo;
+    entities = otherView.entities;
+    entity = otherView.entity;
+
+    document = otherView.document;
+    title = otherView.title;
+    essentialOnly = otherView.essentialOnly;
+  }
 
 }
 
