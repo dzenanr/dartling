@@ -137,7 +137,6 @@ String genApp(Repo repo) {
          '${domain.codeFirstLetterLower}Repo) { \n';
     sc = '${sc}   var mainView = new View(document, "main"); \n';
     sc = '${sc}   mainView.repo = ${domain.codeFirstLetterLower}Repo; \n';
-    sc = '${sc}   mainView.document = document; \n';
     sc = '${sc}   new RepoMainSection(mainView); \n';
     sc = '${sc}} \n';
     sc = '${sc} \n';

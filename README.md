@@ -31,4 +31,4 @@ The data folder contains JSON representation of a model and its data. The model.
 
 [**More details**] (http://goo.gl/7YGAq)
 
-[**New project**] (https://docs.google.com/document/d/1W1fz7cW5ky13P93OarBsr0Hd2Ze3BTx6D5H9OJm3h0w/edit)
+[**New project**] (https://docs.google.com/document/d/1n9dBtZskRPyy57whjKRzRl7gKG2b5KVZVghViGxAEMg/edit)

@@ -182,7 +182,7 @@ class EntitiesTable {
           String childCodePath =
               '${entryConceptSourceConceptInternalPath}_${child.code}_'
               '${destinationConcept.code}';
-          View childView = new View(document, childCodePath);
+          View childView = new View.from(view, childCodePath);
           childView.entities = entity.getChild(child.code);
           if (!childView.entities.empty) {
             if (entity.concept.identifier) {

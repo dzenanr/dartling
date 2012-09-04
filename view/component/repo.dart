@@ -72,7 +72,7 @@ class RepoMenuBar {
           Entities entryEntities = modelEntries.getEntry(concept.code);
           ButtonElement buttonElement =
               document.query('#${domain.code}${model.code}${concept.code}Button');
-          View entryEntitiesView = new View(view.document, concept.codesFirstLetterLower);
+          View entryEntitiesView = new View.from(view, concept.codesFirstLetterLower);
           entryEntitiesView.entities = entryEntities;
           entryEntitiesView.title = concept.codes;
           EntitiesTable entryEntitiesTable = new EntitiesTable(entryEntitiesView);
