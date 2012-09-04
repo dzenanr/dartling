@@ -10,7 +10,6 @@ class Attribute extends Property {
   int increment;
   int sequence;
   bool _derive = false;
-  bool essential = true;
 
   Type type;
 

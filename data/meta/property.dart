@@ -4,6 +4,7 @@ abstract class Property extends ConceptEntity<Property> {
   String minc = '0';
   String maxc = '1';
   bool _id = false;
+  bool essential = false;
   bool update = true;
   bool sensitive = false;
 
@@ -21,6 +22,7 @@ abstract class Property extends ConceptEntity<Property> {
     if (id) {
       minc = '1';
       maxc = '1';
+      essential = true;
       update = false;
     }
   }
