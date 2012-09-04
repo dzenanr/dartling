@@ -1,4 +1,4 @@
-github.txt for Dartling
+github.txt for dartling.dart (formerly Dartling)
 
 GitHub, Git
 
@@ -22,22 +22,22 @@ http://scottr.org/presentations/git-in-5-minutes/
 ---------------------------------------------------------------------
 
 After creating an account, create a remote repository.
-The following is what I did for Dartling.
+The following is what I did for dartling.dart.
 
 http://help.github.com/create-a-repo/
 
 Create a New Repository at GitHub (without README, since cloning will not be used)
-Repository Name: Dartling
+Repository Name: dartling.dart
 Description: 
   Dartling is a Dart model framework.
       
 Next steps:
-  cd Dartling
+  cd git/dart/dartling.dart
   git init
   git status
   git add .
   git commit -m 'working version'
-  git remote add origin https://github.com/dzenanr/Dartling.git
+  git remote add origin https://github.com/dzenanr/dartling.dart.git
   git push -u origin master     
 
 ----------------------------------------------------------------------
