@@ -30,7 +30,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#library('dartling');
+#library('dartling.dart');
 
 //#import('package:unittest/unittest.dart');
 #import('../unittest/unittest.dart');

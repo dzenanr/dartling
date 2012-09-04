@@ -1,5 +1,7 @@
 Dartling To Do
 
+adapt category_keyword_link.dartling & institution_ecole.dartling
+
 add the Show button for an entity in a table
 add the Add button after the entities table
 create EntityForm to update the selected entity

@@ -1,5 +1,11 @@
 Dartling Schedule
 
+2012-09-04, 09:12
+dartling -> dartling.dart
+
+2012-09-03, 19:30
+web components in repo.dart
+
 2012-09-01, 14:50
 move schedule.txt to adhoc/dartling
 move to do from schedule.txt to todo.txt
