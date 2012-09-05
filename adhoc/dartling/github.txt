@@ -1,4 +1,4 @@
-github.txt for dartling.dart (formerly Dartling)
+github.txt for dartling (formerly Dartling)
 
 GitHub, Git
 
@@ -22,7 +22,7 @@ http://scottr.org/presentations/git-in-5-minutes/
 ---------------------------------------------------------------------
 
 After creating an account, create a remote repository.
-The following is what I did for dartling.dart.
+The following is what I did for dartling.
 
 http://help.github.com/create-a-repo/
 
@@ -32,12 +32,12 @@ Description:
   Dartling is a Dart model framework.
       
 Next steps:
-  cd git/dart/dartling.dart
+  cd git/dart/dartling
   git init
   git status
   git add .
   git commit -m 'working version'
-  git remote add origin https://github.com/dzenanr/dartling.dart.git
+  git remote add origin https://github.com/dzenanr/dartling.git
   git push -u origin master     
 
 ----------------------------------------------------------------------
@@ -46,15 +46,15 @@ Git with Git Bash
 
 Clone a remote repository into a local repository.
 
-cd git/dart/teach
-git clone https://github.com/dzenanr/Dartling.git
-cd Dartling
+cd git/dart
+git clone https://github.com/dzenanr/dartling.git
+cd dartling
 
 Read+Write:
-https://github.com/dzenanr/Dartling.git
+https://github.com/dzenanr/dartling.git
 
 Read only:
-git://github.com/dzenanr/Dartling.git
+git://github.com/dzenanr/dartling.git
 
 Get the latest changes from the remote repository
 
@@ -65,7 +65,7 @@ git pull origin master
 
 Work with a local repository
 
-cd git/dart/taech/Dartling
+cd git/dart/dartling
 
 git add .
 

@@ -8,21 +8,33 @@ Google: windows set environment variable
 http://www.itechtalk.com/thread3595.html
 http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx
 
+Semantic versioning
+http://semver.org/
+
+C:\Program Files (x86)\Git\bin;
+
 USER VAR
 DART_SDK :
 C:\dart\editor\dart-sdk
 SYSTEM PATH
 PATH
 add at the end: 
-;%DART_SDK%\bin
+;C:\Program Files (x86)\Git\bin;%DART_SDK%\bin
 restart
 
 command black window
 cd git/dart/dartling
+
 pubspec.yaml is in the dartling folder
+
+name: dartling
+version: 0.5.0
+description: >
+  Dartling is a domain model framework for web application prototypes.
 dependencies:
   unittest:
     sdk: unittest
+    
 from the dartling folder:
 pub install
 
@@ -30,7 +42,7 @@ the packages folder appears in the dartling folder:
 packages
   unittest
     
-in dartling.dart:
+in dartling:
 #import('package:unittest/unittest.dart');
 
 in Dart Editor:

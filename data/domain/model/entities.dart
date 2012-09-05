@@ -20,6 +20,7 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
 
   abstract bool contains(T entity);
   abstract T last();
+  abstract T random();
   abstract T find(Oid oid);
   abstract T deepFind(Oid oid);
   abstract T findByCode(String code);

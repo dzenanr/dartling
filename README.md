@@ -3,17 +3,17 @@
 
 # Dartling
 
-[Dartling] (https://github.com/dzenanr/Dartling) is a domain model framework for web application prototypes. Its open source license is the 3-clause BSD license -- ["New BSD License" or "Modified BSD License"] (http://en.wikipedia.org/wiki/BSD_license).
+[Dartling] (https://github.com/dzenanr/dartling) is a domain model framework for web application prototypes. Its open source license is the 3-clause BSD license -- ["New BSD License" or "Modified BSD License"] (http://en.wikipedia.org/wiki/BSD_license).
 
 Dartling model consists of concepts, concept attributes and concept neighbors. Two neighbors make a relationship between two concepts. A relationship has two directions, each direction going from one concept to another neighbor concept. When both concepts are the same, the relationship is reflexive. When there are two relationships between the same but different concepts, the relationships are twins.
 
-A graphical model designed in [Magic Boxes](https://github.com/dzenanr/MagicBoxes) is transformed into [JSON] (http://www.json.org/) representation, imported to Dartling and converted to the meta model. Then, the model may be used without almost any additional programming for quick prototypes.
+A graphical model designed in [Magic Boxes](https://github.com/dzenanr/magic_boxes) is transformed into [JSON] (http://www.json.org/) representation, imported to Dartling and converted to the meta model. Then, the model may be used without almost any additional programming for quick prototypes.
 
 **What Can You Do with Dartling?**
 
 * design a domain model in Magic Boxes
 * transform the model into a JSON representation
-* prepare your dartling project based on the [dartling_skeleton.dart] (https://github.com/dzenanr/dartling_skeleton.dart) project
+* prepare your dartling project based on the [dartling_skeleto (https://github.com/dzenanr/dartling_skeleton) project
 * copy the JSON representation of the model to your project
 * generate the code for your project from your project
 * test your model with some data
