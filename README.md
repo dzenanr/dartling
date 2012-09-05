@@ -9,6 +9,18 @@ Dartling model consists of concepts, concept attributes and concept neighbors. T
 
 A graphical model designed in [Magic Boxes](https://github.com/dzenanr/MagicBoxes) is transformed into [JSON] (http://www.json.org/) representation, imported to Dartling and converted to the meta model. Then, the model may be used without almost any additional programming for quick prototypes.
 
+**What Can You Do with Dartling?**
+
+* design a domain model in Magic Boxes
+* transform the model into a JSON representation
+* prepare your dartling project based on the [dartling_skeleton.dart] (https://github.com/dzenanr/dartling_skeleton.dart) project
+* copy the JSON representation of the model to your project
+* generate the code for your project from your project
+* test your model with some data
+* init your model with some data
+* add some specific code if you wish
+* run the prototype application that uses the model and Dartling web components
+
 ## Dartling API
 
 Dartling repository may have several domains. A domain may have several models. A model has entry points that are entities. From an entity in one of entry entities, child entities may be obtained. Data navigation is done by following parent or child neighbors.
