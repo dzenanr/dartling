@@ -1,0 +1,8 @@
+name: dartling.dart
+version: 0.8.0
+description: >
+  Dartling (dartling.dart) is a domain model framework for web application prototypes.
+dependencies:
+  unittest:
+    sdk: unittest
+  

@@ -55,6 +55,8 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   bool post = true;
   bool propagateToSource = true;
 
+  Random randomGen;
+
   Entities() {
     _entityList = new List<T>();
     _oidEntityMap = new Map<int, T>();
@@ -65,6 +67,8 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     pre = false;
     post = false;
     propagateToSource = false;
+
+    randomGen = new Random();
   }
 
   Entities.of(this._concept) {
@@ -73,6 +77,8 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
     _errors = new Errors();
+
+    randomGen = new Random();
   }
 
   Entities<T> newEntities() => new Entities.of(_concept);
@@ -341,41 +347,6 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     return result;
   }
 
-  bool contains(T entity) {
-    T element = _oidEntityMap[entity.oid.timeStamp];
-    if (entity == element) {
-      return true;
-    }
-    return false;
-  }
-
-  T last() {
-    return _entityList.last();
-  }
-
-  T find(Oid oid) {
-    return _oidEntityMap[oid.timeStamp];
-  }
-
-  T deepFind(Oid oid) {
-    if (empty) {
-      return null;
-    }
-    ConceptEntity foundEntity = find(oid);
-    if (foundEntity != null) {
-      return foundEntity;
-    }
-    if (!_concept.children.empty) {
-      for (ConceptEntity entity in _entityList) {
-        for (Child child in _concept.children) {
-          Entities childEntities = entity.getChild(child.code);
-          return childEntities.deepFind(oid);
-        }
-      }
-    }
-  }
-
-
   /**
    * Updates removes the before entity and adds the after entity, in order to
    * update oid, code and id entity maps.
@@ -412,6 +383,46 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       _errors.add(error);
     }
     return false;
+  }
+
+  bool contains(T entity) {
+    T element = _oidEntityMap[entity.oid.timeStamp];
+    if (entity == element) {
+      return true;
+    }
+    return false;
+  }
+
+  T last() {
+    return _entityList.last();
+  }
+
+  T random() {
+    if (count > 0) {
+      return _entityList[randomGen.nextInt(count)];
+    }
+  }
+
+  T find(Oid oid) {
+    return _oidEntityMap[oid.timeStamp];
+  }
+
+  T deepFind(Oid oid) {
+    if (empty) {
+      return null;
+    }
+    ConceptEntity foundEntity = find(oid);
+    if (foundEntity != null) {
+      return foundEntity;
+    }
+    if (!_concept.children.empty) {
+      for (ConceptEntity entity in _entityList) {
+        for (Child child in _concept.children) {
+          Entities childEntities = entity.getChild(child.code);
+          return childEntities.deepFind(oid);
+        }
+      }
+    }
   }
 
   T findByCode(String code) {

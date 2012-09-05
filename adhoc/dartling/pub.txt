@@ -1,6 +1,7 @@
 pub: The Dart Package Manager
 
 http://www.dartlang.org/docs/pub-package-manager/
+http://www.dartlang.org/docs/pub-package-manager/pubspec.html
 https://docs.google.com/document/d/13y7yCwq9GtPChXtd6t0YMcUtMJLZq2IVwq546Dve_No/edit
 http://bob-package-layout.dart-lang.appspot.com/docs/pub-package-manager/package-layout.html
 Google: windows set environment variable

@@ -1,13 +1,16 @@
 Dartling To Do
 
-adapt category_keyword_link.dartling & institution_ecole.dartling
+http://api.dartlang.org/docs/continuous/dart_math/Random.html
+get random value for different types (for test data)
+
+essentail for neighbors (true by default)
+min for properties
 
 add the Show button for an entity in a table
 add the Add button after the entities table
 create EntityForm to update the selected entity
 
 finalize pub
-update README.md content and use markdown (md)
 
 util/text_handling
 
@@ -25,10 +28,6 @@ action.doit when called directly by a user avoids a session doit
   ok when session is null for undoing the action
   not ok if session is not null
     how to make a distinction between a user call and a session past call?
-  
-get random entity
-  http://api.dartlang.org/docs/continuous/dart_math/Random.html
-get random value for different types (for test data)
   
 document code
   http://www.dartlang.org/docs/language-tour/#comments
