@@ -29,6 +29,7 @@ The Dartling project has two folders: data and view. The data folder has the gen
 
 The data folder contains JSON representation of a model and its data. The model.dart file contains a model from Magic Boxes. The data.dart file contains data of the model. 
 
-[**More details**] (http://goo.gl/7YGAq)
+[**More details**] (https://docs.google.com/document/d/1IYs9jqWfKXmflTIGYob7qIE01wwJpWRQkWHQXZLNSvo/edit)
 
 [**New project**] (https://docs.google.com/document/d/1n9dBtZskRPyy57whjKRzRl7gKG2b5KVZVghViGxAEMg/edit)
+
