@@ -6,7 +6,6 @@ get random value for different types (for test data)
 essentail for neighbors (true by default)
 min for properties
 
-add the Show button for an entity in a table
 add the Add button after the entities table
 create EntityForm to update the selected entity
 
@@ -41,7 +40,9 @@ Uri validation for well formed uri (not done in Uri)
   http://msdn.microsoft.com/en-us/library/system.uri.iswellformedoriginalstring.aspx
 Dynamic type???
 Duration (time span) type
-email type
+email type?
+  http://davidcelis.com/blog/2012/09/06/stop-validating-email-addresses-with-regex/
+  https://www.google.com/search?q=email+regex
 money type
 telephone type
 postal code type

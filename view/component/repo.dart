@@ -112,6 +112,13 @@ class RepoEntitiesSection {
                       '</section>  \n';
           }
         }
+        for (Concept concept in model.concepts) {
+          String entryConceptThisConceptInternalPath =
+              concept.entryConceptThisConceptInternalPath;
+          section =
+              '${section}<section id="${entryConceptThisConceptInternalPath}">'
+              '</section>  \n';
+        }
       }
     }
     view.document.query('#${view.did}').innerHTML = section;

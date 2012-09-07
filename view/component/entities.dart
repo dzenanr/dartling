@@ -112,6 +112,14 @@ class EntitiesTable {
         section = '${section}      ${label} \n';
         section = '${section}    </th> \n';
       }
+
+      if (attributes.length > 0) {
+        label = 'Display';
+        section = '${section}    <th> \n';
+        section = '${section}      ${label} \n';
+        section = '${section}    </th> \n';
+      }
+
       for (Parent parent in parents) {
         label = parent.codeFirstLetterUpper;
         section = '${section}    <th> \n';
@@ -135,6 +143,14 @@ class EntitiesTable {
           section = '${section}      ${value} \n';
           section = '${section}    </td> \n';
         }
+
+        if (entity.concept.attributes.count > 0) {
+          section =
+            '${section}    '
+            '<td id="${entity.concept.codeFirstLetterLower}${entity.oid}"> \n';
+          section = '${section}    </td> \n';
+        }
+
         for (Parent parent in parents) {
           section = '${section}    <td> \n';
           var parentEntity = entity.getParent(parent.code);
@@ -166,9 +182,39 @@ class EntitiesTable {
       view.document.query('#${view.did}').innerHTML = section;
 
       for (var entity in view.entities) {
+        if (entity.concept.attributes.count > 0) {
+          Element entityTdElement = view.document.query(
+              '#${entity.concept.codeFirstLetterLower}${entity.oid}');
+          ButtonElement entityButton = new ButtonElement();
+          entityButton.text = 'Show';
+          var cssClasses = new List<String>();
+          cssClasses.add('button');
+          entityButton.classes = cssClasses;
+          String entryConceptThisConceptInternalPath =
+              entity.concept.entryConceptThisConceptInternalPath;
+          View entityView =
+              new View.from(view, entryConceptThisConceptInternalPath);
+          entityView.entity = entity;
+          entityView.title = entity.concept.code;
+          EntityTable entityTable = new EntityTable(entityView);
+
+          entityButton.on.click.add((MouseEvent e) {
+            if (entityTable.hidden) {
+              entityTable.show();
+              entityButton.text = 'Hide';
+            } else {
+              entityTable.hide();
+              entityButton.text = 'Show';
+            }
+          });
+
+          entityTdElement.elements.clear();
+          entityTdElement.elements.add(entityButton);
+        }
+
         for (Child child in children) {
-          Element tdElement = document.query('#${child.code}Of${entity.oid}');
-          assert(tdElement != null);
+          Element childTdElement =
+              view.document.query('#${child.code}Of${entity.oid}');
           ButtonElement childButton = new ButtonElement();
           childButton.text = 'Show';
           var cssClasses = new List<String>();
@@ -202,12 +248,12 @@ class EntitiesTable {
               }
             });
 
-            tdElement.elements.clear();
-            tdElement.elements.add(childButton);
+            childTdElement.elements.clear();
+            childTdElement.elements.add(childButton);
           }
         }
       }
-      //print(view.document.query('#${view.did}').innerHTML);
+      print(view.document.query('#${view.did}').innerHTML);
       hidden = false;
     }
   }
