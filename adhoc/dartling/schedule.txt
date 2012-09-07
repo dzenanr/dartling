@@ -1,5 +1,11 @@
 Dartling Schedule
 
+2012-09-07
+display all attributes in EntityTable shown from entities
+
+2012-09-07
+add the Display button for an entity in a table of entities
+
 2012-09-05
 random entity
 

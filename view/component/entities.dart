@@ -196,6 +196,7 @@ class EntitiesTable {
               new View.from(view, entryConceptThisConceptInternalPath);
           entityView.entity = entity;
           entityView.title = entity.concept.code;
+          entityView.essentialOnly = false;
           EntityTable entityTable = new EntityTable(entityView);
 
           entityButton.on.click.add((MouseEvent e) {
