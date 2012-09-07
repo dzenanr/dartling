@@ -45,39 +45,39 @@ String genDartling(Repo repo) {
   sc = '${sc}#import("dart:uri"); \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#source("../dartling.dart/data/domain/model/event/actions.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/domain/model/event/reactions.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/domain/model/exception/errors.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/domain/model/exception/exceptions.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/domain/model/transfer/json.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/domain/model/entities.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/domain/model/entity.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/domain/model/entries.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/domain/model/id.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/domain/model/oid.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/domain/models.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/domain/session.dart"); \n';
+  sc = '${sc}#source("../dartling/data/domain/model/event/actions.dart"); \n';
+  sc = '${sc}#source("../dartling/data/domain/model/event/reactions.dart"); \n';
+  sc = '${sc}#source("../dartling/data/domain/model/exception/errors.dart"); \n';
+  sc = '${sc}#source("../dartling/data/domain/model/exception/exceptions.dart"); \n';
+  sc = '${sc}#source("../dartling/data/domain/model/transfer/json.dart"); \n';
+  sc = '${sc}#source("../dartling/data/domain/model/entities.dart"); \n';
+  sc = '${sc}#source("../dartling/data/domain/model/entity.dart"); \n';
+  sc = '${sc}#source("../dartling/data/domain/model/entries.dart"); \n';
+  sc = '${sc}#source("../dartling/data/domain/model/id.dart"); \n';
+  sc = '${sc}#source("../dartling/data/domain/model/oid.dart"); \n';
+  sc = '${sc}#source("../dartling/data/domain/models.dart"); \n';
+  sc = '${sc}#source("../dartling/data/domain/session.dart"); \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#source("../dartling.dart/data/gen/app.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/gen/dartling.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/gen/generated.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/gen/specific.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/gen/tests.dart"); \n';
+  sc = '${sc}#source("../dartling/data/gen/app.dart"); \n';
+  sc = '${sc}#source("../dartling/data/gen/dartling.dart"); \n';
+  sc = '${sc}#source("../dartling/data/gen/generated.dart"); \n';
+  sc = '${sc}#source("../dartling/data/gen/specific.dart"); \n';
+  sc = '${sc}#source("../dartling/data/gen/tests.dart"); \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#source("../dartling.dart/data/meta/attributes.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/meta/children.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/meta/concepts.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/meta/domains.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/meta/models.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/meta/neighbor.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/meta/parents.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/meta/property.dart"); \n';
-  sc = '${sc}#source("../dartling.dart/data/meta/types.dart"); \n';
+  sc = '${sc}#source("../dartling/data/meta/attributes.dart"); \n';
+  sc = '${sc}#source("../dartling/data/meta/children.dart"); \n';
+  sc = '${sc}#source("../dartling/data/meta/concepts.dart"); \n';
+  sc = '${sc}#source("../dartling/data/meta/domains.dart"); \n';
+  sc = '${sc}#source("../dartling/data/meta/models.dart"); \n';
+  sc = '${sc}#source("../dartling/data/meta/neighbor.dart"); \n';
+  sc = '${sc}#source("../dartling/data/meta/parents.dart"); \n';
+  sc = '${sc}#source("../dartling/data/meta/property.dart"); \n';
+  sc = '${sc}#source("../dartling/data/meta/types.dart"); \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#source("../dartling.dart/data/repository.dart"); \n';
+  sc = '${sc}#source("../dartling/data/repository.dart"); \n';
   sc = '${sc} \n';
 
   for (Domain domain in repo.domains) {
