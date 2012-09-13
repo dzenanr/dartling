@@ -54,7 +54,7 @@ class RepoMenuBar {
     section = '${section}        <li> \n';
     section = '${section}          <a href="https://plus.google.com/u/0/b/'
               '113649577593294551754/"> \n';
-    section = '${section}            <img src="view/css/img/ondart0.png"/> \n';
+    section = '${section}            <img src="img/ondart0.png"/> \n';
     section = '${section}          </a> \n';
     section = '${section}        </li> \n';
     section = '${section}      </ul> \n';

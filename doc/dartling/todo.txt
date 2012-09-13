@@ -4,7 +4,7 @@ http://api.dartlang.org/docs/continuous/dart_math/Random.html
 get random value for different types (for test data)
 
 essentail for neighbors (true by default)
-min for properties
+min (minimal properties only are shown in a web componet) for properties
 
 add the Add button after the entities table
 create EntityForm to update the selected entity

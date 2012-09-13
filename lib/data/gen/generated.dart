@@ -1,7 +1,7 @@
 
 String genGenRepository(Domain domain) {
   var sc = ' \n';
-  sc = '${sc}// data/gen/${domain.codeLowerUnderscore}/'
+  sc = '${sc}// src/data/gen/${domain.codeLowerUnderscore}/'
        'repository.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${domain.code}Repo extends Repo { \n';
@@ -36,7 +36,7 @@ String genGenRepository(Domain domain) {
 
 String genGenModels(Domain domain) {
   var sc = ' \n';
-  sc = '${sc}// data/gen/${domain.codeLowerUnderscore}/'
+  sc = '${sc}// src/data/gen/${domain.codeLowerUnderscore}/'
        'models.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${domain.code}Models extends DomainModels { \n';
@@ -69,7 +69,7 @@ String genGenModels(Domain domain) {
 String genGenEntries(Model model) {
   Domain domain = model.domain;
   var sc = ' \n';
-  sc = '${sc}// data/gen/${domain.codeLowerUnderscore}/'
+  sc = '${sc}// src/data/gen/${domain.codeLowerUnderscore}/'
        '${model.codeLowerUnderscore}/entries.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${model.code}Entries extends ModelEntries { \n';
@@ -140,7 +140,7 @@ String genGenConcept(Concept concept) {
   Model model = concept.model;
   Domain domain = model.domain;
   var sc = ' \n';
-  sc = '${sc}// data/gen/${domain.codeLowerUnderscore}'
+  sc = '${sc}// src/data/gen/${domain.codeLowerUnderscore}'
        '/${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart \n';
   sc = '${sc} \n';
   sc = '${sc}abstract class ${concept.code}Gen extends '

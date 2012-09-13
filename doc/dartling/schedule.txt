@@ -1,5 +1,9 @@
 Dartling Schedule
 
+2012-09-12
+project reorganization to support Pub: Package layout conventions
+http://www.dartlang.org/docs/pub-package-manager/package-layout.html
+
 2012-09-07
 display all attributes in EntityTable shown from entities
 

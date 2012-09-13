@@ -34,10 +34,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 ''';
 
-String genDartling(Repo repo) {
-  var sc = '${license} \n';
-  sc = '${sc}// dartling.dart \n';
+String genDartlingData(Repo repo) {
+  var sc = ' \n';
+  sc = '${sc}// dartling_data.dart \n';
   sc = '${sc} \n';
+  sc = '${sc}${license} \n';
   sc = '${sc}//#import("package:unittest/unittest.dart"); \n';
   sc = '${sc}#import("../unittest/unittest.dart"); \n';
   sc = '${sc}#import("dart:json"); \n';
@@ -45,50 +46,51 @@ String genDartling(Repo repo) {
   sc = '${sc}#import("dart:uri"); \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#source("../dartling/data/domain/model/event/actions.dart"); \n';
-  sc = '${sc}#source("../dartling/data/domain/model/event/reactions.dart"); \n';
-  sc = '${sc}#source("../dartling/data/domain/model/exception/errors.dart"); \n';
-  sc = '${sc}#source("../dartling/data/domain/model/exception/exceptions.dart"); \n';
-  sc = '${sc}#source("../dartling/data/domain/model/transfer/json.dart"); \n';
-  sc = '${sc}#source("../dartling/data/domain/model/entities.dart"); \n';
-  sc = '${sc}#source("../dartling/data/domain/model/entity.dart"); \n';
-  sc = '${sc}#source("../dartling/data/domain/model/entries.dart"); \n';
-  sc = '${sc}#source("../dartling/data/domain/model/id.dart"); \n';
-  sc = '${sc}#source("../dartling/data/domain/model/oid.dart"); \n';
-  sc = '${sc}#source("../dartling/data/domain/models.dart"); \n';
-  sc = '${sc}#source("../dartling/data/domain/session.dart"); \n';
+  sc = '${sc}//#import("package:dartling/dartling.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/domain/model/event/actions.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/domain/model/event/reactions.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/domain/model/exception/errors.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/domain/model/exception/exceptions.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/domain/model/transfer/json.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/domain/model/entities.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/domain/model/entity.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/domain/model/entries.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/domain/model/id.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/domain/model/oid.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/domain/models.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/domain/session.dart"); \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#source("../dartling/data/gen/app.dart"); \n';
-  sc = '${sc}#source("../dartling/data/gen/dartling.dart"); \n';
-  sc = '${sc}#source("../dartling/data/gen/generated.dart"); \n';
-  sc = '${sc}#source("../dartling/data/gen/specific.dart"); \n';
-  sc = '${sc}#source("../dartling/data/gen/tests.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/gen/dartling_data.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/gen/dartling_view.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/gen/generated.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/gen/specific.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/gen/tests.dart"); \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#source("../dartling/data/meta/attributes.dart"); \n';
-  sc = '${sc}#source("../dartling/data/meta/children.dart"); \n';
-  sc = '${sc}#source("../dartling/data/meta/concepts.dart"); \n';
-  sc = '${sc}#source("../dartling/data/meta/domains.dart"); \n';
-  sc = '${sc}#source("../dartling/data/meta/models.dart"); \n';
-  sc = '${sc}#source("../dartling/data/meta/neighbor.dart"); \n';
-  sc = '${sc}#source("../dartling/data/meta/parents.dart"); \n';
-  sc = '${sc}#source("../dartling/data/meta/property.dart"); \n';
-  sc = '${sc}#source("../dartling/data/meta/types.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/meta/attributes.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/meta/children.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/meta/concepts.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/meta/domains.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/meta/models.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/meta/neighbor.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/meta/parents.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/meta/property.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/meta/types.dart"); \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#source("../dartling/data/repository.dart"); \n';
+  sc = '${sc}#source("../dartling/lib/data/repository.dart"); \n';
   sc = '${sc} \n';
 
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
-      sc = '${sc}#source("data/${domain.codeLowerUnderscore}/'
+      sc = '${sc}#source("src/data/${domain.codeLowerUnderscore}/'
            '${model.codeLowerUnderscore}/json/data.dart"); \n';
     }
   }
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
-      sc = '${sc}#source("data/${domain.codeLowerUnderscore}/'
+      sc = '${sc}#source("src/data/${domain.codeLowerUnderscore}/'
            '${model.codeLowerUnderscore}/json/model.dart"); \n';
     }
   }
@@ -96,21 +98,10 @@ String genDartling(Repo repo) {
 
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
-      sc = '${sc}#source("data/${domain.codeLowerUnderscore}/'
-      '${model.codeLowerUnderscore}/test/data.dart"); \n';
-      sc = '${sc}#source("data/${domain.codeLowerUnderscore}/'
-      '${model.codeLowerUnderscore}/test/group.dart"); \n';
-      sc = '${sc}#source("data/${domain.codeLowerUnderscore}/'
-      '${model.codeLowerUnderscore}/test/single.dart"); \n';
-    }
-  }
-  sc = '${sc} \n';
-  for (Domain domain in repo.domains) {
-    for (Model model in domain.models) {
-      sc = '${sc}#source("data/${domain.codeLowerUnderscore}/'
+      sc = '${sc}#source("src/data/${domain.codeLowerUnderscore}/'
       '${model.codeLowerUnderscore}/init.dart"); \n';
       for (Concept concept in model.concepts) {
-        sc = '${sc}#source("data/${domain.codeLowerUnderscore}/'
+        sc = '${sc}#source("src/data/${domain.codeLowerUnderscore}/'
         '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart"); \n';
       }
     }
@@ -119,16 +110,16 @@ String genDartling(Repo repo) {
 
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
-      sc = '${sc}#source("data/gen/${domain.codeLowerUnderscore}/'
+      sc = '${sc}#source("src/data/gen/${domain.codeLowerUnderscore}/'
       '${model.codeLowerUnderscore}/entries.dart"); \n';
       for (Concept concept in model.concepts) {
-        sc = '${sc}#source("data/gen/${domain.codeLowerUnderscore}/'
+        sc = '${sc}#source("src/data/gen/${domain.codeLowerUnderscore}/'
         '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart"); \n';
       }
     }
-    sc = '${sc}#source("data/gen/${domain.codeLowerUnderscore}/'
+    sc = '${sc}#source("src/data/gen/${domain.codeLowerUnderscore}/'
          'models.dart"); \n';
-    sc = '${sc}#source("data/gen/${domain.codeLowerUnderscore}/'
+    sc = '${sc}#source("src/data/gen/${domain.codeLowerUnderscore}/'
          'repository.dart"); \n';
   }
   sc = '${sc} \n';
@@ -162,31 +153,9 @@ String genDartling(Repo repo) {
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
-  sc = '${sc}testData() { \n';
   for (Domain domain in repo.domains) {
-    sc = '${sc}  var ${domain.codeFirstLetterLower}Repo = '
-         'new ${domain.code}Repo(); \n';
-    sc = '${sc} \n';
-    for (Model model in domain.models) {
-      sc = '${sc}  test${domain.code}${model.code}('
-           '${domain.codeFirstLetterLower}Repo, '
-           '${domain.code}Repo.${domain.codeFirstLetterLower}'
-           'DomainCode, \n';
-      sc = '${sc}      ${domain.code}Repo.'
-           '${domain.codeFirstLetterLower}'
-           '${model.code}ModelCode); \n';
-      sc = '${sc} \n';
-    }
-  }
-  sc = '${sc}  //lastSingleTest(repo, "", ""); \n';
-  sc = '${sc}  //lastSingleTest(repo, "", ""); \n';
-  sc = '${sc}} \n';
-  sc = '${sc} \n';
-
-  sc = '${sc}initData() { \n';
-  for (Domain domain in repo.domains) {
-    sc = '${sc}   var ${domain.codeFirstLetterLower}Repo = '
-         'new ${domain.code}Repo(); \n';
+    sc = '${sc}init${domain.code}Data(${domain.code}Repo '
+         '${domain.codeFirstLetterLower}Repo) { \n';
     sc = '${sc}   var ${domain.codeFirstLetterLower}Models = \n';
     sc = '${sc}       ${domain.codeFirstLetterLower}Repo.'
          'getDomainModels(${domain.code}Repo.'
@@ -207,14 +176,18 @@ String genDartling(Repo repo) {
       sc = '${sc}   ${domain.codeFirstLetterLower}${model.code}'
            'Entries.displayJson(); \n';
     }
+    sc = '${sc}} \n';
+    sc = '${sc} \n';
   }
-  sc = '${sc}} \n';
-  sc = '${sc} \n';
 
   sc = '${sc}void main() { \n';
   sc = '${sc}  genCode(); \n';
-  sc = '${sc}  //testData(); \n';
-  sc = '${sc}  //initData(); \n';
+  for (Domain domain in repo.domains) {
+    sc = '${sc} \n';
+    sc = '${sc}  var ${domain.codeFirstLetterLower}Repo = '
+         'new ${domain.code}Repo(); \n';
+    sc = '${sc}  init${domain.code}Data(${domain.codeFirstLetterLower}Repo); \n';
+  }
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
