@@ -1,17 +1,24 @@
 pub: The Dart Package Manager
 
+https://www.dartlang.org/docs/pub-package-manager/package-layout.html
+
 http://www.dartlang.org/docs/pub-package-manager/
 http://www.dartlang.org/docs/pub-package-manager/pubspec.html
 https://docs.google.com/document/d/13y7yCwq9GtPChXtd6t0YMcUtMJLZq2IVwq546Dve_No/edit
-http://bob-package-layout.dart-lang.appspot.com/docs/pub-package-manager/package-layout.html
+https://www.dartlang.org/docs/pub-package-manager/package-layout.html
+
 Google: windows set environment variable
 http://www.itechtalk.com/thread3595.html
 http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx
 
 Semantic versioning
 http://semver.org/
-
-C:\Program Files (x86)\Git\bin;
+Once you identify your public API, you communicate changes to it with specific 
+increments to your version number. 
+Consider a version format of X.Y.Z (Major.Minor.Patch). 
+Bug fixes not affecting the API increment the patch version, 
+backwards compatible API additions/changes increment the minor version, 
+and backwards incompatible API changes increment the major version.
 
 USER VAR
 DART_SDK :
@@ -19,7 +26,7 @@ C:\dart\editor\dart-sdk
 SYSTEM PATH
 PATH
 add at the end: 
-;C:\Program Files (x86)\Git\bin;%DART_SDK%\bin
+;%DART_SDK%\bin
 restart
 
 command black window
@@ -28,7 +35,7 @@ cd git/dart/dartling
 pubspec.yaml is in the dartling folder
 
 name: dartling
-version: 0.5.0
+version: 0.0.0
 description: >
   Dartling is a domain model framework for web application prototypes.
 dependencies:
@@ -47,5 +54,5 @@ in dartling:
 
 in Dart Editor:
 Tools/Preferences
-Package directory: C:\Users\ridjanod\git\dart\dartling\packages
+Package directory: \\C:\Users\ridjanod\git\dart\dartling\packages
 

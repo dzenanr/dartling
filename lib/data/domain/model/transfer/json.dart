@@ -42,6 +42,8 @@ Model fromMagicBoxes(String json, Domain domain, String modelCode) {
         } else if (itemInit  == 'sensitive') {
           attribute.sensitive = true;
           attribute.init = null;
+        } else if (itemInit  == 'empty') {
+          attribute.init = '';
         } else {
           attribute.init = itemInit;
         }

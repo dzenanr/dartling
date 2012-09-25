@@ -1,0 +1,39 @@
+/* list.css */
+
+/* ===[ begin ]=== */
+
+/*
+  Title:                   List Design Style
+  Author:                  Dzenan Ridjanovic
+  Influenced By:           http://www.simplebits.com/
+  Created:                 2006-09-09
+  Updated:                 2011-12-08
+*/
+
+  ul {
+    list-style: none;
+    padding: 2px;
+    text-align: left;
+  }
+
+  li {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 18px;
+  }	
+    
+  .link li {
+    background: url(img/arrow-right.gif) no-repeat 0 50%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 18px;
+  }	
+    
+  .target li {
+    background: url(img/target.gif) no-repeat 0 50%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 18px;
+  }	
+		
+/* ===[ end ]=== */

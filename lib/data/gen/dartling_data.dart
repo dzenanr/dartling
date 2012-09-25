@@ -34,63 +34,105 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 ''';
 
-String genDartlingData(Repo repo) {
+String genDartlingData(String place, Repo repo) {
   var sc = ' \n';
   sc = '${sc}// dartling_data.dart \n';
   sc = '${sc} \n';
   sc = '${sc}${license} \n';
-  sc = '${sc}//#import("package:unittest/unittest.dart"); \n';
-  sc = '${sc}#import("../unittest/unittest.dart"); \n';
+  if (place == 'pub') {
+    sc = '${sc}#import("package:unittest/unittest.dart"); \n';
+  } else if (place == 'child') {
+    sc = '${sc}#import("../../../../unittest/unittest.dart"); \n';
+  } else { // twin
+    sc = '${sc}#import("../../unittest/unittest.dart"); \n';
+  }
   sc = '${sc}#import("dart:json"); \n';
   sc = '${sc}#import("dart:math"); \n';
   sc = '${sc}#import("dart:uri"); \n';
   sc = '${sc} \n';
 
-  sc = '${sc}//#import("package:dartling/dartling.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/domain/model/event/actions.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/domain/model/event/reactions.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/domain/model/exception/errors.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/domain/model/exception/exceptions.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/domain/model/transfer/json.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/domain/model/entities.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/domain/model/entity.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/domain/model/entries.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/domain/model/id.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/domain/model/oid.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/domain/models.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/domain/session.dart"); \n';
-  sc = '${sc} \n';
+  if (place == 'pub') {
+    sc = '${sc}#import("package:dartling/dartling.dart"); \n';
+  } else if (place == 'child') {
+    sc = '${sc}#source("../../../lib/data/domain/model/event/actions.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/domain/model/event/reactions.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/domain/model/exception/errors.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/domain/model/exception/exceptions.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/domain/model/transfer/json.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/domain/model/entities.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/domain/model/entity.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/domain/model/entries.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/domain/model/id.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/domain/model/oid.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/domain/models.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/domain/session.dart"); \n';
+    sc = '${sc} \n';
 
-  sc = '${sc}#source("../dartling/lib/data/gen/dartling_data.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/gen/dartling_view.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/gen/generated.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/gen/specific.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/gen/tests.dart"); \n';
-  sc = '${sc} \n';
+    sc = '${sc}#source("../../../lib/data/gen/dartling_data.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/gen/dartling_view.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/gen/generated.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/gen/specific.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/gen/tests.dart"); \n';
+    sc = '${sc} \n';
 
-  sc = '${sc}#source("../dartling/lib/data/meta/attributes.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/meta/children.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/meta/concepts.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/meta/domains.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/meta/models.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/meta/neighbor.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/meta/parents.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/meta/property.dart"); \n';
-  sc = '${sc}#source("../dartling/lib/data/meta/types.dart"); \n';
-  sc = '${sc} \n';
+    sc = '${sc}#source("../../../lib/data/meta/attributes.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/meta/children.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/meta/concepts.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/meta/domains.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/meta/models.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/meta/neighbor.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/meta/parents.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/meta/property.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/meta/types.dart"); \n';
+    sc = '${sc} \n';
 
-  sc = '${sc}#source("../dartling/lib/data/repository.dart"); \n';
+    sc = '${sc}#source("../../../lib/data/repository.dart"); \n';
+  } else { // twin
+    sc = '${sc}#source("../../dartling/lib/data/domain/model/event/actions.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/domain/model/event/reactions.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/domain/model/exception/errors.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/domain/model/exception/exceptions.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/domain/model/transfer/json.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/domain/model/entities.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/domain/model/entity.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/domain/model/entries.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/domain/model/id.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/domain/model/oid.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/domain/models.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/domain/session.dart"); \n';
+    sc = '${sc} \n';
+
+    sc = '${sc}#source("../../dartling/lib/data/gen/dartling_data.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/gen/dartling_view.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/gen/generated.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/gen/specific.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/gen/tests.dart"); \n';
+    sc = '${sc} \n';
+
+    sc = '${sc}#source("../../dartling/lib/data/meta/attributes.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/meta/children.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/meta/concepts.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/meta/domains.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/meta/models.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/meta/neighbor.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/meta/parents.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/meta/property.dart"); \n';
+    sc = '${sc}#source("../../dartling/lib/data/meta/types.dart"); \n';
+    sc = '${sc} \n';
+
+    sc = '${sc}#source("../../dartling/lib/data/repository.dart"); \n';
+  }
   sc = '${sc} \n';
 
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
-      sc = '${sc}#source("src/data/${domain.codeLowerUnderscore}/'
+      sc = '${sc}#source("data/${domain.codeLowerUnderscore}/'
            '${model.codeLowerUnderscore}/json/data.dart"); \n';
     }
   }
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
-      sc = '${sc}#source("src/data/${domain.codeLowerUnderscore}/'
+      sc = '${sc}#source("data/${domain.codeLowerUnderscore}/'
            '${model.codeLowerUnderscore}/json/model.dart"); \n';
     }
   }
@@ -98,10 +140,10 @@ String genDartlingData(Repo repo) {
 
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
-      sc = '${sc}#source("src/data/${domain.codeLowerUnderscore}/'
+      sc = '${sc}#source("data/${domain.codeLowerUnderscore}/'
       '${model.codeLowerUnderscore}/init.dart"); \n';
       for (Concept concept in model.concepts) {
-        sc = '${sc}#source("src/data/${domain.codeLowerUnderscore}/'
+        sc = '${sc}#source("data/${domain.codeLowerUnderscore}/'
         '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart"); \n';
       }
     }
@@ -110,21 +152,21 @@ String genDartlingData(Repo repo) {
 
   for (Domain domain in repo.domains) {
     for (Model model in domain.models) {
-      sc = '${sc}#source("src/data/gen/${domain.codeLowerUnderscore}/'
+      sc = '${sc}#source("data/gen/${domain.codeLowerUnderscore}/'
       '${model.codeLowerUnderscore}/entries.dart"); \n';
       for (Concept concept in model.concepts) {
-        sc = '${sc}#source("src/data/gen/${domain.codeLowerUnderscore}/'
+        sc = '${sc}#source("data/gen/${domain.codeLowerUnderscore}/'
         '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart"); \n';
       }
     }
-    sc = '${sc}#source("src/data/gen/${domain.codeLowerUnderscore}/'
+    sc = '${sc}#source("data/gen/${domain.codeLowerUnderscore}/'
          'models.dart"); \n';
-    sc = '${sc}#source("src/data/gen/${domain.codeLowerUnderscore}/'
+    sc = '${sc}#source("data/gen/${domain.codeLowerUnderscore}/'
          'repository.dart"); \n';
   }
   sc = '${sc} \n';
 
-  sc = '${sc}genCode() { \n';
+  sc = '${sc}genCode(String place) { \n';
   sc = '${sc}  var repo = new Repo(); \n';
   sc = '${sc} \n';
   for (Domain domain in repo.domains) {
@@ -148,8 +190,8 @@ String genDartlingData(Repo repo) {
          'Domain); \n';
     sc = '${sc} \n';
   }
-  sc = '${sc}  repo.gen(); \n';
-  sc = '${sc}  //repo.gen(specific:false); \n';
+  sc = '${sc}  repo.gen(place); \n';
+  sc = '${sc}  //repo.gen(place, specific:false); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
@@ -181,7 +223,7 @@ String genDartlingData(Repo repo) {
   }
 
   sc = '${sc}void main() { \n';
-  sc = '${sc}  genCode(); \n';
+  sc = '${sc}  genCode("child"); \n';
   for (Domain domain in repo.domains) {
     sc = '${sc} \n';
     sc = '${sc}  var ${domain.codeFirstLetterLower}Repo = '

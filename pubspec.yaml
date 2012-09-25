@@ -1,5 +1,5 @@
 name: dartling
-version: 0.5.0
+version: 0.0.0
 description: >
   Dartling is a domain model framework for web application prototypes.
 dependencies:

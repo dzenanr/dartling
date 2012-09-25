@@ -1,0 +1,150 @@
+github.txt for dartling_skeleton
+
+GitHub, Git
+
+https://github.com/
+http://www.codeschool.com/courses/try-git
+http://git-scm.com/videos
+http://marklodato.github.com/visual-git-guide/index-en.html
+
+Education
+
+https://github.com/edu
+
+Create an account at GitHub.
+
+Read:
+
+http://help.github.com/win-set-up-git/
+http://www.ralfebert.de/blog/tools/git_screencast/
+http://scottr.org/presentations/git-in-5-minutes/
+
+---------------------------------------------------------------------
+
+After creating an account, create a remote repository.
+The following is what I did for dartling_skeleton.
+
+http://help.github.com/create-a-repo/
+
+Create a New Repository at GitHub (without README, since cloning will not be used)
+Repository Name: dartling_skeleton
+Description: 
+  A project skeleton to be copied and adapted for a new project with Dartling.
+      
+Next steps:
+  cd git/dart/dartling_skeleton
+  git init
+  git status
+  git add .
+  git commit -m 'working version'
+  git remote add origin https://github.com/dzenanr/dartling_skeleton.git
+  git push -u origin master     
+
+----------------------------------------------------------------------
+
+Git with Git Bash
+
+Clone a remote repository into a local repository.
+
+cd git/dart/teach
+git clone https://github.com/dzenanr/dartling.git
+cd dartling
+
+Read+Write:
+https://github.com/dzenanr/dartling.git
+
+Read only:
+git://github.com/dzenanr/dartling.git
+
+Get the latest changes from the remote repository
+
+git pull
+git pull origin master
+
+---------------------------------------------------------------------
+
+Work with a local repository
+
+cd git/dart/dartling
+
+git add .
+
+git status
+
+git commit -m 'short description'
+
+git status
+
+git rm file
+
+git status
+
+git push
+git push origin master
+Enter passphrase for key ... :
+
+git status
+
+---------------------------------------------------------------------
+
+Tagging for versions (spirals)
+
+http://learn.github.com/p/tagging.html
+
+git tag
+git tag -a s00 -m 'spiral 00'
+git tag
+
+To push tags to the remote repository:
+
+git push --tags
+Enter passphrase for key ... :
+
+To remove a tag from the remote repository:
+
+http://nathanhoad.net/how-to-delete-a-remote-git-tag
+
+git tag -d s00
+git push origin :refs/tags/s00
+
+---------------------------------------------------------------------
+
+Switching from master to spiral
+
+from master to tag
+git checkout s01
+from tag to branch
+git checkout -b s01a
+to use branch
+git checkout s01a
+
+
+Switching from spiral to master
+
+to exclude js:
+git checkout dartling.dart.js
+or 
+(see http://scottr.org/presentations/git-in-5-minutes/)
+git stash
+
+git checkout master
+
+----------------------------------------------------------------------
+
+http://learn.github.com/p/diff.html
+
+all changes since the last commit
+git diff HEAD
+
+----------------------------------------------------------------------
+
+Branching
+
+http://nvie.com/posts/a-successful-git-branching-model/
+
+----------------------------------------------------------------------
+
+Renaming github repository
+
+http://stackoverflow.com/questions/5751585/change-repo-name-in-github/5751588#5751588
+

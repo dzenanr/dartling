@@ -4,7 +4,7 @@ abstract class RepoApi {
   abstract add(DomainModelsApi domainModels);
   abstract Domains get domains;
   abstract DomainModelsApi getDomainModels(String domainCode);
-  abstract gen([bool specific=true]);
+  abstract gen([String place='pub', bool specific=true]);
 
 }
 
@@ -41,7 +41,7 @@ class Repo implements RepoApi {
   DomainModels getDomainModels(String domainCode) =>
       _domainModelsMap[domainCode];
 
-  gen([bool specific=true]) {
+  gen([String place='pub', bool specific=true]) {
     title('Generated code, which you must not change, ',
           'for the src/data/gen folder in the ${code} repository.');
     for (Domain domain in domains) {
@@ -74,10 +74,10 @@ class Repo implements RepoApi {
       }
       subTitle('The dartling_data.dart file with imports, sources and '
                'the main method');
-      print(genDartlingData(this));
+      print(genDartlingData(place, this));
       subTitle('The dartling_view.dart file with imports, sources and '
                'the main method');
-      print(genDartlingView(this));
+      print(genDartlingView(place, this));
 
       for (Domain domain in domains) {
         title('Specific test code, which you should change, ',
@@ -85,7 +85,7 @@ class Repo implements RepoApi {
         for (Model model in domain.models) {
           subTitle('Code template for the ${domain.code}.${model.code} '
                    'model tests.');
-          print(genTestData(this, model));
+          print(genTestData(place, this, model));
         }
       }
     }

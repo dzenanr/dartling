@@ -2,18 +2,26 @@
 abstract class ErrorsApi {
 
   abstract int get count;
-  abstract List<Error> get list;  abstract add(Error error);
+  abstract List<EntityError> get list;  abstract add(EntityError error);
   abstract clear();
 
 }
 
 //class Error extends Entity<Error> { // conflict with dart:html Entity
+
+/*
+Running dart2js...
+../lib/core/errors.dart:5:1: duplicate definition
 class Error {
+^^^^^
+Error: Compilation failed.
+ */
+class EntityError {
 
   String category;
   String message;
 
-  Error(this.category);
+  EntityError(this.category);
 
   /**
    * Displays (prints) an error.
@@ -31,18 +39,18 @@ class Error {
 
 class Errors implements ErrorsApi {
 
-  List<Error> _errorList;
+  List<EntityError> _errorList;
 
   Errors() {
-    _errorList = new List<Error>();
+    _errorList = new List<EntityError>();
   }
 
   int get count => _errorList.length;
   int get length => count;
 
-  List<Error> get list => _errorList;
+  List<EntityError> get list => _errorList;
 
-  add(Error error) {
+  add(EntityError error) {
     _errorList.add(error);
   }
 
@@ -62,7 +70,7 @@ class Errors implements ErrorsApi {
     print('$title                                          ');
     print('************************************************');
     print('');
-    for (Error error in _errorList) {
+    for (EntityError error in _errorList) {
       error.display('*** ');
     }
   }

@@ -1,15 +1,15 @@
 
-class DartlingException implements Exception {
+class EntityException implements Exception {
 
   final String msg;
 
-  const DartlingException(this.msg);
+  const EntityException(this.msg);
 
   toString() => '*** $msg ***';
 
 }
 
-class ActionException extends DartlingException {
+class ActionException extends EntityException {
 
   const ActionException(String msg) : super(msg);
 
@@ -21,43 +21,43 @@ class AddException extends ActionException {
 
 }
 
-class CodeException extends DartlingException {
+class CodeException extends EntityException {
 
   const CodeException(String msg) : super(msg);
 
 }
 
-class ConceptException extends DartlingException {
+class ConceptException extends EntityException {
 
   const ConceptException(String msg) : super(msg);
 
 }
 
-class IdException extends DartlingException {
+class IdException extends EntityException {
 
   const IdException(String msg) : super(msg);
 
 }
 
-class JsonException extends DartlingException {
+class JsonException extends EntityException {
 
   const JsonException(String msg) : super(msg);
 
 }
 
-class OidException extends DartlingException {
+class OidException extends EntityException {
 
   const OidException(String msg) : super(msg);
 
 }
 
-class OrderException extends DartlingException {
+class OrderException extends EntityException {
 
   const OrderException(String msg) : super(msg);
 
 }
 
-class ParentException extends DartlingException {
+class ParentException extends EntityException {
 
   const ParentException(String msg) : super(msg);
 
@@ -69,7 +69,7 @@ class RemoveException extends ActionException {
 
 }
 
-class TypeException extends DartlingException {
+class TypeException extends EntityException {
 
   const TypeException(String msg) : super(msg);
 

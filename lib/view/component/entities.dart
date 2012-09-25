@@ -113,11 +113,18 @@ class EntitiesTable {
         section = '${section}    </th> \n';
       }
 
-      if (attributes.length > 0) {
+      if (view.essentialOnly) {
         label = 'Display';
         section = '${section}    <th> \n';
         section = '${section}      ${label} \n';
         section = '${section}    </th> \n';
+      } else {
+        if (attributes.length > 0) {
+          label = 'Display';
+          section = '${section}    <th> \n';
+          section = '${section}      ${label} \n';
+          section = '${section}    </th> \n';
+        }
       }
 
       for (Parent parent in parents) {

@@ -1,0 +1,188 @@
+Good API Designing by Joshua Bloch
+
+http://lcsd05.cs.tamu.edu/slides/keynote.pdf
+http://www.youtube.com/watch?v=aAb7hSCtvGw
+http://hash-table.com/home/2012/07/20/how-to-design-a-good-api-and-why-it-matters/
+http://techvivek.wordpress.com/2011/09/16/good-api-designing-by-joshua-bloch/
+
+abstract class RepoApi {
+
+  abstract add(DomainModelsApi domainModels);
+  abstract Domains get domains();
+  abstract DomainModelsApi getDomainModels(String domainCode);
+  abstract gen([bool specific=true]);
+  
+}
+
+abstract class DomainModelsApi implements SourceOfActionReactionApi {
+
+  abstract add(ModelEntriesApi modelEntries);
+  abstract Domain get domain();
+  abstract Model getModel(String modelCode);
+  abstract ModelEntriesApi getModelEntries(String modelCode);
+  abstract DomainSessionApi newSession();
+
+}
+
+abstract class DomainSessionApi {
+
+  abstract DomainModelsApi get domainModels();
+  abstract PastApi get past();
+
+}
+
+abstract class ModelEntriesApi {
+
+  abstract Model get model();
+  abstract Concept getConcept(String conceptCode);
+  abstract EntitiesApi getEntry(String entryConceptCode);
+  abstract EntityApi find(Oid oid);
+  abstract EntityApi findInInternalTree(Concept entryConcept, Oid oid);
+
+  abstract bool get empty();
+  abstract clear();
+
+  abstract String toJson();
+  abstract fromJson(String json);
+
+}
+
+abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
+
+  abstract Concept get concept();
+  abstract EntitiesApi<T> get source();
+  abstract ErrorsApi get errors();
+  abstract int get count();
+  abstract bool get empty();
+  abstract void clear();
+
+  abstract bool preAdd(T entity);
+  abstract bool add(T entity);
+  abstract bool postAdd(T entity);
+  abstract bool preRemove(T entity);
+  abstract bool remove(T entity);
+  abstract bool postRemove(T entity);
+
+  abstract void forEach(Function f);
+  abstract bool every(Function f);
+  abstract bool some(Function f);
+
+  abstract bool contains(T entity);
+  abstract T last();
+  abstract T random();
+  abstract T find(Oid oid);
+  abstract T deepFind(Oid oid);
+  abstract T findByCode(String code);
+  abstract T findById(IdApi id);
+  abstract T findByAttributeId(String code, Object attribute);
+  abstract T findByAttribute(String code, Object attribute);
+
+  abstract EntitiesApi<T> select(Function f);
+  abstract EntitiesApi<T> selectByParent(String code, Object parent);
+  abstract EntitiesApi<T> selectByAttribute(String code, Object attribute);
+  abstract EntitiesApi<T> order();
+  abstract EntitiesApi<T> orderByFunction(Function f);
+
+  abstract EntitiesApi<T> copy();
+  abstract List<T> get list();
+  abstract List<Map<String, Object>> toJson();
+
+}
+
+abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
+
+  abstract Concept get concept();
+  abstract String get code();
+  abstract void set code(String code);
+
+  abstract Object getAttribute(String name);
+  abstract bool setAttribute(String name, Object value);
+  abstract String getStringFromAttribute(String name);
+  abstract bool setStringToAttribute(String name, String string);
+  abstract EntityApi getParent(String name);
+  abstract bool setParent(String name, EntityApi entity);
+  abstract EntitiesApi getChild(String name);
+  abstract bool setChild(String name, EntitiesApi entities);
+
+  abstract IdApi get id();
+  abstract T copy();
+  abstract Map<String, Object> toJson();
+
+}
+
+abstract class IdApi implements Comparable, Hashable {
+
+  abstract Concept get concept();
+
+  abstract int get parentCount();
+  abstract int get attributeCount();
+
+  abstract EntityApi getParent(String code);
+  abstract setParent(String code, EntityApi parent);
+
+  abstract Object getAttribute(String code);
+  abstract setAttribute(String code, Object attribute);
+
+}
+
+abstract class ErrorsApi {
+
+  abstract int get count();
+  abstract List<Error> get list();
+  abstract add(Error error);
+  abstract clear();
+
+}
+
+abstract class ActionApi {
+
+  abstract bool doit();
+  abstract bool undo();
+  abstract bool redo();
+
+}
+
+abstract class TransactionApi extends ActionApi {
+
+  abstract add(ActionApi action);
+
+}
+
+abstract class PastApi implements SourceOfPastReactionApi {
+
+  abstract add(ActionApi action);
+  abstract clear();
+  abstract bool get empty();
+  
+  abstract bool doit();
+  abstract bool undo();
+  abstract bool redo();
+
+}
+
+abstract class SourceOfActionReactionApi {
+
+  abstract startActionReaction(ActionReactionApi reaction);
+  abstract cancelActionReaction(ActionReactionApi reaction);
+  abstract notifyActionReactions(ActionApi action);
+}
+
+abstract class SourceOfPastReactionApi {
+
+  abstract startPastReaction(PastReactionApi reaction);
+  abstract cancelPastReaction(PastReactionApi reaction);
+  abstract notifyNoPast();
+  abstract notifyYesPast();
+}
+
+abstract class ActionReactionApi {
+
+  abstract react(ActionApi action);
+}
+
+abstract class PastReactionApi {
+
+  abstract reactNoPast();
+  abstract reactYesPast();
+}
+

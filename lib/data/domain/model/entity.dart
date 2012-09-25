@@ -248,7 +248,8 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     if (getAttribute(name) == null) {
       _attributeMap[name] = value;
       return true;
-    } else if (!attribute.derive && attribute.update) {
+    //} else if (!attribute.derive && attribute.update) {
+    } else if (attribute.update) {
       _attributeMap[name] = value;
       return true;
     } else {

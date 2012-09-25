@@ -11,7 +11,7 @@ abstract class RepoApi {
   abstract add(DomainModelsApi domainModels);
   abstract Domains get domains();
   abstract DomainModelsApi getDomainModels(String domainCode);
-  abstract gen([bool specific=true]);
+  abstract gen([String place='pub', bool specific=true]);
   
 }
 
@@ -69,6 +69,7 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   abstract bool some(Function f);
 
   abstract bool contains(T entity);
+  abstract T first();
   abstract T last();
   abstract T random();
   abstract T find(Oid oid);
@@ -129,8 +130,8 @@ abstract class IdApi implements Comparable, Hashable {
 abstract class ErrorsApi {
 
   abstract int get count();
-  abstract List<Error> get list();
-  abstract add(Error error);
+  abstract List<EntityError> get list;
+  abstract add(EntityError error);
   abstract clear();
 
 }

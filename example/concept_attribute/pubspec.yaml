@@ -1,0 +1,8 @@
+name: dartling_skeleton
+version: 0.0.0
+description: >
+  Dartling is a domain model framework for web application prototypes.
+  A new dartling project is copied and adapted from dartling_skeleton.
+dependencies:
+  dartling:
+    git: git://github.com/dzenanr/dartling.git

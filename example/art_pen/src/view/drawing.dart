@@ -1,0 +1,292 @@
+
+class Board {
+
+  static final int interval = 10; // in ms; redraw every interval
+  static final int artCount = 4;  // how many times segments ar doubled
+  static final num leftAngle = 22.5;
+  static final num righttAngle = 45;
+  static final num backwardSteps = 60;
+  static final num forwardSteps = 120;
+
+  Pen pen;
+
+  Map<String, String> colors;
+  SelectElement colorSelect;
+  SelectElement widthSelect;
+  InputElement downCheckbox;
+  InputElement writeInput;
+  InputElement visibleCheckbox;
+  InputElement artCountInput;
+  ButtonElement artButton;
+  InputElement onDartCountInput;
+  ButtonElement onDartButton;
+  ButtonElement eraseButton;
+  SelectElement demosSelect;
+
+  CanvasElement canvas;
+  CanvasRenderingContext2D context;
+
+  InputElement turnInput;
+  InputElement advanceInput;
+  InputElement repeatInput;
+  ButtonElement moveButton;
+  ButtonElement randomButton;
+  ButtonElement startButton;
+
+  InputElement leftInput;
+  ButtonElement leftButton;
+  InputElement rightInput;
+  ButtonElement rightButton;
+  InputElement backwardInput;
+  ButtonElement backwardButton;
+  InputElement forwardInput;
+  ButtonElement forwardButton;
+
+  Board(minRepo) {
+    pen = new Pen(minRepo);
+
+    colors = colorMap();
+    // above drawing
+    colorSelect = document.query('#color');
+    colorSelect.on.change.add((Event e) {
+      pen.color = colorSelect.value;
+    });
+
+    widthSelect = document.query('#width');
+    widthSelect.on.change.add((Event e) {
+      try {
+        pen.width = parseInt(widthSelect.value);
+      } on FormatException catch(error) {
+        print('${widthSelect.value} must be an integer -- $error');
+      }
+    });
+
+    downCheckbox = document.query('#down');
+    downCheckbox.on.change.add((Event e) {
+      pen.down = downCheckbox.checked;
+    });
+
+    writeInput = document.query('#write');
+    writeInput.on.change.add((Event e) {
+      pen.write = writeInput.value;
+    });
+
+    visibleCheckbox = document.query('#visible');
+    visibleCheckbox.on.change.add((Event e) {
+      pen.visible = visibleCheckbox.checked;
+    });
+
+    artCountInput = document.query('#artCount');
+    artButton = document.query('#art');
+    artButton.on.click.add((MouseEvent e) {
+      try {
+        pen.art(parseInt(artCountInput.value));
+      } on FormatException catch(error) {
+        print('Art count (${artCountInput.value}) must be an integer -- $error');
+      }
+    });
+
+    onDartCountInput = document.query('#onDartCount');
+    onDartButton = document.query('#onDart');
+    onDartButton.on.click.add((MouseEvent e) {
+      try {
+        randomProgram(pen,
+            parseInt(artCountInput.value), parseInt(onDartCountInput.value));
+      } on FormatException catch(error) {
+        print('On Dart count (${onDartCountInput.value}) must be an integer -- $error');
+      }
+    });
+
+    eraseButton = document.query('#erase');
+    eraseButton.on.click.add((MouseEvent e) {
+      pen.erase();
+      _init();
+    });
+
+    demosSelect = document.query('#demos');
+    demosSelect.on.change.add((Event e) {
+      try {
+        if (demosSelect.value == 'demos') {
+          randomDemo(pen, parseInt(artCountInput.value));
+        } else {
+          demo(pen, parseInt(demosSelect.value));
+        }
+      } on FormatException catch(error) {
+        randomDemo(pen);
+      }
+    });
+
+    // drawing
+
+    canvas = document.query('#canvas');
+    context = canvas.getContext('2d');
+    pen.drawingWidth = canvas.width;
+    pen.drawingHeight = canvas.height;
+
+    // bellow drawing
+
+    turnInput = document.query('#turn');
+    advanceInput = document.query('#advance');
+    repeatInput = document.query('#repeat');
+
+    moveButton = document.query('#move');
+    moveButton.on.click.add((MouseEvent e) {
+      try {
+        num turn = parseDouble(turnInput.value);
+        num advance = parseDouble(advanceInput.value);
+        int repeat = parseInt(repeatInput.value);
+        pen.move(turn, advance, repeat);
+      } on FormatException catch(error) {
+        print('not a number -- $error');
+      }
+    });
+
+    randomButton = document.query('#random');
+    randomButton.on.click.add((MouseEvent e) {
+      pen.moveRandom();
+    });
+
+    startButton = document.query('#start');
+    startButton.on.click.add((MouseEvent e) {
+      pen.moveTo(pen.startX, pen.startY);
+    });
+
+    leftInput = document.query('#leftTurn');
+    leftButton = document.query('#left');
+    leftButton.on.click.add((MouseEvent e) {
+      try {
+        // num value = leftInput.valueAsNumber; // ??
+        pen.left(parseDouble(leftInput.value));
+      } on FormatException catch(error) {
+        print('${leftInput.value} must be a number -- $error');
+      }
+    });
+
+    rightInput = document.query('#rightTurn');
+    rightButton = document.query('#right');
+    rightButton.on.click.add((MouseEvent e) {
+      try {
+        pen.right(parseDouble(rightInput.value));
+      } on FormatException catch(error) {
+        print('${rightInput.value} must be a number -- $error');
+      }
+    });
+
+    backwardInput = document.query('#backwardAdvance');
+    backwardButton = document.query('#backward');
+    backwardButton.on.click.add((MouseEvent e) {
+      try {
+        pen.backward(parseDouble(backwardInput.value));
+      } on FormatException catch(error) {
+        print('${backwardInput.value} must be a number -- $error');
+      }
+    });
+
+    forwardInput = document.query('#forwardAdvance');
+    forwardButton = document.query('#forward');
+    forwardButton.on.click.add((MouseEvent e) {
+      try {
+        pen.forward(parseDouble(forwardInput.value));
+      } on FormatException catch(error) {
+        print('${forwardInput.value} must be a number -- $error');
+      }
+    });
+
+    _init();
+
+    // Redraw every interval ms.
+    document.window.setInterval(draw, interval);
+  }
+
+  _init() {
+    colorSelect.value = pen.color;
+    widthSelect.value = pen.width.toString();
+    downCheckbox.checked = pen.down;
+    writeInput.value = pen.write;
+    visibleCheckbox.checked = pen.visible;
+    artCountInput.value = artCount.toString();
+    onDartCountInput.value = (randomCommandGenList.length + 1).toString();
+    demosSelect.value = 'demos';
+
+    turnInput.value = Pen.angle.toString();
+    advanceInput.value = Pen.steps.toString();
+    repeatInput.value = Pen.repeat.toString();
+
+    leftInput.value = leftAngle.toString();
+    rightInput.value = righttAngle.toString();
+    backwardInput.value = backwardSteps.toString();
+    forwardInput.value = forwardSteps.toString();
+  }
+
+  clear() {
+    context.beginPath();
+    context.fillStyle = colors['white'];
+    context.lineWidth = pen.width;
+    context.strokeStyle = colors[pen.color];
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.rect(0, 0, canvas.width, canvas.height);
+    context.fill();
+    context.stroke();
+    context.closePath();
+  }
+
+  draw() {
+    clear();
+
+    for (Segment segment in pen.segments) {
+      if (segment.visible) {
+        // draw segment lines
+        context.beginPath();
+        context.lineWidth = segment.width;
+        context.strokeStyle = colors[segment.color];
+        for (Line line in segment.lines) {
+          context.moveTo(line.beginX, line.beginY);
+          context.lineTo(line.endX, line.endY);
+          if (segment.text != null && segment.text.trim() != '') {
+            var x = (line.beginX + line.endX) / 2;
+            var y = (line.beginY + line.endY) / 2;
+            context.font = '14px sans-serif';
+            context.textAlign = 'center';
+            context.strokeText(segment.text, x + 2, y - 2, line.pixels);
+          }
+        }
+        context.stroke();
+        context.closePath();
+      }
+    }
+
+    if (pen.visible) {
+      // draw pen as a circle with the current direction
+      context.beginPath();
+      context.fillStyle = colors[pen.color];
+      context.lineWidth = pen.width;
+      context.strokeStyle = colors[pen.color];
+      Line direction;
+      Point endPoint;
+      if (pen.lastLine == null) {
+        context.arc(pen.startX, pen.startY, pen.width + 1,
+            0, PI * 2, false);
+        direction = new Line.first(pen.lineConcept, pen.startX, pen.startY);
+        endPoint = direction.findEndPoint(
+            direction.beginX, direction.beginY, direction.cumulativeAngle,
+            pen.width + 8);
+      } else {
+        context.arc(pen.lastLine.endX, pen.lastLine.endY, pen.width + 1,
+            0, PI * 2, false);
+        direction = new Line.next(pen.lastLine.concept, pen.lastLine);
+        endPoint = direction.findEndPoint(
+            direction.beginX, direction.beginY, pen.lastLine.cumulativeAngle,
+            pen.width + 8);
+      }
+      direction.endX = endPoint.x;
+      direction.endY = endPoint.y;
+      context.moveTo(direction.beginX, direction.beginY);
+      context.lineTo(direction.endX, direction.endY);
+
+      context.fill();
+      context.stroke();
+      context.closePath();
+    }
+  }
+
+}

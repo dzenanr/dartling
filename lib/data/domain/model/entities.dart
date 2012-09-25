@@ -19,6 +19,7 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   abstract bool some(Function f);
 
   abstract bool contains(T entity);
+  abstract T first();
   abstract T last();
   abstract T random();
   abstract T find(Oid oid);
@@ -137,7 +138,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       try {
         maxInt = parseInt(maxc);
         if (count == maxInt) {
-          Error error = new Error('max');
+          EntityError error = new EntityError('max');
           error.message = '${_concept.codes}.max is $maxc.';
 
           _errors.add(error);
@@ -163,7 +164,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
               '${a.code} attribute value cannot be incremented.');
         }
       } else if (a.required && entity.getAttribute(a.code) == null) {
-        Error error = new Error('required');
+        EntityError error = new EntityError('required');
         error.message = '${entity.concept.code}.${a.code} attribute is null.';
         _errors.add(error);
         result = false;
@@ -171,7 +172,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     }
     for (Parent p in _concept.parents) {
       if (p.required && entity.getParent(p.code) == null) {
-        Error error = new Error('required');
+        EntityError error = new EntityError('required');
         error.message = '${entity.concept.code}.${p.code} parent is null.';
         _errors.add(error);
         result = false;
@@ -180,13 +181,13 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
 
     // uniqueness validation
     if (entity.code != null && findByCode(entity.code) != null) {
-      Error error = new Error('unique');
+      EntityError error = new EntityError('unique');
       error.message = '${entity.concept.code}.code is not unique.';
       _errors.add(error);
       result = false;
     }
     if (entity.id != null && findById(entity.id) != null) {
-      Error error = new Error('unique');
+      EntityError error = new EntityError('unique');
       error.message =
           '${entity.concept.code}.id ${entity.id.toString()} is not unique.';
       _errors.add(error);
@@ -275,7 +276,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       try {
         minInt = parseInt(minc);
         if (count == minInt) {
-          Error error = new Error('min');
+          EntityError error = new EntityError('min');
           error.message = '${_concept.codes}.min is $minc.';
           _errors.add(error);
           result = false;
@@ -368,7 +369,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
         return true;
       } else {
         if (add(beforeEntity)) {
-          Error error = new Error('update');
+          EntityError error = new EntityError('update');
           error.message =
             '${_concept.codes}.update fails to add after update entity.';
           _errors.add(error);
@@ -378,7 +379,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
         }
       }
     } else {
-      Error error = new Error('update');
+      EntityError error = new EntityError('update');
       error.message =
         '${_concept.codes}.update fails to remove before update entity.';
       _errors.add(error);
@@ -394,12 +395,20 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     return false;
   }
 
+  T first() {
+    if (!empty) {
+      return _entityList[0];
+    }
+  }
+
   T last() {
-    return _entityList.last();
+    if (!empty) {
+      return _entityList.last();
+    }
   }
 
   T random() {
-    if (count > 0) {
+    if (!empty) {
       return _entityList[randomGen.nextInt(count)];
     }
   }

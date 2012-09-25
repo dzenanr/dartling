@@ -1,0 +1,97 @@
+/* menu.css */
+
+/* ===[ begin ]=== */
+
+/*
+  Title:                  Menu Design Style
+  Author:                 Dzenan Ridjanovic
+  Influenced By: 
+    http://www.devinrolsen.com/pure-css-horizontal-menu/
+  Created:                2011-12-22
+  Updated:                2012-01-04
+*/
+
+/* ===[ horizontal menu bar with menus and menu items ]=== */
+
+  nav {
+    width: 100%;
+    height: 30px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #663117;
+    border-top: 2px solid #999999;
+  }
+
+  nav ul {
+    margin: 0px; 
+    padding: 0px;
+  }
+
+  nav ul li {
+    display: inline; 
+    height: 30px; 
+    float: left; 
+    list-style: none;
+    margin-left: 15px;
+    position: relative;
+  }
+
+  nav ul li:hover {
+    color: #d9ece2;
+  }
+
+  nav li ul {
+    margin: 0px;
+    padding-top: 8px;
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 20px;
+    font-size: 14px;
+    color: #d9ece2;
+    background-color: #663117;
+  }
+
+  nav li:hover ul {
+    display: block;
+    width: 180px;
+  }
+
+  nav li li {
+    padding: 0px;
+    color: #ffffff;
+    list-style: none;
+    display: list-item;
+  }
+
+  nav li li a:link {
+    text-decoration: none;
+    font-weight: bold;
+    color: #e6ffc8;
+  }
+
+  nav li li a:visited {
+    text-decoration: none;
+    font-weight: bold;
+    color: #f2e1fb;
+  }
+
+  nav li li a:hover {
+    text-decoration: none;
+    color: #663117;
+    background: #d9ece2;
+  }
+
+  nav li li button {
+    color: #663117;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ffffff;
+  }
+
+  nav li li button:hover {
+    background-color: #d9ece2;
+  }
+
+/* ===[ end ]=== */
+

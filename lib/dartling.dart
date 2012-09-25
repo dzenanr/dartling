@@ -33,47 +33,46 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #library('dartling');
 
 //#import('package:unittest/unittest.dart');
-#import('../unittest/unittest.dart');
+#import('../../unittest/unittest.dart');
+#import("dart:html");
 #import('dart:json');
 #import('dart:math');
 #import('dart:uri');
 
-#source('lib/data/domain/model/event/actions.dart');
-#source('lib/data/domain/model/event/reactions.dart');
-#source('lib/data/domain/model/exception/errors.dart');
-#source('lib/data/domain/model/exception/exceptions.dart');
-#source('lib/data/domain/model/transfer/json.dart');
-#source('lib/data/domain/model/entities.dart');
-#source('lib/data/domain/model/entity.dart');
-#source('lib/data/domain/model/entries.dart');
-#source('lib/data/domain/model/id.dart');
-#source('lib/data/domain/model/oid.dart');
-#source('lib/data/domain/models.dart');
-#source('lib/data/domain/session.dart');
+#source('data/domain/model/event/actions.dart');
+#source('data/domain/model/event/reactions.dart');
+#source('data/domain/model/exception/errors.dart');
+#source('data/domain/model/exception/exceptions.dart');
+#source('data/domain/model/transfer/json.dart');
+#source('data/domain/model/entities.dart');
+#source('data/domain/model/entity.dart');
+#source('data/domain/model/entries.dart');
+#source('data/domain/model/id.dart');
+#source('data/domain/model/oid.dart');
+#source('data/domain/models.dart');
+#source('data/domain/session.dart');
 
-#source('lib/data/gen/dartling_view.dart');
-#source('lib/data/gen/dartling_data.dart');
-#source('lib/data/gen/generated.dart');
-#source('lib/data/gen/specific.dart');
-#source('lib/data/gen/tests.dart');
+#source('data/gen/dartling_view.dart');
+#source('data/gen/dartling_data.dart');
+#source('data/gen/generated.dart');
+#source('data/gen/specific.dart');
+#source('data/gen/tests.dart');
 
-#source('lib/data/meta/attributes.dart');
-#source('lib/data/meta/children.dart');
-#source('lib/data/meta/concepts.dart');
-#source('lib/data/meta/domains.dart');
-#source('lib/data/meta/models.dart');
-#source('lib/data/meta/neighbor.dart');
-#source('lib/data/meta/parents.dart');
-#source('lib/data/meta/property.dart');
-#source('lib/data/meta/types.dart');
+#source('data/meta/attributes.dart');
+#source('data/meta/children.dart');
+#source('data/meta/concepts.dart');
+#source('data/meta/domains.dart');
+#source('data/meta/models.dart');
+#source('data/meta/neighbor.dart');
+#source('data/meta/parents.dart');
+#source('data/meta/property.dart');
+#source('data/meta/types.dart');
 
-#source('lib/data/repository.dart');
+#source('data/repository.dart');
 
-#source("lib/view/component/entities.dart");
-#source("lib/view/component/entity.dart");
-#source("lib/view/component/param.dart");
-#source("lib/view/component/repo.dart");
+#source("view/component/entities.dart");
+#source("view/component/entity.dart");
+#source("view/component/param.dart");
+#source("view/component/repo.dart");
 
-void main() {
 
-}
