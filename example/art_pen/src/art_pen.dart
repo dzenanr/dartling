@@ -1,6 +1,6 @@
 
-//#import("package:unittest/unittest.dart");
-#import("../../../../unittest/unittest.dart", prefix:"unittest");
+#import("package:unittest/unittest.dart");
+//#import("../../../../unittest/unittest.dart", prefix:"unittest");
 
 #import("dart:html");
 #import("dart:json");
