@@ -12,6 +12,8 @@ https://github.com/trucy/potatodown
 http://awestruct.org/
 http://johnmacfarlane.net/pandoc/
 
+http://designshack.net/articles/html/mastering-markdown-30-resources-apps-and-tutorials-to-get-you-started/
+
 Editor
 
 http://notepag.es/
