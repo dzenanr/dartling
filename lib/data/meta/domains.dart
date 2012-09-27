@@ -12,25 +12,25 @@ class Domain extends ConceptEntity<Domain> {
   Domain domain;
 
   Domains domains;
-  Types types;
+  AttributeTypes types;
   Models models;
 
   Domain([String domainCode = 'Default']) {
     super.code = domainCode;
     domains = new Domains();
-    types = new Types();
+    types = new AttributeTypes();
     models = new Models();
     if (domainCode == 'Default') {
       description = 'Default domain to keep types and models.';
     }
 
-    new Type(this, 'String');
-    new Type(this, 'num');
-    new Type(this, 'int');
-    new Type(this, 'double');
-    new Type(this, 'bool');
-    new Type(this, 'Date');
-    new Type(this, 'Uri');
+    new AttributeType(this, 'String');
+    new AttributeType(this, 'num');
+    new AttributeType(this, 'int');
+    new AttributeType(this, 'double');
+    new AttributeType(this, 'bool');
+    new AttributeType(this, 'Date');
+    new AttributeType(this, 'Uri');
     assert(types.count == 7);
   }
 
@@ -38,6 +38,6 @@ class Domain extends ConceptEntity<Domain> {
 
   Model getModel(String modelCode) => models.findByCode(modelCode);
 
-  Type getType(String typeCode) => types.findByCode(typeCode);
+  AttributeType getType(String typeCode) => types.findByCode(typeCode);
 
 }

@@ -1,16 +1,16 @@
 
-class Types extends Entities<Type> {
+class AttributeTypes extends Entities<AttributeType> {
 
 }
 
-class Type extends ConceptEntity<Type> {
+class AttributeType extends ConceptEntity<AttributeType> {
 
   String base;
   int length;
 
   Domain domain;
 
-  Type(this.domain, String typeCode) {
+  AttributeType(this.domain, String typeCode) {
     super.code = typeCode;
     base = typeCode;
     domain.types.add(this);

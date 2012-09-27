@@ -48,7 +48,7 @@ Model fromMagicBoxes(String json, Domain domain, String modelCode) {
           attribute.init = itemInit;
         }
         String itemType = item["type"];
-        Type type = domain.types.findByCode(itemType);
+        AttributeType type = domain.types.findByCode(itemType);
         if (type != null) {
           attribute.type = type;
         } else {

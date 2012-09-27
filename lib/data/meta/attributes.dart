@@ -11,7 +11,7 @@ class Attribute extends Property {
   int sequence;
   bool _derive = false;
 
-  Type type;
+  AttributeType type;
 
   Attribute(Concept sourceConcept, String attributeCode) :
     super(sourceConcept, attributeCode) {

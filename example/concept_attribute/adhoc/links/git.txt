@@ -1,4 +1,0 @@
-Git
-
-http://www.ralfebert.de/blog/tools/git_screencast/
-http://git-scm.com/videos
