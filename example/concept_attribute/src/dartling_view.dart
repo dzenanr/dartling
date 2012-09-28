@@ -33,13 +33,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // dartling_view.dart
 
-//#import("package:unittest/unittest.dart");
-#import("../../../../unittest/unittest.dart");
+#import("package:unittest/unittest.dart", prefix:"unittest");
+//#import("../../../../unittest/unittest.dart");
 #import("dart:html");
 #import("dart:json");
 #import("dart:math");
 #import("dart:uri");
 
+#import("package:dartling/dartling.dart");
+
+/*
 #source("../../../lib/data/domain/model/event/actions.dart");
 #source("../../../lib/data/domain/model/event/reactions.dart");
 #source("../../../lib/data/domain/model/exception/errors.dart");
@@ -75,6 +78,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source("../../../lib/view/component/entity.dart");
 #source("../../../lib/view/component/param.dart");
 #source("../../../lib/view/component/repo.dart");
+*/
 
 #source("data/concept/attribute/json/data.dart");
 #source("data/concept/attribute/json/model.dart");

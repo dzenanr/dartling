@@ -32,8 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #library('dartling');
 
-//#import('package:unittest/unittest.dart');
-#import('../../unittest/unittest.dart');
+#import("package:unittest/unittest.dart", prefix:"unittest");
+//#import('../../unittest/unittest.dart');
 #import("dart:html");
 #import('dart:json');
 #import('dart:math');

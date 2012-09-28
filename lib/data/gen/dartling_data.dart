@@ -40,7 +40,7 @@ String genDartlingData(String place, Repo repo) {
   sc = '${sc} \n';
   sc = '${sc}${license} \n';
   if (place == 'pub') {
-    sc = '${sc}#import("package:unittest/unittest.dart"); \n';
+    sc = '${sc}#import("package:unittest/unittest.dart", prefix:"unittest"); \n';
   } else if (place == 'child') {
     sc = '${sc}#import("../../../../unittest/unittest.dart"); \n';
   } else { // twin
@@ -223,7 +223,7 @@ String genDartlingData(String place, Repo repo) {
   }
 
   sc = '${sc}void main() { \n';
-  sc = '${sc}  genCode("child"); \n';
+  sc = '${sc}  genCode("pub");  // or child or twin \n';
   for (Domain domain in repo.domains) {
     sc = '${sc} \n';
     sc = '${sc}  var ${domain.codeFirstLetterLower}Repo = '

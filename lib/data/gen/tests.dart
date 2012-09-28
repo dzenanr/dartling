@@ -8,7 +8,7 @@ String genTestData(String place, Repo repo, Model model) {
        '${model.codeLowerUnderscore}_test.dart \n';
   sc = '${sc} \n';
   if (place == 'pub') {
-    sc = '${sc}#import("package:unittest/unittest.dart"); \n';
+    sc = '${sc}#import("package:unittest/unittest.dart", prefix:"unittest"); \n';
   } else if (place == 'child') {
     sc = '${sc}#import("../../../../../../../unittest/unittest.dart"); \n';
   } else { // twin

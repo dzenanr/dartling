@@ -34,10 +34,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // dartling_data.dart
 
 // pub
-//#import("package:unittest/unittest.dart");
+#import("package:unittest/unittest.dart", prefix:"unittest");
 
 // child
-#import("../../../../unittest/unittest.dart");
+//#import("../../../../unittest/unittest.dart");
 
 // twin
 //#import("../../unittest/unittest.dart");
@@ -47,9 +47,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import("dart:uri");
 
 // pub
-//#import("package:dartling/dartling.dart");
+#import("package:dartling/dartling.dart");
 
 // child
+/*
 #source("../../../lib/data/domain/model/event/actions.dart");
 #source("../../../lib/data/domain/model/event/reactions.dart");
 #source("../../../lib/data/domain/model/exception/errors.dart");
@@ -80,6 +81,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source("../../../lib/data/meta/types.dart");
 
 #source("../../../lib/data/repository.dart");
+*/
 
 // twin
 /*
@@ -148,5 +150,5 @@ genCode(String place) {
 
 void main() {
   // pub, child or twin
-  //genCode("child");
+  //genCode("pub");
 }

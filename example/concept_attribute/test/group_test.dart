@@ -1,8 +1,8 @@
 
-//#import("package:unittest/unittest.dart");
-#import("../../../../unittest/unittest.dart");
-
-#source("../../../lib/data/repository.dart");
+#import("package:unittest/unittest.dart", prefix:"unittest");
+//#import("../../../../unittest/unittest.dart");
+#import("package:dartling/dartling.dart");
+//#source("../../../lib/data/repository.dart");
 
 // Code template for the last group test.
 
