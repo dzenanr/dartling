@@ -30,15 +30,19 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#library('dartling');
+#library('dartling_view');
 
-#import('dart:json');
-#import('dart:math');
-#import('dart:uri');
+#import('dart:html');
+//#import('dart:json');
+//#import('dart:math');
+//#import('dart:uri');
 
-#import('package:unittest/unittest.dart', prefix:'unittest');
+//#import("package:unittest/unittest.dart", prefix:"unittest");
 //#import('../../unittest/unittest.dart');
 
+#import('package:dartling/dartling.dart');
+
+/*
 #source('data/domain/model/event/actions.dart');
 #source('data/domain/model/event/reactions.dart');
 #source('data/domain/model/exception/errors.dart');
@@ -69,4 +73,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('data/meta/types.dart');
 
 #source('data/repository.dart');
+*/
+
+#source("view/component/entities.dart");
+#source("view/component/entity.dart");
+#source("view/component/param.dart");
+#source("view/component/repo.dart");
+
 

@@ -1,11 +1,12 @@
 
 // test/data/default/project/data_default_project_test.dart
 
-#import("package:unittest/unittest.dart", prefix:"unittest");
-//#import("../../../../../../../unittest/unittest.dart");
 #import("dart:json");
 #import("dart:math");
 #import("dart:uri");
+
+#import("package:unittest/unittest.dart", prefix:"unittest");
+//#import("../../../../../../../unittest/unittest.dart");
 
 #import("package:dartling/dartling.dart");
 
@@ -42,16 +43,16 @@
 #source("../../../../../../lib/data/repository.dart");
 
 */
-#source("../../../../src/data/default/project/json/data.dart");
-#source("../../../../src/data/default/project/json/model.dart");
+#source("../src/data/default/project/json/data.dart");
+#source("../src/data/default/project/json/model.dart");
 
-#source("../../../../src/data/default/project/init.dart");
-#source("../../../../src/data/default/project/projects.dart");
+#source("../src/data/default/project/init.dart");
+#source("../src/data/default/project/projects.dart");
 
-#source("../../../../src/data/gen/default/project/entries.dart");
-#source("../../../../src/data/gen/default/project/projects.dart");
-#source("../../../../src/data/gen/default/models.dart");
-#source("../../../../src/data/gen/default/repository.dart");
+#source("../src/data/gen/default/project/entries.dart");
+#source("../src/data/gen/default/project/projects.dart");
+#source("../src/data/gen/default/models.dart");
+#source("../src/data/gen/default/repository.dart");
 
 testDefaultProject(Repo repo, String domainCode, String modelCode) {
   var models;

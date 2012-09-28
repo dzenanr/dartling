@@ -41,6 +41,7 @@
 #source("../../../../../../lib/data/meta/types.dart");
 
 #source("../../../../../../lib/data/repository.dart");
+*/
 
 #source("../../../../src/data/category/keyword/json/data.dart");
 // do not change model
@@ -58,7 +59,6 @@
 // do not change models
 #source("../../../../src/data/gen/category/models.dart");
 #source("../../../../src/data/gen/category/repository.dart");
-*/
 
 testCategoryKeyword(Repo repo, String domainCode, String modelCode) {
   var models;

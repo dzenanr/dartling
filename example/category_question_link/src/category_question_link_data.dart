@@ -33,10 +33,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // dartling_data.dart
 
-#import("package:unittest/unittest.dart", prefix:"unittest");
+//#import("package:unittest/unittest.dart", prefix:"unittest");
 //#import("../../../../unittest/unittest.dart");
-#import("dart:json");
-#import("dart:math");
+//#import("dart:json");
+//#import("dart:math");
 #import("dart:uri");
 
 #import("package:dartling/dartling.dart");

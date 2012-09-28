@@ -40,6 +40,7 @@
 #source("../../../../../../lib/data/meta/types.dart");
 
 #source("../../../../../../lib/data/repository.dart");
+*/
 
 #source("../../../../src/data/category_question/link/json/data.dart");
 #source("../../../../src/data/category_question/link/json/model.dart");
@@ -61,7 +62,6 @@
 #source("../../../../src/data/gen/category_question/link/questions.dart");
 #source("../../../../src/data/gen/category_question/models.dart");
 #source("../../../../src/data/gen/category_question/repository.dart");
-*/
 
 testCategoryQuestionLink(Repo repo, String domainCode, String modelCode) {
   var models;

@@ -38,6 +38,7 @@
 #source("../../../../../../lib/data/meta/types.dart");
 
 #source("../../../../../../lib/data/repository.dart");
+*/
 
 #source("../../../../src/data/concept/attribute/json/data.dart");
 #source("../../../../src/data/concept/attribute/json/model.dart");
@@ -49,7 +50,6 @@
 #source("../../../../src/data/gen/concept/attribute/cities.dart");
 #source("../../../../src/data/gen/concept/models.dart");
 #source("../../../../src/data/gen/concept/repository.dart");
-*/
 
 // test/data/concept/attribute/data_concept_attribute_test.dart
 

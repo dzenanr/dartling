@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // dartling_view.dart
 
 // pub
-#import("package:unittest/unittest.dart", prefix:"unittest");
+//#import("package:unittest/unittest.dart", prefix:"unittest");
 
 // child
 //#import("../../../../unittest/unittest.dart");
@@ -43,12 +43,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //#import("../../unittest/unittest.dart");
 
 #import("dart:html");
-#import("dart:json");
-#import("dart:math");
-#import("dart:uri");
+//#import("dart:json");
+//#import("dart:math");
+//#import("dart:uri");
 
 // pub
 #import("package:dartling/dartling.dart");
+#import("package:dartling/dartling_view.dart");
 
 // child
 /*
