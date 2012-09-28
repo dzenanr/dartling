@@ -1,12 +1,12 @@
 
 // test/data/category/keyword/data_category_keyword_test.dart
 
-#import("package:unittest/unittest.dart", prefix:"unittest");
-//#import("../../../../../../../unittest/unittest.dart");
-
 #import("dart:json");
 #import("dart:math");
 #import("dart:uri");
+
+#import("package:unittest/unittest.dart", prefix:"unittest");
+//#import("../../../../../../../unittest/unittest.dart");
 
 #import("package:dartling/dartling.dart");
 
