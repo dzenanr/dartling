@@ -34,7 +34,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import("package:unittest/unittest.dart", prefix:"unittest");
 //#import('../../unittest/unittest.dart');
-#import("dart:html");
+
+#import('dart:html');
 #import('dart:json');
 #import('dart:math');
 #import('dart:uri');
