@@ -1,7 +1,7 @@
 
 // test/data/category_question/link/data_category_question_link_test.dart
 
-#import("package:unittest/unittest.dart", prefix:"unittest");
+#import("package:unittest/unittest.dart");
 //#import("../../../../../../../unittest/unittest.dart");
 #import("dart:json");
 #import("dart:math");

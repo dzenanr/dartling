@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // dartling_data.dart
 
 // pub
-//#import("package:unittest/unittest.dart", prefix:"unittest");
+//#import("package:unittest/unittest.dart");
 
 // child
 //#import("../../../../unittest/unittest.dart");

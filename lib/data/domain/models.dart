@@ -59,7 +59,7 @@ class DomainModels implements DomainModelsApi {
     _actionReactions.removeRange(index, 1);
   }
 
-  notifyActionReactions(Action action) {
+  notifyActionReactions(BasicAction action) {
     for (ActionReactionApi reaction in _actionReactions) {
       reaction.react(action);
     }

@@ -25,7 +25,7 @@ abstract class PastApi implements SourceOfPastReactionApi {
 
 }
 
-abstract class Action implements ActionApi {
+abstract class BasicAction implements ActionApi {
 
   String name;
   String category;
@@ -36,7 +36,7 @@ abstract class Action implements ActionApi {
 
   bool partOfTransaction = false;
 
-  Action(this.name, this.session);
+  BasicAction(this.name, this.session);
 
   abstract bool doit();
   abstract bool undo();
@@ -44,7 +44,7 @@ abstract class Action implements ActionApi {
 
   toString() => 'action: $name; state: $state -- description: $description';
 
-  display([String title='Action']) {
+  display([String title='BasicAction']) {
     print('');
     print('======================================');
     print('$title                                ');
@@ -56,7 +56,7 @@ abstract class Action implements ActionApi {
 
 }
 
-abstract class EntitiesAction extends Action {
+abstract class EntitiesAction extends BasicAction {
 
   Entities entities;
   ConceptEntity entity;
@@ -148,7 +148,7 @@ class RemoveAction extends EntitiesAction {
 
 }
 
-abstract class EntityAction extends Action {
+abstract class EntityAction extends BasicAction {
 
   ConceptEntity entity;
   String property;
@@ -265,7 +265,7 @@ class SetChildAction extends EntityAction {
 
 }
 
-class Transaction extends Action implements TransactionApi {
+class Transaction extends BasicAction implements TransactionApi {
 
   Past _actions;
 
@@ -273,7 +273,7 @@ class Transaction extends Action implements TransactionApi {
     _actions = new Past();
   }
 
-  add(Action action) {
+  add(BasicAction action) {
     _actions.add(action);
     action.partOfTransaction = true;
   }
@@ -326,16 +326,16 @@ class Transaction extends Action implements TransactionApi {
 class Past implements PastApi {
 
   int cursor = 0;
-  List<Action> _actions;
+  List<BasicAction> _actions;
 
   List<PastReactionApi> _pastReactions;
 
   Past() {
-    _actions = new List<Action>();
+    _actions = new List<BasicAction>();
     _pastReactions = new List<PastReactionApi>();
   }
 
-  add(Action action) {
+  add(BasicAction action) {
     _removeRightOfCursor();
     _actions.add(action);
     _moveCursorForward();
@@ -374,7 +374,7 @@ class Past implements PastApi {
   bool doit() {
     bool done = false;
     if (!empty) {
-      Action action = _actions[cursor];
+      BasicAction action = _actions[cursor];
       done = action.doit();
       _moveCursorForward();
     }
@@ -385,7 +385,7 @@ class Past implements PastApi {
     bool undone = false;
     if (!empty) {
       _moveCursorBackward();
-      Action action = _actions[cursor];
+      BasicAction action = _actions[cursor];
       undone = action.undo();
     }
     return undone;
@@ -394,7 +394,7 @@ class Past implements PastApi {
   bool redo() {
     bool redone = false;
     if (!empty) {
-      Action action = _actions[cursor];
+      BasicAction action = _actions[cursor];
       redone = action.redo();
       _moveCursorForward();
     }
@@ -458,7 +458,7 @@ class Past implements PastApi {
     print('======================================');
     print('');
     print('cursor: $cursor');
-    for (Action action in _actions) {
+    for (BasicAction action in _actions) {
       action.display();
     }
     print('');

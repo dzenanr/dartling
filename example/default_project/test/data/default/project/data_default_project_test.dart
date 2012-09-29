@@ -1,8 +1,8 @@
 
 // test/data/default/project/data_default_project_test.dart
 
-#import("package:unittest/unittest.dart", prefix:"unittest");
-//#import("../../../../../../../unittest/unittest.dart");
+#import("package:unittest/unittest.dart");
+//#import("../../../../../../../unittest/dart");
 #import("dart:json");
 #import("dart:math");
 #import("dart:uri");
@@ -596,7 +596,7 @@ class ProjectReaction implements ActionReactionApi {
   bool reactedOnAdd = false;
   bool reactedOnUpdate = false;
 
-  react(Action action) {
+  react(BasicAction action) {
     if (action is EntitiesAction) {
       reactedOnAdd = true;
     } else if (action is EntityAction) {

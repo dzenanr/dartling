@@ -5,7 +5,7 @@
 #import("dart:math");
 #import("dart:uri");
 
-#import("package:unittest/unittest.dart", prefix:"unittest");
+#import("package:unittest/unittest.dart");
 //#import("../../../../../../../unittest/unittest.dart");
 
 #import("package:dartling/dartling.dart");
