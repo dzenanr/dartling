@@ -1,6 +1,5 @@
 .children
 packages
-pubspec.lock
 *.js
 *.js.map
 *~
