@@ -1,0 +1,4 @@
+
+initDartlingSkeleton(var entries) {
+
+}
