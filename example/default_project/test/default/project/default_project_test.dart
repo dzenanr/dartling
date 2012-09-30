@@ -1,7 +1,17 @@
 
 #import("package:dartling/dartling.dart");
-#import("package:default_project/default_project.dart");
 #import("package:unittest/unittest.dart");
+
+//#import("package:default_project/default_project.dart");
+
+#source("../../../lib/default/project/json/data.dart");
+#source("../../../lib/default/project/json/model.dart");
+#source("../../../lib/default/project/init.dart");
+#source("../../../lib/default/project/projects.dart");
+#source("../../../lib/gen/default/project/entries.dart");
+#source("../../../lib/gen/default/project/projects.dart");
+#source("../../../lib/gen/default/models.dart");
+#source("../../../lib/gen/default/repository.dart");
 
 testDefaultProject(Repo repo, String domainCode, String modelCode) {
   var models;

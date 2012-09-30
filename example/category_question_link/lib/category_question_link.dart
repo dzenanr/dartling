@@ -33,9 +33,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #library('category_question_link');
 
-#import("package:dartling/dartling.dart");
-
 #import("dart:uri");
+
+#import("package:dartling/dartling.dart");
 
 #source("category_question/link/json/data.dart");
 #source("category_question/link/json/model.dart");
