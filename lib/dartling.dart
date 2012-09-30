@@ -36,37 +36,36 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import('dart:math');
 #import('dart:uri');
 
-#import('package:unittest/unittest.dart', prefix:'unittest');
-//#import('../../unittest/unittest.dart');
+#import('package:unittest/unittest.dart');
 
-#source('data/domain/model/event/actions.dart');
-#source('data/domain/model/event/reactions.dart');
-#source('data/domain/model/exception/errors.dart');
-#source('data/domain/model/exception/exceptions.dart');
-#source('data/domain/model/transfer/json.dart');
-#source('data/domain/model/entities.dart');
-#source('data/domain/model/entity.dart');
-#source('data/domain/model/entries.dart');
-#source('data/domain/model/id.dart');
-#source('data/domain/model/oid.dart');
-#source('data/domain/models.dart');
-#source('data/domain/session.dart');
+#source('domain/model/event/actions.dart');
+#source('domain/model/event/reactions.dart');
+#source('domain/model/exception/errors.dart');
+#source('domain/model/exception/exceptions.dart');
+#source('domain/model/transfer/json.dart');
+#source('domain/model/entities.dart');
+#source('domain/model/entity.dart');
+#source('domain/model/entries.dart');
+#source('domain/model/id.dart');
+#source('domain/model/oid.dart');
+#source('domain/models.dart');
+#source('domain/session.dart');
 
-#source('data/gen/dartling_view.dart');
-#source('data/gen/dartling_data.dart');
-#source('data/gen/generated.dart');
-#source('data/gen/specific.dart');
-#source('data/gen/tests.dart');
+#source('gen/dartling_view.dart');
+#source('gen/dartling_data.dart');
+#source('gen/generated.dart');
+#source('gen/specific.dart');
+#source('gen/tests.dart');
 
-#source('data/meta/attributes.dart');
-#source('data/meta/children.dart');
-#source('data/meta/concepts.dart');
-#source('data/meta/domains.dart');
-#source('data/meta/models.dart');
-#source('data/meta/neighbor.dart');
-#source('data/meta/parents.dart');
-#source('data/meta/property.dart');
-#source('data/meta/types.dart');
+#source('meta/attributes.dart');
+#source('meta/children.dart');
+#source('meta/concepts.dart');
+#source('meta/domains.dart');
+#source('meta/models.dart');
+#source('meta/neighbor.dart');
+#source('meta/parents.dart');
+#source('meta/property.dart');
+#source('meta/types.dart');
 
-#source('data/repository.dart');
+#source('repository.dart');
 
