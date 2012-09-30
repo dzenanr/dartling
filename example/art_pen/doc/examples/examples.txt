@@ -1844,5 +1844,18 @@ art, 4;
   pen.interpret(commands);
 }
 
+demo070(Pen pen) {
+  var commands = '''
+move, 0, 80, 0;
+move, 38.37150854524225, 11.599787091836333, 32;
+move, 0, 80, 0;
+move, 24.96553952805698, 84.51234030071646, 3;
+art, 4;
+art, 4;
+  ''';
+  pen.erase();
+  pen.interpret(commands);
+}
+
 
 

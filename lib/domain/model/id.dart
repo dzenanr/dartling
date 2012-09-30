@@ -1,5 +1,5 @@
 
-abstract class IdApi implements Comparable, Hashable {
+abstract class IdApi implements Comparable {
 
   abstract Concept get concept;
 
