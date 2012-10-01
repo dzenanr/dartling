@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 ''';
 
-String genDartlingData(String place, Repo repo) {
+String genDartlingGen(String place, Repo repo) {
   var sc = ' \n';
   sc = '${sc}// dartling_data.dart \n';
   sc = '${sc} \n';

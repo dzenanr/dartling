@@ -51,8 +51,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('domain/models.dart');
 #source('domain/session.dart');
 
-#source('gen/dartling_view.dart');
-#source('gen/dartling_data.dart');
+#source('gen/dartling_app.dart');
+#source('gen/dartling_gen.dart');
 #source('gen/generated.dart');
 #source('gen/specific.dart');
 #source('gen/tests.dart');

@@ -61,7 +61,6 @@ genCode() {
   repo.domains.add(defaultDomain);
 
   repo.gen();
-  //repo.gen(specific:false);
 }
 
 initDefaultData(DefaultRepo defaultRepo) {

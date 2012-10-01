@@ -65,7 +65,6 @@ genCode() {
   repo.domains.add(categoryDomain);
 
   repo.gen();
-  //repo.gen(specific:false);
 }
 
 initCategoryData(CategoryRepo categoryRepo) {

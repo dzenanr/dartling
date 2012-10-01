@@ -74,7 +74,7 @@ class Repo implements RepoApi {
       }
       subTitle('The dartling_data.dart file with imports, sources and '
                'the main method');
-      print(genDartlingData(place, this));
+      print(genDartlingGen(place, this));
       subTitle('The dartling_view.dart file with imports, sources and '
                'the main method');
       print(genDartlingView(place, this));

@@ -43,6 +43,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // pub
 //#import("package:art_pen/art_pen.dart");
 
+#source("art/pen/json/data.dart");
+#source("art/pen/json/model.dart");
+
+#source("art/pen/init.dart");
+#source("art/pen/segments.dart");
+#source("art/pen/lines.dart");
+
+#source("art/pen/pen.dart");
+#source("art/pen/examples.dart");
+#source("art/pen/programs.dart");
+
+#source("gen/art/pen/entries.dart");
+#source("gen/art/pen/segments.dart");
+#source("gen/art/pen/lines.dart");
+#source("gen/art/models.dart");
+#source("gen/art/repository.dart");
+
+#source("util/color.dart");
+#source("util/random.dart");
+// pub
+
 #source("app/drawing.dart");
 #source("app/commands.dart");
-// pub

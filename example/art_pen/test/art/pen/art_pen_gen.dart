@@ -59,7 +59,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source("../../../lib/util/random.dart");
 // pub
 
-genCode(String place) {
+genCode() {
   var repo = new Repo();
 
   // change "Dartling" to "YourDomainName"
@@ -73,8 +73,7 @@ genCode(String place) {
 
   repo.domains.add(artDomain);
 
-  repo.gen(place);
-  //repo.gen(place, specific:false);
+  repo.gen();
 }
 
 initArtData(ArtRepo artRepo) {
@@ -89,7 +88,7 @@ initArtData(ArtRepo artRepo) {
 }
 
 void main() {
-  genCode('pub');
+  genCode();
 
   var artRepo = new ArtRepo();
   initArtData(artRepo);

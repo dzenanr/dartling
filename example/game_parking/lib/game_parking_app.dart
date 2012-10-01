@@ -41,7 +41,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // pub
 //#import("package:game_parking/game_parking.dart");
 
+#source("game/parking/json/data.dart");
+#source("game/parking/json/model.dart");
+
+#source("game/parking/init.dart");
+#source("game/parking/areas.dart");
+#source("game/parking/brands.dart");
+#source("game/parking/parkings.dart");
+#source("game/parking/cars.dart");
+
+#source("gen/game/parking/entries.dart");
+#source("gen/game/parking/areas.dart");
+#source("gen/game/parking/brands.dart");
+#source("gen/game/parking/parkings.dart");
+#source("gen/game/parking/cars.dart");
+#source("gen/game/models.dart");
+#source("gen/game/repository.dart");
+// pub
+
 #source("app/home/board.dart");
 #source("app/home/dash.dart");
 #source("app/home/menu.dart");
-// pub

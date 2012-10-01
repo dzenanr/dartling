@@ -73,7 +73,6 @@ genCode() {
   repo.domains.add(categoryQuestionDomain);
 
   repo.gen();
-  //repo.gen(specific:false);
 }
 
 initCategoryQuestionData(CategoryQuestionRepo categoryQuestionRepo) {

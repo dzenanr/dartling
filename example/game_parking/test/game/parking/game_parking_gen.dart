@@ -67,7 +67,6 @@ genCode() {
   repo.domains.add(gameDomain);
 
   repo.gen();
-  //repo.gen(specific:false);
 }
 
 initGameData(GameRepo gameRepo) {
