@@ -39,25 +39,33 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // pub
 //#import("package:art_pen/art_pen.dart");
 
-#source("../lib/art/pen/json/data.dart");
-#source("../lib/art/pen/json/model.dart");
+#source("../../../lib/art/pen/json/data.dart");
+#source("../../../lib/art/pen/json/model.dart");
 
-#source("../lib/art/pen/init.dart");
-#source("../lib/art/pen/segments.dart");
-#source("../lib/art/pen/lines.dart");
+#source("../../../lib/art/pen/init.dart");
+#source("../../../lib/art/pen/segments.dart");
+#source("../../../lib/art/pen/lines.dart");
 
-#source("../lib/art/pen/pen.dart");
-#source("../lib/art/pen/examples.dart");
-#source("../lib/art/pen/programs.dart");
+#source("../../../lib/gen/art/pen/entries.dart");
+#source("../../../lib/gen/art/pen/segments.dart");
+#source("../../../lib/gen/art/pen/lines.dart");
+#source("../../../lib/gen/art/models.dart");
+#source("../../../lib/gen/art/repository.dart");
 
-#source("../lib/gen/art/pen/entries.dart");
-#source("../lib/gen/art/pen/segments.dart");
-#source("../lib/gen/art/pen/lines.dart");
-#source("../lib/gen/art/models.dart");
-#source("../lib/gen/art/repository.dart");
+// added by hand
+#source("../../../lib/art/pen/pen.dart");
+#source("../../../lib/art/pen/examples.dart");
+#source("../../../lib/art/pen/programs.dart");
 
-#source("../lib/util/color.dart");
-#source("../lib/util/random.dart");
+#source("../../../lib/util/color.dart");
+#source("../../../lib/util/random.dart");
+// pub
+
+// pub
+//#import("package:art_pen/art_pen_app.dart");
+
+#source("app/drawing.dart");
+#source("app/commands.dart");
 // pub
 
 initArtData(ArtRepo artRepo) {

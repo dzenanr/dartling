@@ -45,15 +45,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source("../../../lib/art/pen/segments.dart");
 #source("../../../lib/art/pen/lines.dart");
 
-#source("../../../lib/art/pen/pen.dart");
-#source("../../../lib/art/pen/examples.dart");
-#source("../../../lib/art/pen/programs.dart");
-
 #source("../../../lib/gen/art/pen/entries.dart");
 #source("../../../lib/gen/art/pen/segments.dart");
 #source("../../../lib/gen/art/pen/lines.dart");
 #source("../../../lib/gen/art/models.dart");
 #source("../../../lib/gen/art/repository.dart");
+
+// added by hand
+#source("../../../lib/art/pen/pen.dart");
+#source("../../../lib/art/pen/examples.dart");
+#source("../../../lib/art/pen/programs.dart");
 
 #source("../../../lib/util/color.dart");
 #source("../../../lib/util/random.dart");

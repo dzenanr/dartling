@@ -4,7 +4,7 @@ abstract class RepoApi {
   abstract add(DomainModelsApi domainModels);
   abstract Domains get domains;
   abstract DomainModelsApi getDomainModels(String domainCode);
-  abstract gen([String place='pub', bool specific=true]);
+  abstract gen([bool specific=true]);
 
 }
 
@@ -41,26 +41,26 @@ class Repo implements RepoApi {
   DomainModels getDomainModels(String domainCode) =>
       _domainModelsMap[domainCode];
 
-  gen([String place='pub', bool specific=true]) {
+  gen([bool specific=true]) {
     title('Generated code, which you must not change, ',
-          'for the src/data/gen folder in the ${code} repository.');
+          'in the lin/gen folder of the ${code} repository.');
     for (Domain domain in domains) {
       subTitle('The ${domain.code} domain repository.');
-      print(genGenRepository(domain));
+      print(genRepository(domain));
       subTitle('The ${domain.code} domain models.');
-      print(genGenModels(domain));
+      print(genModels(domain));
       for (Model model in domain.models) {
         subTitle('The ${domain.code}.${model.code} model entries.');
-        print(genGenEntries(model));
+        print(genEntries(model));
         for (Concept concept in model.concepts) {
           subTitle('The ${domain.code}.${model.code}.${concept.code} concept.');
-          print(genGenConcept(concept));
+          print(genConceptGen(concept));
         }
       }
     }
     if (specific) {
       title('Specific code, which you may change, ',
-            'for the src/data folder in the ${code} repository.');
+            'in the lib folder of the ${code} repository.');
       for (Domain domain in domains) {
         for (Model model in domain.models) {
           subTitle('The initial ${domain.code}.${model.code} model data.');
@@ -72,20 +72,40 @@ class Repo implements RepoApi {
           }
         }
       }
-      subTitle('The dartling_data.dart file with imports, sources and '
-               'the main method');
-      print(genDartlingGen(place, this));
-      subTitle('The dartling_view.dart file with imports, sources and '
-               'the main method');
-      print(genDartlingView(place, this));
 
       for (Domain domain in domains) {
-        title('Specific test code, which you should change, ',
-            'for the test/data folder in the ${code} repository.');
+        title('Specific library code ',
+              'in the lib folder of the ${code} repository.');
         for (Model model in domain.models) {
           subTitle('Code template for the ${domain.code}.${model.code} '
+          'model library.');
+          print(genDartlingLibrary(model));
+          subTitle('Code template for the ${domain.code}.${model.code} '
+          'model app library.');
+          print(genDartlingLibraryApp(model));
+        }
+      }
+
+      for (Domain domain in domains) {
+        title('Specific gen and test code ',
+              'in the test folder of the ${code} repository.');
+        for (Model model in domain.models) {
+          subTitle('Code template for the code generation of the '
+              '${domain.code}.${model.code} model.');
+          print(genDartlingGen(model));
+          subTitle('Code template for the ${domain.code}.${model.code} '
                    'model tests.');
-          print(genTestData(place, this, model));
+          print(genDartlingTest(this, model));
+        }
+      }
+
+      for (Domain domain in domains) {
+        title('Specific web code ',
+            'in the web folder of the ${code} repository.');
+        for (Model model in domain.models) {
+          subTitle('Code template for the '
+              '${domain.code}.${model.code} model web page.');
+          print(genDartlingWeb(model));
         }
       }
     }

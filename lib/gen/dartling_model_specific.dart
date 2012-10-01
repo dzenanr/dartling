@@ -1,8 +1,9 @@
 
 String genInitDomainModel(Model model) {
   Domain domain = model.domain;
+
   var sc = ' \n';
-  sc = '${sc}// src/data/${domain.codeLowerUnderscore}/'
+  sc = '${sc}// lib/${domain.codeLowerUnderscore}/'
        '${model.codeLowerUnderscore}/init.dart \n';
   sc = '${sc} \n';
   sc = '${sc}init${domain.code}${model.code}(var entries) { \n';
@@ -25,8 +26,9 @@ String genInitDomainModel(Model model) {
 String genConcept(Concept concept) {
   Model model = concept.model;
   Domain domain = model.domain;
+
   var sc = ' \n';
-  sc = '// src/data/${domain.codeLowerUnderscore}/'
+  sc = '// lib/${domain.codeLowerUnderscore}/'
        '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${concept.code} extends ${concept.code}Gen { \n';

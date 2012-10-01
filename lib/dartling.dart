@@ -51,11 +51,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source('domain/models.dart');
 #source('domain/session.dart');
 
-#source('gen/dartling_app.dart');
 #source('gen/dartling_gen.dart');
-#source('gen/generated.dart');
-#source('gen/specific.dart');
-#source('gen/tests.dart');
+#source('gen/dartling_library.dart');
+#source('gen/dartling_library_app.dart');
+#source('gen/dartling_model_generic.dart');
+#source('gen/dartling_model_specific.dart');
+#source('gen/dartling_test.dart');
+#source('gen/dartling_web.dart');
 
 #source('meta/attributes.dart');
 #source('meta/children.dart');
