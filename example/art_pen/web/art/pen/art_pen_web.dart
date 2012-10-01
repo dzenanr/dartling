@@ -64,8 +64,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // pub
 //#import("package:art_pen/art_pen_app.dart");
 
-#source("app/drawing.dart");
-#source("app/commands.dart");
+#source("../../../lib/app/drawing.dart");
+#source("../../../lib/app/commands.dart");
 // pub
 
 initArtData(ArtRepo artRepo) {

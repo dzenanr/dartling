@@ -40,24 +40,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // pub
 //#import("package:category_question_link/category_question_link.dart");
 
-#source("../lib/category_question/link/json/data.dart");
-#source("../lib/category_question/link/json/model.dart");
-#source("../lib/category_question/link/init.dart");
-#source("../lib/category_question/link/members.dart");
-#source("../lib/category_question/link/categories.dart");
-#source("../lib/category_question/link/web_links.dart");
-#source("../lib/category_question/link/interests.dart");
-#source("../lib/category_question/link/comments.dart");
-#source("../lib/category_question/link/questions.dart");
-#source("../lib/gen/category_question/link/entries.dart");
-#source("../lib/gen/category_question/link/members.dart");
-#source("../lib/gen/category_question/link/categories.dart");
-#source("../lib/gen/category_question/link/web_links.dart");
-#source("../lib/gen/category_question/link/interests.dart");
-#source("../lib/gen/category_question/link/comments.dart");
-#source("../lib/gen/category_question/link/questions.dart");
-#source("../lib/gen/category_question/models.dart");
-#source("../lib/gen/category_question/repository.dart");
+#source("../../../lib/category_question/link/json/data.dart");
+#source("../../../lib/category_question/link/json/model.dart");
+#source("../../../lib/category_question/link/init.dart");
+#source("../../../lib/category_question/link/members.dart");
+#source("../../../lib/category_question/link/categories.dart");
+#source("../../../lib/category_question/link/web_links.dart");
+#source("../../../lib/category_question/link/interests.dart");
+#source("../../../lib/category_question/link/comments.dart");
+#source("../../../lib/category_question/link/questions.dart");
+#source("../../../lib/gen/category_question/link/entries.dart");
+#source("../../../lib/gen/category_question/link/members.dart");
+#source("../../../lib/gen/category_question/link/categories.dart");
+#source("../../../lib/gen/category_question/link/web_links.dart");
+#source("../../../lib/gen/category_question/link/interests.dart");
+#source("../../../lib/gen/category_question/link/comments.dart");
+#source("../../../lib/gen/category_question/link/questions.dart");
+#source("../../../lib/gen/category_question/models.dart");
+#source("../../../lib/gen/category_question/repository.dart");
 // pub
 
 initCategoryQuestionData(CategoryQuestionRepo categoryQuestionRepo) {

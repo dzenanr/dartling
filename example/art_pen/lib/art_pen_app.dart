@@ -65,5 +65,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source("util/random.dart");
 // pub
 
+// added by hand
 #source("app/drawing.dart");
 #source("app/commands.dart");
