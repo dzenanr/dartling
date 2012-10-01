@@ -36,6 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import("package:dartling/dartling.dart");
 #import("package:dartling/dartling_app.dart");
 
+// pub
 //#import("package:default_project/default_project.dart");
 
 #source("../lib/default/project/json/data.dart");
@@ -46,6 +47,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source("../lib/gen/default/project/projects.dart");
 #source("../lib/gen/default/models.dart");
 #source("../lib/gen/default/repository.dart");
+// pub
 
 initDefaultData(DefaultRepo defaultRepo) {
    var defaultModels =

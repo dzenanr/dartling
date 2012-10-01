@@ -1862,6 +1862,33 @@ art, 4;
   pen.interpret(commands);
 }
 
+demo070(Pen pen) {
+  var commands = '''
+move, 35.32066143093176, 98.8991254730593, 33;
+move, 0.0, 80.0, 0;
+move, 95.19127573079987, 65.6558805194268, 0;
+move, -20.276541522939574, 70.66412091028697, 18;
+move, 0.0, 80.0, 0;
+move, 4.416802280765286, 23.186124507536256, 17;
+art, 4;
+  ''';
+  pen.erase();
+  pen.interpret(commands);
+}
+
+demo071(Pen pen) {
+  var commands = '''
+move, 0, 80, 0;
+move, 38.37150854524225, 11.599787091836333, 32;
+move, 0, 80, 0;
+move, 24.96553952805698, 84.51234030071646, 3;
+art, 4;
+art, 4;
+  ''';
+  pen.erase();
+  pen.interpret(commands);
+}
+
 
 
 

@@ -33,6 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import("package:dartling/dartling.dart");
 
+// pub
 //#import("package:category_keyword/category_keyword.dart");
 
 #source("../../../lib/category/keyword/json/data.dart");
@@ -47,6 +48,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source("../../../lib/gen/category/keyword/tags.dart");
 #source("../../../lib/gen/category/models.dart");
 #source("../../../lib/gen/category/repository.dart");
+// pub
 
 genCode() {
   var repo = new Repo();

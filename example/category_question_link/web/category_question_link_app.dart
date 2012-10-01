@@ -35,7 +35,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import("dart:uri");
 
 #import("package:dartling/dartling.dart");
-#import("package:dartling/dartling_app.dart");//#import("package:category_question_link/category_question_link.dart");
+#import("package:dartling/dartling_app.dart");
+
+// pub
+//#import("package:category_question_link/category_question_link.dart");
 
 #source("../lib/category_question/link/json/data.dart");
 #source("../lib/category_question/link/json/model.dart");
@@ -55,6 +58,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source("../lib/gen/category_question/link/questions.dart");
 #source("../lib/gen/category_question/models.dart");
 #source("../lib/gen/category_question/repository.dart");
+// pub
 
 initCategoryQuestionData(CategoryQuestionRepo categoryQuestionRepo) {
    var categoryQuestionModels =

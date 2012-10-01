@@ -35,6 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import("package:dartling/dartling.dart");
 
+// pub
 //#import("package:category_question_link/category_question_link.dart");
 
 #source("../../../lib/category_question/link/json/data.dart");
@@ -55,6 +56,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #source("../../../lib/gen/category_question/link/questions.dart");
 #source("../../../lib/gen/category_question/models.dart");
 #source("../../../lib/gen/category_question/repository.dart");
+// pub
 
 genCode() {
   var repo = new Repo();

@@ -4,6 +4,7 @@
 #import("package:dartling/dartling.dart");
 #import("package:dartling/dartling_app.dart");
 
+// pub
 //#import("package:game_parking/game_parking.dart");
 
 #source("../lib/game/parking/json/data.dart");
@@ -26,6 +27,7 @@
 #source("../lib/app/home/board.dart");
 #source("../lib/app/home/dash.dart");
 #source("../lib/app/home/menu.dart");
+// pub
 
 initGameData(GameRepo gameRepo) {
    var gameModels =

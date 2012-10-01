@@ -27,10 +27,12 @@
 #source("../lib/util/color.dart");
 #source("../lib/util/random.dart");
 
+// pub
 //#import("package:art_pen/art_pen_app.dart");
 
 #source("../lib/app/drawing.dart");
 #source("../lib/app/commands.dart");
+// pub
 
 showMinData(ArtRepo minRepo) {
    var mainView = new View(document, "main");
