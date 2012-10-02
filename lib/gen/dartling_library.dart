@@ -79,9 +79,9 @@ String genDartlingLibrary(Model model) {
   }
   sc = '${sc} \n';
 
-  sc = '${sc}#source("data/gen/${domain.codeLowerUnderscore}/'
+  sc = '${sc}#source("gen/${domain.codeLowerUnderscore}/'
        'models.dart"); \n';
-  sc = '${sc}#source("data/gen/${domain.codeLowerUnderscore}/'
+  sc = '${sc}#source("gen/${domain.codeLowerUnderscore}/'
        'repository.dart"); \n';
   sc = '${sc} \n';
 
