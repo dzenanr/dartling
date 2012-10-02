@@ -39,9 +39,13 @@ The [JSON text](https://dl.dropbox.com/u/161496/dart/mb/model/Link2.txt) is gene
 
 The Dartling project has three folders: lib, test and web. The lib folder has the gen subfolder where the code is generated from a domain model and regenerated if the model changes. A programmer should not change anything in the gen folder.
 
-The domain (your domain name) folder has the model (your model name) folder that contains the json folder with JSON representations of the model and its data. The model.dart file in the model folder contains a model from Magic Boxes. The data.dart file in the json folder contains data of the model. 
+The domain (your domain name) folder has the model (your model name) folder that contains the json folder with JSON representations of the model and its data. The model.dart file in the model folder contains a model from Magic Boxes. The data.dart file in the json folder contains data of the model.
 
-[**More details**] (https://docs.google.com/document/d/1IYs9jqWfKXmflTIGYob7qIE01wwJpWRQkWHQXZLNSvo/edit)
+## Dartling Skeleton
 
-[**New project**] (https://docs.google.com/document/d/1n9dBtZskRPyy57whjKRzRl7gKG2b5KVZVghViGxAEMg/edit)
+[Dartling Skeleton](https://github.com/dzenanr/dartling_skeleton) is a [Dart Editor] (http://www.dartlang.org/docs/editor/getting-started/ project template for a new Dartling project.
+ 
+[**More details about Dartling**] (https://docs.google.com/document/d/1IYs9jqWfKXmflTIGYob7qIE01wwJpWRQkWHQXZLNSvo/edit)
+
+
 

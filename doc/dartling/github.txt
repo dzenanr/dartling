@@ -1,4 +1,4 @@
-github.txt for dartling (formerly Dartling)
+github.txt for dartling 
 
 GitHub, Git
 
@@ -27,7 +27,7 @@ The following is what I did for dartling.
 http://help.github.com/create-a-repo/
 
 Create a New Repository at GitHub (without README, since cloning will not be used)
-Repository Name: dartling.dart
+Repository Name: dartling
 Description: 
   Dartling is a Dart model framework.
       
@@ -59,6 +59,7 @@ git://github.com/dzenanr/dartling.git
 Get the latest changes from the remote repository
 
 git pull
+or
 git pull origin master
 
 ---------------------------------------------------------------------
