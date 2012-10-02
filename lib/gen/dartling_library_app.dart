@@ -10,8 +10,8 @@ String genDartlingLibraryApp(Model model) {
   sc = '${sc}${license} \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#library(${domain.codeLowerUnderscore}_'
-       '${model.codeLowerUnderscore}_app) \n';
+  sc = '${sc}#library("${domain.codeLowerUnderscore}_'
+       '${model.codeLowerUnderscore}_app"); \n';
   sc = '${sc} \n';
 
   sc = '${sc}#import("dart:html"); \n';

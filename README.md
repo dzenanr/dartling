@@ -37,9 +37,9 @@ The [JSON text](https://dl.dropbox.com/u/161496/dart/mb/model/Link2.txt) is gene
 
 ## Dartling Project Structure
 
-The Dartling project has two folders: data and view. The data folder has the gen subfolder where the code is generated from a domain model and regenerated if the model changes. A programmer should not change anything in the gen folder.
+The Dartling project has three folders: lib, test and web. The lib folder has the gen subfolder where the code is generated from a domain model and regenerated if the model changes. A programmer should not change anything in the gen folder.
 
-The data folder contains JSON representation of a model and its data. The model.dart file contains a model from Magic Boxes. The data.dart file contains data of the model. 
+The domain (your domain name) folder has the model (your model name) folder that contains the json folder with JSON representations of the model and its data. The model.dart file in the model folder contains a model from Magic Boxes. The data.dart file in the json folder contains data of the model. 
 
 [**More details**] (https://docs.google.com/document/d/1IYs9jqWfKXmflTIGYob7qIE01wwJpWRQkWHQXZLNSvo/edit)
 

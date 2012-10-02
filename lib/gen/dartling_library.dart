@@ -44,7 +44,7 @@ String genDartlingLibrary(Model model) {
   sc = '${sc}${license} \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#library(${domain.codeLowerUnderscore}_${model.codeLowerUnderscore}) \n';
+  sc = '${sc}#library("${domain.codeLowerUnderscore}_${model.codeLowerUnderscore}"); \n';
   sc = '${sc} \n';
 
   sc = '${sc}#import("dart:json"); \n';
