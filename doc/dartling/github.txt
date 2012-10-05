@@ -3,8 +3,10 @@ github.txt for dartling
 GitHub, Git
 
 https://github.com/
+http://training.github.com/
 http://www.codeschool.com/courses/try-git
 http://git-scm.com/videos
+http://git-scm.com/book
 http://marklodato.github.com/visual-git-guide/index-en.html
 
 Education

@@ -25,13 +25,17 @@ Bug fixes not affecting the API increment the patch version,
 backwards compatible API additions/changes increment the minor version, 
 and backwards incompatible API changes increment the major version.
 
-USER VAR
+System variables in Windows 7
+http://www.itechtalk.com/thread3595.html
 DART_SDK :
-C:\dart\editor\dart-sdk
+C:\darteditor-win-32-64\dart\dart-sdk
 SYSTEM PATH
 PATH
 add at the end: 
 ;%DART_SDK%\bin
+
+C:\Program Files (x86)\Git\bin;%DART_SDK%\bin;
+
 restart
 
 command black window

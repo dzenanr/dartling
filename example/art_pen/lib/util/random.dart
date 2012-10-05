@@ -8,13 +8,16 @@ int randomInt(int max) => new Random().nextInt(max);
 
 randomListElement(List list) => list[randomInt(list.length - 1)];
 
+String randomColor() => randomListElement(colorList());
+String randomColorCode() => colorMap()[randomColor()];
+
 Map randomPoint(double maxX, double maxY) {
   var x = randomDouble(maxX);
   var y = randomDouble(maxY);
   var point = {'x': x, 'y': y};
   return point;
 }
-    
+
 int randomSign(int spread) {
   int result = 1;
   if (randomInt(spread) == 0) {
