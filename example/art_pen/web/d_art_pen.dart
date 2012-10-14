@@ -1,10 +1,12 @@
 
 #import("dart:html");
+#import("dart:isolate");
 #import("dart:math");
 
 #import("package:dartling/dartling.dart");
 #import("package:dartling/dartling_app.dart");
 
+// pub
 //#import("package:art_pen/art_pen.dart");
 
 #source("../lib/art/pen/json/data.dart");
@@ -28,10 +30,13 @@
 #source("../lib/util/random.dart");
 
 // pub
+
+// pub
 //#import("package:art_pen/art_pen_app.dart");
 
 #source("../lib/app/drawing.dart");
 #source("../lib/app/commands.dart");
+
 // pub
 
 showMinData(ArtRepo minRepo) {

@@ -1,7 +1,7 @@
 
 // http://jsonformatter.curiousconcept.com/
 
-var gameParkingDataJson = @'''
+var gameParkingDataJson = r'''
 {
    "domain":"Car",
    "entries":[

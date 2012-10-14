@@ -9,7 +9,7 @@
  *  at description : String
  */
 
-var defaultProjectModelJson = @'''
+var defaultProjectModelJson = r'''
 {
    "width":990,
    "height":580,

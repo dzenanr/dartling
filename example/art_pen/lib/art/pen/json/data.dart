@@ -7,6 +7,6 @@
 
 // src/data/dartling/skeleton/json/data.dart
 
-var artPenDataJson = @'''
+var artPenDataJson = r'''
 
 ''';

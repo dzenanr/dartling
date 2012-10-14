@@ -1,7 +1,7 @@
 class Board {
 
   // The board is redrawn every INTERVAL ms.
-  static final int INTERVAL = 8;
+  static final int interval = 8;
 
   static final int LINE_WIDTH = 1;
   static final String LINE_COLOR = '#000000'; // black
@@ -44,7 +44,7 @@ class Board {
     // Canvas event.
     document.query('#canvas').on.mouseDown.add(onMouseDown);
     // Redraw every INTERVAL ms.
-    document.window.setInterval(redraw, INTERVAL);
+    new Timer.repeating(interval, (t) => redraw());
   }
 
   void set currentArea(Area area) {

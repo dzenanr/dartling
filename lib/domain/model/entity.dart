@@ -108,7 +108,8 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     }
   }
 
-  String get code => _code;  void set code(String code) {
+  String get code => _code;
+  void set code(String code) {
     if (_code == null || _concept.updateCode) {
       _code = code;
     } else {
@@ -194,7 +195,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       c = codePlural;
     }
     if (c != null) {
-      RegExp exp = const RegExp(@"([A-Z])");
+      RegExp exp = const RegExp(r"([A-Z])");
       Iterable<Match> matches = exp.allMatches(c);
       var indexes = new List<int>();
       for (Match m in matches) {

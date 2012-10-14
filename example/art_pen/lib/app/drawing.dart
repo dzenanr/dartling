@@ -55,7 +55,7 @@ class Board {
     widthSelect = document.query('#width');
     widthSelect.on.change.add((Event e) {
       try {
-        pen.width = parseInt(widthSelect.value);
+        pen.width = int.parse(widthSelect.value);
       } on FormatException catch(error) {
         print('${widthSelect.value} must be an integer -- $error');
       }
@@ -80,7 +80,7 @@ class Board {
     artButton = document.query('#art');
     artButton.on.click.add((MouseEvent e) {
       try {
-        pen.art(parseInt(artCountInput.value));
+        pen.art(int.parse(artCountInput.value));
       } on FormatException catch(error) {
         print('Art count (${artCountInput.value}) must be an integer -- $error');
       }
@@ -91,7 +91,7 @@ class Board {
     onDartButton.on.click.add((MouseEvent e) {
       try {
         randomProgram(pen,
-            parseInt(artCountInput.value), parseInt(onDartCountInput.value));
+            int.parse(artCountInput.value), int.parse(onDartCountInput.value));
       } on FormatException catch(error) {
         print('On Dart count (${onDartCountInput.value}) must be an integer -- $error');
       }
@@ -107,9 +107,9 @@ class Board {
     demosSelect.on.change.add((Event e) {
       try {
         if (demosSelect.value == 'demos') {
-          randomDemo(pen, parseInt(artCountInput.value));
+          randomDemo(pen, int.parse(artCountInput.value));
         } else {
-          demo(pen, parseInt(demosSelect.value));
+          demo(pen, int.parse(demosSelect.value));
         }
       } on FormatException catch(error) {
         randomDemo(pen);
@@ -132,9 +132,9 @@ class Board {
     moveButton = document.query('#move');
     moveButton.on.click.add((MouseEvent e) {
       try {
-        num turn = parseDouble(turnInput.value);
-        num advance = parseDouble(advanceInput.value);
-        int repeat = parseInt(repeatInput.value);
+        num turn = double.parse(turnInput.value);
+        num advance = double.parse(advanceInput.value);
+        int repeat = int.parse(repeatInput.value);
         pen.move(turn, advance, repeat);
       } on FormatException catch(error) {
         print('not a number -- $error');
@@ -156,7 +156,7 @@ class Board {
     leftButton.on.click.add((MouseEvent e) {
       try {
         // num value = leftInput.valueAsNumber; // ??
-        pen.left(parseDouble(leftInput.value));
+        pen.left(double.parse(leftInput.value));
       } on FormatException catch(error) {
         print('${leftInput.value} must be a number -- $error');
       }
@@ -166,7 +166,7 @@ class Board {
     rightButton = document.query('#right');
     rightButton.on.click.add((MouseEvent e) {
       try {
-        pen.right(parseDouble(rightInput.value));
+        pen.right(double.parse(rightInput.value));
       } on FormatException catch(error) {
         print('${rightInput.value} must be a number -- $error');
       }
@@ -176,7 +176,7 @@ class Board {
     backwardButton = document.query('#backward');
     backwardButton.on.click.add((MouseEvent e) {
       try {
-        pen.backward(parseDouble(backwardInput.value));
+        pen.backward(double.parse(backwardInput.value));
       } on FormatException catch(error) {
         print('${backwardInput.value} must be a number -- $error');
       }
@@ -186,7 +186,7 @@ class Board {
     forwardButton = document.query('#forward');
     forwardButton.on.click.add((MouseEvent e) {
       try {
-        pen.forward(parseDouble(forwardInput.value));
+        pen.forward(double.parse(forwardInput.value));
       } on FormatException catch(error) {
         print('${forwardInput.value} must be a number -- $error');
       }
@@ -195,7 +195,7 @@ class Board {
     _init();
 
     // Redraw every interval ms.
-    document.window.setInterval(draw, interval);
+    new Timer.repeating(interval, (t) => draw());
   }
 
   _init() {

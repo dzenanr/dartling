@@ -3,7 +3,7 @@
 
 // http://jsonformatter.curiousconcept.com/
 
-var defaultProjectDataJson = @'''
+var defaultProjectDataJson = r'''
 {
    "domain":"Default",
    "entries":[

@@ -58,6 +58,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #source("../../../lib/util/color.dart");
 #source("../../../lib/util/random.dart");
+
 // pub
 
 genCode() {

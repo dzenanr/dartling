@@ -8,7 +8,7 @@
 
 // src/data/dartling/skeleton/json/model.dart
 
-var artPenModelJson = @'''
+var artPenModelJson = r'''
 {
    "width":990,
    "lines":[

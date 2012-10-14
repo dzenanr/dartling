@@ -34,6 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #library('art_pen_app');
 
 #import("dart:html");
+#import('dart:isolate');
 #import("dart:math");
 
 #import("package:dartling/dartling.dart");
@@ -63,6 +64,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #source("util/color.dart");
 #source("util/random.dart");
+
 // pub
 
 // added by hand

@@ -2,7 +2,7 @@
 // http://www.json.org/
 // http://jsonformatter.curiousconcept.com/
 
-var categoryKeywordModelJson = @'''
+var categoryKeywordModelJson = r'''
 {
    "width":990,
    "lines":[

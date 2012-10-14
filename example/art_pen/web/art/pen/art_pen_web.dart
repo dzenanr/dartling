@@ -59,6 +59,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #source("../../../lib/util/color.dart");
 #source("../../../lib/util/random.dart");
+
 // pub
 
 // pub
@@ -66,6 +67,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #source("../../../lib/app/drawing.dart");
 #source("../../../lib/app/commands.dart");
+
 // pub
 
 initArtData(ArtRepo artRepo) {

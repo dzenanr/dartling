@@ -69,7 +69,7 @@
 
 // data/category_question/link/json/model.dart
 
-var categoryQuestionLinkModelJson = @'''
+var categoryQuestionLinkModelJson = r'''
 {
    "width":990,
    "lines":[

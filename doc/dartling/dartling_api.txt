@@ -5,6 +5,7 @@ http://lcsd05.cs.tamu.edu/slides/keynote.pdf
 http://www.youtube.com/watch?v=aAb7hSCtvGw
 http://hash-table.com/home/2012/07/20/how-to-design-a-good-api-and-why-it-matters/
 http://techvivek.wordpress.com/2011/09/16/good-api-designing-by-joshua-bloch/
+http://coding.smashingmagazine.com/2012/10/09/designing-javascript-apis-usability/
 
 abstract class RepoApi {
 

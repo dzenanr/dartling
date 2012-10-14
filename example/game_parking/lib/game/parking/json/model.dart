@@ -1,7 +1,7 @@
 
 // http://jsonformatter.curiousconcept.com/
 
-var gameParkingModelJson = @'''
+var gameParkingModelJson = r'''
 {
    "width":990,
    "lines":[

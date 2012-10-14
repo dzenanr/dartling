@@ -6,7 +6,7 @@
 
 // data/category_question/link/json/data.dart
 
-var categoryQuestionLinkDataJson = @'''
+var categoryQuestionLinkDataJson = r'''
 {
    "domain":"CategoryQuestion",
    "entries":[

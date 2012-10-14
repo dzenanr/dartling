@@ -2,7 +2,7 @@
 // http://www.json.org/
 // http://jsonformatter.curiousconcept.com/
 
-var categoryKeywordDataJson = @'''
+var categoryKeywordDataJson = r'''
 {
    "domain":"Category",
    "entries":[

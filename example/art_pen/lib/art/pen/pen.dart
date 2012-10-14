@@ -309,7 +309,7 @@ class Pen {
               colorRandom();
               break;
             case 'width':
-              width = parseInt(command[1]);
+              width = int.parse(command[1]);
               break;
             case 'widthRandom':
               widthRandom();
@@ -332,50 +332,50 @@ class Pen {
               moveToStart();
               break;
             case 'moveTo':
-              moveTo(parseDouble(command[1]), parseDouble(command[2]));
+              moveTo(double.parse(command[1]), double.parse(command[2]));
               break;
             case 'moveToRandom':
               moveToRandom();
               break;
             case 'move':
               if (command.length == 2) {
-                move(parseDouble(command[1]));
+                move(double.parse(command[1]));
               } else if (command.length == 3) {
-                move(parseDouble(command[1]), parseDouble(command[2]));
+                move(double.parse(command[1]), double.parse(command[2]));
               } else if (command.length == 4) {
-                move(parseDouble(command[1]), parseDouble(command[2]),
-                  parseInt(command[3]));
+                move(double.parse(command[1]), double.parse(command[2]),
+                  int.parse(command[3]));
               }
               break;
             case 'moveRandom':
               moveRandom();
               break;
             case 'left':
-              left(parseDouble(command[1]));
+              left(double.parse(command[1]));
               break;
             case 'leftRandom':
               leftRandom();
               break;
             case 'right':
-              right(parseDouble(command[1]));
+              right(double.parse(command[1]));
               break;
             case 'rightRandom':
               rightRandom();
               break;
             case 'backward':
-              backward(parseDouble(command[1]));
+              backward(double.parse(command[1]));
               break;
             case 'backwardRandom':
               backwardRandom();
               break;
             case 'forward':
-              forward(parseDouble(command[1]));
+              forward(double.parse(command[1]));
               break;
             case 'forwardRandom':
               forwardRandom();
               break;
             case 'art':
-              art(parseInt(command[1]));
+              art(int.parse(command[1]));
               break;
             case 'artRandom':
               artRandom();
