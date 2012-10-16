@@ -7,7 +7,7 @@
 
 Dartling model consists of concepts, concept attributes and concept neighbors. Two neighbors make a relationship between two concepts. A relationship has two directions, each direction going from one concept to another neighbor concept. When both concepts are the same, the relationship is reflexive. When there are two relationships between the same but different concepts, the relationships are twins.
 
-A graphical model designed in [Magic Boxes](https://github.com/dzenanr/magic_boxes) is transformed into [JSON] (http://www.json.org/) representation, imported to Dartling and converted to the meta model. After the code generation, the model may be used without almost any additional programming for quick prototypes.
+A graphical model designed in [Magic Boxes](https://github.com/dzenanr/magic_boxes) is transformed into [JSON] (http://www.json.org/) representation, imported to Dartling and converted to a meta model. After the code generation, the model may be used without almost any additional programming for quick prototypes.
 
 **What Can You Do with Dartling?**
 
