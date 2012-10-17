@@ -52,8 +52,12 @@ The domain (your domain name) folder has the model (your model name) folder that
 ## Dartling Skeleton
 
 [Dartling Skeleton](https://github.com/dzenanr/dartling_skeleton) is a [Dart Editor] (http://www.dartlang.org/docs/editor/getting-started/ project template for a new Dartling project.
+
+## More Details
  
-[**More details about Dartling**] (https://docs.google.com/document/d/1IYs9jqWfKXmflTIGYob7qIE01wwJpWRQkWHQXZLNSvo/edit)
+[**About Dartling**] (https://docs.google.com/document/d/1IYs9jqWfKXmflTIGYob7qIE01wwJpWRQkWHQXZLNSvo/edit)
+
+[**On Dart blog**] (http://dzenanr.github.com/)
 
 
 
