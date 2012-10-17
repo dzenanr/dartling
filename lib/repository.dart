@@ -1,10 +1,10 @@
 
 abstract class RepoApi {
 
-  abstract add(DomainModelsApi domainModels);
-  abstract Domains get domains;
-  abstract DomainModelsApi getDomainModels(String domainCode);
-  abstract gen([bool specific=true]);
+  add(DomainModelsApi domainModels);
+  Domains get domains;
+  DomainModelsApi getDomainModels(String domainCode);
+  gen([bool specific=true]);
 
 }
 

@@ -1,6 +1,0 @@
-Dartling Code Generation Guide
-
-Dartling Skeleton Project
-
-https://docs.google.com/document/d/1n9dBtZskRPyy57whjKRzRl7gKG2b5KVZVghViGxAEMg/edit
-

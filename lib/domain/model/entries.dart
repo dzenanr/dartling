@@ -1,16 +1,16 @@
 
 abstract class ModelEntriesApi {
 
-  abstract Model get model;
-  abstract Concept getConcept(String conceptCode);
-  abstract EntitiesApi getEntry(String entryConceptCode);
-  abstract EntityApi find(Oid oid);
-  abstract EntityApi findInInternalTree(Concept entryConcept, Oid oid);
+  Model get model;
+  Concept getConcept(String conceptCode);
+  EntitiesApi getEntry(String entryConceptCode);
+  EntityApi find(Oid oid);
+  EntityApi findInInternalTree(Concept entryConcept, Oid oid);
 
-  abstract bool get empty;  abstract clear();
+  bool get empty;  clear();
 
-  abstract String toJson();
-  abstract fromJson(String json);
+  String toJson();
+  fromJson(String json);
 
 }
 

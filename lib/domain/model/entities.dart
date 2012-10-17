@@ -1,43 +1,43 @@
 
 abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
 
-  abstract Concept get concept;
-  abstract EntitiesApi<T> get source;  abstract ErrorsApi get errors;
-  abstract int get count;
-  abstract bool get empty;
-  abstract void clear();
+  Concept get concept;
+  EntitiesApi<T> get source;  ErrorsApi get errors;
+  int get count;
+  bool get empty;
+  void clear();
 
-  abstract bool preAdd(T entity);
-  abstract bool add(T entity);
-  abstract bool postAdd(T entity);
-  abstract bool preRemove(T entity);
-  abstract bool remove(T entity);
-  abstract bool postRemove(T entity);
+  bool preAdd(T entity);
+  bool add(T entity);
+  bool postAdd(T entity);
+  bool preRemove(T entity);
+  bool remove(T entity);
+  bool postRemove(T entity);
 
-  abstract void forEach(Function f);
-  abstract bool every(Function f);
-  abstract bool some(Function f);
+  void forEach(Function f);
+  bool every(Function f);
+  bool some(Function f);
 
-  abstract bool contains(T entity);
-  abstract T first();
-  abstract T last();
-  abstract T random();
-  abstract T find(Oid oid);
-  abstract T deepFind(Oid oid);
-  abstract T findByCode(String code);
-  abstract T findById(IdApi id);
-  abstract T findByAttributeId(String code, Object attribute);
-  abstract T findByAttribute(String code, Object attribute);
+  bool contains(T entity);
+  T first();
+  T last();
+  T random();
+  T find(Oid oid);
+  T deepFind(Oid oid);
+  T findByCode(String code);
+  T findById(IdApi id);
+  T findByAttributeId(String code, Object attribute);
+  T findByAttribute(String code, Object attribute);
 
-  abstract EntitiesApi<T> select(Function f);
-  abstract EntitiesApi<T> selectByParent(String code, Object parent);
-  abstract EntitiesApi<T> selectByAttribute(String code, Object attribute);
-  abstract EntitiesApi<T> order();
-  abstract EntitiesApi<T> orderByFunction(Function f);
+  EntitiesApi<T> select(Function f);
+  EntitiesApi<T> selectByParent(String code, Object parent);
+  EntitiesApi<T> selectByAttribute(String code, Object attribute);
+  EntitiesApi<T> order();
+  EntitiesApi<T> orderByFunction(Function f);
 
-  abstract EntitiesApi<T> copy();
-  abstract List<T> get list;
-  abstract List<Map<String, Object>> toJson();
+  EntitiesApi<T> copy();
+  List<T> get list;
+  List<Map<String, Object>> toJson();
 
 }
 

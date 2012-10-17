@@ -1,21 +1,21 @@
 
 abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 
-  abstract Concept get concept;
-  abstract String get code;  abstract void set code(String code);
+  Concept get concept;
+  String get code;  void set code(String code);
 
-  abstract Object getAttribute(String name);
-  abstract bool setAttribute(String name, Object value);
-  abstract String getStringFromAttribute(String name);
-  abstract bool setStringToAttribute(String name, String string);
-  abstract EntityApi getParent(String name);
-  abstract bool setParent(String name, EntityApi entity);
-  abstract EntitiesApi getChild(String name);
-  abstract bool setChild(String name, EntitiesApi entities);
+  Object getAttribute(String name);
+  bool setAttribute(String name, Object value);
+  String getStringFromAttribute(String name);
+  bool setStringToAttribute(String name, String string);
+  EntityApi getParent(String name);
+  bool setParent(String name, EntityApi entity);
+  EntitiesApi getChild(String name);
+  bool setChild(String name, EntitiesApi entities);
 
-  abstract IdApi get id;
-  abstract T copy();
-  abstract Map<String, Object> toJson();
+  IdApi get id;
+  T copy();
+  Map<String, Object> toJson();
 
 }
 

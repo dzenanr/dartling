@@ -13,7 +13,7 @@ A graphical model designed in [Magic Boxes](https://github.com/dzenanr/magic_box
 
 * design a domain model in Magic Boxes
 * transform the model into a JSON representation
-* prepare your dartling project based on the [dartling_skeleto (https://github.com/dzenanr/dartling_skeleton) project
+* prepare your dartling project based on the [dartling_skeleton] (https://github.com/dzenanr/dartling_skeleton) project
 * copy the JSON representation of the model to your project
 * generate the code for your project from your project
 * test your model with some data

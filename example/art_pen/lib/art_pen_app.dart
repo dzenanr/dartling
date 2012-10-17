@@ -68,5 +68,5 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // pub
 
 // added by hand
-#source("app/drawing.dart");
 #source("app/commands.dart");
+#source("app/drawing.dart");

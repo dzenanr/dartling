@@ -1,9 +1,9 @@
 
 abstract class ErrorsApi {
 
-  abstract int get count;
-  abstract List<EntityError> get list;  abstract add(EntityError error);
-  abstract clear();
+  int get count;
+  List<EntityError> get list;  add(EntityError error);
+  clear();
 
 }
 

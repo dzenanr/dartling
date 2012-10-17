@@ -1,14 +1,14 @@
 
 abstract class IdApi implements Comparable {
 
-  abstract Concept get concept;
+  Concept get concept;
 
-  abstract int get parentCount;  abstract int get attributeCount;
-  abstract EntityApi getParent(String code);
-  abstract setParent(String code, EntityApi parent);
+  int get parentCount;  int get attributeCount;
+  EntityApi getParent(String code);
+  setParent(String code, EntityApi parent);
 
-  abstract Object getAttribute(String code);
-  abstract setAttribute(String code, Object attribute);
+  Object getAttribute(String code);
+  setAttribute(String code, Object attribute);
 
 }
 

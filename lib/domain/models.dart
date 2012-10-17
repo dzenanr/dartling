@@ -1,11 +1,11 @@
 
 abstract class DomainModelsApi implements SourceOfActionReactionApi {
 
-  abstract add(ModelEntriesApi modelEntries);
-  abstract Domain get domain;
-  abstract Model getModel(String modelCode);
-  abstract ModelEntriesApi getModelEntries(String modelCode);
-  abstract DomainSessionApi newSession();
+  add(ModelEntriesApi modelEntries);
+  Domain get domain;
+  Model getModel(String modelCode);
+  ModelEntriesApi getModelEntries(String modelCode);
+  DomainSessionApi newSession();
 
 }
 

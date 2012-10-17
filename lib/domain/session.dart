@@ -1,8 +1,8 @@
 
 abstract class DomainSessionApi {
 
-  abstract DomainModelsApi get domainModels;
-  abstract PastApi get past;
+  DomainModelsApi get domainModels;
+  PastApi get past;
 }
 
 class DomainSession implements DomainSessionApi {
