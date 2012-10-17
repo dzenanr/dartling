@@ -8,6 +8,10 @@ Mapping Models
 
 http://modelmapper.org/
 
+Models
+
+http://dbpatterns.com/
+
 MVC & similar
 
 http://todomvc.com/
