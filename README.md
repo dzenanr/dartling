@@ -21,6 +21,15 @@ A graphical model designed in [Magic Boxes](https://github.com/dzenanr/magic_box
 * add some specific code if you wish
 * run the prototype application that uses the model and Dartling web components
 
+**What Could You Do with Dartling in Future?**
+
+* [research guidelines] 
+  (https://docs.google.com/document/d/15rvqT1QOEusUniqNJOad-vwJDwRLombVmG3X87T6xkM/edit)
+* let me know what you would like to see in Dartling?
+* join me in making Dartling a darling of Dart community
+* if you are a student work with me on making Dartling [easier to learn] 
+  (https://docs.google.com/document/d/1cZWkOlzy8lqHhe_0q0mEyQlvI-Xjc8q07BwLaWqqyE8/edit)
+
 ## Dartling API
 
 Dartling repository may have several domains. A domain may have several models. A model has entry points that are entities. From an entity in one of entry entities, child entities may be obtained. Data navigation is done by following parent or child neighbors.
