@@ -69,7 +69,7 @@ project template for a new Dartling project.
  
 [**About Dartling**] (https://docs.google.com/document/d/1IYs9jqWfKXmflTIGYob7qIE01wwJpWRQkWHQXZLNSvo/edit)
 
-[**On Dart Google+ page**] (https://plus.google.com/b/113649577593294551754/113649577593294551754/posts)
+[**On Dart g+ page**] (https://plus.google.com/b/113649577593294551754/113649577593294551754/posts)
 
 [**On Dart blog**] (http://dzenanr.github.com/)
 
