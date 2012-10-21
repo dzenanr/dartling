@@ -124,7 +124,7 @@ String genEntries(Model model) {
 
   for (Concept entryConcept in model.entryConcepts) {
     sc = '${sc}  ${entryConcept.codes} get '
-         '${entryConcept.codesLowerUnderscore}'
+         '${entryConcept.codesFirstLetterLower}'
          ' => getEntry("${entryConcept.code}"); \n';
   }
 
