@@ -575,13 +575,13 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   /**
    * Displays (prints) an entity with its attributes, parents and children.
    */
-  display({String space:'', bool withOid:true, bool withChildren:true}) {
+  display([String prefix='', bool withOid=true, bool withChildren=true]) {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
-    var s = space;
+    var s = prefix;
     if (!_concept.entry || (_concept.entry && _concept.parents.count > 0)) {
-      s = '$space  ';
+      s = '$prefix  ';
     }
     print('${s}------------------------------------');
     print('${s}${toString()}                       ');

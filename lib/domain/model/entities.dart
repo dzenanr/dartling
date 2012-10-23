@@ -608,11 +608,11 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   /**
   * Displays (prints) a title, then entities.
   */
-  display({String title:'Entities', String space:'',
-      bool withOid:true, bool withChildren:true}) {
-    var s = space;
+  display([String title='Entities', String prefix='',
+      bool withOid=true, bool withChildren=true]) {
+    var s = prefix;
     if (!_concept.entry || (_concept.entry && _concept.parents.count > 0)) {
-      s = '$space  ';
+      s = '$prefix  ';
     }
     if (title != '') {
       //print('');
