@@ -31,30 +31,30 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#library('category_question_link');
+library category_question_link;
 
-#import("dart:uri");
+import 'dart:uri';
 
-#import("package:dartling/dartling.dart");
+import 'package:dartling/dartling.dart';
 
-#source("category_question/link/json/data.dart");
-#source("category_question/link/json/model.dart");
+part 'category_question/link/json/data.dart';
+part 'category_question/link/json/model.dart';
 
-#source("category_question/link/init.dart");
-#source("category_question/link/members.dart");
-#source("category_question/link/categories.dart");
-#source("category_question/link/web_links.dart");
-#source("category_question/link/interests.dart");
-#source("category_question/link/comments.dart");
-#source("category_question/link/questions.dart");
+part 'category_question/link/init.dart';
+part 'category_question/link/members.dart';
+part 'category_question/link/categories.dart';
+part 'category_question/link/web_links.dart';
+part 'category_question/link/interests.dart';
+part 'category_question/link/comments.dart';
+part 'category_question/link/questions.dart';
 
-#source("gen/category_question/link/entries.dart");
-#source("gen/category_question/link/members.dart");
-#source("gen/category_question/link/categories.dart");
-#source("gen/category_question/link/web_links.dart");
-#source("gen/category_question/link/interests.dart");
-#source("gen/category_question/link/comments.dart");
-#source("gen/category_question/link/questions.dart");
-#source("gen/category_question/models.dart");
-#source("gen/category_question/repository.dart");
+part 'gen/category_question/link/entries.dart';
+part 'gen/category_question/link/members.dart';
+part 'gen/category_question/link/categories.dart';
+part 'gen/category_question/link/web_links.dart';
+part 'gen/category_question/link/interests.dart';
+part 'gen/category_question/link/comments.dart';
+part 'gen/category_question/link/questions.dart';
+part 'gen/category_question/models.dart';
+part 'gen/category_question/repository.dart';
 

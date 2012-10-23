@@ -1,3 +1,4 @@
+part of dartling_app;
 
 class EntitiesSimpleTable {
 

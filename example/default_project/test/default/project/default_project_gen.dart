@@ -31,19 +31,19 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#import("package:dartling/dartling.dart");
+import 'package:dartling/dartling.dart';
 
 // pub
-//#import("package:default_project/default_project.dart");
+//import 'package:default_project/default_project.dart';
 
-#source("../../../lib/default/project/json/data.dart");
-#source("../../../lib/default/project/json/model.dart");
-#source("../../../lib/default/project/init.dart");
-#source("../../../lib/default/project/projects.dart");
-#source("../../../lib/gen/default/project/entries.dart");
-#source("../../../lib/gen/default/project/projects.dart");
-#source("../../../lib/gen/default/models.dart");
-#source("../../../lib/gen/default/repository.dart");
+part '../../../lib/default/project/json/data.dart';
+part '../../../lib/default/project/json/model.dart';
+part '../../../lib/default/project/init.dart';
+part '../../../lib/default/project/projects.dart';
+part '../../../lib/gen/default/project/entries.dart';
+part '../../../lib/gen/default/project/projects.dart';
+part '../../../lib/gen/default/models.dart';
+part '../../../lib/gen/default/repository.dart';
 // pub
 
 genCode() {
@@ -60,7 +60,7 @@ genCode() {
 
   repo.domains.add(defaultDomain);
 
-  repo.gen();
+  repo.gen('default_project');
 }
 
 initDefaultData(DefaultRepo defaultRepo) {
@@ -76,7 +76,7 @@ initDefaultData(DefaultRepo defaultRepo) {
 
 void main() {
   genCode();
-  
+
   var defaultRepo = new DefaultRepo();
   initDefaultData(defaultRepo);
 }

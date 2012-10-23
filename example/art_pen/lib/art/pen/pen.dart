@@ -1,3 +1,4 @@
+//part of art_pen;
 
 class Pen {
 

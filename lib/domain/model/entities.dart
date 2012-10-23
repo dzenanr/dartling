@@ -1,3 +1,4 @@
+part of dartling;
 
 abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
 
@@ -607,8 +608,8 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   /**
   * Displays (prints) a title, then entities.
   */
-  display([String title='Entities', String space='',
-      bool withOid=true, bool withChildren=true]) {
+  display({String title:'Entities', String space:'',
+      bool withOid:true, bool withChildren:true}) {
     var s = space;
     if (!_concept.entry || (_concept.entry && _concept.parents.count > 0)) {
       s = '$space  ';

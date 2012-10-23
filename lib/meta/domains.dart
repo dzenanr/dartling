@@ -1,3 +1,4 @@
+part of dartling;
 
 class Domains extends Entities<Domain> {
 

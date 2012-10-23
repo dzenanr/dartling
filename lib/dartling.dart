@@ -30,44 +30,44 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#library('dartling');
+library dartling;
 
-#import('dart:json');
-#import('dart:math');
-#import('dart:uri');
+import 'dart:json';
+import 'dart:math';
+import 'dart:uri';
 
-#import('package:unittest/unittest.dart');
+import 'package:unittest/unittest.dart';
 
-#source('domain/model/event/actions.dart');
-#source('domain/model/event/reactions.dart');
-#source('domain/model/exception/errors.dart');
-#source('domain/model/exception/exceptions.dart');
-#source('domain/model/transfer/json.dart');
-#source('domain/model/entities.dart');
-#source('domain/model/entity.dart');
-#source('domain/model/entries.dart');
-#source('domain/model/id.dart');
-#source('domain/model/oid.dart');
-#source('domain/models.dart');
-#source('domain/session.dart');
+part 'domain/model/event/actions.dart';
+part 'domain/model/event/reactions.dart';
+part 'domain/model/exception/errors.dart';
+part 'domain/model/exception/exceptions.dart';
+part 'domain/model/transfer/json.dart';
+part 'domain/model/entities.dart';
+part 'domain/model/entity.dart';
+part 'domain/model/entries.dart';
+part 'domain/model/id.dart';
+part 'domain/model/oid.dart';
+part 'domain/models.dart';
+part 'domain/session.dart';
 
-#source('gen/dartling_gen.dart');
-#source('gen/dartling_library.dart');
-#source('gen/dartling_library_app.dart');
-#source('gen/dartling_model_generic.dart');
-#source('gen/dartling_model_specific.dart');
-#source('gen/dartling_test.dart');
-#source('gen/dartling_web.dart');
+part 'gen/dartling_gen.dart';
+part 'gen/dartling_library.dart';
+part 'gen/dartling_library_app.dart';
+part 'gen/dartling_model_generic.dart';
+part 'gen/dartling_model_specific.dart';
+part 'gen/dartling_test.dart';
+part 'gen/dartling_web.dart';
 
-#source('meta/attributes.dart');
-#source('meta/children.dart');
-#source('meta/concepts.dart');
-#source('meta/domains.dart');
-#source('meta/models.dart');
-#source('meta/neighbor.dart');
-#source('meta/parents.dart');
-#source('meta/property.dart');
-#source('meta/types.dart');
+part 'meta/attributes.dart';
+part 'meta/children.dart';
+part 'meta/concepts.dart';
+part 'meta/domains.dart';
+part 'meta/models.dart';
+part 'meta/neighbor.dart';
+part 'meta/parents.dart';
+part 'meta/property.dart';
+part 'meta/types.dart';
 
-#source('repository.dart');
+part 'repository.dart';
 

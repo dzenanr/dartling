@@ -1,3 +1,4 @@
+part of dartling;
 
 class Concepts extends Entities<Concept> {
 

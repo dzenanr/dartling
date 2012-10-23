@@ -31,23 +31,23 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#import("package:dartling/dartling.dart");
+import 'package:dartling/dartling.dart';
 
 // pub
-//#import("package:category_keyword/category_keyword.dart");
+//import 'package:category_keyword/category_keyword.dart';
 
-#source("../../../lib/category/keyword/json/data.dart");
-#source("../../../lib/category/keyword/json/model.dart");
-#source("../../../lib/category/keyword/init.dart");
-#source("../../../lib/category/keyword/categories.dart");
-#source("../../../lib/category/keyword/keywords.dart");
-#source("../../../lib/category/keyword/tags.dart");
-#source("../../../lib/gen/category/keyword/entries.dart");
-#source("../../../lib/gen/category/keyword/categories.dart");
-#source("../../../lib/gen/category/keyword/keywords.dart");
-#source("../../../lib/gen/category/keyword/tags.dart");
-#source("../../../lib/gen/category/models.dart");
-#source("../../../lib/gen/category/repository.dart");
+part '../../../lib/category/keyword/json/data.dart';
+part '../../../lib/category/keyword/json/model.dart';
+part '../../../lib/category/keyword/init.dart';
+part '../../../lib/category/keyword/categories.dart';
+part '../../../lib/category/keyword/keywords.dart';
+part '../../../lib/category/keyword/tags.dart';
+part '../../../lib/gen/category/keyword/entries.dart';
+part '../../../lib/gen/category/keyword/categories.dart';
+part '../../../lib/gen/category/keyword/keywords.dart';
+part '../../../lib/gen/category/keyword/tags.dart';
+part '../../../lib/gen/category/models.dart';
+part '../../../lib/gen/category/repository.dart';
 // pub
 
 genCode() {
@@ -64,7 +64,7 @@ genCode() {
 
   repo.domains.add(categoryDomain);
 
-  repo.gen();
+  repo.gen('category_keyword');
 }
 
 initCategoryData(CategoryRepo categoryRepo) {
@@ -80,7 +80,7 @@ initCategoryData(CategoryRepo categoryRepo) {
 
 void main() {
   genCode();
-  
+
   var categoryRepo = new CategoryRepo();
   initCategoryData(categoryRepo);
 }

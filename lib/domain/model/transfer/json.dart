@@ -1,3 +1,4 @@
+part of dartling;
 
 Model fromMagicBoxes(String json, Domain domain, String modelCode) {
   if (json == null || json.trim() == '') {

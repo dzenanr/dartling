@@ -1,3 +1,4 @@
+part of dartling;
 
 abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 
@@ -461,20 +462,20 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
 
   /**
    * ==
-  *
-   * If x===y, return true.
+   *
+   * If identical(x, y), return true.
    * Otherwise, if either x or y is null, return false.
    * Otherwise, return the result of x.equals(y).
    *
    * The newest spec is:
-   * a) if either x or y is null, do a ===
+   * a) if either x or y is null, do identical(x, y)
    * b) otherwise call operator ==
    */
   /*
   bool operator ==(Object other) {
     if (other is Entity) {
       Entity entity = other;
-      if (this===entity) {
+      if (identical(this, entity)) {
         return true;
       } else {
         if (this == null || entity == null) {
@@ -492,7 +493,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     if (other is ConceptEntity) {
       ConceptEntity entity = other;
       if (this == null || entity == null) {
-        return this===entity;
+        return identical(this, entity);
       } else {
         return equals(entity);
       }
@@ -574,7 +575,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   /**
    * Displays (prints) an entity with its attributes, parents and children.
    */
-  display([String space='', bool withOid=true, bool withChildren=true]) {
+  display({String space:'', bool withOid:true, bool withChildren:true}) {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }

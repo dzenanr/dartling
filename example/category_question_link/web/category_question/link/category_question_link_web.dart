@@ -31,33 +31,33 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#import("dart:html");
-#import("dart:uri");
+import 'dart:html';
+import 'dart:uri';
 
-#import("package:dartling/dartling.dart");
-#import("package:dartling/dartling_app.dart");
+import 'package:dartling/dartling.dart';
+import 'package:dartling/dartling_app.dart';
 
 // pub
-//#import("package:category_question_link/category_question_link.dart");
+//import 'package:category_question_link/category_question_link.dart';
 
-#source("../../../lib/category_question/link/json/data.dart");
-#source("../../../lib/category_question/link/json/model.dart");
-#source("../../../lib/category_question/link/init.dart");
-#source("../../../lib/category_question/link/members.dart");
-#source("../../../lib/category_question/link/categories.dart");
-#source("../../../lib/category_question/link/web_links.dart");
-#source("../../../lib/category_question/link/interests.dart");
-#source("../../../lib/category_question/link/comments.dart");
-#source("../../../lib/category_question/link/questions.dart");
-#source("../../../lib/gen/category_question/link/entries.dart");
-#source("../../../lib/gen/category_question/link/members.dart");
-#source("../../../lib/gen/category_question/link/categories.dart");
-#source("../../../lib/gen/category_question/link/web_links.dart");
-#source("../../../lib/gen/category_question/link/interests.dart");
-#source("../../../lib/gen/category_question/link/comments.dart");
-#source("../../../lib/gen/category_question/link/questions.dart");
-#source("../../../lib/gen/category_question/models.dart");
-#source("../../../lib/gen/category_question/repository.dart");
+part '../../../lib/category_question/link/json/data.dart';
+part '../../../lib/category_question/link/json/model.dart';
+part '../../../lib/category_question/link/init.dart';
+part '../../../lib/category_question/link/members.dart';
+part '../../../lib/category_question/link/categories.dart';
+part '../../../lib/category_question/link/web_links.dart';
+part '../../../lib/category_question/link/interests.dart';
+part '../../../lib/category_question/link/comments.dart';
+part '../../../lib/category_question/link/questions.dart';
+part '../../../lib/gen/category_question/link/entries.dart';
+part '../../../lib/gen/category_question/link/members.dart';
+part '../../../lib/gen/category_question/link/categories.dart';
+part '../../../lib/gen/category_question/link/web_links.dart';
+part '../../../lib/gen/category_question/link/interests.dart';
+part '../../../lib/gen/category_question/link/comments.dart';
+part '../../../lib/gen/category_question/link/questions.dart';
+part '../../../lib/gen/category_question/models.dart';
+part '../../../lib/gen/category_question/repository.dart';
 // pub
 
 initCategoryQuestionData(CategoryQuestionRepo categoryQuestionRepo) {

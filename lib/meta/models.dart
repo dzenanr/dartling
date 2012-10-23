@@ -1,3 +1,4 @@
+part of dartling;
 
 class Models extends Entities<Model> {
 

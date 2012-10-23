@@ -1,6 +1,8 @@
+part of dartling;
 
-String genRepository(Domain domain) {
-  var sc = ' \n';
+String genRepository(Domain domain, String library) {
+  var sc = 'part of ${library}; \n';
+  sc = '${sc} \n';
   sc = '${sc}// lib/gen/${domain.codeLowerUnderscore}/repository.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${domain.code}Repo extends Repo { \n';
@@ -33,8 +35,9 @@ String genRepository(Domain domain) {
   return sc;
 }
 
-String genModels(Domain domain) {
-  var sc = ' \n';
+String genModels(Domain domain, String library) {
+  var sc = 'part of ${library}; \n';
+  sc = '${sc} \n';
   sc = '${sc}// lib/gen/${domain.codeLowerUnderscore}/models.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${domain.code}Models extends DomainModels { \n';
@@ -64,10 +67,11 @@ String genModels(Domain domain) {
 }
 
 
-String genEntries(Model model) {
+String genEntries(Model model, String library) {
   Domain domain = model.domain;
 
-  var sc = ' \n';
+  var sc = 'part of ${library}; \n';
+  sc = '${sc} \n';
   sc = '${sc}// lib/gen/${domain.codeLowerUnderscore}/'
        '${model.codeLowerUnderscore}/entries.dart \n';
   sc = '${sc} \n';
@@ -135,11 +139,12 @@ String genEntries(Model model) {
   return sc;
 }
 
-String genConceptGen(Concept concept) {
+String genConceptGen(Concept concept, String library) {
   Model model = concept.model;
   Domain domain = model.domain;
 
-  var sc = ' \n';
+  var sc = 'part of ${library}; \n';
+  sc = '${sc} \n';
   sc = '${sc}// lib/gen/${domain.codeLowerUnderscore}'
        '/${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart \n';
   sc = '${sc} \n';

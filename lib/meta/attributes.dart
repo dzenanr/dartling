@@ -1,3 +1,4 @@
+part of dartling;
 
 class Attributes extends Entities<Property> {
 

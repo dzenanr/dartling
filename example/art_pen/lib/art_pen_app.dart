@@ -31,42 +31,40 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#library('art_pen_app');
+library art_pen_app;
 
-#import("dart:html");
-#import('dart:isolate');
-#import("dart:math");
+import 'dart:html';
+import 'dart:isolate';
+import 'dart:math';
 
-#import("package:dartling/dartling.dart");
-#import("package:dartling/dartling_app.dart");
-
+import 'package:dartling/dartling.dart';
+import 'package:dartling/dartling_app.dart';
 
 // pub
-//#import("package:art_pen/art_pen.dart");
+//import 'package:art_pen/art_pen.dart';
 
-#source("art/pen/json/data.dart");
-#source("art/pen/json/model.dart");
+part 'art/pen/json/data.dart';
+part 'art/pen/json/model.dart';
 
-#source("art/pen/init.dart");
-#source("art/pen/segments.dart");
-#source("art/pen/lines.dart");
+part 'art/pen/init.dart';
+part 'art/pen/segments.dart';
+part 'art/pen/lines.dart';
 
-#source("gen/art/pen/entries.dart");
-#source("gen/art/pen/segments.dart");
-#source("gen/art/pen/lines.dart");
-#source("gen/art/models.dart");
-#source("gen/art/repository.dart");
+part 'gen/art/pen/entries.dart';
+part 'gen/art/pen/segments.dart';
+part 'gen/art/pen/lines.dart';
+part 'gen/art/models.dart';
+part 'gen/art/repository.dart';
 
 // added by hand
-#source("art/pen/pen.dart");
-#source("art/pen/examples.dart");
-#source("art/pen/programs.dart");
+part 'art/pen/pen.dart';
+part 'art/pen/examples.dart';
+part 'art/pen/programs.dart';
 
-#source("util/color.dart");
-#source("util/random.dart");
-
+part 'util/color.dart';
+part 'util/random.dart';
 // pub
 
 // added by hand
-#source("app/commands.dart");
-#source("app/drawing.dart");
+part 'app/commands.dart';
+part 'app/drawing.dart';

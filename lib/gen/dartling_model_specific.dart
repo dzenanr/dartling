@@ -1,8 +1,10 @@
+part of dartling;
 
-String genInitDomainModel(Model model) {
+String genInitDomainModel(Model model, String library) {
   Domain domain = model.domain;
 
-  var sc = ' \n';
+  var sc = 'part of ${library}; \n';
+  sc = '${sc} \n';
   sc = '${sc}// lib/${domain.codeLowerUnderscore}/'
        '${model.codeLowerUnderscore}/init.dart \n';
   sc = '${sc} \n';
@@ -23,11 +25,12 @@ String genInitDomainModel(Model model) {
   return sc;
 }
 
-String genConcept(Concept concept) {
+String genConcept(Concept concept, String library) {
   Model model = concept.model;
   Domain domain = model.domain;
 
-  var sc = ' \n';
+  var sc = 'part of ${library}; \n';
+  sc = '${sc} \n';
   sc = '// lib/${domain.codeLowerUnderscore}/'
        '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart \n';
   sc = '${sc} \n';

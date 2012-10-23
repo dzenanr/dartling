@@ -1,3 +1,4 @@
+//part of default_project;
 
 // data/gen/default/project/entries.dart
 

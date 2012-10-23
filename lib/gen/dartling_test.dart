@@ -1,3 +1,4 @@
+part of dartling;
 
 String genDartlingTest(Repo repo, Model model) {
   Domain domain = model.domain;
@@ -8,13 +9,13 @@ String genDartlingTest(Repo repo, Model model) {
        '${model.codeLowerUnderscore}_test.dart \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#import("package:unittest/unittest.dart"); \n';
+  sc = '${sc}import "package:unittest/unittest.dart"; \n';
   sc = '${sc} \n';
-  sc = '${sc}#import("package:dartling/dartling.dart"); \n';
+  sc = '${sc}import "package:dartling/dartling.dart"; \n';
   sc = '${sc} \n';
-  sc = '${sc}#import("package:${domain.codeLowerUnderscore}_'
+  sc = '${sc}import "package:${domain.codeLowerUnderscore}_'
        '${model.codeLowerUnderscore}/${domain.codeLowerUnderscore}_'
-       '${model.codeLowerUnderscore}.dart"); \n';
+       '${model.codeLowerUnderscore}.dart"; \n';
   sc = '${sc} \n';
 
   sc = '${sc}test${domain.code}${model.code}('

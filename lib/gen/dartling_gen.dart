@@ -1,3 +1,4 @@
+part of dartling;
 
 String genDartlingGen(Model model) {
   Domain domain = model.domain;
@@ -7,15 +8,15 @@ String genDartlingGen(Model model) {
        '${domain.codeLowerUnderscore}_${model.codeLowerUnderscore}_gen.dart \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#import("dart:json"); \n';
-  sc = '${sc}#import("dart:math"); \n';
-  sc = '${sc}#import("dart:uri"); \n';
+  sc = '${sc}import "dart:json"; \n';
+  sc = '${sc}import "dart:math"; \n';
+  sc = '${sc}import "dart:uri"; \n';
   sc = '${sc} \n';
-  sc = '${sc}#import("package:dartling/dartling.dart"); \n';
+  sc = '${sc}import "package:dartling/dartling.dart"; \n';
   sc = '${sc} \n';
-  sc = '${sc}#import("package:${domain.codeLowerUnderscore}_'
+  sc = '${sc}import "package:${domain.codeLowerUnderscore}_'
        '${model.codeLowerUnderscore}/${domain.codeLowerUnderscore}_'
-       '${model.codeLowerUnderscore}.dart"); \n';
+       '${model.codeLowerUnderscore}.dart"; \n';
   sc = '${sc} \n';
 
   sc = '${sc}genCode() { \n';
@@ -38,7 +39,8 @@ String genDartlingGen(Model model) {
   sc = '${sc}  repo.domains.add(${domain.codeFirstLetterLower}'
        'Domain); \n';
   sc = '${sc} \n';
-  sc = '${sc}  repo.gen(); \n';
+  sc = '${sc}  repo.gen("${domain.codeLowerUnderscore}_'
+       '${model.codeLowerUnderscore}"); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 

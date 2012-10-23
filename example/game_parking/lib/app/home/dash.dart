@@ -1,3 +1,5 @@
+//part of game_parking_app;
+
 class ActionPanel {
 
   final Board board;

@@ -1,3 +1,4 @@
+part of dartling;
 
 abstract class IdApi implements Comparable {
 

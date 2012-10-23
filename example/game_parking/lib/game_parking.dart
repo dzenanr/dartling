@@ -31,24 +31,24 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#library('game_parking');
+library game_parking;
 
-#import("package:dartling/dartling.dart");
+import 'package:dartling/dartling.dart';
 
-#source("game/parking/json/data.dart");
-#source("game/parking/json/model.dart");
+part 'game/parking/json/data.dart';
+part 'game/parking/json/model.dart';
 
-#source("game/parking/init.dart");
-#source("game/parking/areas.dart");
-#source("game/parking/brands.dart");
-#source("game/parking/parkings.dart");
-#source("game/parking/cars.dart");
+part 'game/parking/init.dart';
+part 'game/parking/areas.dart';
+part 'game/parking/brands.dart';
+part 'game/parking/parkings.dart';
+part 'game/parking/cars.dart';
 
-#source("gen/game/parking/entries.dart");
-#source("gen/game/parking/areas.dart");
-#source("gen/game/parking/brands.dart");
-#source("gen/game/parking/parkings.dart");
-#source("gen/game/parking/cars.dart");
-#source("gen/game/models.dart");
-#source("gen/game/repository.dart");
+part 'gen/game/parking/entries.dart';
+part 'gen/game/parking/areas.dart';
+part 'gen/game/parking/brands.dart';
+part 'gen/game/parking/parkings.dart';
+part 'gen/game/parking/cars.dart';
+part 'gen/game/models.dart';
+part 'gen/game/repository.dart';
 

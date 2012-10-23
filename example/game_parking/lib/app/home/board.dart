@@ -1,3 +1,5 @@
+//part of game_parking_app;
+
 class Board {
 
   // The board is redrawn every INTERVAL ms.

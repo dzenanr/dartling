@@ -31,23 +31,23 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#library('category_keyword');
+library category_keyword;
 
-#import("package:dartling/dartling.dart");
+import 'package:dartling/dartling.dart';
 
-#source("category/keyword/json/data.dart");
+part 'category/keyword/json/data.dart';
 // do not change model
-#source("category/keyword/json/model.dart");
+part 'category/keyword/json/model.dart';
 
-#source("category/keyword/init.dart");
-#source("category/keyword/categories.dart");
-#source("category/keyword/keywords.dart");
-#source("category/keyword/tags.dart");
+part 'category/keyword/init.dart';
+part 'category/keyword/categories.dart';
+part 'category/keyword/keywords.dart';
+part 'category/keyword/tags.dart';
 
-#source("gen/category/keyword/entries.dart");
-#source("gen/category/keyword/categories.dart");
-#source("gen/category/keyword/keywords.dart");
-#source("gen/category/keyword/tags.dart");
+part 'gen/category/keyword/entries.dart';
+part 'gen/category/keyword/categories.dart';
+part 'gen/category/keyword/keywords.dart';
+part 'gen/category/keyword/tags.dart';
 // do not change models
-#source("gen/category/models.dart");
-#source("gen/category/repository.dart");
+part 'gen/category/models.dart';
+part 'gen/category/repository.dart';

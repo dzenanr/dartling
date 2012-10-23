@@ -1,3 +1,4 @@
+part of dartling;
 
 class Children extends Entities<Property> {
 

@@ -1,3 +1,4 @@
+part of dartling;
 
 class AttributeTypes extends Entities<AttributeType> {
 

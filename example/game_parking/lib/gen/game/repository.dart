@@ -1,3 +1,4 @@
+//part of game_parking;
 
 // data/gen/game/repository.dart
 

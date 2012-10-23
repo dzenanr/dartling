@@ -31,20 +31,20 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#library('default_project');
+library default_project;
 
-#import("package:dartling/dartling.dart");
+import 'package:dartling/dartling.dart';
 
-#source("default/project/json/data.dart");
+part 'default/project/json/data.dart';
 // do not change model
-#source("default/project/json/model.dart");
+part 'default/project/json/model.dart';
 
-#source("default/project/init.dart");
-#source("default/project/projects.dart");
+part 'default/project/init.dart';
+part 'default/project/projects.dart';
 
-#source("gen/default/project/entries.dart");
-#source("gen/default/project/projects.dart");
+part 'gen/default/project/entries.dart';
+part 'gen/default/project/projects.dart';
 // do not change models
-#source("gen/default/models.dart");
-#source("gen/default/repository.dart");
+part 'gen/default/models.dart';
+part 'gen/default/repository.dart';
 

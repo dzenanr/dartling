@@ -1,3 +1,5 @@
+part of dartling;
+
 var license =
 '''
 /*
@@ -44,45 +46,45 @@ String genDartlingLibrary(Model model) {
   sc = '${sc}${license} \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#library("${domain.codeLowerUnderscore}_${model.codeLowerUnderscore}"); \n';
+  sc = '${sc}library ${domain.codeLowerUnderscore}_${model.codeLowerUnderscore}; \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#import("dart:json"); \n';
-  sc = '${sc}#import("dart:math"); \n';
-  sc = '${sc}#import("dart:uri"); \n';
+  sc = '${sc}import "dart:json"; \n';
+  sc = '${sc}import "dart:math"; \n';
+  sc = '${sc}import "dart:uri"; \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#import("package:dartling/dartling.dart"); \n';
+  sc = '${sc}import "package:dartling/dartling.dart"; \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#source("${domain.codeLowerUnderscore}/'
-       '${model.codeLowerUnderscore}/json/data.dart"); \n';
-  sc = '${sc}#source("${domain.codeLowerUnderscore}/'
-       '${model.codeLowerUnderscore}/json/model.dart"); \n';
+  sc = '${sc}part "${domain.codeLowerUnderscore}/'
+       '${model.codeLowerUnderscore}/json/data.dart"; \n';
+  sc = '${sc}part "${domain.codeLowerUnderscore}/'
+       '${model.codeLowerUnderscore}/json/model.dart"; \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#source("${domain.codeLowerUnderscore}/'
-       '${model.codeLowerUnderscore}/init.dart"); \n';
+  sc = '${sc}part "${domain.codeLowerUnderscore}/'
+       '${model.codeLowerUnderscore}/init.dart"; \n';
   sc = '${sc} \n';
 
   for (Concept concept in model.concepts) {
-    sc = '${sc}#source("${domain.codeLowerUnderscore}/'
-         '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart"); \n';
+    sc = '${sc}part "${domain.codeLowerUnderscore}/'
+         '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart"; \n';
   }
   sc = '${sc} \n';
 
-  sc = '${sc}#source("gen/${domain.codeLowerUnderscore}/'
-       '${model.codeLowerUnderscore}/entries.dart"); \n';
+  sc = '${sc}part "gen/${domain.codeLowerUnderscore}/'
+       '${model.codeLowerUnderscore}/entries.dart"; \n';
   for (Concept concept in model.concepts) {
-    sc = '${sc}#source("gen/${domain.codeLowerUnderscore}/'
-         '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart"); \n';
+    sc = '${sc}part "gen/${domain.codeLowerUnderscore}/'
+         '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart"; \n';
   }
   sc = '${sc} \n';
 
-  sc = '${sc}#source("gen/${domain.codeLowerUnderscore}/'
-       'models.dart"); \n';
-  sc = '${sc}#source("gen/${domain.codeLowerUnderscore}/'
-       'repository.dart"); \n';
+  sc = '${sc}part "gen/${domain.codeLowerUnderscore}/'
+       'models.dart"; \n';
+  sc = '${sc}part "gen/${domain.codeLowerUnderscore}/'
+       'repository.dart"; \n';
   sc = '${sc} \n';
 
   return sc;

@@ -1,33 +1,33 @@
 
-#import("dart:html");
-#import("dart:isolate");
+import 'dart:html';
+import 'dart:isolate';
 
-#import("package:dartling/dartling.dart");
-#import("package:dartling/dartling_app.dart");
+import 'package:dartling/dartling.dart';
+import 'package:dartling/dartling_app.dart';
 
 // pub
-//#import("package:game_parking/game_parking.dart");
+//import 'package:game_parking/game_parking.dart';
 
-#source("../lib/game/parking/json/data.dart");
-#source("../lib/game/parking/json/model.dart");
-#source("../lib/game/parking/init.dart");
-#source("../lib/game/parking/areas.dart");
-#source("../lib/game/parking/brands.dart");
-#source("../lib/game/parking/parkings.dart");
-#source("../lib/game/parking/cars.dart");
-#source("../lib/gen/game/parking/entries.dart");
-#source("../lib/gen/game/parking/areas.dart");
-#source("../lib/gen/game/parking/brands.dart");
-#source("../lib/gen/game/parking/parkings.dart");
-#source("../lib/gen/game/parking/cars.dart");
-#source("../lib/gen/game/models.dart");
-#source("../lib/gen/game/repository.dart");
+part '../lib/game/parking/json/data.dart';
+part '../lib/game/parking/json/model.dart';
+part '../lib/game/parking/init.dart';
+part '../lib/game/parking/areas.dart';
+part '../lib/game/parking/brands.dart';
+part '../lib/game/parking/parkings.dart';
+part '../lib/game/parking/cars.dart';
+part '../lib/gen/game/parking/entries.dart';
+part '../lib/gen/game/parking/areas.dart';
+part '../lib/gen/game/parking/brands.dart';
+part '../lib/gen/game/parking/parkings.dart';
+part '../lib/gen/game/parking/cars.dart';
+part '../lib/gen/game/models.dart';
+part '../lib/gen/game/repository.dart';
 
-//#import("package:game_parking/game_parking_app.dart");
+//import 'package:game_parking/game_parking_app.dart';
 
-#source("../lib/app/home/board.dart");
-#source("../lib/app/home/dash.dart");
-#source("../lib/app/home/menu.dart");
+part '../lib/app/home/board.dart';
+part '../lib/app/home/dash.dart';
+part '../lib/app/home/menu.dart';
 // pub
 
 initGameData(GameRepo gameRepo) {

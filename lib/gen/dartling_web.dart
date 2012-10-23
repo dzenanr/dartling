@@ -1,3 +1,4 @@
+part of dartling;
 
 String genDartlingWeb(Model model) {
   Domain domain = model.domain;
@@ -7,15 +8,15 @@ String genDartlingWeb(Model model) {
        '${domain.codeLowerUnderscore}_${model.codeLowerUnderscore}_web.dart \n';
   sc = '${sc} \n';
 
-  sc = '${sc}#import("dart:html"); \n';
-  sc = '${sc}#import("dart:isolate"); \n';
+  sc = '${sc}import "dart:html"; \n';
+  sc = '${sc}import "dart:isolate"; \n';
   sc = '${sc} \n';
-  sc = '${sc}#import("package:dartling/dartling.dart"); \n';
-  sc = '${sc}#import("package:dartling/dartling_app.dart"); \n';
+  sc = '${sc}import "package:dartling/dartling.dart"; \n';
+  sc = '${sc}import "package:dartling/dartling_app.dart"; \n';
   sc = '${sc} \n';
-  sc = '${sc}#import("package:${domain.codeLowerUnderscore}_'
+  sc = '${sc}import "package:${domain.codeLowerUnderscore}_'
        '${model.codeLowerUnderscore}/${domain.codeLowerUnderscore}_'
-       '${model.codeLowerUnderscore}.dart"); \n';
+       '${model.codeLowerUnderscore}.dart"; \n';
   sc = '${sc} \n';
 
   sc = '${sc}init${domain.code}Data(${domain.code}Repo '

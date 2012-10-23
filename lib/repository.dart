@@ -1,10 +1,11 @@
+part of dartling;
 
 abstract class RepoApi {
 
   add(DomainModelsApi domainModels);
   Domains get domains;
   DomainModelsApi getDomainModels(String domainCode);
-  gen([bool specific=true]);
+  gen(String library, [bool specific=true]);
 
 }
 
@@ -41,20 +42,20 @@ class Repo implements RepoApi {
   DomainModels getDomainModels(String domainCode) =>
       _domainModelsMap[domainCode];
 
-  gen([bool specific=true]) {
+  gen(String library, [bool specific=true]) {
     title('Generated code, which you must not change, ',
           'in the lin/gen folder of the ${code} repository.');
     for (Domain domain in domains) {
       subTitle('The ${domain.code} domain repository.');
-      print(genRepository(domain));
+      print(genRepository(domain, library));
       subTitle('The ${domain.code} domain models.');
-      print(genModels(domain));
+      print(genModels(domain, library));
       for (Model model in domain.models) {
         subTitle('The ${domain.code}.${model.code} model entries.');
-        print(genEntries(model));
+        print(genEntries(model, library));
         for (Concept concept in model.concepts) {
           subTitle('The ${domain.code}.${model.code}.${concept.code} concept.');
-          print(genConceptGen(concept));
+          print(genConceptGen(concept, library));
         }
       }
     }
@@ -64,11 +65,11 @@ class Repo implements RepoApi {
       for (Domain domain in domains) {
         for (Model model in domain.models) {
           subTitle('The initial ${domain.code}.${model.code} model data.');
-          print(genInitDomainModel(model));
+          print(genInitDomainModel(model, library));
           for (Concept concept in model.concepts) {
             subTitle('Specific code base, for the '
                      '${domain.code}.${model.code}.${concept.code} concept.');
-            print(genConcept(concept));
+            print(genConcept(concept, library));
           }
         }
       }

@@ -1,3 +1,4 @@
+part of dartling;
 
 class Parents extends Entities<Property> {
 
