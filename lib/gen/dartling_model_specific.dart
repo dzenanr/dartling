@@ -31,7 +31,7 @@ String genConcept(Concept concept, String library) {
 
   var sc = 'part of ${library}; \n';
   sc = '${sc} \n';
-  sc = '// lib/${domain.codeLowerUnderscore}/'
+  sc = '${sc}// lib/${domain.codeLowerUnderscore}/'
        '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart \n';
   sc = '${sc} \n';
   sc = '${sc}class ${concept.code} extends ${concept.code}Gen { \n';
