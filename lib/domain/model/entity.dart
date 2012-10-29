@@ -200,7 +200,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       Iterable<Match> matches = exp.allMatches(c);
       var indexes = new List<int>();
       for (Match m in matches) {
-        indexes.add(m.end());
+        indexes.add(m.end);
       };
       int previousIndex = 0;
       var camelCaseWordList = new List<String>();
@@ -639,9 +639,9 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     }
     entityMap['oid'] = _oid.toString();
     entityMap['code'] = _code;
-    _attributeMap.getKeys().forEach((k) =>
+    _attributeMap.keys.forEach((k) =>
         entityMap[k] = getStringFromAttribute(k));
-    _childMap.getKeys().forEach((k) => entityMap[k] = getChild(k).toJson());
+    _childMap.keys.forEach((k) => entityMap[k] = getChild(k).toJson());
     return entityMap;
   }
 

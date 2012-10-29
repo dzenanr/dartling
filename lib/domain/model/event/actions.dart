@@ -370,7 +370,7 @@ class Past implements PastApi {
     notifyNoPast();
   }
 
-  bool get empty => _actions.isEmpty();
+  bool get empty => _actions.isEmpty;
 
   bool doit() {
     bool done = false;

@@ -237,8 +237,6 @@ class Id implements IdApi {
     return '(${_dropEnd(result.trim(), ',')})';
   }
 
-  int hashCode() => toString().hashCode();
-
   display([String title='Id']) {
     if (title != '') {
       print('');

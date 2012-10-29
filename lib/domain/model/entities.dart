@@ -91,7 +91,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   Errors get errors => _errors;
   int get count => _entityList.length;
   int get length => count;
-  bool get empty => _entityList.isEmpty();
+  bool get empty => _entityList.isEmpty;
 
   void clear() {
     _entityList.clear();
@@ -404,7 +404,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
 
   T last() {
     if (!empty) {
-      return _entityList.last();
+      return _entityList.last;
     }
   }
 
