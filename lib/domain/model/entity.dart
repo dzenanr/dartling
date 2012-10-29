@@ -158,7 +158,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     }
   }
 
-  String _firstLetterLowerCase([plural=false]) {
+  String _firstLetterLowerCase({plural:false}) {
     var c = _code;
     if (plural) {
       c = codePlural;
@@ -174,7 +174,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     }
   }
 
-  String _firstLetterUpperCase([plural=false]) {
+  String _firstLetterUpperCase({plural:false}) {
     var c = _code;
     if (plural) {
       c = codePlural;
@@ -190,7 +190,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     }
   }
 
-  String _camelCaseLowerCaseUnderscore([plural=false]) {
+  String _camelCaseLowerCaseUnderscore({plural:false}) {
     var c = _code;
     if (plural) {
       c = codePlural;
