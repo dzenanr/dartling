@@ -1,5 +1,7 @@
 //part of game_parking;
 
+part of game_parking_app;
+
 // data/gen/game/parking/brands.dart
 
 abstract class BrandGen extends ConceptEntity<Brand> {

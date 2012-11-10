@@ -137,7 +137,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     if (maxc != 'N') {
       int maxInt;
       try {
-        maxInt = parseInt(maxc);
+        maxInt = int.parse(maxc);
         if (count == maxInt) {
           EntityError error = new EntityError('max');
           error.message = '${_concept.codes}.max is $maxc.';
@@ -275,7 +275,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     if (minc != '0') {
       int minInt;
       try {
-        minInt = parseInt(minc);
+        minInt = int.parse(minc);
         if (count == minInt) {
           EntityError error = new EntityError('min');
           error.message = '${_concept.codes}.min is $minc.';
@@ -608,8 +608,8 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   /**
   * Displays (prints) a title, then entities.
   */
-  display([String title='Entities', String prefix='',
-      bool withOid=true, bool withChildren=true]) {
+  display({String title:'Entities', String prefix:'',
+      bool withOid:true, bool withChildren:true}) {
     var s = prefix;
     if (!_concept.entry || (_concept.entry && _concept.parents.count > 0)) {
       s = '$prefix  ';
@@ -622,7 +622,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       //print('');
     }
     for (T e in _entityList) {
-      e.display(s, withOid, withChildren);
+      e.display(prefix:s, withOid:withOid, withChildren:withChildren);
     }
   }
 

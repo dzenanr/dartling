@@ -1,4 +1,4 @@
-//part of default_project;
+part of default_project;
 
 // data/default/project/init.dart
 

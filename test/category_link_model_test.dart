@@ -78,7 +78,7 @@ testCategoryLinkModel() {
   assert(tryDartWebLink.getParent('category').getAttribute('name') == 'Dart');
 
   // Display
-  categories.display('Link Model Creation');
+  categories.display(title:'Link Model Creation');
 }
 
 void main() {

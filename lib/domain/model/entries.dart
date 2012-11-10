@@ -196,7 +196,7 @@ class ModelEntries implements ModelEntriesApi {
     ConceptEntity entity = newEntity(concept.code);
     int timeStamp;
     try {
-      timeStamp = parseInt(entityMap['oid']);
+      timeStamp = int.parse(entityMap['oid']);
     } on FormatException catch (e) {
       throw new TypeException('${entityMap['oid']} oid is not int: $e');
     }
@@ -240,7 +240,7 @@ class ModelEntries implements ModelEntriesApi {
         }
       } else {
         try {
-          int parentTimeStamp = parseInt(parentOidString);
+          int parentTimeStamp = int.parse(parentOidString);
           Oid parentOid = new Oid.ts(parentTimeStamp);
           List nullParent = new List(3);
           nullParent[0] = parentOid;
@@ -300,7 +300,7 @@ class ModelEntries implements ModelEntriesApi {
   display() {
     for (Concept entryConcept in _model.entryConcepts) {
       Entities entryEntities = getEntry(entryConcept.code);
-      entryEntities.display(entryConcept.code);
+      entryEntities.display(title:entryConcept.code);
     }
   }
 

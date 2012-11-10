@@ -3,7 +3,6 @@ part of dartling;
 abstract class IdApi implements Comparable {
 
   Concept get concept;
-
   int get parentCount;  int get attributeCount;
   EntityApi getParent(String code);
   setParent(String code, EntityApi parent);
@@ -126,7 +125,7 @@ class Id implements IdApi {
      if (other is Id) {
        Id id = other;
        if (this == null || id == null) {
-         return this===id;
+         return identical(this, id);
        } else {
          return equals(id);
        }

@@ -39,13 +39,13 @@ abstract class BasicAction implements ActionApi {
 
   BasicAction(this.name, this.session);
 
-  abstract bool doit();
-  abstract bool undo();
-  abstract bool redo();
+  bool doit();
+  bool undo();
+  bool redo();
 
   toString() => 'action: $name; state: $state -- description: $description';
 
-  display([String title='BasicAction']) {
+  display({String title: 'BasicAction'}) {
     print('');
     print('======================================');
     print('$title                                ');

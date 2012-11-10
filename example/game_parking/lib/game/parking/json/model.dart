@@ -1,5 +1,7 @@
 //part of game_parking;
 
+part of game_parking_app;
+
 // http://jsonformatter.curiousconcept.com/
 
 var gameParkingModelJson = r'''

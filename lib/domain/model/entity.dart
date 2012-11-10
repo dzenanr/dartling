@@ -52,24 +52,24 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
           _attributeMap[a.code] = false;
       } else if (a.type.base == 'int') {
         try {
-          _attributeMap[a.code] = parseInt(a.init);
+          _attributeMap[a.code] = int.parse(a.init);
         } on FormatException catch (e) {
           throw new TypeException(
               '${a.code} attribute init (default) value is not int: $e');
         }
       } else if (a.type.base == 'double') {
         try {
-          _attributeMap[a.code] = parseDouble(a.init);
+          _attributeMap[a.code] = double.parse(a.init);
         } on FormatException catch (e) {
           throw new TypeException(
               '${a.code} attribute init (default) value is not double: $e');
         }
       } else if (a.type.base == 'num') {
         try {
-          _attributeMap[a.code] = parseInt(a.init);
+          _attributeMap[a.code] = int.parse(a.init);
         } on FormatException catch (e1) {
           try {
-            _attributeMap[a.code] = parseDouble(a.init);
+            _attributeMap[a.code] = double.parse(a.init);
           } on FormatException catch (e2) {
             throw new TypeException(
                 '${a.code} attribute init (default) value is not num: $e1; $e2');
@@ -294,24 +294,24 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       }
     } else if (attribute.type.base == 'int') {
       try {
-        return setAttribute(name, parseInt(string));
+        return setAttribute(name, int.parse(string));
       } on FormatException catch (e) {
         throw new TypeException('${attribute.code} '
                                 'attribute value is not int: $e');
       }
     } else if (attribute.type.base == 'double') {
       try {
-        return setAttribute(name, parseDouble(string));
+        return setAttribute(name, double.parse(string));
       } on FormatException catch (e) {
         throw new TypeException('${attribute.code} '
                                 'attribute value is not double: $e');
       }
     } else if (attribute.type.base == 'num') {
       try {
-        return setAttribute(name, parseInt(string));
+        return setAttribute(name, int.parse(string));
       } on FormatException catch (e1) {
         try {
-          return setAttribute(name, parseDouble(string));
+          return setAttribute(name, double.parse(string));
         } on FormatException catch (e2) {
           throw new TypeException(
             '${attribute.code} attribute value is not num: $e1; $e2');
@@ -575,7 +575,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   /**
    * Displays (prints) an entity with its attributes, parents and children.
    */
-  display([String prefix='', bool withOid=true, bool withChildren=true]) {
+  display({String prefix:'', bool withOid:true, bool withChildren:true}) {
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
@@ -619,7 +619,8 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
         if (_concept.isChildSensitive(k)) {
           print('**********');
         } else {
-          v.display('${s}$k', '${s}  ', withOid, withChildren);
+          v.display(title:'${s}$k', prefix:'${s}  ',
+              withOid:withOid, withChildren:withChildren);
         }
       });
     }

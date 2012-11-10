@@ -1,4 +1,4 @@
-//part of art_pen_app;
+part of art_pen_app;
 
 class Board {
 

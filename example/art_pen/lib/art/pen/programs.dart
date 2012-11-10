@@ -1,4 +1,4 @@
-//part of art_pen;
+part of art_pen;
 
 var basicCommands = ['color',
                      'width',
@@ -303,9 +303,9 @@ demo6(Pen pen) {
 
 demo7(Pen pen) {
   var commandsString = '''
-    color, red; width, 2; move, 15, 160, 2; 
-    color, green; width, 1; move, -45, 200, 3; move, 66, 80, 6; 
-    color, brown;  width, 2; move, -20, 40, 8; 
+    color, red; width, 2; move, 15, 160, 2;
+    color, green; width, 1; move, -45, 200, 3; move, 66, 80, 6;
+    color, brown;  width, 2; move, -20, 40, 8;
     art, 6;
 ''';
   pen.erase();
@@ -314,16 +314,16 @@ demo7(Pen pen) {
 
 demo8(Pen pen) {
   var commandsString = '''
-    color, gray; 
-    width, 2; 
-    move, 45, 80, 1; 
-    color, green; 
-    width, 1; 
-    move, 33, 80, 1; 
-    color, orange;  
-    width, 3; 
-    move, 15, 80, 1; 
-    move, 90, 80, 4; 
+    color, gray;
+    width, 2;
+    move, 45, 80, 1;
+    color, green;
+    width, 1;
+    move, 33, 80, 1;
+    color, orange;
+    width, 3;
+    move, 15, 80, 1;
+    move, 90, 80, 4;
     art, 5;
   ''';
   pen.erase();

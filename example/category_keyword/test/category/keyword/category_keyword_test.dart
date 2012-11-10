@@ -88,8 +88,8 @@ testCategoryKeyword(Repo repo, String domainCode, String modelCode) {
       entries.clear();
       expect(entries.empty, isTrue);
       entries.fromJsonToData();
-      entries.categories.display('From JSON to Model: Categories');
-      entries.keywords.display('From JSON to Model: Keywords');
+      entries.categories.display(title:'From JSON to Model: Categories');
+      entries.keywords.display(title:'From JSON to Model: Keywords');
     });
 
   });

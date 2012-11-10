@@ -1,5 +1,7 @@
 //part of game_parking;
 
+part of game_parking_app;
+
 // data/gen/game/parking/entries.dart
 
 class ParkingEntries extends ModelEntries {

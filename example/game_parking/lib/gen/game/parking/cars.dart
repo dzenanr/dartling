@@ -1,5 +1,7 @@
 //part of game_parking;
 
+part of game_parking;
+
 // data/gen/game/parking/cars.dart
 
 abstract class CarGen extends ConceptEntity<Car> {

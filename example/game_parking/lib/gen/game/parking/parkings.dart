@@ -1,5 +1,7 @@
 //part of game_parking;
 
+part of game_parking_app;
+
 // data/gen/game/parking/parkings.dart
 
 abstract class ParkingGen extends ConceptEntity<Parking> {

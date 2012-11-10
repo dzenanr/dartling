@@ -1,5 +1,7 @@
 //part of category_question_link;
 
+part of category_question_link;
+
 // data/gen/category_question/link/categories.dart
 
 abstract class CategoryGen extends ConceptEntity<Category> {

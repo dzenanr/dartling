@@ -1,4 +1,4 @@
-//part of default_project;
+part of default_project;
 
 // data/default/project/json/data.dart
 
@@ -33,5 +33,5 @@ var defaultProjectDataJson = r'''
       }
    ],
    "model":"Project"
-} 
+}
 ''';

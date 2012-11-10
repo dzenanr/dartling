@@ -1,4 +1,4 @@
-//part of game_parking;
+part of game_parking;
 
 // data/game/parking/brands.dart
 

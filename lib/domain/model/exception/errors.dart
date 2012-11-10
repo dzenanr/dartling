@@ -27,12 +27,12 @@ class EntityError {
   /**
    * Displays (prints) an error.
    */
-  display([String s='']) {
-    print('${s}******************************************');
-    print('${s}${category}                               ');
-    print('${s}******************************************');
-    print('${s}message: ${message}');
-    print('${s}******************************************');
+  display({String prefix:''}) {
+    print('${prefix}******************************************');
+    print('${prefix}${category}                               ');
+    print('${prefix}******************************************');
+    print('${prefix}message: ${message}');
+    print('${prefix}******************************************');
     print('');
   }
 
@@ -62,7 +62,7 @@ class Errors implements ErrorsApi {
   /**
    * Displays (prints) a title, then errors.
    */
-  display([String title='Entities', bool withOid=true]) {
+  display({String title:'Entities', bool withOid:true}) {
     if (title == 'Entities') {
       title = 'Errors';
     }
@@ -72,7 +72,7 @@ class Errors implements ErrorsApi {
     print('************************************************');
     print('');
     for (EntityError error in _errorList) {
-      error.display('*** ');
+      error.display(prefix:'*** ');
     }
   }
 

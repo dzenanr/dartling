@@ -77,7 +77,7 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       expect(projects.empty, isTrue);
       entries.fromJsonToData();
       expect(projects.empty, isFalse);
-      projects.display('From JSON to Project Model');
+      projects.display(title:'From JSON to Project Model');
     });
     test('Add Project Required Error', () {
       var projects = entries.projects;
@@ -90,7 +90,7 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       expect(projects.count, equals(projectCount));
       expect(projects.errors.count, equals(1));
       expect(projects.errors.list[0].category, equals('required'));
-      projects.errors.display('Add Project Required Error');
+      projects.errors.display(title:'Add Project Required Error');
     });
     test('Add Project Unique Error', () {
       var projects = entries.projects;
@@ -104,7 +104,7 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       expect(projects.count, equals(projectCount));
       expect(projects.errors.count, equals(1));
       expect(projects.errors.list[0].category, equals('unique'));
-      projects.errors.display('Add Project Unique Error');
+      projects.errors.display(title:'Add Project Unique Error');
     });
     test('Add Project Pre Validation', () {
       var projects = entries.projects;
@@ -119,7 +119,7 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       expect(projects.count, equals(projectCount));
       expect(projects.errors, hasLength(1));
       expect(projects.errors.list[0].category, equals('pre'));
-      projects.errors.display('Add Project Pre Validation');
+      projects.errors.display(title:'Add Project Pre Validation');
     });
     test('Find Project by New Oid', () {
       var dartlingOid = new Oid.ts(1345648254063);
@@ -137,7 +137,7 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       var dartlingOid = new Oid.ts(1344888717723);
       var project = projects.find(dartlingOid);
       expect(project, isNotNull);
-      expect(project.name == 'Dartling');
+      expect(project.name, equals('Dartling'));
     });
     test('Find Project by Id', () {
       var projects = entries.projects;
@@ -170,7 +170,7 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       expect(programmingProjects.empty, isFalse);
       expect(programmingProjects.length, equals(2));
 
-      programmingProjects.display('Select Projects by Function');
+      programmingProjects.display(title:'Select Projects by Function');
     });
     test('Select Projects by Function then Add', () {
       var projects = entries.projects;
@@ -185,8 +185,8 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       var added = programmingProjects.add(programmingProject);
       expect(added, isTrue);
 
-      programmingProjects.display('Select Projects by Function then Add');
-      projects.display('All Projects');
+      programmingProjects.display(title:'Select Projects by Function then Add');
+      projects.display(title:'All Projects');
     });
     test('Select Projects by Function then Remove', () {
       var projects = entries.projects;
@@ -214,7 +214,7 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       expect(orderedProjects.source.empty, isFalse);
       expect(orderedProjects.source.count, equals(projects.count));
 
-      orderedProjects.display('Order Projects by Name');
+      orderedProjects.display(title:'Order Projects by Name');
     });
     test('New Project with Id', () {
       var projects = entries.projects;
@@ -226,7 +226,7 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       var added = projects.add(marketing);
       expect(added, isTrue);
       expect(projects.count, equals(++projectCount));
-      projects.display('New Project with Id');
+      projects.display(title:'New Project with Id');
     });
     test('Copy Projects', () {
       var projects = entries.projects;
@@ -234,11 +234,10 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       expect(copiedProjects.empty, isFalse);
       expect(copiedProjects.count, equals(projects.count));
       expect(copiedProjects, isNot(same(projects)));
-      expect(copiedProjects != projects);
-      //expect(copiedProjects, isNot(equals(projects))); // does not pass
+      expect(copiedProjects, equals(projects));
       copiedProjects.forEach((cp) =>
           expect(cp, isNot(same(projects.findById(cp.id)))));
-      copiedProjects.display('Copied Projects');
+      copiedProjects.display(title:'Copied Projects');
     });
     test('True for Every Project', () {
       var projects = entries.projects;
@@ -331,21 +330,17 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       projects.add(marketing);
       expect(projects.count, equals(++projectCount));
 
-      marketing.display('before copy: ');
+      marketing.display(prefix:'before copy: ');
       var afterUpdateMarketing = marketing.copy();
-      afterUpdateMarketing.display('after copy: ');
-      expect(marketing == afterUpdateMarketing);
-      expect(marketing.equals(afterUpdateMarketing));
-      expect(marketing.oid == afterUpdateMarketing.oid);
+      afterUpdateMarketing.display(prefix:'after copy: ');
+      expect(marketing, equals(afterUpdateMarketing));
       expect(marketing.oid, equals(afterUpdateMarketing.oid));
-      expect(marketing.code == afterUpdateMarketing.code);
       expect(marketing.code, equals(afterUpdateMarketing.code));
       expect(marketing.name, equals(afterUpdateMarketing.name));
       expect(marketing.description, equals(afterUpdateMarketing.description));
 
       expect(marketing.id, isNotNull);
       expect(afterUpdateMarketing.id, isNotNull);
-      expect(marketing.id == afterUpdateMarketing.id);
       expect(marketing.id, equals(afterUpdateMarketing.id));
       /*
        * ==
@@ -481,17 +476,17 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       transaction.doit();
       projectCount = projectCount + 2;
       expect(projects.count, equals(projectCount));
-      projects.display('Transaction Done');
+      projects.display(title:'Transaction Done');
 
       session.past.undo();
       projectCount = projectCount - 2;
       expect(projects.count, equals(projectCount));
-      projects.display('Transaction Undone');
+      projects.display(title:'Transaction Undone');
 
       session.past.redo();
       projectCount = projectCount + 2;
       expect(projects.count, equals(projectCount));
-      projects.display('Transaction Redone');
+      projects.display(title:'Transaction Redone');
     });
     test('Undo and Redo Transaction with Id Error', () {
       var projects = entries.projects;
@@ -514,7 +509,7 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       var done = transaction.doit();
       expect(done, isFalse);
       expect(projects.count, equals(projectCount));
-      projects.display('Transaction (with Id Error) Done');
+      projects.display(title:'Transaction (with Id Error) Done');
     });
     test('Reactions to Project Actions', () {
       var projects = entries.projects;
@@ -545,10 +540,10 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       var projects = entries.projects;
       var project1 = projects.random();
       expect(project1, isNotNull);
-      project1.display('1');
+      project1.display(prefix:'1');
       var project2 = projects.random();
       expect(project2, isNotNull);
-      project2.display('2');
+      project2.display(prefix:'2');
     });
 
   });

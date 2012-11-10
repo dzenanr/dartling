@@ -1,5 +1,7 @@
 //part of category_keyword;
 
+part of category_keyword;
+
 // data/category/keyword/init.dart
 
 initCategoryKeyword(var entries) {

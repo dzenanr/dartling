@@ -3,7 +3,7 @@
 
 # Dartling
 
-[Dartling] (https://github.com/dzenanr/dartling) is a domain model framework for web application prototypes. Its open source license is the 3-clause BSD license -- ["New BSD License" or "Modified BSD License"] (http://en.wikipedia.org/wiki/BSD_license).
+[Dartling] (https://github.com/dzenanr/dartling) is a domain model framework. Its open source license is the 3-clause BSD license -- ["New BSD License" or "Modified BSD License"] (http://en.wikipedia.org/wiki/BSD_license).
 
 Dartling model consists of concepts, concept attributes and concept neighbors. Two neighbors make a relationship between two concepts. A relationship has two directions, each direction going from one concept to another neighbor concept. When both concepts are the same, the relationship is reflexive. When there are two relationships between the same but different concepts, the relationships are twins.
 

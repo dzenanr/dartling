@@ -1,5 +1,7 @@
 //part of game_parking;
 
+part of game_parking;
+
 // repo/code/specific/game/parking/init.dart
 
 initGameParking(var entries) {

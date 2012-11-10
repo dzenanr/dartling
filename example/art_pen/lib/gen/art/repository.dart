@@ -1,4 +1,4 @@
-//part of art_pen;
+part of art_pen;
 
 // src/data/gen/art/repository.dart
 
@@ -7,7 +7,7 @@ class ArtRepo extends Repo {
   static final artDomainCode = "Art";
   static final artPenModelCode = "Pen";
 
-  ArtRepo([String code="ArtRepo"]) : super(code) {
+  ArtRepo({String code: "ArtRepo"}) : super(code) {
     _initArtDomain();
   }
 

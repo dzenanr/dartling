@@ -1,5 +1,7 @@
 //part of game_parking;
 
+part of game_parking;
+
 // data/gen/game/repository.dart
 
 class GameRepo extends Repo {

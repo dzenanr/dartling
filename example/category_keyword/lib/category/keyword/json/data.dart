@@ -1,4 +1,4 @@
-//part of category_keyword;
+part of category_keyword;
 
 // http://www.json.org/
 // http://jsonformatter.curiousconcept.com/

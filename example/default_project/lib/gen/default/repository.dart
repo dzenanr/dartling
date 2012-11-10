@@ -1,4 +1,4 @@
-//part of default_project;
+part of default_project;
 
 // data/gen/default/repository.dart
 
@@ -7,7 +7,7 @@ class DefaultRepo extends Repo {
   static final defaultDomainCode = "Default";
   static final defaultProjectModelCode = "Project";
 
-  DefaultRepo([String code="DefaultRepo"]) : super(code) {
+  DefaultRepo({String code: "DefaultRepo"}) : super(code) {
     _initDefaultDomain();
   }
 

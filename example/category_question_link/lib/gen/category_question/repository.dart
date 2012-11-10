@@ -1,4 +1,4 @@
-//part of category_question_link;
+part of category_question_link;
 
 // data/gen/category_question/repository.dart
 
@@ -7,7 +7,7 @@ class CategoryQuestionRepo extends Repo {
   static final categoryQuestionDomainCode = "CategoryQuestion";
   static final categoryQuestionLinkModelCode = "Link";
 
-  CategoryQuestionRepo([String code="CategoryQuestionRepo"]) : super(code) {
+  CategoryQuestionRepo({String code: "CategoryQuestionRepo"}) : super(code) {
     _initCategoryQuestionDomain();
   }
 

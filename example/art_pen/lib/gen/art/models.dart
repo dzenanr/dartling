@@ -1,5 +1,7 @@
 //part of art_pen;
 
+part of art_pen_app;
+
 // src/data/gen/art/models.dart
 
 class ArtModels extends DomainModels {

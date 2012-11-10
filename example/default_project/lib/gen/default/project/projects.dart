@@ -1,4 +1,4 @@
-//part of default_project;
+part of default_project;
 
 // data/gen/default/project/projects.dart
 

@@ -61,7 +61,7 @@ class Oid implements Comparable {
     if (other is Oid) {
       Oid oid = other;
       if (this == null || oid == null) {
-        return this===oid;
+        return identical(this, oid);
       } else {
         return equals(oid);
       }

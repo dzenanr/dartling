@@ -1,5 +1,7 @@
 //part of art_pen;
 
+part of art_pen;
+
 class Pen {
 
   static final num angle = 0;
