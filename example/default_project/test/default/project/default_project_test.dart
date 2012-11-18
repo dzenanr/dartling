@@ -69,6 +69,7 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
     test('From Project Model to JSON', () {
       var json = entries.toJson();
       expect(json, isNotNull);
+      print(json);
       entries.displayJson();
     });
     test('From JSON to Project Model', () {

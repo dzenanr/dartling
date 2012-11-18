@@ -4,6 +4,10 @@ Domain Modeling
 
 http://faculty.inverhills.edu/dlevitt/CS%202000%20(FP)/Domain%20Modeling.pdf
 
+Frameworks
+
+http://www.itweb.co.za/index.php?option=com_content&view=article&id=59991:arrested-development-&catid=112
+
 Mapping Models
 
 http://modelmapper.org/

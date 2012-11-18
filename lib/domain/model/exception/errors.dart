@@ -25,6 +25,13 @@ class EntityError {
   EntityError(this.category);
 
   /**
+   * Returns a string that represents the error.
+   */
+  String toString() {
+    return '${category}: ${message}';
+  }
+
+  /**
    * Displays (prints) an error.
    */
   display({String prefix:''}) {
@@ -57,6 +64,19 @@ class Errors implements ErrorsApi {
 
   clear() {
     _errorList.clear();
+  }
+
+  Iterator<EntityError> iterator() => _errorList.iterator();
+
+  /**
+   * Returns a string that represents the errors.
+   */
+  String toString() {
+    var msgs = '';
+    for (var error in this) {
+      msgs = '${error.toString()} \n${msgs}';
+    }
+    return msgs;
   }
 
   /**

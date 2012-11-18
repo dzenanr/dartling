@@ -1,5 +1,7 @@
 Dartling To Do
 
+fromJson for entity and entities
+
 http://api.dartlang.org/docs/continuous/dart_math/Random.html
 get random value for different types (for test data)
 
