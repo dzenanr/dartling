@@ -39,6 +39,7 @@ import 'dart:uri';
 import 'package:unittest/unittest.dart';
 
 part 'domain/model/event/actions.dart';
+part 'domain/model/event/past.dart';
 part 'domain/model/event/reactions.dart';
 part 'domain/model/exception/errors.dart';
 part 'domain/model/exception/exceptions.dart';

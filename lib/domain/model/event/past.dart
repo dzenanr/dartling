@@ -1,0 +1,156 @@
+part of dartling;
+
+abstract class PastApi implements SourceOfPastReactionApi {
+
+  add(ActionApi action);
+  clear();
+  bool get empty;
+
+  bool doit();
+  bool undo();
+  bool redo();
+
+}
+
+class Past implements PastApi {
+
+  int cursor = 0;
+  List<BasicAction> _actions;
+
+  List<PastReactionApi> _pastReactions;
+
+  Past() {
+    _actions = new List<BasicAction>();
+    _pastReactions = new List<PastReactionApi>();
+  }
+
+  add(BasicAction action) {
+    _removeRightOfCursor();
+    _actions.add(action);
+    _moveCursorForward();
+  }
+
+  _removeRightOfCursor() {
+    for (int i = _actions.length - 1; i >= cursor; i--) {
+      _actions.removeRange(i, 1);
+    }
+  }
+
+  _moveCursorForward() {
+    cursor++;
+    if (cursor == 1) {
+      notifyYesPast();
+    }
+  }
+
+  _moveCursorBackward() {
+    if (cursor > 0) {
+      cursor--;
+    }
+    if (cursor == 0) {
+      notifyNoPast();
+    }
+  }
+
+  clear() {
+    cursor = 0;
+    _actions.clear();
+    notifyNoPast();
+  }
+
+  bool get empty => _actions.isEmpty;
+
+  bool doit() {
+    bool done = false;
+    if (!empty) {
+      BasicAction action = _actions[cursor];
+      done = action.doit();
+      _moveCursorForward();
+    }
+    return done;
+  }
+
+  bool undo() {
+    bool undone = false;
+    if (!empty) {
+      _moveCursorBackward();
+      BasicAction action = _actions[cursor];
+      undone = action.undo();
+    }
+    return undone;
+  }
+
+  bool redo() {
+    bool redone = false;
+    if (!empty) {
+      BasicAction action = _actions[cursor];
+      redone = action.redo();
+      _moveCursorForward();
+    }
+    return redone;
+  }
+
+  bool doAll() {
+    bool allDone = true;
+    cursor = 0;
+    while (cursor < _actions.length) {
+      if (!doit()) {
+        allDone = false;
+      }
+    }
+    return allDone;
+  }
+
+  bool undoAll() {
+    bool allUndone = true;
+    while (cursor > 0) {
+      if (!undo()) {
+        allUndone = false;
+      }
+    }
+    return allUndone;
+  }
+
+  bool redoAll() {
+    bool allRedone = true;
+    cursor = 0;
+    while (cursor < _actions.length) {
+      if (!redo()) {
+        allRedone = false;
+      }
+    }
+    return allRedone;
+  }
+
+  startPastReaction(PastReactionApi reaction) => _pastReactions.add(reaction);
+  cancelPastReaction(PastReactionApi reaction) {
+    int index = _pastReactions.indexOf(reaction, 0);
+    _pastReactions.removeRange(index, 1);
+  }
+
+  notifyNoPast() {
+    for (PastReactionApi reaction in _pastReactions) {
+      reaction.reactNoPast();
+    }
+  }
+
+  notifyYesPast() {
+    for (PastReactionApi reaction in _pastReactions) {
+      reaction.reactYesPast();
+    }
+  }
+
+  display([String title='Past Actions']) {
+    print('');
+    print('======================================');
+    print('$title                                ');
+    print('======================================');
+    print('');
+    print('cursor: $cursor');
+    for (BasicAction action in _actions) {
+      action.display();
+    }
+    print('');
+  }
+
+}

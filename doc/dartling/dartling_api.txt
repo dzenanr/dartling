@@ -94,6 +94,7 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
 abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 
   Concept get concept;
+  ErrorsApi get errors;
   String get code;
   void set code(String code);
 

@@ -3,6 +3,7 @@ part of dartling;
 abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 
   Concept get concept;
+  ErrorsApi get errors;
   String get code;  void set code(String code);
 
   Object getAttribute(String name);
@@ -23,6 +24,7 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
 
   Concept _concept;
+  Errors _errors;
   Oid _oid;
   String _code;
 
@@ -32,10 +34,12 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   Map<String, Entities> _childMap;
 
   ConceptEntity() {
+    _errors = new Errors();
     _oid = new Oid();
   }
 
   ConceptEntity.of(this._concept) {
+    _errors = new Errors();
     _oid = new Oid();
     _attributeMap = new Map<String, Object>();
     _parentMap = new Map<String, ConceptEntity>();
@@ -99,6 +103,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   ConceptEntity<T> newEntity() => new ConceptEntity.of(_concept);
 
   Concept get concept => _concept;
+  Errors get errors => _errors;
 
   Oid get oid => _oid;
   void set oid(Oid oid) {
@@ -255,8 +260,11 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       _attributeMap[name] = value;
       return true;
     } else {
-      String msg = '${_concept.code}.${attribute.code} is not updateable.';
-      throw new UpdateException(msg);
+      //String msg = '${_concept.code}.${attribute.code} is not updateable.';
+      //throw new UpdateException(msg);
+      EntityError error = new EntityError('read-only');
+      error.message = '${_concept.code}.${attribute.code} is not updateable.';
+      _errors.add(error);
     }
     return false;
   }
