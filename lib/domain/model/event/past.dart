@@ -24,8 +24,6 @@ class Past implements PastApi {
   Past() {
     _actions = new List<BasicAction>();
     _pastReactions = new List<PastReactionApi>();
-    notifyCannotUndo();
-    notifyCannotRedo();
   }
 
   bool get empty => _actions.isEmpty;
