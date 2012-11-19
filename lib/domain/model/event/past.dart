@@ -5,6 +5,8 @@ abstract class PastApi implements SourceOfPastReactionApi {
   add(ActionApi action);
   clear();
   bool get empty;
+  bool get undoLimit;
+  bool get redoLimit;
 
   bool doit();
   bool undo();
@@ -22,7 +24,13 @@ class Past implements PastApi {
   Past() {
     _actions = new List<BasicAction>();
     _pastReactions = new List<PastReactionApi>();
+    notifyCannotUndo();
+    notifyCannotRedo();
   }
+
+  bool get empty => _actions.isEmpty;
+  bool get undoLimit => empty || cursor == 0;
+  bool get redoLimit => empty || cursor == _actions.length;
 
   add(BasicAction action) {
     _removeRightOfCursor();
@@ -36,29 +44,36 @@ class Past implements PastApi {
     }
   }
 
+  _notifyUndoRedo() {
+    if (undoLimit) {
+      notifyCannotUndo();
+    } else {
+      notifyCanUndo();
+    }
+    if (redoLimit) {
+      notifyCannotRedo();
+    } else {
+      notifyCanRedo();
+    }
+  }
+
   _moveCursorForward() {
     cursor++;
-    if (cursor == 1) {
-      notifyYesPast();
-    }
+    _notifyUndoRedo();
   }
 
   _moveCursorBackward() {
     if (cursor > 0) {
       cursor--;
     }
-    if (cursor == 0) {
-      notifyNoPast();
-    }
+    _notifyUndoRedo();
   }
 
   clear() {
     cursor = 0;
     _actions.clear();
-    notifyNoPast();
+    _notifyUndoRedo();
   }
-
-  bool get empty => _actions.isEmpty;
 
   bool doit() {
     bool done = false;
@@ -82,7 +97,7 @@ class Past implements PastApi {
 
   bool redo() {
     bool redone = false;
-    if (!empty) {
+    if (!empty && !redoLimit) {
       BasicAction action = _actions[cursor];
       redone = action.redo();
       _moveCursorForward();
@@ -128,15 +143,27 @@ class Past implements PastApi {
     _pastReactions.removeRange(index, 1);
   }
 
-  notifyNoPast() {
+  notifyCannotUndo() {
     for (PastReactionApi reaction in _pastReactions) {
-      reaction.reactNoPast();
+      reaction.reactCannotUndo();
     }
   }
 
-  notifyYesPast() {
+  notifyCanUndo() {
     for (PastReactionApi reaction in _pastReactions) {
-      reaction.reactYesPast();
+      reaction.reactCanUndo();
+    }
+  }
+
+  notifyCanRedo() {
+    for (PastReactionApi reaction in _pastReactions) {
+      reaction.reactCanRedo();
+    }
+  }
+
+  notifyCannotRedo() {
+    for (PastReactionApi reaction in _pastReactions) {
+      reaction.reactCannotRedo();
     }
   }
 

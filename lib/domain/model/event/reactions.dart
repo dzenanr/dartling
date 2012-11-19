@@ -12,8 +12,10 @@ abstract class SourceOfPastReactionApi {
 
   startPastReaction(PastReactionApi reaction);
   cancelPastReaction(PastReactionApi reaction);
-  notifyNoPast();
-  notifyYesPast();
+  notifyCannotUndo();
+  notifyCanUndo();
+  notifyCanRedo();
+  notifyCannotRedo();
 
 }
 
@@ -25,8 +27,10 @@ abstract class ActionReactionApi {
 
 abstract class PastReactionApi {
 
-  reactNoPast();
-  reactYesPast();
+  reactCannotUndo();
+  reactCanUndo();
+  reactCanRedo();
+  reactCannotRedo();
 
 }
 
