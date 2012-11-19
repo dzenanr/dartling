@@ -260,11 +260,13 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       _attributeMap[name] = value;
       return true;
     } else {
-      //String msg = '${_concept.code}.${attribute.code} is not updateable.';
-      //throw new UpdateException(msg);
+      String msg = '${_concept.code}.${attribute.code} is not updateable.';
+      throw new UpdateException(msg);
+      /*
       EntityError error = new EntityError('read-only');
       error.message = '${_concept.code}.${attribute.code} is not updateable.';
       _errors.add(error);
+      */
     }
     return false;
   }
