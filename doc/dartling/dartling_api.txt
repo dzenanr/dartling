@@ -139,6 +139,10 @@ abstract class ErrorsApi {
 
 abstract class ActionApi {
 
+  bool get done;
+  bool get undone;
+  bool get redone;
+
   bool doit();
   bool undo();
   bool redo();

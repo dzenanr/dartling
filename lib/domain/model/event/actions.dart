@@ -2,6 +2,10 @@ part of dartling;
 
 abstract class ActionApi {
 
+  bool get done;
+  bool get undone;
+  bool get redone;
+
   bool doit();
   bool undo();
   bool redo();
@@ -30,6 +34,11 @@ abstract class BasicAction implements ActionApi {
   bool doit();
   bool undo();
   bool redo();
+
+  bool get started => state == 'started' ? true : false;
+  bool get done => state == 'done' ? true : false;
+  bool get undone => state == 'undone' ? true : false;
+  bool get redone => state == 'redone' ? true : false;
 
   toString() => 'action: $name; state: $state -- description: $description';
 

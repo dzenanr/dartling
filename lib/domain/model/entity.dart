@@ -82,7 +82,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       } else if (a.type.base == 'Uri') {
         try {
           _attributeMap[a.code] = new Uri.fromString(a.init);
-        } on IllegalArgumentException catch (e) {
+        } on ArgumentError catch (e) {
           throw new TypeException(
               '${a.code} attribute init (default) value is not Uri: $e');
         }
@@ -201,7 +201,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       c = codePlural;
     }
     if (c != null) {
-      RegExp exp = const RegExp(r"([A-Z])");
+      RegExp exp = new RegExp(r"([A-Z])");
       Iterable<Match> matches = exp.allMatches(c);
       var indexes = new List<int>();
       for (Match m in matches) {
@@ -289,7 +289,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       try {
         assert(string != null);
         return setAttribute(name, new Date.fromString(string));
-      } on IllegalArgumentException catch (e) {
+      } on ArgumentError catch (e) {
         throw new TypeException('${_concept.code}.${attribute.code} '
                                 'attribute value is not Date: $e');
       }
@@ -330,7 +330,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     } else if (attribute.type.base == 'Uri') {
       try {
         return setAttribute(name, new Uri.fromString(string));
-      } on IllegalArgumentException catch (e) {
+      } on ArgumentError catch (e) {
         throw new TypeException('${attribute.code} '
                                 'attribute value is not Uri: $e');
       }

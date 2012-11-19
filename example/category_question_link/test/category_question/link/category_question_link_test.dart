@@ -284,7 +284,7 @@ testCategoryQuestionLink(Repo repo, String domainCode, String modelCode) {
       try {
         s = '????:\\**""##&dartbug!hom';
         uri = new Uri.fromString(s);
-      } on IllegalArgumentException catch (e) {
+      } on ArgumentError catch (e) {
         expect(uri, isNull);
         print('/// Not valid uri: $s; $e');
         print('');
@@ -296,7 +296,7 @@ testCategoryQuestionLink(Repo repo, String domainCode, String modelCode) {
       try {
         s = '';
         uri = new Uri.fromString(s);
-      } on IllegalArgumentException catch (e) {
+      } on ArgumentError catch (e) {
         expect(uri, isNull);
         print('/// Not valid uri: $s; $e');
         print('');

@@ -9,7 +9,7 @@ class GameRepo extends Repo {
   static final gameDomainCode = "Game";
   static final gameParkingModelCode = "Parking";
 
-  GameRepo([String code="GameRepo"]) : super(code) {
+  GameRepo({String code: "GameRepo"}) : super(code) {
     _initGameDomain();
   }
 
