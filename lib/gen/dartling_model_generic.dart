@@ -237,7 +237,7 @@ String genConceptGen(Concept concept, String library) {
     sc = '${sc} \n';
   }
 
-  sc = '${sc}  ${concept.code} newEntity() => new ${concept.code}(concept); \n ';
+  sc = '${sc}  ${concept.code} newEntity() => new ${concept.code}(concept); \n';
   sc = '${sc}  ${concept.codes} newEntities() => '
        'new ${concept.codes}(concept); \n ';
   sc = '${sc} \n';
@@ -263,7 +263,7 @@ String genConceptGen(Concept concept, String library) {
   sc = '${sc}  ${concept.codes}Gen(Concept concept) : super.of(concept); \n';
   sc = '${sc} \n';
   sc = '${sc}  ${concept.codes} newEntities() => '
-       'new ${concept.codes}(concept); \n ';
+       'new ${concept.codes}(concept); \n';
   sc = '${sc}  ${concept.code} newEntity() => new ${concept.code}(concept); \n ';
   sc = '${sc} \n';
   sc = '${sc}} \n';
