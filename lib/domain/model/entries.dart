@@ -164,7 +164,7 @@ class ModelEntries implements ModelEntriesApi {
       String entryConceptCode = entriesMap['concept'];
       var concept = model.concepts.findByCode(entryConceptCode);
       if (concept == null) {
-        throw new ConceptException('${concept.code} concept does not exist.');
+        throw new ConceptException('${entryConceptCode} concept does not exist.');
       }
       Entities entryEntities = getEntry(entryConceptCode);
       if (entryEntities.count > 0) {

@@ -12,7 +12,7 @@ abstract class RepoApi {
   add(DomainModelsApi domainModels);
   Domains get domains;
   DomainModelsApi getDomainModels(String domainCode);
-  gen([bool specific=true]);
+  gen(String library, [bool specific=true]);
 
 }
 
@@ -116,7 +116,6 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 abstract class IdApi implements Comparable {
 
   Concept get concept;
-
   int get parentCount;
   int get attributeCount;
 
@@ -152,12 +151,14 @@ abstract class ActionApi {
 abstract class TransactionApi extends ActionApi {
 
   add(ActionApi action);
+  PastApi get past;
 
 }
 
 abstract class PastApi implements SourceOfPastReactionApi {
 
   add(ActionApi action);
+  List<ActionApi> get actions;
   clear();
   bool get empty;
   bool get undoLimit;
@@ -173,6 +174,7 @@ abstract class SourceOfActionReactionApi {
 
   startActionReaction(ActionReactionApi reaction);
   cancelActionReaction(ActionReactionApi reaction);
+  
   notifyActionReactions(ActionApi action);
   
 }
@@ -181,6 +183,7 @@ abstract class SourceOfPastReactionApi {
 
   startPastReaction(PastReactionApi reaction);
   cancelPastReaction(PastReactionApi reaction);
+
   notifyCannotUndo();
   notifyCanUndo();
   notifyCanRedo();

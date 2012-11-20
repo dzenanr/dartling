@@ -85,6 +85,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   }
 
   Entities<T> newEntities() => new Entities.of(_concept);
+  ConceptEntity<T> newEntity() => new ConceptEntity.of(_concept);
 
   Concept get concept => _concept;
   Entities<T> get source => _source;
@@ -650,6 +651,29 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       entityList.add(entity.toJson());
     }
     return entityList;
+  }
+
+  /**
+   * Loads entities without validations to this, which must be empty.
+   * It does not handle neighbors.
+   * See ModelEntries for the JSON transfer at the level of a model.
+   */
+  fromJson(List<Map<String, Object>> entitiesList) {
+    if (concept == null) {
+      throw new ConceptException('entities concept does not exist.');
+    }
+    if (count > 0) {
+      throw new JsonException('entities are not empty');
+    }
+    for (Map<String, Object> entityMap in entitiesList) {
+      ConceptEntity entity = newEntity();
+      entity.fromJson(entityMap);
+      pre = false;
+      post = false;
+      add(entity);
+      pre = true;
+      post = true;
+    }
   }
 
 }

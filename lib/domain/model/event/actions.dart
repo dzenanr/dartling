@@ -15,6 +15,7 @@ abstract class ActionApi {
 abstract class TransactionApi extends ActionApi {
 
   add(ActionApi action);
+  PastApi get past;
 
 }
 
@@ -270,6 +271,8 @@ class Transaction extends BasicAction implements TransactionApi {
   Transaction(String name, DomainSession session) : super(name, session) {
     _actions = new Past();
   }
+
+  Past get past => _actions;
 
   add(BasicAction action) {
     _actions.add(action);

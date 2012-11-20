@@ -101,6 +101,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   }
 
   ConceptEntity<T> newEntity() => new ConceptEntity.of(_concept);
+  Entities<T> newEntities() => new Entities.of(_concept);
 
   Concept get concept => _concept;
   Errors get errors => _errors;
@@ -654,6 +655,41 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
         entityMap[k] = getStringFromAttribute(k));
     _childMap.keys.forEach((k) => entityMap[k] = getChild(k).toJson());
     return entityMap;
+  }
+
+  /**
+   * Loads attribute values without validations to this.
+   * It does not handle neighbors.
+   * See ModelEntries for the JSON transfer at the level of a model.
+   */
+  fromJson(Map<String, Object> entityMap) {
+    int timeStamp;
+    try {
+      timeStamp = int.parse(entityMap['oid']);
+    } on FormatException catch (e) {
+      throw new TypeException('${entityMap['oid']} oid is not int: $e');
+    }
+
+    var beforeUpdateOid = concept.updateOid;
+    concept.updateOid = true;
+    oid = new Oid.ts(timeStamp);
+    concept.updateOid = beforeUpdateOid;
+
+    var beforeUpdateCode = concept.updateCode;
+    concept.updateCode = true;
+    code = entityMap['code'];
+    concept.updateCode = beforeUpdateCode;
+
+    for (Attribute attribute in concept.attributes) {
+      if (attribute.identifier) {
+        var beforUpdate = attribute.update;
+        attribute.update = true;
+        setStringToAttribute(attribute.code, entityMap[attribute.code]);
+        attribute.update = beforUpdate;
+      } else {
+        setStringToAttribute(attribute.code, entityMap[attribute.code]);
+      }
+    }
   }
 
 }

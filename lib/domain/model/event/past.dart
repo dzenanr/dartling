@@ -3,6 +3,7 @@ part of dartling;
 abstract class PastApi implements SourceOfPastReactionApi {
 
   add(ActionApi action);
+  List<ActionApi> get actions;
   clear();
   bool get empty;
   bool get undoLimit;
@@ -25,6 +26,8 @@ class Past implements PastApi {
     _actions = new List<BasicAction>();
     _pastReactions = new List<PastReactionApi>();
   }
+
+  List<BasicAction> get actions => _actions;
 
   bool get empty => _actions.isEmpty;
   bool get undoLimit => empty || cursor == 0;
