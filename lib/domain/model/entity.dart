@@ -238,6 +238,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
 
   Object getAttribute(String name) => _attributeMap[name];
   bool setAttribute(String name, Object value) {
+    bool updated = false;
     if (_concept == null) {
       throw new ConceptException('Entity concept is not defined.');
     }
@@ -255,11 +256,11 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     */
     if (getAttribute(name) == null) {
       _attributeMap[name] = value;
-      return true;
+      updated = true;
     //} else if (!attribute.derive && attribute.update) {
     } else if (attribute.update) {
       _attributeMap[name] = value;
-      return true;
+      updated = true;
     } else {
       String msg = '${_concept.code}.${attribute.code} is not updateable.';
       throw new UpdateException(msg);
@@ -269,7 +270,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       _errors.add(error);
       */
     }
-    return false;
+    return updated;
   }
 
   String getStringFromAttribute(String name) => _attributeMap[name].toString();
