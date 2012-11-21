@@ -50,7 +50,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   Map<String, T> _codeEntityMap;
   Map<String, T> _idEntityMap;
   Entities<T> _source;
-  Errors _errors;
+  EntityErrors _errors;
 
   String minc = '0';
   String maxc = 'N';
@@ -65,7 +65,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     _oidEntityMap = new Map<int, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    _errors = new Errors();
+    _errors = new EntityErrors();
 
     pre = false;
     post = false;
@@ -79,7 +79,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     _oidEntityMap = new Map<int, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    _errors = new Errors();
+    _errors = new EntityErrors();
 
     randomGen = new Random();
   }
@@ -89,7 +89,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
 
   Concept get concept => _concept;
   Entities<T> get source => _source;
-  Errors get errors => _errors;
+  EntityErrors get errors => _errors;
   int get count => _entityList.length;
   int get length => count;
   bool get empty => _entityList.isEmpty;
