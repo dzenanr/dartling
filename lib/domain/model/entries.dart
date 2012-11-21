@@ -40,7 +40,7 @@ class ModelEntries implements ModelEntriesApi {
   EntitiesApi newEntities(String conceptCode) {
     var concept = _model.concepts.findByCode(conceptCode);
     if (concept == null) {
-      throw new ConceptException('${concept.code} concept does not exist.');
+      throw new ConceptError('${concept.code} concept does not exist.');
     }
     if (!concept.entry) {
       return new Entities.of(concept);
@@ -50,7 +50,7 @@ class ModelEntries implements ModelEntriesApi {
   EntityApi newEntity(String conceptCode) {
     var concept = _model.concepts.findByCode(conceptCode);
     if (concept == null) {
-      throw new ConceptException('${concept.code} concept does not exist.');
+      throw new ConceptError('${concept.code} concept does not exist.');
     }
     return new ConceptEntity.of(concept);
   }
@@ -118,11 +118,11 @@ class ModelEntries implements ModelEntriesApi {
     var domain = modelMap['domain'];
     var model = modelMap['model'];
     if (_model.domain.code != domain) {
-      throw new CodeException(
+      throw new CodeError(
           'The $domain domain does not exist.');
     }
     if (_model.code != model) {
-      throw new CodeException(
+      throw new CodeError(
           'The $model model does not exist.');
     }
     _modelFromJson(modelMap);
@@ -146,7 +146,7 @@ class ModelEntries implements ModelEntriesApi {
         var msg =
         '${entity.concept.code}.${parent.code} ${parent.destinationConcept.code}'
          ' parent entity is not found for the ${parentOid} parent oid.';
-        throw new ParentException(msg);
+        throw new ParentError(msg);
       }
       if (parent.identifier) {
         var beforUpdate = parent.update;
@@ -164,11 +164,11 @@ class ModelEntries implements ModelEntriesApi {
       String entryConceptCode = entriesMap['concept'];
       var concept = model.concepts.findByCode(entryConceptCode);
       if (concept == null) {
-        throw new ConceptException('${entryConceptCode} concept does not exist.');
+        throw new ConceptError('${entryConceptCode} concept does not exist.');
       }
       Entities entryEntities = getEntry(entryConceptCode);
       if (entryEntities.count > 0) {
-        throw new JsonException(
+        throw new JsonError(
             '$entryConceptCode entry receiving entities are not empty');
       }
       List<Map<String, Object>> entitiesList = entriesMap['entities'];
@@ -198,7 +198,7 @@ class ModelEntries implements ModelEntriesApi {
     try {
       timeStamp = int.parse(entityMap['oid']);
     } on FormatException catch (e) {
-      throw new TypeException('${entityMap['oid']} oid is not int: $e');
+      throw new TypeError('${entityMap['oid']} oid is not int: $e');
     }
 
     var beforeUpdateOid = entity.concept.updateOid;
@@ -236,7 +236,7 @@ class ModelEntries implements ModelEntriesApi {
       String parentOidString = entityMap[parent.code];
       if (parentOidString == 'null') {
         if (parent.minc != '0') {
-          throw new ParentException('${parent.code} parent cannot be null.');
+          throw new ParentError('${parent.code} parent cannot be null.');
         }
       } else {
         try {
@@ -248,7 +248,7 @@ class ModelEntries implements ModelEntriesApi {
           nullParent[2] = parent;
           _nullParents.add(nullParent);
         } on FormatException catch (e) {
-          throw new TypeException(
+          throw new TypeError(
               '${parent.code} parent oid value is not int: $e');
         }
       }

@@ -149,7 +149,7 @@ class Concept extends ConceptEntity<Concept> {
           return parent.destinationConcept.entryConcept;
         }
       }
-      throw new ParentException('No internal parent for the ${code} concept');
+      throw new ParentError('No internal parent for the ${code} concept');
     }
   }
 
@@ -164,7 +164,7 @@ class Concept extends ConceptEntity<Concept> {
               '${code}';
         }
       }
-      throw new ParentException('No internal parent for the ${code} concept');
+      throw new ParentError('No internal parent for the ${code} concept');
     }
   }
 

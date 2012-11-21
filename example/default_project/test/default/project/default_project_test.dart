@@ -258,7 +258,7 @@ testDefaultProject(Repo repo, String domainCode, String modelCode) {
       var beforeNameUpdate = marketing.name;
       try {
         marketing.name = 'Marketing Dartling';
-      } on UpdateException catch (e) {
+      } on UpdateError catch (e) {
         expect(marketing.name, equals(beforeNameUpdate));
       }
     });

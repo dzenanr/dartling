@@ -58,14 +58,14 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
         try {
           _attributeMap[a.code] = int.parse(a.init);
         } on FormatException catch (e) {
-          throw new TypeException(
+          throw new TypeError(
               '${a.code} attribute init (default) value is not int: $e');
         }
       } else if (a.type.base == 'double') {
         try {
           _attributeMap[a.code] = double.parse(a.init);
         } on FormatException catch (e) {
-          throw new TypeException(
+          throw new TypeError(
               '${a.code} attribute init (default) value is not double: $e');
         }
       } else if (a.type.base == 'num') {
@@ -75,7 +75,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
           try {
             _attributeMap[a.code] = double.parse(a.init);
           } on FormatException catch (e2) {
-            throw new TypeException(
+            throw new TypeError(
                 '${a.code} attribute init (default) value is not num: $e1; $e2');
           }
         }
@@ -83,7 +83,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
         try {
           _attributeMap[a.code] = new Uri.fromString(a.init);
         } on ArgumentError catch (e) {
-          throw new TypeException(
+          throw new TypeError(
               '${a.code} attribute init (default) value is not Uri: $e');
         }
       } else {
@@ -111,7 +111,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     if (_concept.updateOid) {
       _oid = oid;
     } else {
-      throw new OidException('Entity oid cannot be updated.');
+      throw new OidError('Entity oid cannot be updated.');
     }
   }
 
@@ -120,7 +120,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     if (_code == null || _concept.updateCode) {
       _code = code;
     } else {
-      throw new CodeException('Entity code cannot be updated.');
+      throw new CodeError('Entity code cannot be updated.');
     }
   }
 
@@ -240,12 +240,12 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   bool setAttribute(String name, Object value) {
     bool updated = false;
     if (_concept == null) {
-      throw new ConceptException('Entity concept is not defined.');
+      throw new ConceptError('Entity concept is not defined.');
     }
     Attribute attribute = _concept.attributes.findByCode(name);
     if (attribute == null) {
       String msg = '${_concept.code}.$name is not correct attribute name.';
-      throw new UpdateException(msg);
+      throw new UpdateError(msg);
     }
     /*
      * validation done in Entities.preAdd
@@ -263,7 +263,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       updated = true;
     } else {
       String msg = '${_concept.code}.${attribute.code} is not updateable.';
-      throw new UpdateException(msg);
+      throw new UpdateError(msg);
       /*
       EntityError error = new EntityError('read-only');
       error.message = '${_concept.code}.${attribute.code} is not updateable.';
@@ -276,12 +276,12 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   String getStringFromAttribute(String name) => _attributeMap[name].toString();
   bool setStringToAttribute(String name, String string) {
     if (_concept == null) {
-      throw new ConceptException('Entity concept is not defined.');
+      throw new ConceptError('Entity concept is not defined.');
     }
     Attribute attribute = _concept.attributes.findByCode(name);
     if (attribute == null) {
       String msg = '${_concept.code}.$name is not correct attribute name.';
-      throw new UpdateException(msg);
+      throw new UpdateError(msg);
     }
 
     if (string == null  || string == 'null') {
@@ -292,7 +292,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
         assert(string != null);
         return setAttribute(name, new Date.fromString(string));
       } on ArgumentError catch (e) {
-        throw new TypeException('${_concept.code}.${attribute.code} '
+        throw new TypeError('${_concept.code}.${attribute.code} '
                                 'attribute value is not Date: $e');
       }
     } else if (attribute.type.base == 'bool') {
@@ -301,21 +301,21 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       } else if (string == 'false') {
         return setAttribute(name, false);
       } else {
-        throw new TypeException('${attribute.code} '
+        throw new TypeError('${attribute.code} '
                                 'attribute value is not bool.');
       }
     } else if (attribute.type.base == 'int') {
       try {
         return setAttribute(name, int.parse(string));
       } on FormatException catch (e) {
-        throw new TypeException('${attribute.code} '
+        throw new TypeError('${attribute.code} '
                                 'attribute value is not int: $e');
       }
     } else if (attribute.type.base == 'double') {
       try {
         return setAttribute(name, double.parse(string));
       } on FormatException catch (e) {
-        throw new TypeException('${attribute.code} '
+        throw new TypeError('${attribute.code} '
                                 'attribute value is not double: $e');
       }
     } else if (attribute.type.base == 'num') {
@@ -325,7 +325,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
         try {
           return setAttribute(name, double.parse(string));
         } on FormatException catch (e2) {
-          throw new TypeException(
+          throw new TypeError(
             '${attribute.code} attribute value is not num: $e1; $e2');
         }
       }
@@ -333,7 +333,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       try {
         return setAttribute(name, new Uri.fromString(string));
       } on ArgumentError catch (e) {
-        throw new TypeException('${attribute.code} '
+        throw new TypeError('${attribute.code} '
                                 'attribute value is not Uri: $e');
       }
     } else { // other
@@ -344,12 +344,12 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   ConceptEntity getParent(String name) => _parentMap[name];
   bool setParent(String name, ConceptEntity entity) {
     if (_concept == null) {
-      throw new ConceptException('Entity concept is not defined.');
+      throw new ConceptError('Entity concept is not defined.');
     }
     Parent parent = _concept.parents.findByCode(name);
     if (parent == null) {
       String msg = '${_concept.code}.$name is not correct parent entity name.';
-      throw new UpdateException(msg);
+      throw new UpdateError(msg);
     }
 
     if (getParent(name) == null) {
@@ -357,13 +357,13 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       return true;
     } else if (parent.identifier) {
       String msg = '${_concept.code}.${parent.code} is not updateable.';
-      throw new UpdateException(msg);
+      throw new UpdateError(msg);
     } else if (parent.update) {
       _parentMap[name] = entity;
       return true;
     } else {
       String msg = '${_concept.code}.${parent.code} is not updateable.';
-      throw new UpdateException(msg);
+      throw new UpdateError(msg);
     }
 
     return false;
@@ -372,26 +372,26 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   Entities getChild(String name) => _childMap[name];
   bool setChild(String name, Entities entities) {
     if (_concept == null) {
-      throw new ConceptException('Entity concept is not defined.');
+      throw new ConceptError('Entity concept is not defined.');
     }
     Child child = _concept.children.findByCode(name);
     if (child == null) {
       String msg = '${_concept.code}.$name is not correct child entities name.';
-      throw new UpdateException(msg);
+      throw new UpdateError(msg);
     }
     if (child.update) {
       _childMap[name] = entities;
       return true;
     } else {
       String msg = '${_concept.code}.${child.code} is not updateable.';
-      throw new UpdateException(msg);
+      throw new UpdateError(msg);
     }
     return false;
   }
 
   Id get id {
     if (_concept == null) {
-      throw new ConceptException('Entity concept is not defined.');
+      throw new ConceptError('Entity concept is not defined.');
     }
     Id id = new Id(_concept);
     for (Parent p in _concept.parents) {
@@ -416,7 +416,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
    */
   T copy() {
     if (_concept == null) {
-      throw new ConceptException('Entity concept is not defined.');
+      throw new ConceptError('Entity concept is not defined.');
     }
     T entity = newEntity();
     assert(entity.concept != null);
@@ -520,7 +520,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
    */
    bool equalContent(T entity) {
      if (_concept == null) {
-       throw new ConceptException('Entity concept is not defined.');
+       throw new ConceptError('Entity concept is not defined.');
      }
      if (_code != entity.code) {
        return false;
@@ -555,11 +555,11 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     } else {
       if (id == null || entity.id == null) {
         if (_concept == null) {
-          throw new ConceptException('Entity concept is not defined.');
+          throw new ConceptError('Entity concept is not defined.');
         }
         String msg =
             '${_concept.code} concept does not have an id.';
-        throw new IdException(msg);
+        throw new IdError(msg);
       }
       return id.compareTo(entity.id);
     }
@@ -589,7 +589,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
    */
   display({String prefix:'', bool withOid:true, bool withChildren:true}) {
     if (_concept == null) {
-      throw new ConceptException('Entity concept is not defined.');
+      throw new ConceptError('Entity concept is not defined.');
     }
     var s = prefix;
     if (!_concept.entry || (_concept.entry && _concept.parents.count > 0)) {
@@ -668,7 +668,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     try {
       timeStamp = int.parse(entityMap['oid']);
     } on FormatException catch (e) {
-      throw new TypeException('${entityMap['oid']} oid is not int: $e');
+      throw new TypeError('${entityMap['oid']} oid is not int: $e');
     }
 
     var beforeUpdateOid = concept.updateOid;

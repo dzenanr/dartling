@@ -153,7 +153,7 @@ class Id implements IdApi {
        }
        return compare;
      }
-     throw new IdException('${_concept.code}.id does not have parents.');
+     throw new IdError('${_concept.code}.id does not have parents.');
    }
 
    /**
@@ -180,7 +180,7 @@ class Id implements IdApi {
            } else {
              String msg =
              '${a.concept.code}.${a.code} is of ${a.type.code} type: cannot order.';
-             throw new OrderException(msg);
+             throw new OrderError(msg);
            }
            if (compare != 0) {
              break;
@@ -189,7 +189,7 @@ class Id implements IdApi {
        } // for
        return compare;
      }
-     throw new IdException('${_concept.code}.id does not have attributes.');
+     throw new IdError('${_concept.code}.id does not have attributes.');
    }
 
    /**
@@ -209,7 +209,7 @@ class Id implements IdApi {
       }
       return compare;
     }
-    throw new IdException('${_concept.code}.id is not defined.');
+    throw new IdError('${_concept.code}.id is not defined.');
   }
 
   String _dropEnd(String text, String end) {

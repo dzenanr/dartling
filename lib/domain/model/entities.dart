@@ -122,14 +122,14 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     }
 
     if (entity.concept == null) {
-      throw new ConceptException(
+      throw new ConceptError(
         'Entity(oid: ${entity.oid}) concept is not defined.');
     }
     if (_concept == null) {
-      throw new ConceptException('Entities.add: concept is not defined.');
+      throw new ConceptError('Entities.add: concept is not defined.');
     }
     if (!_concept.add) {
-      throw new AddException('An entity cannot be added to ${_concept.codes}.');
+      throw new AddError('An entity cannot be added to ${_concept.codes}.');
     }
 
     bool result = true;
@@ -147,7 +147,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
           result = false;
         }
       } on FormatException catch (e) {
-        throw new AddException(
+        throw new AddError(
           'Entities max is neither N nor a positive integer string.');
       }
     }
@@ -162,7 +162,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
           int incrementAttribute = lastEntity.getAttribute(a.code);
           entity.setAttribute(a.code, incrementAttribute + a.increment);
         } else {
-          throw new TypeException(
+          throw new TypeError(
               '${a.code} attribute value cannot be incremented.');
         }
       } else if (a.required && entity.getAttribute(a.code) == null) {
@@ -224,7 +224,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
         if (!remove(entity)) {
           var msg = '${entity.concept.code} entity (${entity.oid}) '
             'was added, post was not successful, remove was not successful';
-          throw new RemoveException(msg);
+          throw new RemoveError(msg);
         }
         pre = beforePre;
         post = beforePost;
@@ -239,11 +239,11 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     }
 
     if (entity.concept == null) {
-      throw new ConceptException(
+      throw new ConceptError(
         'Entity(oid: ${entity.oid}) concept is not defined.');
     }
     if (_concept == null) {
-      throw new ConceptException('Entities.add: concept is not defined.');
+      throw new ConceptError('Entities.add: concept is not defined.');
     }
 
     bool result = true;
@@ -259,14 +259,14 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     }
 
     if (entity.concept == null) {
-      throw new ConceptException(
+      throw new ConceptError(
         'Entity(oid: ${entity.oid}) concept is not defined.');
     }
     if (_concept == null) {
-      throw new ConceptException('Entities.remove: concept is not defined.');
+      throw new ConceptError('Entities.remove: concept is not defined.');
     }
     if (!_concept.remove) {
-      throw new RemoveException(
+      throw new RemoveError(
         'An entity cannot be removed from ${_concept.codes}.');
     }
 
@@ -284,7 +284,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
           result = false;
         }
       } on FormatException catch (e) {
-        throw new RemoveException(
+        throw new RemoveError(
           'Entities min is not a positive integer string.');
       }
     }
@@ -322,7 +322,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
         if (!add(entity)) {
           var msg = '${entity.concept.code} entity (${entity.oid}) '
             'was removed, post was not successful, add was not successful';
-          throw new AddException(msg);
+          throw new AddError(msg);
         }
         pre = beforePre;
         post = beforePost;
@@ -337,11 +337,11 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     }
 
     if (entity.concept == null) {
-      throw new ConceptException(
+      throw new ConceptError(
         'Entity(oid: ${entity.oid}) concept is not defined.');
     }
     if (_concept == null) {
-      throw new ConceptException('Entities.add: concept is not defined.');
+      throw new ConceptError('Entities.add: concept is not defined.');
     }
 
     bool result = true;
@@ -363,7 +363,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     if (beforeEntity.oid == afterEntity.oid &&
         beforeEntity.code == afterEntity.code &&
         beforeEntity.id == afterEntity.id) {
-      throw new UpdateException(
+      throw new UpdateError(
           '${_concept.codes}.update can only be used if oid, code or id set.');
     }
     if (remove(beforeEntity)) {
@@ -376,7 +376,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
             '${_concept.codes}.update fails to add after update entity.';
           _errors.add(error);
         } else {
-          throw new UpdateException(
+          throw new UpdateError(
               '${_concept.codes}.update fails to add back before update entity.');
         }
       }
@@ -474,7 +474,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
 
   Entities<T> selectByParent(String code, Object parent) {
     if (_concept == null) {
-      throw new ConceptException(
+      throw new ConceptError(
         'Entities.selectByParent($code, $parent): concept is not defined.');
     }
     Entities<T> selectedEntities = newEntities();
@@ -499,7 +499,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
 
   Entities<T> selectByAttribute(String code, Object attribute) {
     if (_concept == null) {
-      throw new ConceptException(
+      throw new ConceptError(
         'Entities.selectByAttribute($code, $attribute): concept is not defined.');
     }
     Entities<T> selectedEntities = newEntities();
@@ -564,7 +564,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
    */
   Entities<T> copy() {
     if (_concept == null) {
-      throw new ConceptException('Entities.copy: concept is not defined.');
+      throw new ConceptError('Entities.copy: concept is not defined.');
     }
     Entities<T> copiedEntities = newEntities();
     copiedEntities.pre = false;
@@ -588,7 +588,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     if (_concept == entities.concept) {
       entities.forEach((entity) => add(entity) ? true : allAdded = false);
     } else {
-      throw new ConceptException('The concept of the argument is different.');
+      throw new ConceptError('The concept of the argument is different.');
     }
     return allAdded;
   }
@@ -660,10 +660,10 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
    */
   fromJson(List<Map<String, Object>> entitiesList) {
     if (concept == null) {
-      throw new ConceptException('entities concept does not exist.');
+      throw new ConceptError('entities concept does not exist.');
     }
     if (count > 0) {
-      throw new JsonException('entities are not empty');
+      throw new JsonError('entities are not empty');
     }
     for (Map<String, Object> entityMap in entitiesList) {
       ConceptEntity entity = newEntity();

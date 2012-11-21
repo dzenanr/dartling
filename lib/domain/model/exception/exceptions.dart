@@ -1,84 +1,84 @@
 part of dartling;
 
-class EntityException implements Exception {
+class DartlingError implements Error {
 
   final String msg;
 
-  const EntityException(this.msg);
+  DartlingError(this.msg);
 
   toString() => '*** $msg ***';
 
 }
 
-class ActionException extends EntityException {
+class ActionError extends DartlingError {
 
-  const ActionException(String msg) : super(msg);
-
-}
-
-class AddException extends ActionException {
-
-  const AddException(String msg) : super(msg);
+  ActionError(String msg) : super(msg);
 
 }
 
-class CodeException extends EntityException {
+class AddError extends ActionError {
 
-  const CodeException(String msg) : super(msg);
-
-}
-
-class ConceptException extends EntityException {
-
-  const ConceptException(String msg) : super(msg);
+  AddError(String msg) : super(msg);
 
 }
 
-class IdException extends EntityException {
+class CodeError extends DartlingError {
 
-  const IdException(String msg) : super(msg);
-
-}
-
-class JsonException extends EntityException {
-
-  const JsonException(String msg) : super(msg);
+  CodeError(String msg) : super(msg);
 
 }
 
-class OidException extends EntityException {
+class ConceptError extends DartlingError {
 
-  const OidException(String msg) : super(msg);
-
-}
-
-class OrderException extends EntityException {
-
-  const OrderException(String msg) : super(msg);
+  ConceptError(String msg) : super(msg);
 
 }
 
-class ParentException extends EntityException {
+class IdError extends DartlingError {
 
-  const ParentException(String msg) : super(msg);
-
-}
-
-class RemoveException extends ActionException {
-
-  const RemoveException(String msg) : super(msg);
+  IdError(String msg) : super(msg);
 
 }
 
-class TypeException extends EntityException {
+class JsonError extends DartlingError {
 
-  const TypeException(String msg) : super(msg);
+  JsonError(String msg) : super(msg);
 
 }
 
-class UpdateException extends ActionException {
+class OidError extends DartlingError {
 
-  const UpdateException(String msg) : super(msg);
+  OidError(String msg) : super(msg);
+
+}
+
+class OrderError extends DartlingError {
+
+  OrderError(String msg) : super(msg);
+
+}
+
+class ParentError extends DartlingError {
+
+  ParentError(String msg) : super(msg);
+
+}
+
+class RemoveError extends ActionError {
+
+  RemoveError(String msg) : super(msg);
+
+}
+
+class TypeError extends DartlingError {
+
+  TypeError(String msg) : super(msg);
+
+}
+
+class UpdateError extends ActionError {
+
+  UpdateError(String msg) : super(msg);
 
 }
 

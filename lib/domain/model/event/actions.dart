@@ -71,7 +71,7 @@ abstract class EntitiesAction extends BasicAction {
       } else if (name == 'remove') {
         done = entities.remove(entity);
       } else {
-        throw new ActionException(
+        throw new ActionError(
         'Allowed actions on entities for doit are add or remove.');
       }
       if (done) {
@@ -93,7 +93,7 @@ abstract class EntitiesAction extends BasicAction {
       } else if (name == 'remove') {
         undone = entities.add(entity);
       } else {
-        throw new ActionException(
+        throw new ActionError(
           'Allowed actions on entities for undo are add or remove.');
       }
       if (undone) {
@@ -114,7 +114,7 @@ abstract class EntitiesAction extends BasicAction {
       } else if (name == 'remove') {
         redone = entities.remove(entity);
       } else {
-        throw new ActionException(
+        throw new ActionError(
         'Allowed actions on entities for redo are add or remove.');
       }
       if (redone) {
@@ -169,7 +169,7 @@ abstract class EntityAction extends BasicAction {
       } else if (name == 'set' && category == 'child') {
         done = entity.setChild(property, after);
       } else {
-        throw new ActionException(
+        throw new ActionError(
           'Allowed actions on entity for doit are set attribute, parent or child.');
       }
       if (done) {
@@ -193,7 +193,7 @@ abstract class EntityAction extends BasicAction {
       } else if (name == 'set' && category == 'child') {
         undone = entity.setChild(property, before);
       } else {
-        throw new ActionException(
+        throw new ActionError(
           'Allowed actions on entity for undo are set attribute, parent or child.');
       }
       if (undone) {
@@ -216,7 +216,7 @@ abstract class EntityAction extends BasicAction {
       } else if (name == 'set' && category == 'child') {
         redone = entity.setChild(property, after);
       } else {
-        throw new ActionException(
+        throw new ActionError(
           'Allowed actions on entity for redo are set attribute, parent or child.');
       }
       if (redone) {

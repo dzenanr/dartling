@@ -28,14 +28,14 @@ class DomainModels implements DomainModelsApi {
     if (_domain.code != domainCode) {
       var msg = 'The ${domainCode} domain of the model is different from '
           'the ${_domain.code} domain.';
-      throw new CodeException(msg);
+      throw new CodeError(msg);
     }
     var modelCode = modelEntries.model.code;
     var entries = _modelEntriesMap[modelCode];
     if (entries == null) {
       _modelEntriesMap[modelCode] = modelEntries;
     } else {
-      throw new CodeException(
+      throw new CodeError(
         'The ${modelCode} model exists already in the ${_domain.code} domain.');
     }
   }

@@ -32,7 +32,7 @@ class Repo implements RepoApi {
     if (models == null) {
       _domainModelsMap[domainCode] = domainModels;
     } else {
-      throw new CodeException(
+      throw new CodeError(
           '$domainCode domain code exists already in the repository.');
     }
   }
