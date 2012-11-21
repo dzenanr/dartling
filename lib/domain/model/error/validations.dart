@@ -1,22 +1,15 @@
 part of dartling;
 
-abstract class ValidationErrorApi {
-
-  String category;
-  String message;
-
-}
-
 abstract class ValidationErrorsApi {
 
   int get count;
-  List<ValidationErrorApi> get list;
-  add(ValidationErrorApi error);
+  List<ValidationError> get list;
+  add(ValidationError error);
   clear();
 
 }
 
-class ValidationError implements ValidationErrorApi {
+class ValidationError {
 
   String category;
   String message;
