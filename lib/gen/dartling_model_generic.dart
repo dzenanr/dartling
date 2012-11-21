@@ -96,7 +96,7 @@ String genEntries(Model model, String library) {
   sc = '${sc}  Entities newEntities(String conceptCode) { \n';
   sc = '${sc}    var concept = model.concepts.findByCode(conceptCode); \n';
   sc = '${sc}    if (concept == null) { \n';
-  sc = '${sc}      throw new ConceptException('
+  sc = '${sc}      throw new ConceptError('
        '"\${conceptCode} concept does not exist.") ; \n';
   sc = '${sc}    } \n';
   for (Concept concept in model.concepts) {
@@ -110,7 +110,7 @@ String genEntries(Model model, String library) {
   sc = '${sc}  ConceptEntity newEntity(String conceptCode) { \n';
   sc = '${sc}    var concept = model.concepts.findByCode(conceptCode); \n';
   sc = '${sc}    if (concept == null) { \n';
-  sc = '${sc}      throw new ConceptException('
+  sc = '${sc}      throw new ConceptError('
        '"\${conceptCode} concept does not exist.") ; \n';
   sc = '${sc}    } \n';
   for (Concept concept in model.concepts) {
