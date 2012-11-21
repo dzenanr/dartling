@@ -19,7 +19,7 @@ class KeywordEntries extends ModelEntries {
   Entities newEntities(String conceptCode) {
     var concept = model.concepts.findByCode(conceptCode);
     if (concept == null) {
-      throw new ConceptException("${conceptCode} concept does not exist.") ;
+      throw new ConceptError("${conceptCode} concept does not exist.") ;
     }
     if (concept.code == "Category") {
       return new Categories(concept);
@@ -35,7 +35,7 @@ class KeywordEntries extends ModelEntries {
   ConceptEntity newEntity(String conceptCode) {
     var concept = model.concepts.findByCode(conceptCode);
     if (concept == null) {
-      throw new ConceptException("${conceptCode} concept does not exist.") ;
+      throw new ConceptError("${conceptCode} concept does not exist.") ;
     }
     if (concept.code == "Category") {
       return new Category(concept);

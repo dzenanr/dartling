@@ -25,7 +25,7 @@ class LinkEntries extends ModelEntries {
   Entities newEntities(String conceptCode) {
     var concept = model.concepts.findByCode(conceptCode);
     if (concept == null) {
-      throw new ConceptException("${conceptCode} concept does not exist.") ;
+      throw new ConceptError("${conceptCode} concept does not exist.") ;
     }
     if (concept.code == "Member") {
       return new Members(concept);
@@ -50,7 +50,7 @@ class LinkEntries extends ModelEntries {
   ConceptEntity newEntity(String conceptCode) {
     var concept = model.concepts.findByCode(conceptCode);
     if (concept == null) {
-      throw new ConceptException("${conceptCode} concept does not exist.") ;
+      throw new ConceptError("${conceptCode} concept does not exist.") ;
     }
     if (concept.code == "Member") {
       return new Member(concept);

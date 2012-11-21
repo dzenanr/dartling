@@ -3,7 +3,7 @@ part of dartling;
 abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
 
   Concept get concept;
-  EntitiesApi<T> get source;  ErrorsApi get errors;
+  EntitiesApi<T> get source;  ValidationErrorsApi get errors;
   int get count;
   bool get empty;
   void clear();
@@ -50,7 +50,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   Map<String, T> _codeEntityMap;
   Map<String, T> _idEntityMap;
   Entities<T> _source;
-  EntityErrors _errors;
+  ValidationErrors _errors;
 
   String minc = '0';
   String maxc = 'N';
@@ -65,7 +65,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     _oidEntityMap = new Map<int, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    _errors = new EntityErrors();
+    _errors = new ValidationErrors();
 
     pre = false;
     post = false;
@@ -79,7 +79,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     _oidEntityMap = new Map<int, T>();
     _codeEntityMap = new Map<String, T>();
     _idEntityMap = new Map<String, T>();
-    _errors = new EntityErrors();
+    _errors = new ValidationErrors();
 
     randomGen = new Random();
   }
@@ -89,7 +89,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
 
   Concept get concept => _concept;
   Entities<T> get source => _source;
-  EntityErrors get errors => _errors;
+  ValidationErrors get errors => _errors;
   int get count => _entityList.length;
   int get length => count;
   bool get empty => _entityList.isEmpty;
@@ -140,7 +140,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       try {
         maxInt = int.parse(maxc);
         if (count == maxInt) {
-          EntityError error = new EntityError('max');
+          var error = new ValidationError('max');
           error.message = '${_concept.codes}.max is $maxc.';
 
           _errors.add(error);
@@ -166,7 +166,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
               '${a.code} attribute value cannot be incremented.');
         }
       } else if (a.required && entity.getAttribute(a.code) == null) {
-        EntityError error = new EntityError('required');
+        var error = new ValidationError('required');
         error.message = '${entity.concept.code}.${a.code} attribute is null.';
         _errors.add(error);
         result = false;
@@ -174,7 +174,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     }
     for (Parent p in _concept.parents) {
       if (p.required && entity.getParent(p.code) == null) {
-        EntityError error = new EntityError('required');
+        var error = new ValidationError('required');
         error.message = '${entity.concept.code}.${p.code} parent is null.';
         _errors.add(error);
         result = false;
@@ -183,13 +183,13 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
 
     // uniqueness validation
     if (entity.code != null && findByCode(entity.code) != null) {
-      EntityError error = new EntityError('unique');
+      var error = new ValidationError('unique');
       error.message = '${entity.concept.code}.code is not unique.';
       _errors.add(error);
       result = false;
     }
     if (entity.id != null && findById(entity.id) != null) {
-      EntityError error = new EntityError('unique');
+      ValidationError error = new ValidationError('unique');
       error.message =
           '${entity.concept.code}.id ${entity.id.toString()} is not unique.';
       _errors.add(error);
@@ -278,7 +278,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       try {
         minInt = int.parse(minc);
         if (count == minInt) {
-          EntityError error = new EntityError('min');
+          ValidationError error = new ValidationError('min');
           error.message = '${_concept.codes}.min is $minc.';
           _errors.add(error);
           result = false;
@@ -371,7 +371,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
         return true;
       } else {
         if (add(beforeEntity)) {
-          EntityError error = new EntityError('update');
+          var error = new ValidationError('update');
           error.message =
             '${_concept.codes}.update fails to add after update entity.';
           _errors.add(error);
@@ -381,7 +381,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
         }
       }
     } else {
-      EntityError error = new EntityError('update');
+      var error = new ValidationError('update');
       error.message =
         '${_concept.codes}.update fails to remove before update entity.';
       _errors.add(error);

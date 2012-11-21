@@ -52,7 +52,7 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
 
   Concept get concept;
   EntitiesApi<T> get source;
-  ErrorsApi get errors;
+  ValidationErrorsApi get errors;
   int get count;
   bool get empty;
   void clear();
@@ -94,7 +94,7 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
 abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 
   Concept get concept;
-  ErrorsApi get errors;
+  ValidationErrorsApi get errors;
   String get code;
   void set code(String code);
 
@@ -127,11 +127,18 @@ abstract class IdApi implements Comparable {
 
 }
 
-abstract class ErrorsApi {
+abstract class ValidationErrorApi {
+
+  String category;
+  String message;
+
+}
+
+abstract class ValidationErrorsApi {
 
   int get count;
-  List<EntityError> get list;
-  add(EntityError error);
+  List<ValidationErrorApi> get list;
+  add(ValidationErrorApi error);
   clear();
 
 }

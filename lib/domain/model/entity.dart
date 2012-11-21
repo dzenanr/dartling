@@ -3,7 +3,7 @@ part of dartling;
 abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 
   Concept get concept;
-  ErrorsApi get errors;
+  ValidationErrorsApi get errors;
   String get code;  void set code(String code);
 
   Object getAttribute(String name);
@@ -24,7 +24,7 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
 
   Concept _concept;
-  EntityErrors _errors;
+  ValidationErrors _errors;
   Oid _oid;
   String _code;
 
@@ -34,12 +34,12 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   Map<String, Entities> _childMap;
 
   ConceptEntity() {
-    _errors = new EntityErrors();
+    _errors = new ValidationErrors();
     _oid = new Oid();
   }
 
   ConceptEntity.of(this._concept) {
-    _errors = new EntityErrors();
+    _errors = new ValidationErrors();
     _oid = new Oid();
     _attributeMap = new Map<String, Object>();
     _parentMap = new Map<String, ConceptEntity>();
@@ -104,7 +104,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   Entities<T> newEntities() => new Entities.of(_concept);
 
   Concept get concept => _concept;
-  EntityErrors get errors => _errors;
+  ValidationErrors get errors => _errors;
 
   Oid get oid => _oid;
   void set oid(Oid oid) {

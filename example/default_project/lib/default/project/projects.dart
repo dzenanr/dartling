@@ -27,7 +27,7 @@ class Projects extends ProjectsGen {
     if (validation) {
       validation = project.name.length <= 32;
       if (!validation) {
-        var error = new EntityError('pre');
+        var error = new ValidationError('pre');
         error.message =
             '${concept.codePlural}.preAdd rejects the "${project.name}" '
             'name that is longer than 32.';

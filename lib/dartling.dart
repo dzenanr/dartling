@@ -42,6 +42,7 @@ part 'domain/model/event/actions.dart';
 part 'domain/model/event/past.dart';
 part 'domain/model/event/reactions.dart';
 part 'domain/model/error/errors.dart';
+part 'domain/model/error/validations.dart';
 part 'domain/model/transfer/json.dart';
 part 'domain/model/entities.dart';
 part 'domain/model/entity.dart';
