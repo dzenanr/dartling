@@ -1,6 +1,4 @@
-//part of art_pen;
-
-part of art_pen_app;
+part of art_pen;
 
 double randomDouble(double max) {
   double randomDouble = new Random().nextDouble() * 100;

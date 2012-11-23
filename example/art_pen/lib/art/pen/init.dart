@@ -1,6 +1,4 @@
-//part of art_pen;
-
-part of art_pen_app;
+part of art_pen;
 
 // src/data/art/pen/init.dart
 

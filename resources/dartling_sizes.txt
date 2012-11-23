@@ -1,0 +1,13 @@
+dartling sizes
+
+dartlingb: 421, 182
+dartlinga: 337, 146
+dartling: 270, 117
+dartling1: 203, 88
+dartling2: 152, 66
+dartling3: 114, 50
+dartling4: 86, 38
+dartling5: 65, 29
+dartling6: 49, 22
+dartling7: 37, 17
+

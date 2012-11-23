@@ -8,10 +8,6 @@ String genDartlingGen(Model model) {
        '${domain.codeLowerUnderscore}_${model.codeLowerUnderscore}_gen.dart \n';
   sc = '${sc} \n';
 
-  sc = '${sc}import "dart:json"; \n';
-  sc = '${sc}import "dart:math"; \n';
-  sc = '${sc}import "dart:uri"; \n';
-  sc = '${sc} \n';
   sc = '${sc}import "package:dartling/dartling.dart"; \n';
   sc = '${sc} \n';
   sc = '${sc}import "package:${domain.codeLowerUnderscore}_'

@@ -9,7 +9,6 @@ String genDartlingWeb(Model model) {
   sc = '${sc} \n';
 
   sc = '${sc}import "dart:html"; \n';
-  sc = '${sc}import "dart:isolate"; \n';
   sc = '${sc} \n';
   sc = '${sc}import "package:dartling/dartling.dart"; \n';
   sc = '${sc}import "package:dartling/dartling_app.dart"; \n';
