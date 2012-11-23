@@ -75,7 +75,7 @@ project template for a new dartling project.
 
 [**On Dart course**] (http://ondart.me/)
 
-### ![Alt dartling] (https://raw.github.com/dzenanr/dartling/master/resources/dartling5.png) image done by Rafik Benmoussa
+#### ![Alt dartling] (https://raw.github.com/dzenanr/dartling/master/resources/dartling5.png) image done by Rafik Benmoussa
 
 
 
