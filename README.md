@@ -1,7 +1,7 @@
 
 
 
-# ![Alt dartling] (https://github.com/dzenanr/dartling/master/resources/dartling.png)
+# ![Alt dartling] (https://github.com/dzenanr/dartling/master/resource/dartling.png)
 
 [dartling] (https://github.com/dzenanr/dartling) is a domain model framework. Its open source license is the 3-clause BSD license -- ["New BSD License" or "Modified BSD License"] (http://en.wikipedia.org/wiki/BSD_license).
 
@@ -75,7 +75,7 @@ project template for a new dartling project.
 
 [**On Dart course**] (http://ondart.me/)
 
-### ![Alt dartling] (https://github.com/dzenanr/dartling/master/resources/dartling5.png)
+### ![Alt dartling] (https://github.com/dzenanr/dartling/master/resource/dartling5.png)
 image done by Rafik Benmoussa
 
 
