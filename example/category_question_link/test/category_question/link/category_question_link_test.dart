@@ -393,7 +393,7 @@ testCategoryQuestionLink(Repo repo, String domainCode, String modelCode) {
         if (undone) {
           session.past.redo();
           expect(categories.count, equals(categoryCount));
-          categories.display('Transaction (with Id Error) Redone');
+          categories.display(title:'Transaction (with Id Error) Redone');
         }
       }
     });
