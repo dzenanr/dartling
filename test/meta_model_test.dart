@@ -124,6 +124,54 @@ testModelData(Model model) {
       orderedCategories.display(title:
         'Categories Ordered By Id (code not used, id is name)');
     });
+    test('Order Dart Web Links by Name', () {
+      var categories = entries.getEntry('Category');
+      var dartCategory = categories.findByAttribute('name', 'Dart');
+      expect(dartCategory, isNotNull);
+      var dartWebLinks = dartCategory.getChild('webLinks');
+
+      var orderedDartWebLinks = dartWebLinks.order();
+      expect(orderedDartWebLinks.list, isNot(isEmpty));
+      expect(orderedDartWebLinks.source, isNotNull);
+      expect(orderedDartWebLinks.source.list, isNot(isEmpty));
+      expect(orderedDartWebLinks.source.count, equals(dartWebLinks.count));
+
+      orderedDartWebLinks.display(title:'Ordered Dart Web Links');
+    });
+    test('New Category with Id', () {
+      var categories = entries.getEntry('Category');
+      var categoryCount = categories.count;
+      var webFrameworkCategory = new ConceptEntity.of(categories.concept);
+      webFrameworkCategory.setAttribute('name', 'Web Framework');
+      expect(webFrameworkCategory, isNotNull);
+      expect(webFrameworkCategory.getChild('webLinks').count, equals(0));
+      categories.add(webFrameworkCategory);
+      expect(categories.count, equals(++categoryCount));
+
+      categories.display(title:'Categories Including Web Framework');
+    });
+    test('New WebLink No Category Error', () {
+      var categories = entries.getEntry('Category');
+      var categoryCount = categories.count;
+      var dartCategory = categories.findByAttribute('name', 'Dart');
+      expect(dartCategory, isNotNull);
+
+      var dartWebLinks = dartCategory.getChild('webLinks');
+      var dartHomeWebLink = new ConceptEntity.of(dartWebLinks.concept);
+      expect(dartHomeWebLink, isNotNull);
+      expect(dartHomeWebLink.getParent('category'), isNull);
+
+      dartHomeWebLink.setAttribute('subject', 'Dart Home');
+      dartHomeWebLink.setAttribute('url', 'http://www.dartlang.org/');
+      dartHomeWebLink.setAttribute('description', 'Dart brings structure to '
+          'web app engineering with a new language, libraries, and tools.');
+      dartCategory.getChild('webLinks').add(dartHomeWebLink);
+      expect(dartCategory.getChild('webLinks').count, equals(dartWebLinks.count));
+      expect(dartCategory.getChild('webLinks').errors.count, equals(1));
+      expect(dartCategory.getChild('webLinks').errors.list[0].category,
+          equals('required'));
+      dartCategory.getChild('webLinks').errors.display(title:'WebLink Error');
+    });
 
   });
 }
