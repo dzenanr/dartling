@@ -1,45 +1,151 @@
 part of art_pen;
 
-demo001(Pen pen) {
-  var commands = '''
-    width, 6;
-    move, 30.40293361103451, 22.575530706364066, 13;
-    move, -70.27274635144924, 8.893045765408036, 17;
-    color, orange;
-    move, 67.12434894452434, 22.596410466105166, 29;
-    move, 0, -99.20562517098365, 0;
-    move, -75.1854532891559, 0, 0;
-    move, -60.3210960148174, -56.32416077350124, 7;
-    color, yellow;
-    move, 43.0316382215351, 99.33018949703691, 17;
-    color, black;
-    width, 1;
-    move, 7.6819899770900975, 24.537766791503344, 17;
-    color, brown;
-    moveTo, 13.438934299530892, 88.34072452000386;
-    move, 32.303134459220004, 29.821290049615733, 19;
-    color, orange;
-    move, 97.73375087532105, 25.563987162572833, 4;
-    art, 6;
-    move, 0, 86.68430427632853, 0;
-    move, 33.14591563777854, 0, 0;
-    color, green;
-    move, -69.41259153403907, 75.05232239000514, 23;
-    move, 20.950089647515068, 2.8124484280311446, 25;
-    move, 0, 32.69168120242336, 0;
-    move, 0, 35.40598726759793, 0;
-    moveTo, 28.57033614446375, 65.42261894306503;
-    move, 56.26861633535112, 31.617911316855484, 12;
-    move, 8.988394304365121, 85.76212359841301, 22;
-    move, 38.149328645785886, 89.73872686034422, 35;
-    move, 98.8977357672091, 81.47151572840548, 1;
-  ''';
-  pen.erase();
-  pen.interpret(commands);
+List<String> exampleList() {
+  var examples = new List<String>();
+  examples.add(example000());
+  examples.add(example001());
+  examples.add(example002());
+  examples.add(example003());
+  examples.add(example004());
+  examples.add(example005());
+  examples.add(example006());
+  examples.add(example007());
+  examples.add(example008());
+  examples.add(example009());
+
+  examples.add(example010());
+  examples.add(example011());
+  examples.add(example012());
+  examples.add(example013());
+  examples.add(example014());
+  examples.add(example015());
+  examples.add(example016());
+  examples.add(example017());
+  examples.add(example018());
+  examples.add(example019());
+
+  examples.add(example020());
+  examples.add(example021());
+  examples.add(example022());
+  examples.add(example023());
+  examples.add(example024());
+  examples.add(example025());
+  examples.add(example026());
+  examples.add(example027());
+  examples.add(example028());
+  examples.add(example029());
+
+  examples.add(example030());
+  examples.add(example031());
+  examples.add(example032());
+  examples.add(example033());
+  examples.add(example034());
+  examples.add(example035());
+  examples.add(example036());
+  examples.add(example037());
+  examples.add(example038());
+  examples.add(example039());
+
+  examples.add(example040());
+  examples.add(example041());
+  examples.add(example042());
+  examples.add(example043());
+  examples.add(example044());
+  examples.add(example045());
+  examples.add(example046());
+  examples.add(example047());
+  examples.add(example048());
+  examples.add(example049());
+
+  examples.add(example050());
+  examples.add(example051());
+  examples.add(example052());
+  examples.add(example053());
+  examples.add(example054());
+  examples.add(example055());
+  examples.add(example056());
+  examples.add(example057());
+  examples.add(example058());
+  examples.add(example059());
+
+  examples.add(example060());
+  examples.add(example061());
+  examples.add(example062());
+  examples.add(example063());
+  examples.add(example064());
+  examples.add(example065());
+  examples.add(example066());
+  examples.add(example067());
+  examples.add(example068());
+  examples.add(example069());
+
+  examples.add(example070());
+  examples.add(example071());
+  examples.add(example072());
+  examples.add(example073());
+  examples.add(example074());
+  examples.add(example075());
+  examples.add(example076());
+  examples.add(example077());
+  examples.add(example078());
+  examples.add(example079());
+
+  examples.add(example080());
+  examples.add(example081());
+  examples.add(example082());
+  examples.add(example083());
+  examples.add(example084());
+  examples.add(example085());
+  examples.add(example086());
+
+  return examples;
 }
 
-demo002(Pen pen) {
-  var commands = '''
+String example000() {
+  return '''
+move, 33.0, 80.0, 0;
+move, -143, 169, 10;
+  ''';
+}
+
+String example001() {
+  return '''
+width, 6;
+move, 30.40293361103451, 22.575530706364066, 13;
+move, -70.27274635144924, 8.893045765408036, 17;
+color, orange;
+move, 67.12434894452434, 22.596410466105166, 29;
+move, 0, -99.20562517098365, 0;
+move, -75.1854532891559, 0, 0;
+move, -60.3210960148174, -56.32416077350124, 7;
+color, yellow;
+move, 43.0316382215351, 99.33018949703691, 17;
+color, black;
+width, 1;
+move, 7.6819899770900975, 24.537766791503344, 17;
+color, brown;
+moveTo, 13.438934299530892, 88.34072452000386;
+move, 32.303134459220004, 29.821290049615733, 19;
+color, orange;
+move, 97.73375087532105, 25.563987162572833, 4;
+art, 6;
+move, 0, 86.68430427632853, 0;
+move, 33.14591563777854, 0, 0;
+color, green;
+move, -69.41259153403907, 75.05232239000514, 23;
+move, 20.950089647515068, 2.8124484280311446, 25;
+move, 0, 32.69168120242336, 0;
+move, 0, 35.40598726759793, 0;
+moveTo, 28.57033614446375, 65.42261894306503;
+move, 56.26861633535112, 31.617911316855484, 12;
+move, 8.988394304365121, 85.76212359841301, 22;
+move, 38.149328645785886, 89.73872686034422, 35;
+move, 98.8977357672091, 81.47151572840548, 1;
+  ''';
+}
+
+String example002() {
+  return '''
 color, green;
 width, 1;
 move, 48.28927058523676, 71.67490999858221, 22;
@@ -59,12 +165,10 @@ move, 55.737047909032434, 18.72527810598742, 34;
 move, 20.168680211334433, 30.54555312873477, 9;
 art, 3;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo003(Pen pen) {
-  var commands = '''
+String example003() {
+  return '''
 color, brown;
 width, 1;
 move, 43.86688957556838, 35.89898050650412, 2;
@@ -82,16 +186,12 @@ move, 96.64287758822825, 25.576105898111823, 28;
 width, 0;
 move, 52.57550150545009, 0.25286462991600533, 3;
 move, 98.09911052642569, 83.72572408737047, 1;
-art, 2;
-art, 1;
-art, 1;
+art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo004(Pen pen) {
-  var commands = '''
+String example004() {
+  return '''
 color, white;
 width, 2;
 move, 31.302494954516014, 52.538558435526696, 34;
@@ -109,15 +209,12 @@ move, 81.5459203567498, 82.65786670868407, 23;
 width, 0;
 move, 10.924367959331715, 39.40793425180556, 27;
 move, 93.51117506132648, 11.452441303520377, 6;
-art, 3;
-art, 1;
+art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo005(Pen pen) {
-  var commands = '''
+String example005() {
+  return '''
 color, orange;
 width, 2;
 move, 64.4906918560737, 45.21941707132604, 33;
@@ -135,17 +232,12 @@ move, -71.62539459163544, 51.748617210875324, 16;
 width, 1;
 move, 30.19989393762209, -84.87227809561806, 21;
 move, 87.82707198530785, 1.6778148014785277, 2;
-art, 3;
-art, 1;
-art, 1;
-art, 1;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo006(Pen pen) {
-  var commands = '''
+String example006() {
+  return '''
 color, gray;
 width, 1;
 move, 63.900175949122016, 86.96101385428977, 13;
@@ -163,16 +255,12 @@ move, 91.75653102944135, 27.829340029486815, 18;
 width, 0;
 move, 44.82115851126015, 59.46259549548193, 8;
 move, 65.57970566108668, 0.5864027144059314, 1;
-art, 2;
-art, 1;
-art, 1;
+art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo007(Pen pen) {
-  var commands = '''
+String example007() {
+  return '''
 color, red;
 width, 0;
 move, 32.85020219221764, 20.138231234330018, 24;
@@ -190,17 +278,12 @@ move, 6.851242222365183, 15.979215206118303, 8;
 width, 2;
 move, 66.63160575324206, 7.597642803440929, 11;
 move, -80.39587981282767, 43.695857265368275, 9;
-art, 3;
-art, 1;
-art, 1;
-art, 1;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo008(Pen pen) {
-  var commands = '''
+String example008() {
+  return '''
 color, white;
 width, 2;
 move, 37.57302470714578, -57.473521483894864, 35;
@@ -218,16 +301,12 @@ move, 19.53239277565072, -38.22868906845287, 35;
 width, 0;
 move, 2.313180855876762, 74.25934432536268, 3;
 move, 33.44312815343958, 64.42305155458999, 31;
-art, 3;
-art, 1;
-art, 1;
+art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo009(Pen pen) {
-  var commands = '''
+String example009() {
+  return '''
 color, green;
 width, 0;
 move, 79.57792003420361, 28.561904558499805, 25;
@@ -245,16 +324,12 @@ move, 8.591278674952108, 86.7010293729028, 34;
 width, 0;
 move, 75.40810583859977, 91.8951994680604, 29;
 move, 34.701221798294014, 89.79251494864404, 5;
-art, 4;
-art, 1;
-art, 1;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo010(Pen pen) {
-  var commands = '''
+String example010() {
+  return '''
 color, green;
 width, 0;
 move, 71.97551255974382, 37.28783755881074, 10;
@@ -272,16 +347,12 @@ move, 73.2762300872322, 79.03795685692985, 13;
 width, 1;
 move, 10.471209753122334, -24.671926782151733, 8;
 move, 15.21464485192513, 74.28149692863823, 25;
-art, 4;
-art, 1;
-art, 1;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo011(Pen pen) {
-  var commands = '''
+String example011() {
+  return '''
 color, brown;
 width, 1;
 move, 60.32892277158452, 76.92368020165911, 28;
@@ -301,12 +372,10 @@ move, 92.5761523657597, 30.304685712039202, 4;
 move, 67.02229001209355, 98.0024100877268, 21;
 art, 7;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo012(Pen pen) {
-  var commands = '''
+String example012() {
+  return '''
 color, black;
 width, 3;
 move, 51.785933250306904, 15.90164710124139, 26;
@@ -324,16 +393,12 @@ move, 29.20554380195508, 20.188996082746534, 19;
 width, 0;
 move, 52.765941501100414, 20.270896300568808, 27;
 move, -18.589644578523433, 98.61338887389562, 35;
-art, 3;
-art, 1;
-art, 1;
+art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo013(Pen pen) {
-  var commands = '''
+String example013() {
+  return '''
 color, green;
 width, 3;
 move, -17.37299630867929, 75.23420455606593, 33;
@@ -351,18 +416,12 @@ move, 27.22904606728943, -15.984074377140656, 32;
 width, 3;
 move, 48.58150302678283, 85.86432852348294, 9;
 move, 44.78398650743664, 82.90673074144568, 6;
-art, 2;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo014(Pen pen) {
-  var commands = '''
+String example014() {
+  return '''
 color, blue;
 width, 1;
 move, 49.14615397413051, 47.06012741629033, 29;
@@ -380,15 +439,12 @@ move, 30.82643993605747, 77.28660534469063, 35;
 width, 2;
 move, 26.822431100510368, 77.00839552893167, 14;
 move, 53.20330452418014, 29.22986621716548, 35;
-art, 4;
-art, 1;
+art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo015(Pen pen) {
-  var commands = '''
+String example015() {
+  return '''
 color, orange;
 width, 2;
 move, -91.45908659069559, 84.57610790134436, 15;
@@ -408,12 +464,10 @@ move, 70.25908572506496, 23.224023563664776, 19;
 move, 78.46028571850165, 71.8533095649009, 13;
 art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo016(Pen pen) {
-  var commands = '''
+String example016() {
+  return '''
 color, orange;
 width, 3;
 move, 74.66164380737592, 8.740490018158875, 10;
@@ -439,12 +493,10 @@ color, gray;
 move, 35.909173121212135, 18.019817566605532, 13;
 art, 3;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo017(Pen pen) {
-  var commands = '''
+String example017() {
+  return '''
 color, black;
 width, 3;
 move, 4.610058549924457, 49.284067158385845, 5;
@@ -468,17 +520,12 @@ move, 83.7029538616924, 29.57651044248052, 30;
 width, 2;
 color, gray;
 move, 60.32647421927435, 18.324040770947757, 35;
-art, 2;
-art, 1;
-art, 1;
-art, 1;
+art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo018(Pen pen) {
-  var commands = '''
+String example018() {
+  return '''
 width, 4;
 move, 49.07568399554562, 91.54225925625514, 21;
 move, 98.73061224093752, -39.643117391373636, 16;
@@ -494,15 +541,12 @@ move, 28.537939012228918, 18.006397838440368, 20;
 move, 14.272273639112932, -6.0131610886530185, 35;
 moveTo, 490.0, 330.0;
 moveTo, 490.0, 330.0;
-art, 3;
-art, 3;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo019(Pen pen) {
-  var commands = '''
+String example019() {
+  return '''
 width, 4;
 move, 46.631264038119625, -21.26211023712522, 4;
 move, 68.68259386996577, 45.13430747970348, 33;
@@ -568,12 +612,10 @@ color, brown;
 move, -48.37601550973684, 18.075267966431284, 21;
 art, 2;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo020(Pen pen) {
-  var commands = '''
+String example020() {
+  return '''
 move, 1.5676003062861765, 30.71537630754205, 0;
 width, 1;
 move, 48.963099414986786, 96.56486387579474, 31;
@@ -589,16 +631,12 @@ move, 41.25282462187191, -83.94305579129654, 6;
 move, 34.03694141118917, 19.655165346843418, 27;
 move, 97.00082910273414, 9.651397426521868, 2;
 color, blue;
-art, 2;
-art, 2;
-art, 2;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo021(Pen pen) {
-  var commands = '''
+String example021() {
+  return '''
 move, 93.02153796784347, -61.55304055442015, 25;
 moveTo, 490.0, 330.0;
 move, 2.1072153683685646, 72.95126584509244, 15;
@@ -614,15 +652,12 @@ moveTo, 490.0, 330.0;
 move, 49.52614629241846, 39.901493725268686, 14;
 color, orange;
 move, 82.97105622295149, 36.58466190134596, 14;
-art, 3;
-art, 3;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo022(Pen pen) {
-  var commands = '''
+String example022() {
+  return '''
 color, gray;
 width, 0;
 move, 90.73271609544784, 68.69014908154321, 29;
@@ -648,12 +683,10 @@ color, gray;
 move, 96.9817940661122, 60.84461326436721, 35;
 art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo023(Pen pen) {
-  var commands = '''
+String example023() {
+  return '''
 color, red;
 width, 3;
 move, 3.0994718840644198, -57.928173683326456, 5;
@@ -680,12 +713,10 @@ color, gray;
 move, 84.47483534770008, 33.61543353076042, 27;
 art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo024(Pen pen) {
-  var commands = '''
+String example024() {
+  return '''
 color, white;
 width, 3;
 move, -64.00544455659376, 58.02359367695301, 18;
@@ -712,13 +743,11 @@ color, gray;
 move, 40.43713957043272, 38.72727162042452, 10;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
 
-demo025(Pen pen) {
-  var commands = '''
+String example025() {
+  return '''
 width, 3;
 move, 42.22831072595977, -70.78552677075571, 11;
 width, 7;
@@ -733,15 +762,12 @@ color, orange;
 width, 2;
 move, 47.82625844795445, 4.96132713570081, 35;
 move, 75.79232306604537, 97.57339554518123, 29;
-art, 3;
-art, 3;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo026(Pen pen) {
-  var commands = '''
+String example026() {
+  return '''
 color, red;
 move, -70.56551938149259, -94.81967292123197, 25;
 move, 51.263796260991825, 10.15757863299167, 21;
@@ -757,15 +783,12 @@ width, 7;
 move, 22.745101378305556, 16.722267634442378, 18;
 move, 22.652530777274205, 5.09606022498229, 2;
 move, 44.18261085541659, 77.68042085268698, 29;
-art, 3;
-art, 3;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo027(Pen pen) {
-  var commands = '''
+String example027() {
+  return '''
 color, red;
 width, 1;
 move, 59.59569415633857, 12.16478943888275, 23;
@@ -789,45 +812,28 @@ width, 5;
 move, -93.70218321511683, 78.61246253613804, 8;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo028(Pen pen) {
-  var commands = '''
+String example028() {
+  return '''
 move, 27.37302969559995, 70.91662620848984, 17;
 move, 31.48654545736722, 34.99702832402923, 8;
 move, 77.61688922227833, 30.36807359644983, 6;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
+art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo029(Pen pen) {
-  var commands = '''
+String example029() {
+  return '''
 move, 27.37302969559995, 70.91662620848984, 17;
 move, 31.48654545736722, 34.99702832402923, 8;
 move, 77.61688922227833, 30.36807359644983, 6;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
+art, 8;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo030(Pen pen) {
-  var commands = '''
+String example030() {
+  return '''
 color, orange;
 width, 4;
 move, 52.94380494250939, 81.76784735813283, 29;
@@ -847,18 +853,12 @@ move, 21.693140771995047, 89.12330949267788, 14;
 width, 2;
 move, 87.63210364292274, -37.65561491633479, 10;
 moveTo, 360.0, 333.0;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
+art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo031(Pen pen) {
-  var commands = '''
+String example031() {
+  return '''
 color, blue;
 width, 4;
 move, 46.80760024256022, 83.0609782662178, 0;
@@ -878,19 +878,12 @@ move, 9.482121611063866, -84.21967991032679, 1;
 width, 3;
 move, 34.732548083209394, 98.3724143922479, 6;
 moveTo, 360.0, 333.0;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo032(Pen pen) {
-  var commands = '''
+String example032() {
+  return '''
 move, 60.41165850452834, 50.623591872427, 7;
 color, blue;
 width, 2;
@@ -900,20 +893,12 @@ move, 26.54692489644519, 87.78931302611497, 25;
 color, yellow;
 width, 3;
 move, 42.56724840326801, -50.36127365682992, 22;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
+art, 7;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo033(Pen pen) {
-  var commands = '''
+String example033() {
+  return '''
 color, orange;
 width, 1;
 move, 21.465722098741512, 72.48003993664007, 15;
@@ -934,12 +919,10 @@ width, 1;
 move, 97.41089912189017, 51.436526092387304, 6;
 moveTo, 360.0, 333.0;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo034(Pen pen) {
-  var commands = '''
+String example034() {
+  return '''
 color, orange;
 width, 1;
 move, 21.465722098741512, 72.48003993664007, 15;
@@ -959,17 +942,12 @@ move, 99.9585301504289, 97.95521494205876, 22;
 width, 1;
 move, 97.41089912189017, 51.436526092387304, 6;
 moveTo, 360.0, 333.0;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
+art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo035(Pen pen) {
-  var commands = '''
+String example035() {
+  return '''
 color, gray;
 width, 3;
 move, 31.16871576594795, 89.02002985634512, 35;
@@ -989,17 +967,12 @@ move, 81.22823680823169, 78.36519814699258, 27;
 width, 5;
 move, 78.61639447623251, -3.7534549204155665, 27;
 moveTo, 360.0, 333.0;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
+art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo036(Pen pen) {
-  var commands = '''
+String example036() {
+  return '''
 color, red;
 width, 1;
 move, -79.73531899402222, 21.040005321602028, 32;
@@ -1030,12 +1003,10 @@ move, 86.92164843451016, 59.91228552613674, 1;
 move, 43.94150446376902, 87.19484218530907, 20;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo037(Pen pen) {
-  var commands = '''
+String example037() {
+  return '''
 color, orange;
 width, 5;
 move, 17.823703510108967, 18.387497891633142, 5;
@@ -1066,17 +1037,12 @@ move, 32.632534108246915, 17.438169798320846, 9;
 width, 3;
 move, 33.19973338961248, 19.1475165408997, 19;
 move, 78.34383730445028, -66.70120311869535, 3;
-art, 2;
-art, 1;
-art, 1;
-art, 1;
+art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo038(Pen pen) {
-  var commands = '''
+String example038() {
+  return '''
 move, 58.768685244761166, 0.5466724710996629, 12;
 move, 39.74364436815182, 20.160246470025168, 15;
 width, 5;
@@ -1094,12 +1060,10 @@ move, 87.96412814273042, -0.4410704061934334, 11;
 move, 67.94703168602922, -38.00117834520651, 1;
 art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo039(Pen pen) {
-  var commands = '''
+String example039() {
+  return '''
 move, 31.277989104835658, 37.323922353186475, 16;
 move, 80.69535945655349, 59.69718362221331, 8;
 moveTo, 360.0, 333.0;
@@ -1117,12 +1081,10 @@ color, brown;
 width, 2;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo040(Pen pen) {
-  var commands = '''
+String example040() {
+  return '''
 move, 29.132587876616967, 67.93285001232685, 1;
 down, true;
 width, 4;
@@ -1136,16 +1098,12 @@ down, true;
 width, 1;
 width, 2;
 move, 32.27663861585546, 17.8353408073467, 9;
-art, 4;
-art, 1;
-art, 1;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo041(Pen pen) {
-  var commands = '''
+String example041() {
+  return '''
 down, true;
 move, 9.478877215305037, 6.306139531222654, 31;
 move, 19.851668680782996, 71.00895994149148, 3;
@@ -1161,21 +1119,12 @@ color, gray;
 move, -13.8611336667112, 31.299001861352018, 25;
 down, true;
 move, 17.315313079346105, 0.8148105786260018, 25;
-art, 0;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
+art, 7;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo042(Pen pen) {
-  var commands = '''
+String example042() {
+  return '''
 color, green;
 color, orange;
 move, 70.71710683453333, 77.05154879038628, 22;
@@ -1190,18 +1139,12 @@ moveTo, 360.0, 333.0;
 width, 4;
 color, brown;
 moveTo, 360.0, 333.0;
-art, 2;
-art, 1;
-art, 1;
-art, 1;
-art, 1;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo043(Pen pen) {
-  var commands = '''
+String example043() {
+  return '''
 move, 10.178442142514966, 99.75645702655973, 24;
 moveTo, 360.0, 333.0;
 move, 92.78111116836877, 11.112206515778023, 27;
@@ -1217,16 +1160,12 @@ move, 40.842774755337906, 36.382537510992904, 16;
 move, 27.963002009183167, 7.0049168490811, 12;
 move, 56.65545143794749, 67.11106758602152, 15;
 color, gray;
-art, 5;
-art, 1;
-art, 1;
+art, 7;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo044(Pen pen) {
-  var commands = '''
+String example044() {
+  return '''
 move, 51.81173599416403, 56.53786036136026, 30;
 color, brown;
 moveTo, 360.0, 333.0;
@@ -1241,16 +1180,12 @@ move, -41.085183511844, 70.39118661616165, 14;
 color, red;
 width, 4;
 moveTo, 360.0, 333.0;
-art, 3;
-art, 1;
-art, 1;
+art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo045(Pen pen) {
-  var commands = '''
+String example045() {
+  return '''
 move, 88.92242924780514, 81.7975709404045, 0;
 move, 80.81714785496028, 76.95910458521912, 22;
 color, red;
@@ -1267,12 +1202,10 @@ move, 6.559463335964654, 17.29619113478539, 12;
 move, 52.635260533159126, 56.28075623822563, 30;
 art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo046(Pen pen) {
-  var commands = '''
+String example046() {
+  return '''
 move, 93.02153796784347, -61.55304055442015, 25;
 moveTo, 490.0, 330.0;
 move, 2.1072153683685646, 72.95126584509244, 15;
@@ -1288,15 +1221,12 @@ moveTo, 490.0, 330.0;
 move, 49.52614629241846, 39.901493725268686, 14;
 color, orange;
 move, 82.97105622295149, 36.58466190134596, 14;
-art, 3;
-art, 3;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo047(Pen pen) {
-  var commands = '''
+String example047() {
+  return '''
 move, 48.45686171395861, 67.38708742824653, 15;
 color, white;
 width, 3;
@@ -1314,12 +1244,10 @@ width, 4;
 move, 88.37761170566517, 73.50090707026611, 7;
 art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo048(Pen pen) {
-  var commands = '''
+String example048() {
+  return '''
 move, 53.50079018977014, 53.573058056029076, 11;
 width, 1;
 move, 98.561859512118, 0.17180358965679376, 3;
@@ -1337,12 +1265,10 @@ width, 5;
 moveTo, 360.0, 333.0;
 art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo049(Pen pen) {
-  var commands = '''
+String example049() {
+  return '''
 width, 5;
 move, 51.250692603585414, 52.59531635882338, 0;
 move, 30.608548475410846, 44.30167567164174, 19;
@@ -1360,12 +1286,10 @@ color, brown;
 move, 20.657761933611408, 91.06654749295298, 25;
 art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo050(Pen pen) {
-  var commands = '''
+String example050() {
+  return '''
 move, 73.09998571293669, 94.04416420170855, 9;
 move, 67.75432189027633, 50.48139729266745, 35;
 move, 53.59184354532924, 48.63990187660464, 4;
@@ -1383,12 +1307,10 @@ move, 62.85613504072275, 22.81015472387078, 17;
 move, 33.93749301835022, 42.01838909662272, 10;
 art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo051(Pen pen) {
-  var commands = '''
+String example051() {
+  return '''
 move, 36.25632930647927, 72.54540511423706, 7;
 moveTo, 3.2420830257544164, 77.62053885199254;
 color, white;
@@ -1406,12 +1328,10 @@ width, 1;
 move, 29.127987912770557, 50.437892842764434, 3;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo052(Pen pen) {
-  var commands = '''
+String example052() {
+  return '''
 width, 3;
 move, 14.917713896422757, 34.62714152831049, 32;
 move, 62.4253132291378, 37.067213713390515, 22;
@@ -1427,12 +1347,10 @@ move, 38.11231633040219, -1.6244743191452748, 9;
 move, 9.755782133185164, 70.12045736303104, 23;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo053(Pen pen) {
-  var commands = '''
+String example053() {
+  return '''
 move, -60.3443976257434, 27.373869717431674, 33;
 move, 65.14237975059052, 75.65221183837015, 10;
 move, 88.26455833575565, 72.58381187162763, 5;
@@ -1445,12 +1363,10 @@ move, 51.1190683086773, 77.4670504901301, 16;
 move, 60.18702473696699, 77.72735144260811, 2;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo054(Pen pen) {
-  var commands = '''
+String example054() {
+  return '''
 color, orange;
 move, 7.921172580733183, 84.23753370450167, 16;
 move, -30.39655515448616, 65.13724271968488, 25;
@@ -1507,12 +1423,10 @@ move, 51.42129790910121, 87.19331255791974, 24;
 move, 40.724437891129995, 98.14572913386291, 30;
 art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo055(Pen pen) {
-  var commands = '''
+String example055() {
+  return '''
 move, 37.78464774152768, 83.64380293058655, 32;
 move, 44.726005223986554, 42.379115829960114, 10;
 color, green;
@@ -1545,12 +1459,10 @@ color, gray;
 move, 7.079597003165317, 34.09184126053017, 16;
 art, 5;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo056(Pen pen) {
-  var commands = '''
+String example056() {
+  return '''
 move, 56.280542855229534, -19.333530830886136, 33;
 color, gray;
 move, 18.117912783317237, -29.444839042197934, 18;
@@ -1566,16 +1478,12 @@ move, -49.72980319145438, 96.20299680618089, 34;
 move, 0.7478306992373285, 27.15701072768917, 15;
 move, 46.5032399011031, 69.30106920374801, 3;
 color, blue;
-art, 2;
-art, 2;
-art, 2;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo057(Pen pen) {
-  var commands = '''
+String example057() {
+  return '''
 width, 3;
 move, 24.858847105819702, 76.31917625803624, 17;
 moveTo, 88.93175519550317, 89.30904704723453;
@@ -1593,12 +1501,10 @@ width, 5;
 move, 92.70167057595788, 35.461418096221124, 21;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo058(Pen pen) {
-  var commands = '''
+String example058() {
+  return '''
 move, 98.5063817772753, 3.095429647674053, 14;
 move, 59.13969857716489, 22.214043327492817, 31;
 move, 56.98817972099926, -58.998372276250656, 6;
@@ -1613,15 +1519,12 @@ move, 24.841237258075054, 87.94103306774372, 0;
 width, 5;
 color, green;
 move, 96.56537223847033, 18.618358990814755, 10;
-art, 4;
-art, 4;
+art, 8;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo059(Pen pen) {
-  var commands = '''
+String example059() {
+  return '''
 move, 0.0, 80.0, 0;
 move, -99.0, 80.0, 0;
 move, -99.0, 80.0, 0;
@@ -1632,36 +1535,29 @@ down, true;
 move, -99.0, 80.0, 0;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo060(Pen pen) {
-  var commands = '''
+String example060() {
+  return '''
 move, 0.0, 80.0, 0;
 move, -55.0, 80.0, 0;
 move, -55.0, 80.0, 0;
-art, 4;
-art, 4;
+art, 8;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo061(Pen pen) {
-  var commands = '''
+String example061() {
+  return '''
 move, 0.0, 80.0, 0;
 move, -99.0, 80.0, 0;
 move, -99.0, 80.0, 0;
 move, -99.0, 80.0, 0;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo062(Pen pen) {
-  var commands = '''
+String example062() {
+  return '''
 move, 66.73964638302924, -31.440784706063553, 29;
 moveTo, 490.0, 330.0;
 move, -59.388905052426196, 28.541380267192007, 32;
@@ -1677,15 +1573,12 @@ move, 3.2885818198266636, -40.35106189584733, 10;
 width, 1;
 move, -80.12774302622849, 51.84750382879116, 2;
 move, 26.755100600798986, 9.650281549373485, 17;
-art, 4;
-art, 4;
+art, 8;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo063(Pen pen) {
-  var commands = '''
+String example063() {
+  return '''
 color, white;
 width, 6;
 move, 85.77595849877262, -68.65241874918817, 3;
@@ -1718,12 +1611,10 @@ move, 75.76414203174438, 30.901008030046096, 35;
 move, 96.22266159367354, 3.5664965452024022, 16;
 art, 7;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo064(Pen pen) {
-  var commands = '''
+String example064() {
+  return '''
 move, 93.02153796784347, -61.55304055442015, 25;
 moveTo, 490.0, 330.0;
 move, 2.1072153683685646, 72.95126584509244, 15;
@@ -1739,15 +1630,12 @@ moveTo, 490.0, 330.0;
 move, 49.52614629241846, 39.901493725268686, 14;
 color, orange;
 move, 82.97105622295149, 36.58466190134596, 14;
-art, 3;
-art, 3;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo065(Pen pen) {
-  var commands = '''
+String example065() {
+  return '''
 move, 22.039260100390013, 52.40994355267075, 11;
 color, black;
 move, 98.77023867893796, -74.22141726302928, 9;
@@ -1774,16 +1662,12 @@ width, 4;
 down, true;
 width, 6;
 down, true;
-art, 4;
-art, 1;
-art, 1;
+art, 6;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo066(Pen pen) {
-  var commands = '''
+String example066() {
+  return '''
 move, 44.08355636987835, 61.06067707296461, 6;
 move, 2.3540897760540247, 0, 0;
 color, brown;
@@ -1817,22 +1701,18 @@ color, gray;
 width, 1;
 move, 24.253929452970624, 46.49476690683514, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo067(Pen pen) {
-  var commands = '''
+String example067() {
+  return '''
 move, -32.20856795087457, 38.68152981158346, 9;
 move, 29.399365815334022, 74.83637388795614, 9;
 art, 8;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo068(Pen pen) {
-  var commands = '''
+String example068() {
+  return '''
 move, 0.0, 80.0, 0;
 move, 51.98880111928826, 12.625261878356275, 22;
 move, 0.0, 80.0, 0;
@@ -1841,12 +1721,10 @@ move, 0.0, 80.0, 0;
 move, 19.767531253465098, 45.28427191912861, 13;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo069(Pen pen) {
-  var commands = '''
+String example069() {
+  return '''
 move, 0, 80, 0;
 move, 82.97720095142722, 43.45130955334753, 19;
 move, 0, 80, 0;
@@ -1856,15 +1734,12 @@ move, 0, 80, 0;
 move, -59.27759676706046, -30.302252853289247, 27;
 move, 0, 80, 0;
 move, 5.755284707993269, 38.74415960162878, 15;
-art, 4;
-art, 4;
+art, 8;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo070(Pen pen) {
-  var commands = '''
+String example070() {
+  return '''
 move, 35.32066143093176, 98.8991254730593, 33;
 move, 0.0, 80.0, 0;
 move, 95.19127573079987, 65.6558805194268, 0;
@@ -1873,22 +1748,227 @@ move, 0.0, 80.0, 0;
 move, 4.416802280765286, 23.186124507536256, 17;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
 
-demo071(Pen pen) {
-  var commands = '''
+String example071() {
+  return '''
 move, 0, 80, 0;
 move, 38.37150854524225, 11.599787091836333, 32;
 move, 0, 80, 0;
 move, 24.96553952805698, 84.51234030071646, 3;
-art, 4;
+art, 8;
+  ''';
+}
+
+String example072() {
+  return '''
+move, 0.0, 80.0, 0;
+move, 35.510379570785986, 91.08840141410045, 31;
 art, 4;
   ''';
-  pen.erase();
-  pen.interpret(commands);
 }
+
+String example073() {
+  return '''
+move, 0.0, 80.0, 0;
+move, 40.51556881696686, 10.961400098506424, 10;
+move, 0.0, 80.0, 0;
+move, 91.08354069982545, 17.734716674807217, 31;
+move, 0.0, 80.0, 0;
+move, -98.33436642768766, -61.06151233426077, 28;
+art, 4;
+  ''';
+}
+
+String example074() {
+  return '''
+move, 177.0, 200.0, 11;
+art, 4;
+  ''';
+}
+
+String example075() {
+  return '''
+color, red;
+move, 177.0, 200.0, 6;
+color, blue;
+move, 177.0, 200.0, 8;
+color, yellow;
+move, 177.0, 200.0, 6;
+art, 4;
+  ''';
+}
+
+String example076() {
+  return '''
+move, 42.01246604295291, -1.142012567612971, 1;
+move, 48.52620034897903, 43.14868290189112, 28;
+color, brown;
+move, 29.06482878482821, 51.560819096097134, 17;
+art, 4;
+move, 1.2732170133395448, 97.7458238280595, 35;
+moveTo, 39.37073653231643, 66.97052551259245;
+move, 39.01482992912967, 17.558562873382634, 10;
+color, orange;
+move, 18.02374525564643, 36.826835199825545, 1;
+  ''';
+}
+
+String example077() {
+  return '''
+color, gray;
+move, 0, 45.66565312845289, 0;
+move, -99.38460907562418, 92.87422111341486, 1;
+move, 75.98250546328629, 0, 0;
+color, blue;
+move, 0, 42.80726019177635, 0;
+move, 0, 64.7614818513695, 0;
+color, gray;
+art, 4;
+width, 5;
+moveTo, 61.814343366788414, 84.41862729966128;
+color, yellow;
+move, -84.33745375108191, 16.456424645201594, 16;
+move, 95.9475652149315, 25.807066659237744, 2;
+move, 61.67024789315273, -26.563942514476878, 12;
+moveTo, 70.35186397400587, 3.0725338294673943;
+color, orange;
+move, 42.44470594293037, 95.60803984993771, 1;
+width, 7;
+move, 6.276786796185507, 17.144485081156024, 3;
+color, brown;
+move, -77.29213408881598, 39.95947369130499, 31;
+color, orange;
+move, 9.000324536252169, 0, 0;
+move, 42.04681030385875, 13.687720992555574, 1;
+width, 1;
+move, 44.62764519729795, 39.21123290012656, 7;
+move, 47.098441319902484, 40.914600556427885, 3;
+  ''';
+}
+
+String example078() {
+  return '''
+    move, 44.95256637472088, 48.13786299342821, 34;
+    width, 6;
+    move, 53.38205217427732, 0.21820327816437501, 31;
+    color, red;
+    move, -42.989494026940314, 89.00936065576082, 31;
+    color, white;
+    width, 4;
+    move, 9.425757530379354, 71.25089566386113, 3;
+    color, red;
+    move, 0.0, 48.8225280765833, 0;
+    color, green;
+    move, 16.443267342768632, 0.0, 0;
+    move, 86.62641849775139, 45.164164084321314, 33;
+    move, -76.84238338732095, 0.0, 0;
+    move, 0.0, -72.26757704344567, 0;
+    move, -58.75264895350127, 0.0, 0;
+    move, 0.0, 16.43693436425957, 0;
+    art, 5;
+  ''';
+}
+
+String example079() {
+  return '''
+move, 49.60172122810036, 4.888942162506282, 8;
+move, 20.86279431823641, 52.99268572125584, 12;
+color, orange;
+move, 56.694106850773096, 27.524887723848224, 7;
+move, 27.597979735583067, 53.447500918991864, 4;
+color, brown;
+move, 74.37689632643014, 7.960581453517079, 32;
+move, 0, -10.682069044560194, 0;
+art, 7;
+  ''';
+}
+
+String example080() {
+  return '''
+move, 0.0, 80.0, 0;
+move, -159.51294924360272, 169.35555605108672, 12;
+  ''';
+}
+
+String example081() {
+  return '''
+move, 0.0, 80.0, 0;
+move, -159.51294924360272, 169.35555605108672, 12;
+art, 5;
+  ''';
+}
+
+String example082() {
+  return '''
+move, 0.0, 80.0, 0;
+move, 282.84001466243706, 56.69130837033068, 30;
+move, 0.0, 80.0, 0;
+move, 82.23726545470528, 124.66701248548281, 0;
+move, 0.0, 80.0, 0;
+move, 291.6101313193811, 177.43575944702178, 26;
+art, 4;
+  ''';
+}
+
+String example083() {
+  return '''
+move, 0.0, 80.0, 0;
+move, 98.61138704536503, 94.57616948043865, 21;
+move, 0.0, 80.0, 0;
+move, 89.10089751608588, 20.383092494169997, 7;
+move, 0.0, 80.0, 0;
+move, 22.09524576124543, 32.681795017805584, 22;
+move, 0.0, 80.0, 0;
+move, 37.19047374249094, 70.12660154026314, 22;
+art, 5;
+  ''';
+}
+
+String example084() {
+  return '''
+color, gray;
+move, 0.0, 80.0, 0;
+move, -43.85352254284314, 99.0753630505637, 7;
+move, 0.0, 80.0, 0;
+move, 0.0, 80.0, 0;
+move, 73.07631631614746, 62.941691553135925, 10;
+move, 0.0, 80.0, 0;
+move, 0.0, 80.0, 0;
+move, 20.429350125489666, 89.3724280647821, 2;
+moveTo, 490.0, 330.0;
+move, -40.16068632788444, 54.88463698422675, 16;
+move, 0.0, 80.0, 0;
+move, 43.89420243924446, 80.62549763826463, 10;
+move, 0.0, 80.0, 0;
+move, 44.902152133135864, -22.76091333715997, 23;
+art, 4;
+  ''';
+}
+
+String example085() {
+  return '''
+move, 0.0, 80.0, 0;
+move, -113.6016549372911, 33.15919818661566, 16;
+move, 0.0, 80.0, 0;
+move, 324.03546230714954, 152.58981256707244, 17;
+move, 0.0, 80.0, 0;
+move, 196.15113236200872, 37.80736212882741, 12;
+art, 7;
+  ''';
+}
+
+String example086() {
+  return '''
+move, 0.0, 80.0, 0;
+move, 142.64503528881528, -113.5815832098117, 0;
+move, 210.27129583735638, -24.567448512308644, 19;
+move, 0.0, 80.0, 0;
+move, 84.69198147343224, 120.26685635365426, 35;
+art, 4;
+  ''';
+}
+
 
 
 

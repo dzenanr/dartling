@@ -1,0 +1,100 @@
+Shapes
+
+http://www.sonic.net/~nbs/webturtle/examples/
+
+ Square
+
+ move, 90, 100, 0;
+ move, 90, 100, 0;
+ move, 90, 100, 0;
+ move, 90, 100, 0;
+ 
+ Square Flower
+ 
+ move, 10, 0, 0;
+ move, 90, 100, 3;
+ all, 6;
+ 
+ Square Spiral
+ 
+ demo 9
+ 
+ Triangle
+ 
+ move, 0, 80, 0;
+ move, -120, 80, 0;
+ move, -120, 80, 0;
+ 
+ move, 0, 80, 0;
+ move, -120, 80, 0;
+ move, -120, 80, 0;
+ move, -15, 80, 0;
+ move, -120, 80, 0;
+ move, -120, 80, 0;
+ 
+ Triangle Flower
+ 
+ move, 0, 80, 0;
+ move, -120, 80, 0;
+ move, -120, 80, 0;
+ move, -15, 80, 0;
+ move, -120, 80, 0;
+ move, -120, 80, 0;
+ all, 3;
+ 
+ Star
+ 
+ move, 0, 150, 0;
+ move, -159, 0, 0;
+ all, 1;
+ all, 1;
+ all, 1;
+ 
+ Polygon (regular)
+ 
+ move, 45, 100, 0;
+ move, 45, 100, 0;
+ move, 45, 100, 0;
+ move, 45, 100, 0;
+ move, 45, 100, 0;
+ move, 45, 100, 0;
+ move, 45, 100, 0;
+ move, 45, 100, 0;
+ 
+ Squiggle (A short line that curls and loops in an irregular way)
+ 
+ move, 15, 100, 0;
+ move, 135, 40, 0;
+ move, 120, 60, 0;
+ all, 2;
+
+ Spiral
+
+ move, 90, 100, 0;
+ move, -90, 100, 0;
+ move, -90, 50, 0;
+ move, -90, 50, 0;
+ move, -90, 25, 0;
+ move, -90, 25, 0;
+ move, -90, 12.5, 0;
+ move, -90, 12.5, 0;
+ move, -90, 6.25, 0;
+ move, -90, 6.25, 0;
+ move, -90, 3.125, 0;
+ move, -90, 3.125, 0;
+ 
+ move, 0, 100, 0;
+ move, -60, 100, 0;
+ move, -60, 50, 0;
+ move, -60, 50, 0;
+ move, -60, 25, 0;
+ move, -60, 25, 0;
+ move, -60, 12, 0;
+ move, -60, 12, 0;
+ move, -60, 6, 0;
+ move, -60, 6, 0;
+ move, -60, 3, 0;
+ move, -60, 3, 0;
+ 
+ 
+ 

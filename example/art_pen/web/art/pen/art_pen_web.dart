@@ -36,39 +36,8 @@ import 'dart:html';
 import 'package:dartling/dartling.dart';
 import 'package:dartling/dartling_app.dart';
 
-// pub
-//import 'package:art_pen/art_pen.dart';
-
-part '../../../lib/art/pen/json/data.dart';
-part '../../../lib/art/pen/json/model.dart';
-
-part '../../../lib/art/pen/init.dart';
-part '../../../lib/art/pen/segments.dart';
-part '../../../lib/art/pen/lines.dart';
-
-part '../../../lib/gen/art/pen/entries.dart';
-part '../../../lib/gen/art/pen/segments.dart';
-part '../../../lib/gen/art/pen/lines.dart';
-part '../../../lib/gen/art/models.dart';
-part '../../../lib/gen/art/repository.dart';
-
-// added by hand
-part '../../../lib/art/pen/pen.dart';
-part '../../../lib/art/pen/examples.dart';
-part '../../../lib/art/pen/programs.dart';
-
-part '../../../lib/util/color.dart';
-part '../../../lib/util/random.dart';
-
-// pub
-
-// pub
-//import 'package:art_pen/art_pen_app.dart';
-
-part '../../../lib/app/drawing.dart';
-part '../../../lib/app/commands.dart';
-
-// pub
+import 'package:art_pen/art_pen.dart';
+import 'package:art_pen/art_pen_app.dart';
 
 initArtData(ArtRepo artRepo) {
    var artModels =

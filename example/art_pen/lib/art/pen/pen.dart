@@ -27,6 +27,7 @@ class Pen {
   Line lastLine;
 
   var commands;
+  var examples;
 
   Pen(ArtRepo artRepo) {
     var artModels =
@@ -50,6 +51,7 @@ class Pen {
     lastLine = null;
 
     commands = new List<List>();
+    examples = exampleList();
   }
 
   erase() {
@@ -127,21 +129,24 @@ class Pen {
   moveToStart() => moveTo(startX, startY);
 
   moveTo(num x, num y) {
-    if (lastLine != null) {
-      var previousLine = lastLine;
+    if (lastLine == null) {
+      lastLine = new Line.first(lastSegment.lines.concept, x, y);
+    } else {
       lastLine = new Line.next(lastSegment.lines.concept, lastLine);
-      lastLine.segment = lastSegment;
-      lastLine.beginX = previousLine.endX;
-      lastLine.beginY = previousLine.endY;
-      lastLine.endX = x;
-      lastLine.endY = y;
-      lastLine.backOnBorder(drawingWidth, drawingHeight);
-      lastSegment.lines.add(lastLine);
-      commands.add(['moveTo', x, y]);
     }
+    var previousLine = lastLine;
+    lastLine = new Line.next(lastSegment.lines.concept, lastLine);
+    lastLine.segment = lastSegment;
+    lastLine.beginX = previousLine.endX;
+    lastLine.beginY = previousLine.endY;
+    lastLine.endX = x;
+    lastLine.endY = y;
+    lastLine.backOnBorder(drawingWidth, drawingHeight);
+    lastSegment.lines.add(lastLine);
+    commands.add(['moveTo', x, y]);
   }
 
-  move(num turn, [num advance = 0, int repeat = 0]) {
+  move(num turn, [num steps= 0, int repeat= 0]) {
     if (lastLine == null) {
       lastLine = new Line.first(lastSegment.lines.concept, startX, startY);
     } else {
@@ -149,7 +154,7 @@ class Pen {
     }
     lastLine.segment = lastSegment;
     lastLine.angle = turn;
-    lastLine.pixels = advance;
+    lastLine.pixels = steps;
     lastLine.backOnBorder(drawingWidth, drawingHeight);
     lastSegment.lines.add(lastLine);
 
@@ -159,12 +164,12 @@ class Pen {
             new Line.next(lastSegment.lines.concept, lastLine);
         lastLine.segment = lastSegment;
         lastLine.angle = turn;
-        lastLine.pixels = advance;
+        lastLine.pixels = steps;
         lastLine.backOnBorder(drawingWidth, drawingHeight);
         lastSegment.lines.add(lastLine);
       }
     }
-    commands.add(['move', turn, advance, repeat]);
+    commands.add(['move', turn, steps, repeat]);
   }
 
   art([int times = 1]) {
@@ -223,13 +228,13 @@ class Pen {
     }
   }
 
-  right (num angle) {
+  right(num angle) {
     if (angle > 0) {
       move(angle);
     }
   }
 
-  left (num angle) {
+  left(num angle) {
     if (angle > 0) {
       move(-angle);
     }
@@ -245,6 +250,24 @@ class Pen {
     if (steps > 0) {
       move(0, -steps);
     }
+  }
+
+  go(num steps, {num angle: 0, int repeat: 0}) {
+    var i = 0;
+    while (i++ < repeat + 1) {
+      move(0, steps);
+      move(angle, 0);
+    }
+  }
+
+  skip(num steps, {num angle: 0, int repeat: 0}) {
+    down = false;
+    var i = 0;
+    while (i++ < repeat + 1) {
+      move(0, steps);
+      move(angle, 0);
+    }
+    down = true;
   }
 
   colorRandom() => color = randomListElement(colorList());
@@ -266,6 +289,25 @@ class Pen {
 
   artRandom() {
     art(randomInt(randomMaxInt));
+  }
+
+  goRandom() =>
+      go(randomSign(randomMaxInt) * randomDouble(randomStepsMax),
+          angle: randomSign(randomMaxInt) * randomDouble(randomAngleMax),
+          repeat: randomInt(randomRepeatMax));
+
+  skipRandom() =>
+      skip(randomSign(randomMaxInt) * randomDouble(randomStepsMax),
+          angle: randomSign(randomMaxInt) * randomDouble(randomAngleMax),
+          repeat: randomInt(randomRepeatMax));
+
+  String randomDemoName() {
+    var seq = randomInt(91);
+    var name;
+    if (seq < 10) { name = 'demo00${seq.toString()}';
+    } else if (seq < 100) { name = 'demo0${seq.toString()}';
+    } else if (seq < 1000) name = 'demo${seq.toString()}';
+    return name;
   }
 
   String fromCommands() {
@@ -351,6 +393,32 @@ class Pen {
             case 'moveRandom':
               moveRandom();
               break;
+            case 'go':
+              if (command.length == 2) {
+                go(double.parse(command[1]));
+              } else if (command.length == 3) {
+                go(double.parse(command[1]), angle: double.parse(command[2]));
+              } else if (command.length == 4) {
+                go(double.parse(command[1]), angle: double.parse(command[2]),
+                  repeat: int.parse(command[3]));
+              }
+              break;
+            case 'goRandom':
+              goRandom();
+              break;
+            case 'skip':
+              if (command.length == 2) {
+                skip(double.parse(command[1]));
+              } else if (command.length == 3) {
+                skip(double.parse(command[1]), angle: double.parse(command[2]));
+              } else if (command.length == 4) {
+                skip(double.parse(command[1]), angle: double.parse(command[2]),
+                  repeat: int.parse(command[3]));
+              }
+              break;
+            case 'skipRandom':
+              skipRandom();
+              break;
             case 'left':
               left(double.parse(command[1]));
               break;
@@ -386,6 +454,14 @@ class Pen {
       } // for
     } catch(e) {
       print('error in interpretation of commands -- $e');
+    }
+  }
+
+  example(int seq) {
+    if (seq < examples.length) {
+      var commands = examples[seq];
+      erase();
+      interpret(commands);
     }
   }
 

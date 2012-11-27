@@ -7,7 +7,7 @@ class ArtRepo extends Repo {
   static final artDomainCode = "Art";
   static final artPenModelCode = "Pen";
 
-  ArtRepo({String code: "ArtRepo"}) : super(code) {
+  ArtRepo([String code="ArtRepo"]) : super(code) {
     _initArtDomain();
   }
 

@@ -1,0 +1,93 @@
+github.txt for game_parking
+
+GitHub, Git
+
+https://github.com/
+http://training.github.com/
+http://www.codeschool.com/courses/try-git
+http://git-scm.com/videos
+http://git-scm.com/book
+http://marklodato.github.com/visual-git-guide/index-en.html
+
+Education
+
+https://github.com/edu
+
+Create an account at GitHub.
+
+Read:
+
+http://help.github.com/win-set-up-git/
+http://www.ralfebert.de/blog/tools/git_screencast/
+http://scottr.org/presentations/git-in-5-minutes/
+
+-------------------------------------------------------------------------------
+
+After creating an account, create a remote repository.
+
+http://help.github.com/create-a-repo/
+
+Create a New Repo at GitHub 
+(without README, since cloning will not be used).
+Repository Name: game_parking
+Description: 
+  Model framework for educational purposes.
+      
+Next steps:
+  cd git/dart/dartling_examples/game_parking
+  git init
+  git status
+  git add .
+  git commit -m 'initial version'
+  git remote add origin https://github.com/dzenanr/game_parking.git
+  git push -u origin master     
+
+-------------------------------------------------------------------------------
+
+Git with Git Bash
+
+Clone a remote repository into a local repository.
+
+cd git/dart
+git clone https://github.com/dzenanr/game_parking.git
+cd dartlero
+
+Read+Write:
+https://github.com/dzenanr/game_parking.git
+
+Read only:
+git://github.com/dzenanr/game_parking.git
+
+Get the latest changes from the remote repository
+
+git pull
+or
+git pull origin master
+
+-------------------------------------------------------------------------------
+
+Work with a local repository
+
+cd git/dart/dartling_examples/game_parking
+
+git status
+
+git add .
+
+git status
+
+git commit -m 'short description'
+
+git status
+
+git rm file
+
+git status
+
+git push
+or
+git push origin master
+
+git status
+
+-------------------------------------------------------------------------------

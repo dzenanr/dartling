@@ -7,11 +7,7 @@ class Segment extends SegmentGen {
   Segment(Concept concept) : super(concept);
 
   // begin: added by hand
-  //bool visible = true;
-
   String text;
-
-  //set lines(Lines lines) => setChild("lines", lines);
   // end: added by hand
 
 }

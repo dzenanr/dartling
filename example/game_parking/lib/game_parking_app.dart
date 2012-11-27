@@ -39,26 +39,7 @@ import 'dart:isolate';
 import 'package:dartling/dartling.dart';
 import 'package:dartling/dartling_app.dart';
 
-// pub
-//import 'package:game_parking/game_parking.dart';
-
-part 'game/parking/json/data.dart';
-part 'game/parking/json/model.dart';
-
-part 'game/parking/init.dart';
-part 'game/parking/areas.dart';
-part 'game/parking/brands.dart';
-part 'game/parking/parkings.dart';
-part 'game/parking/cars.dart';
-
-part 'gen/game/parking/entries.dart';
-part 'gen/game/parking/areas.dart';
-part 'gen/game/parking/brands.dart';
-part 'gen/game/parking/parkings.dart';
-part 'gen/game/parking/cars.dart';
-part 'gen/game/models.dart';
-part 'gen/game/repository.dart';
-// pub
+import 'package:game_parking/game_parking.dart';
 
 part 'app/home/board.dart';
 part 'app/home/dash.dart';

@@ -31,27 +31,12 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import 'dart:html';
+//import 'dart:html';
 
 import 'package:dartling/dartling.dart';
 import 'package:dartling/dartling_app.dart';
 
-// pub
-//import 'package:category_keyword/category_keyword.dart';
-
-part '../../../lib/category/keyword/json/data.dart';
-part '../../../lib/category/keyword/json/model.dart';
-part '../../../lib/category/keyword/init.dart';
-part '../../../lib/category/keyword/categories.dart';
-part '../../../lib/category/keyword/keywords.dart';
-part '../../../lib/category/keyword/tags.dart';
-part '../../../lib/gen/category/keyword/entries.dart';
-part '../../../lib/gen/category/keyword/categories.dart';
-part '../../../lib/gen/category/keyword/keywords.dart';
-part '../../../lib/gen/category/keyword/tags.dart';
-part '../../../lib/gen/category/models.dart';
-part '../../../lib/gen/category/repository.dart';
-// pub
+import 'package:category_keyword/category_keyword.dart';
 
 initCategoryData(CategoryRepo categoryRepo) {
    var categoryModels =

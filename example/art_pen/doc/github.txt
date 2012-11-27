@@ -1,0 +1,128 @@
+GitHub
+
+https://github.com/
+http://git-scm.com/videos
+
+Git
+
+http://marklodato.github.com/visual-git-guide/index-en.html
+
+Education
+
+https://github.com/edu
+
+Create an account at GitHub.
+
+Read:
+
+http://help.github.com/win-set-up-git/
+
+http://www.ralfebert.de/blog/tools/git_screencast/
+
+http://scottr.org/presentations/git-in-5-minutes/
+
+---------------------------------------------------------------------
+
+After creating an account, create a remote repository.
+The following is what I did for art_pen.
+
+http://help.github.com/create-a-repo/
+
+Create a New Repository
+Project Name: art_pen
+Description: 
+  Drawing a smart dart art. 
+  If you are less artistic, use commands, based on the Logo programming language for children, to learn basic programming concepts by drawing.    
+  
+Next steps:
+  cd git/dart/dartling_examples/art_pen
+  git init
+  git status
+  git add .
+  git commit -m 'initial version'
+  git remote add origin https://github.com/dzenanr/art_pen.git
+  git push -u origin master     
+
+----------------------------------------------------------------------
+
+Git with Git Bash
+
+Clone a remote repository into a local repository.
+
+cd git/dart/dartling_examples
+git clone https://github.com/dzenanr/art_pen.git
+cd art_pen
+
+Read+Write:
+https://github.com/dzenanr/art_pen.git
+
+Read only:
+git://github.com/dzenanr/art_pen.git
+
+Get the latest changes from the remote repository
+
+git pull
+git pull origin master
+
+---------------------------------------------------------------------
+
+Work with a local repository
+
+cd git/dart/dartling_examples/art_pen
+
+git add .
+
+git status
+
+git commit -m 'short description'
+
+git status
+
+git rm file
+
+git status
+
+git push
+git push origin master
+Enter passphrase for key ... :
+
+git status
+
+---------------------------------------------------------------------
+
+Tagging for versions (spirals)
+
+http://learn.github.com/p/tagging.html
+
+git tag
+git tag -a s00 -m 'spiral 00'
+git tag
+
+To push tags to the remote repository:
+
+git push --tags
+Enter passphrase for key ... :
+
+---------------------------------------------------------------------
+
+Switching from master to spiral
+
+from master to tag
+git checkout s01
+from tag to branch
+git checkout -b s01a
+to use branch
+git checkout s01a
+
+
+Switching from spiral to master
+
+to exclude js:
+git checkout art_pen.dart.js
+or 
+(see http://scottr.org/presentations/git-in-5-minutes/)
+git stash
+
+git checkout master
+
+

@@ -40,30 +40,7 @@ import 'dart:math';
 import 'package:dartling/dartling.dart';
 import 'package:dartling/dartling_app.dart';
 
-// pub
-// import 'package:art_pen/art_pen.dart';
-
-part 'art/pen/json/data.dart';
-part 'art/pen/json/model.dart';
-
-part 'art/pen/init.dart';
-part 'art/pen/segments.dart';
-part 'art/pen/lines.dart';
-
-part 'gen/art/pen/entries.dart';
-part 'gen/art/pen/segments.dart';
-part 'gen/art/pen/lines.dart';
-part 'gen/art/models.dart';
-part 'gen/art/repository.dart';
-
-// added by hand
-part 'art/pen/pen.dart';
-part 'art/pen/examples.dart';
-part 'art/pen/programs.dart';
-
-part 'util/color.dart';
-part 'util/random.dart';
-// pub
+import 'package:art_pen/art_pen.dart';
 
 // added by hand
 part 'app/commands.dart';

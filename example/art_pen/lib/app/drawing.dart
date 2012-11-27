@@ -3,7 +3,7 @@ part of art_pen_app;
 class Board {
 
   static final int interval = 10; // in ms; redraw every interval
-  static final int artCount = 4;  // how many times segments ar doubled
+  static final int artCount = 4;  // how many times segments are doubled
   static final num leftAngle = 22.5;
   static final num righttAngle = 45;
   static final num backwardSteps = 60;
@@ -22,7 +22,8 @@ class Board {
   InputElement onDartCountInput;
   ButtonElement onDartButton;
   ButtonElement eraseButton;
-  SelectElement demosSelect;
+  ButtonElement exampleButton;
+  SelectElement programSelect;
 
   CanvasElement canvas;
   CanvasRenderingContext2D context;
@@ -94,7 +95,7 @@ class Board {
         randomProgram(pen,
             int.parse(artCountInput.value), int.parse(onDartCountInput.value));
       } on FormatException catch(error) {
-        print('On Dart count (${onDartCountInput.value}) must be an integer -- $error');
+        randomProgram(pen, artCount, randomCommandGenList.length + 1);
       }
     });
 
@@ -104,16 +105,21 @@ class Board {
       _init();
     });
 
-    demosSelect = document.query('#demos');
-    demosSelect.on.change.add((Event e) {
+    exampleButton = document.query('#example');
+    exampleButton.on.click.add((MouseEvent e) {
+      pen.example(randomInt(pen.examples.length - 1));
+    });
+
+    programSelect = document.query('#program');
+    programSelect.on.change.add((Event e) {
       try {
-        if (demosSelect.value == 'demos') {
-          randomDemo(pen, int.parse(artCountInput.value));
+        if (programSelect.value == 'random example') {
+          randomExample(pen, artCount:int.parse(artCountInput.value));
         } else {
-          demo(pen, int.parse(demosSelect.value));
+          demo(pen, int.parse(programSelect.value));
         }
       } on FormatException catch(error) {
-        randomDemo(pen);
+        randomExample(pen);
       }
     });
 
@@ -207,7 +213,7 @@ class Board {
     visibleCheckbox.checked = pen.visible;
     artCountInput.value = artCount.toString();
     onDartCountInput.value = (randomCommandGenList.length + 1).toString();
-    demosSelect.value = 'demos';
+    programSelect.value = 'program';
 
     turnInput.value = Pen.angle.toString();
     advanceInput.value = Pen.steps.toString();

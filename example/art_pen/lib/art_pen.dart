@@ -33,7 +33,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 library art_pen;
 
-import 'dart:isolate';
 import 'dart:math';
 
 import 'package:dartling/dartling.dart';

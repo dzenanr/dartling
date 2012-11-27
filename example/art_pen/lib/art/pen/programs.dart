@@ -108,7 +108,7 @@ randomProgram(Pen pen, [int artCount = 4, int commandsCount = 32]) {
   pen.interpret(program);
 }
 
-randomDemo(Pen pen, [int artCount = 4]) {
+randomExample(Pen pen, {int artCount: 4}) {
   var commands =
     'colorRandom; '
     'widthRandom; '
@@ -191,9 +191,47 @@ demo(Pen pen, int demo) {
     case 16:
       demo16(pen);
       break;
+    case 17:
+      demo17(pen);
+      break;
+    case 18:
+      demo18(pen);
+      break;
+    case 19:
+      demo19(pen);
+      break;
+    case 20:
+      demo20(pen);
+      break;
+    case 21:
+      demo21(pen);
+      break;
     default:
-      randomDemo(pen);
+      randomExample(pen);
   }
+}
+
+List sequence(int count) {
+  // based on: http://blog.zacharyabel.com/tag/turtle-programs/
+  List seq(List sequence) {
+    var seq = new List.from(sequence);
+    for (var i in sequence) {
+      if (i == 1) {
+        seq.add(0);
+      } else if (i == 0) {
+        seq.add(1);
+      }
+    }
+    return seq;
+  }
+
+  var sequence = new List();
+  sequence.add(1);
+  var s = seq(sequence);
+  for (var j = 0; j < count; j++) {
+    s = seq(s);
+  }
+  return s;
 }
 
 demo1(Pen pen) {
@@ -293,61 +331,6 @@ demo5(Pen pen) {
 }
 
 demo6(Pen pen) {
-  var commandsString = 'color, red; move, 45, 80, 1; width, 3; color, yellow; '
-                       'move, 50, 80, 1; width, 2; color, blue; '
-                       'move, 65, 80, 1; down, false; moveTo, 333, 333; '
-                       'down, true; move, 15, 120, 4; art, 7';
-  pen.erase();
-  pen.interpret(commandsString);
-}
-
-demo7(Pen pen) {
-  var commandsString = '''
-    color, red; width, 2; move, 15, 160, 2;
-    color, green; width, 1; move, -45, 200, 3; move, 66, 80, 6;
-    color, brown;  width, 2; move, -20, 40, 8;
-    art, 6;
-''';
-  pen.erase();
-  pen.interpret(commandsString);
-}
-
-demo8(Pen pen) {
-  var commandsString = '''
-    color, gray;
-    width, 2;
-    move, 45, 80, 1;
-    color, green;
-    width, 1;
-    move, 33, 80, 1;
-    color, orange;
-    width, 3;
-    move, 15, 80, 1;
-    move, 90, 80, 4;
-    art, 5;
-  ''';
-  pen.erase();
-  pen.interpret(commandsString);
-}
-
-demo9(Pen pen) {
-  var commandsString =
-    'color, yellow; '
-    'width, 3; '
-    'move, 80, 80, 3; '
-    'color, gray; '
-    'width, 1; '
-    'move, -18, 60, 6; '
-    'color, blue; '
-    'width, 2; '
-    'move, 120, 100, 5; '
-    'move, 5, -80, 9; '
-    'art, 4';
-  pen.erase();
-  pen.interpret(commandsString);
-}
-
-demo10(Pen pen) {
   var colorList = ['blue', 'gray', 'red', 'yellow'];
   multicolorSquare(var size) {
     for (var color in colorList) {
@@ -367,7 +350,7 @@ demo10(Pen pen) {
   }
 }
 
-demo11(Pen pen) {
+demo7(Pen pen) {
   f1(var length, var depth) {
     if (depth == 0) {
       pen.forward(length);
@@ -387,7 +370,7 @@ demo11(Pen pen) {
   //f1(500, 4);
 }
 
-demo12(Pen pen) {
+demo8(Pen pen) {
   f2(var length, var depth) {
     if (depth == 0) {
       pen.move(0, length);
@@ -405,103 +388,275 @@ demo12(Pen pen) {
   f2(240, 4);
 }
 
-demo13(Pen pen) {
-  var commands = '''
-    move, 42.01246604295291, -1.142012567612971, 1;
-    move, 48.52620034897903, 43.14868290189112, 28;
-    color, brown;
-    move, 29.06482878482821, 51.560819096097134, 17;
-    art, 6;
-    move, 1.2732170133395448, 97.7458238280595, 35;
-    moveTo, 39.37073653231643, 66.97052551259245;
-    move, 39.01482992912967, 17.558562873382634, 10;
-    color, black;
-    move, 18.02374525564643, 36.826835199825545, 1;
-  ''';
+demo9(Pen pen) {
+  tri(num size) {
+    pen.forward(size);
+    pen.right(120);
+    pen.forward(size);
+    pen.right(120);
+    pen.forward(size);
+    pen.right(120);
+  }
   pen.erase();
-  pen.interpret(commands);
+  var max = 40;
+  for (var i = 0; i < max; i++) {
+    tri(max - i);
+    pen.right(i);
+    pen.forward(max - i);
+  }
+}
+
+demo10(Pen pen) {
+  pen.erase();
+  var max = 500;
+  for (var i = 0; i < max; i++) {
+    pen.down = false;
+    pen.moveToRandom();
+    pen.down = true;
+    pen.move(45, 2, 0);
+  }
+}
+
+demo11a(Pen pen) {
+  f1() {
+    for (var i in [1,2,3,4,5,6]) {
+      pen.forward(1);
+      pen.move(1, 1, 359);
+      pen.right(60);
+    }
+  }
+
+  f2() {
+    for (var i in [1,2,3,4,5,6]) {
+      pen.forward(1);
+      pen.move(1, 1, 359);
+      pen.down = false;
+      pen.forward(1);
+      pen.move(1, 1, 239);
+      pen.down = true;
+      pen.right(180);
+    }
+  }
+
+  f3() {
+    for (var i in [1,2,3,4,5,6]) {
+      pen.down = false;
+      pen.forward(1);
+      pen.move(1, 1, 239);
+      pen.down = true;
+      pen.right(120);
+      pen.forward(1);
+      pen.move(1, 1, 359);
+      pen.left(60);
+      pen.forward(1);
+      pen.move(1, 1, 359);
+      pen.right(120);
+    }
+  }
+
+  pen.erase();
+  f1();
+  pen.down = false;
+  pen.move(0, 100, 0);
+  pen.down = true;
+  f2();
+  f3();
+}
+
+demo11(Pen pen) {
+  f1() {
+    for (var i = 0; i < 6; i++) {
+      pen.go(1, angle: 1, repeat: 359);
+      pen.right(60);
+    }
+  }
+
+  f2() {
+    for (var i = 0; i < 6; i++) {
+      pen.go(1, angle: 1, repeat: 359);
+      pen.skip(1, angle: 1, repeat: 239);
+      pen.right(180);
+    }
+  }
+
+  f3() {
+    for (var i = 0; i < 6; i++) {
+      pen.skip(1, angle: 1, repeat: 239);
+      pen.right(120);
+      pen.go(1, angle: 1, repeat: 359);
+      pen.left(60);
+      pen.go(1, angle: 1, repeat: 359);
+      pen.right(120);
+    }
+  }
+
+  pen.erase();
+  f1();
+  pen.skip(99);
+  f2();
+  f3();
+}
+
+demo12(Pen pen) {
+  f1() {
+    for (var i = 0; i < 4; i++) {
+      var j = 1;
+      pen.go(100, angle: 100 - j++, repeat: 99);
+    }
+  }
+
+  pen.erase();
+  for (var k = 0; k < 8; k++) {
+    pen.colorRandom();
+    f1();
+    pen.moveToRandom();
+  }
+}
+
+demo13(Pen pen) {
+  zig(int level) {
+    pen.forward(level * 30);
+    var l = level - 1;
+    if (l > 0) {
+      pen.left(45);
+      for (var i = 0; i < 3; i++) {
+        pen.colorRandom();
+        zig(l);
+        pen.right(90);
+        pen.forward(level * i);
+      }
+    }
+  }
+
+  pen.erase();
+  zig(6);
 }
 
 demo14(Pen pen) {
-  var commands = '''
-    color, gray;
-    move, 0, 45.66565312845289, 0;
-    move, -99.38460907562418, 92.87422111341486, 1;
-    move, 75.98250546328629, 0, 0;
-    color, blue;
-    move, 0, 42.80726019177635, 0;
-    move, 0, 64.7614818513695, 0;
-    color, gray;
-    art, 5;
-    width, 5;
-    moveTo, 61.814343366788414, 84.41862729966128;
-    color, green;
-    move, -84.33745375108191, 16.456424645201594, 16;
-    move, 95.9475652149315, 25.807066659237744, 2;
-    move, 61.67024789315273, -26.563942514476878, 12;
-    moveTo, 70.35186397400587, 3.0725338294673943;
-    color, orange;
-    move, 42.44470594293037, 95.60803984993771, 1;
-    width, 7;
-    move, 6.276786796185507, 17.144485081156024, 3;
-    color, gray;
-    move, -77.29213408881598, 39.95947369130499, 31;
-    color, orange;
-    move, 9.000324536252169, 0, 0;
-    move, 42.04681030385875, 13.687720992555574, 1;
-    width, 1;
-    move, 44.62764519729795, 39.21123290012656, 7;
-    move, 47.098441319902484, 40.914600556427885, 3;
-    width, 1;
-    color, orange;
-    move, 81.66318136219168, 0, 0;
-    color, gray;
-  ''';
+  square() {
+    pen.move(90, 100, 3);
+  }
+
   pen.erase();
-  pen.interpret(commands);
+  for (var k = 0; k < 52; k++) {
+    pen.colorRandom();
+    square();
+    pen.right(10);
+  }
 }
 
 demo15(Pen pen) {
-  var commands = '''
-    move, 44.95256637472088, 48.13786299342821, 34;
-    width, 6;
-    move, 53.38205217427732, 0.21820327816437501, 31;
-    color, red;
-    move, -42.989494026940314, 89.00936065576082, 31;
-    color, white;
-    width, 4;
-    move, 9.425757530379354, 71.25089566386113, 3;
-    color, red;
-    move, 0.0, 48.8225280765833, 0;
-    color, green;
-    move, 16.443267342768632, 0.0, 0;
-    move, 86.62641849775139, 45.164164084321314, 33;
-    move, -76.84238338732095, 0.0, 0;
-    move, 0.0, -72.26757704344567, 0;
-    move, -58.75264895350127, 0.0, 0;
-    move, 0.0, 16.43693436425957, 0;
-    art, 5;
-  ''';
+  star() {
+    pen.go(100, angle: 252, repeat: 4);
+  }
+
   pen.erase();
-  pen.interpret(commands);
+  pen.color = 'yellow';
+  for (var k = 0; k < 18; k++) {
+    star();
+    pen.right(20);
+  }
 }
 
 demo16(Pen pen) {
-  var commands = '''
-    move, 49.60172122810036, 4.888942162506282, 8;
-    move, 20.86279431823641, 52.99268572125584, 12;
-    color, gray;
-    move, 56.694106850773096, 27.524887723848224, 7;
-    move, 27.597979735583067, 53.447500918991864, 4;
-    color, brown;
-    move, 74.37689632643014, 7.960581453517079, 32;
-    move, 0, -10.682069044560194, 0;
-    width, 2;
-    art, 7;
-  ''';
+  var s = sequence(11);
   pen.erase();
-  pen.interpret(commands);
+  pen.down = false;
+  pen.moveTo(pen.drawingWidth, 0);
+  pen.down = true;
+  for (var k in s) {
+    if (k == 1) {
+      pen.forward(4);
+    } else if (k == 0) {
+      pen.left(60);
+    }
+  }
 }
+
+demo17(Pen pen) {
+  var s = sequence(11);
+  pen.erase();
+  pen.down = false;
+  pen.moveTo(0, 0);
+  pen.down = true;
+  for (var k in s) {
+    if (k == 1) {
+      pen.forward(1);
+    } else if (k == 0) {
+      pen.left(120);
+    }
+  }
+}
+
+demo18(Pen pen) {
+  var s = sequence(10);
+  pen.erase();
+  pen.down = false;
+  pen.moveTo(pen.drawingWidth, 0);
+  pen.down = true;
+  for (var k in s) {
+    if (k == 1) {
+      pen.left(180);
+      pen.forward(4);
+
+    } else if (k == 0) {
+      pen.left(60);
+      pen.forward(4);
+    }
+  }
+}
+
+demo19(Pen pen) {
+  var s = sequence(10);
+  pen.erase();
+  pen.down = false;
+  pen.moveTo(0, 0);
+  pen.down = true;
+  for (var k in s) {
+    if (k == 1) {
+      pen.left(180);
+      pen.forward(8);
+    } else if (k == 0) {
+      pen.left(120);
+      pen.forward(8);
+    }
+  }
+}
+
+demo20(Pen pen) {
+  var s = sequence(10);
+  pen.erase();
+  pen.down = false;
+  pen.moveTo(0, pen.drawingHeight);
+  pen.down = true;
+  for (var k in s) {
+    if (k == 1) {
+      pen.left(180);
+    } else if (k == 0) {
+      pen.left(15);
+      pen.forward(10);
+    }
+  }
+}
+
+demo21(Pen pen) {
+  var s = sequence(10);
+  pen.erase();
+  pen.down = false;
+  pen.moveTo(0, pen.drawingHeight/2);
+  pen.down = true;
+  for (var k in s) {
+    if (k == 1) {
+      pen.forward(4);
+      pen.left(60);
+    } else if (k == 0) {
+      pen.left(180);
+    }
+  }
+}
+
+
+
 
 
 

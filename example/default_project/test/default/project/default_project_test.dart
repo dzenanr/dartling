@@ -1,20 +1,9 @@
 
-import 'package:unittest/unittest.dart';
+//import 'package:unittest/unittest.dart';
 
 import 'package:dartling/dartling.dart';
 
-// pub
-//import 'package:default_project/default_project.dart';
-
-part '../../../lib/default/project/json/data.dart';
-part '../../../lib/default/project/json/model.dart';
-part '../../../lib/default/project/init.dart';
-part '../../../lib/default/project/projects.dart';
-part '../../../lib/gen/default/project/entries.dart';
-part '../../../lib/gen/default/project/projects.dart';
-part '../../../lib/gen/default/models.dart';
-part '../../../lib/gen/default/repository.dart';
-// pub
+import 'package:default_project/default_project.dart';
 
 testDefaultProject(Repo repo, String domainCode, String modelCode) {
   var models;

@@ -1,6 +1,4 @@
-//part of game_parking;
-
-part of game_parking_app;
+part of game_parking;
 
 // http://jsonformatter.curiousconcept.com/
 

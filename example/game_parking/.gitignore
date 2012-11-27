@@ -1,5 +1,6 @@
 .children
 packages
 *.js
+*.js.deps
 *.js.map
 *~
