@@ -26,7 +26,7 @@ A graphical model designed in [Magic Boxes](https://github.com/dzenanr/magic_box
 * [research guidelines] 
   (https://docs.google.com/document/d/15rvqT1QOEusUniqNJOad-vwJDwRLombVmG3X87T6xkM/edit)
 * let me know what you would like to see in dartling?
-* join me in making dartling a darling of the Dart community
+* join me, as a regular project member, in making dartling a darling of the Dart community
 * if you are a student [work with me]  
   (https://docs.google.com/document/d/1cZWkOlzy8lqHhe_0q0mEyQlvI-Xjc8q07BwLaWqqyE8/edit)
   on making dartling easier to learn
@@ -41,7 +41,7 @@ To understand what else you can do with dartling examine its API defined in abst
 
 ## Examples
 
-dartling has five examples that show how different web applications may be developed quickly based on a domain model generated from the JSON representation of a graphical model. One of them is [Art.Pen] (http://pancake.io/976ed5/dart/art/pen/d_art_pen.html), which is a version of the Logo programming language for children. I use Art.Pen to teach basic control structures in programming by drawing fun "art" with positional pen commands. Another example is [Game.Parking] (http://pancake.io/976ed5/dart/game/parking/game_parking.html), which is a strategy puzzle designed by a mathematician to teach children abstract thinking. The other three examples are models with standard modeling patterns: one-to-many, many-to-many and reflexive relationships.
+dartling has several examples, all at [dzenanr] (https://github.com/dzenanr), which show how different web applications may be developed quickly based on a domain model generated from the JSON representation of a graphical model. One of them is [Art.Pen] (https://github.com/dzenanr/art_pen), which is a version of the Logo programming language for children. I use Art.Pen to teach basic control structures in programming by drawing fun "art" with positional pen commands. Another example is [Game.Parking] (https://github.com/dzenanr/game_parking), which is a strategy puzzle designed by a mathematician to teach children abstract thinking. In the [dartling_examples] (https://github.com/dzenanr/dartling_examples) there are three examples of models with standard modeling patterns: one-to-many, many-to-many and reflexive relationships.
 
 **Warning**: I have run my projects only in the [Chrome] (https://www.google.com/intl/en/chrome/browser/) browser.
 
