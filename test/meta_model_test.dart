@@ -1,5 +1,8 @@
 
+import 'dart:uri';
+
 import 'package:dartling/dartling.dart';
+import 'package:unittest/unittest.dart';
 
 Model createDomainModel() {
   Domain domain = new Domain('CategoryQuestion');
@@ -37,7 +40,7 @@ Model createDomainModel() {
   return model;
 }
 
-createModelData(Model model) {
+ModelEntries createModelData(Model model) {
   var entries = new ModelEntries(model);
   Entities categories = entries.getEntry('Category');
   assert(categories.count == 0);
@@ -78,10 +81,54 @@ createModelData(Model model) {
   assert(tryDartWebLink.getParent('category').getAttribute('name') == 'Dart');
 
   // Display
-  categories.display(title:'Link Model Creation');
+  //categories.display(title:'Link Model Creation');
+
+  return entries;
+}
+
+testModelData(Model model) {
+  ModelEntries entries;
+  group('Testing Model Data', () {
+    setUp(() {
+      entries = createModelData(model);
+      expect(entries, isNotNull);
+    });
+    tearDown(() {
+      entries.clear();
+      expect(entries.empty, isTrue);
+    });
+    test('Find Category and Web Link by Id', () {
+      var categories = entries.getEntry('Category');
+      Id categoryId = new Id(entries.getConcept('Category'));
+      categoryId.setAttribute('name', 'Dart');
+      var dartCategory = categories.findById(categoryId);
+      expect(dartCategory, isNotNull);
+      expect(dartCategory.getAttribute('name'), equals('Dart'));
+
+      var dartWebLinks = dartCategory.getChild('webLinks');
+      Id dartHomeId = new Id(entries.getConcept('WebLink'));
+      dartHomeId.setParent('category', dartCategory);
+      dartHomeId.setAttribute('subject', 'Dart Home');
+      var dartHomeWebLink = dartWebLinks.findById(dartHomeId);
+      expect(dartHomeWebLink, isNotNull);
+      expect(dartHomeWebLink.getAttribute('subject'), equals('Dart Home'));
+    });
+    test('Order Categories by Id (code not used, id is name)', () {
+      var categories = entries.getEntry('Category');
+      var orderedCategories = categories.order();
+      expect(orderedCategories.list, isNot(isEmpty));
+      expect(orderedCategories.source, isNotNull);
+      expect(orderedCategories.source.list, isNot(isEmpty));
+      expect(orderedCategories.source.count, equals(categories.count));
+
+      orderedCategories.display(title:
+        'Categories Ordered By Id (code not used, id is name)');
+    });
+
+  });
 }
 
 void main() {
   var model = createDomainModel();
-  createModelData(model);
+  testModelData(model);
 }
