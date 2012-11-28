@@ -1,7 +1,6 @@
 
-import 'dart:uri';
-
 import 'package:dartling/dartling.dart';
+
 import 'package:unittest/unittest.dart';
 
 Model createDomainModel() {
@@ -79,9 +78,6 @@ ModelEntries createModelData(Model model) {
   dartWebLinks.add(tryDartWebLink);
   assert(dartWebLinks.count == 2);
   assert(tryDartWebLink.getParent('category').getAttribute('name') == 'Dart');
-
-  // Display
-  //categories.display(title:'Link Model Creation');
 
   return entries;
 }
@@ -172,11 +168,15 @@ testModelData(Model model) {
           equals('required'));
       dartCategory.getChild('webLinks').errors.display(title:'WebLink Error');
     });
+    test('From Link Model to JSON', () {
+      var json = entries.toJson();
+      expect(json, isNotNull);
+      entries.displayJson();
+    });
 
   });
 }
 
 void main() {
-  var model = createDomainModel();
-  testModelData(model);
+  testModelData(createDomainModel());
 }

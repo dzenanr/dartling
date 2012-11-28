@@ -1,6 +1,6 @@
 Dartling To Do
 
-fromJson for entity and entities
+fromJson for entity and entities is now without neighbors
 
 http://api.dartlang.org/docs/continuous/dart_math/Random.html
 get random value for different types (for test data)
@@ -10,8 +10,6 @@ min (minimal properties only are shown in a web componet) for properties
 
 add the Add button after the entities table
 create EntityForm to update the selected entity
-
-finalize pub
 
 util/text_handling
 
