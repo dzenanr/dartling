@@ -41,7 +41,7 @@ To understand what else you can do with dartling examine its API defined in abst
 
 ## Examples
 
-dartling has several examples, all at [dzenanr] (https://github.com/dzenanr), which show how different web applications may be developed quickly based on a domain model generated from the JSON representation of a graphical model. One of them is [Art.Pen] (https://github.com/dzenanr/art_pen), which is a version of the Logo programming language for children. I use Art.Pen to teach basic control structures in programming by drawing fun "art" with positional pen commands. Another example is [Game.Parking] (https://github.com/dzenanr/game_parking), which is a strategy puzzle designed by a mathematician to teach children abstract thinking. In the [dartling_examples] (https://github.com/dzenanr/dartling_examples) there are three examples of models with standard modeling patterns: one-to-many, many-to-many and reflexive relationships.
+dartling has several examples, all at [dzenanr] (https://github.com/dzenanr), which show how different web applications may be developed quickly based on a domain model generated from the JSON representation of a graphical model. One of them is [art_pen] (https://github.com/dzenanr/art_pen) (Art.Pen), which is a version of the Logo programming language for children. I use Art.Pen to teach basic control structures in programming by drawing fun "art" with positional pen commands. Another example is [game_parking] (https://github.com/dzenanr/game_parking) (Game.Parking), which is a strategy puzzle designed by a mathematician to teach children abstract thinking. In the [dartling_examples] (https://github.com/dzenanr/dartling_examples) there are three examples of models with standard modeling patterns: one-to-many, many-to-many and reflexive relationships.
 
 **Warning**: I have run my projects only in the [Chrome] (https://www.google.com/intl/en/chrome/browser/) browser.
 
@@ -59,9 +59,9 @@ The dartling project has three folders: lib, test and web. The lib folder has th
 
 The domain (your domain name) folder has the model (your model name) folder that contains the json folder with JSON representations of the model and its data. The model.dart file in the model folder contains a model from Magic Boxes. The data.dart file in the json folder contains data of the model.
 
-## dartling Skeleton
+## dartling_skeleton
 
-[dartling Skeleton](https://github.com/dzenanr/dartling_skeleton) is a [Dart Editor] 
+[dartling_skeleton](https://github.com/dzenanr/dartling_skeleton) is a [Dart Editor] 
 (http://www.dartlang.org/docs/editor/getting-started/) 
 project template for a new dartling project.
 
@@ -75,7 +75,7 @@ project template for a new dartling project.
 
 [**On Dart course**] (http://ondart.me/)
 
-#### ![Alt dartling] (https://raw.github.com/dzenanr/dartling/master/resources/dartling5.png) image done by Rafik Benmoussa
+#### ![Alt dartling] (https://raw.github.com/dzenanr/dartling/master/resources/dartling5.png) image created by Rafik Benmoussa
 
 
 
