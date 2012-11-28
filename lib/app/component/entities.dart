@@ -217,8 +217,8 @@ class EntitiesTable {
             }
           });
 
-          entityTdElement.elements.clear();
-          entityTdElement.elements.add(entityButton);
+          entityTdElement.children.clear();
+          entityTdElement.children.add(entityButton);
         }
 
         for (Child child in children) {
@@ -257,8 +257,8 @@ class EntitiesTable {
               }
             });
 
-            childTdElement.elements.clear();
-            childTdElement.elements.add(childButton);
+            childTdElement.children.clear();
+            childTdElement.children.add(childButton);
           }
         }
       }
