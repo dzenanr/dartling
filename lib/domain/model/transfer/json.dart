@@ -66,11 +66,11 @@ Model fromMagicBoxes(String json, Domain domain, String modelCode) {
     Concept concept1 = model.concepts.findByCode(box1Name);
     Concept concept2 = model.concepts.findByCode(box2Name);
     if (concept1 == null) {
-      throw new NullPointerException(
+      throw new ConceptError(
         'Line concept is missing for the $box1Name box.');
     }
     if (concept2 == null) {
-      throw new NullPointerException(
+      throw new ConceptError(
         'Line concept is missing for the $box2Name box.');
     }
 

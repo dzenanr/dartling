@@ -53,6 +53,7 @@ createModelData(Model model) {
   html5Category.setAttribute('description',
     'HTML5 is the ubiquitous platform for the web.');
   categories.add(html5Category);
+  assert(categories.count == 2);
 
   Entities dartWebLinks = dartCategory.getChild('webLinks');
   assert(dartWebLinks.count == 0);
