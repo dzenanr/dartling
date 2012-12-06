@@ -63,7 +63,7 @@ class RepoMenuBar {
 
     section = '${section}  </ul> \n';
     section = '${section}</nav> \n';
-    view.document.query('#${view.did}').innerHTML = section;
+    view.document.query('#${view.did}').innerHtml = section;
 
     for (Domain domain in domains) {
       DomainModels domainModels = repo.getDomainModels(domain.code);
@@ -122,7 +122,7 @@ class RepoEntitiesSection {
         }
       }
     }
-    view.document.query('#${view.did}').innerHTML = section;
+    view.document.query('#${view.did}').innerHtml = section;
   }
 
 }

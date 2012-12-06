@@ -59,14 +59,14 @@ class EntitiesSimpleTable {
        * provides functionality global to the document (such as obtaining the
        * page's URL and creating new elements in the document).
        */
-      view.document.query('#${view.did}').innerHTML = section;
+      view.document.query('#${view.did}').innerHtml = section;
       hidden = false;
     }
   }
 
   void hide() {
     if (shown) {
-      view.document.query('#${view.did}').innerHTML = '';
+      view.document.query('#${view.did}').innerHtml = '';
       hidden = true;
     }
   }
@@ -187,7 +187,7 @@ class EntitiesTable {
        * provides functionality global to the document (such as obtaining the
        * page's URL and creating new elements in the document).
        */
-      view.document.query('#${view.did}').innerHTML = section;
+      view.document.query('#${view.did}').innerHtml = section;
 
       for (var entity in view.entities) {
         if (entity.concept.attributes.count > 0) {
@@ -262,14 +262,14 @@ class EntitiesTable {
           }
         }
       }
-      print(view.document.query('#${view.did}').innerHTML);
+      print(view.document.query('#${view.did}').innerHtml);
       hidden = false;
     }
   }
 
   void hide() {
     if (shown) {
-      view.document.query('#${view.did}').innerHTML = '';
+      view.document.query('#${view.did}').innerHtml = '';
       hidden = true;
     }
   }

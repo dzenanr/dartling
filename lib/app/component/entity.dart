@@ -53,14 +53,14 @@ class EntityTable {
        * provides functionality global to the document (such as obtaining the
        * page's URL and creating new elements in the document).
        */
-      view.document.query('#${view.did}').innerHTML = section;
+      view.document.query('#${view.did}').innerHtml = section;
       hidden = false;
     }
   }
 
   void hide() {
     if (shown) {
-      view.document.query('#${view.did}').innerHTML = '';
+      view.document.query('#${view.did}').innerHtml = '';
       hidden = true;
     }
   }
