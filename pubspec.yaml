@@ -5,4 +5,4 @@ version: 0.1.0
 description:
   Dartling is a domain model framework.
 dependencies:
-  unittest: 0.2.10+1
+  unittest: any

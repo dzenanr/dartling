@@ -1,5 +1,5 @@
 
-import 'package:dartling/dartling.dart';
+import '../packages/dartling/dartling.dart';
 
 Model createDomainModel() {
   Domain domain = new Domain('CategoryQuestion');
