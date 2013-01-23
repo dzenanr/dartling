@@ -29,6 +29,4 @@ class Attribute extends Property {
     }
   }
 
-  //Concept get concept() => sourceConcept; // produces an error
-
 }

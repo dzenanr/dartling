@@ -441,9 +441,8 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     selectedEntities.pre = false;
     selectedEntities.post = false;
     selectedEntities.propagateToSource = false;
-    // filter returns a new list
-    List<T> selectedList = _entityList.where(f);
-    selectedEntities._addFromList(selectedList);
+    var selectedElements = _entityList.where(f);
+    selectedElements.forEach((entity) => selectedEntities.add(entity));
     selectedEntities.pre = true;
     selectedEntities.post = true;
     selectedEntities.propagateToSource = true;
@@ -558,10 +557,6 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     copiedEntities.post = true;
     copiedEntities.propagateToSource = true;
     return copiedEntities;
-  }
-
-  _addFromList(List<T> other) {
-    other.forEach((entity) => add(entity));
   }
 
   bool addFrom(Entities<T> entities) {
