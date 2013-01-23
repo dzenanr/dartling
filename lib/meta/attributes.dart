@@ -1,7 +1,15 @@
 part of dartling;
 
-class Attributes extends Entities<Attribute> {
+class Attributes extends Entities<Property> {
 
+  List<Attribute> toList() {
+    var attributeList = new List<Attribute>();
+    for (var attribute in this) {
+      attributeList.add(attribute);
+    }
+    return attributeList;
+  }
+  
 }
 
 class Attribute extends Property {
