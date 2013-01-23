@@ -514,7 +514,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     List<T> sortedList = toList();
     // in place sort
     sortedList.sort((m,n) => m.compareTo(n));
-    orderedEntities._addFromList(sortedList);
+    sortedList.forEach((entity) => orderedEntities.add(entity));
     orderedEntities.pre = true;
     orderedEntities.post = true;
     orderedEntities.propagateToSource = false;
@@ -530,7 +530,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     List<T> sortedList = toList();
     // in place sort
     sortedList.sort(f);
-    orderedEntities._addFromList(sortedList);
+    sortedList.forEach((entity) => orderedEntities.add(entity));
     orderedEntities.pre = true;
     orderedEntities.post = true;
     orderedEntities.propagateToSource = false;
