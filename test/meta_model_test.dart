@@ -91,7 +91,7 @@ testModelData(Model model) {
     });
     tearDown(() {
       entries.clear();
-      expect(entries.empty, isTrue);
+      expect(entries.isEmpty, isTrue);
     });
     test('Find Category and Web Link by Id', () {
       var categories = entries.getEntry('Category');
@@ -112,9 +112,9 @@ testModelData(Model model) {
     test('Order Categories by Id (code not used, id is name)', () {
       var categories = entries.getEntry('Category');
       var orderedCategories = categories.order();
-      expect(orderedCategories.list, isNot(isEmpty));
+      expect(orderedCategories.toList(), isNot(isEmpty));
       expect(orderedCategories.source, isNotNull);
-      expect(orderedCategories.source.list, isNot(isEmpty));
+      expect(orderedCategories.source.toList(), isNot(isEmpty));
       expect(orderedCategories.source.count, equals(categories.count));
 
       orderedCategories.display(title:

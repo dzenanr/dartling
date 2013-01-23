@@ -27,7 +27,7 @@ class EntityTable {
       if (view.essentialOnly) {
         attributes = view.entity.concept.essentialAttributes;
       } else {
-        attributes = view.entity.concept.attributes.list;
+        attributes = view.entity.concept.attributes.toList();
       }
       String label;
       var value;

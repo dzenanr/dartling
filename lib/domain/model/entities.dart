@@ -5,7 +5,6 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   Concept get concept;
   EntitiesApi<T> get source;  ValidationErrorsApi get errors;
   int get count;
-  bool get empty;
   void clear();
 
   bool preAdd(T entity);
@@ -15,13 +14,6 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   bool remove(T entity);
   bool postRemove(T entity);
 
-  void forEach(Function f);
-  bool every(Function f);
-  bool some(Function f);
-
-  bool contains(T entity);
-  T first();
-  T last();
   T random();
   T find(Oid oid);
   T deepFind(Oid oid);
@@ -37,7 +29,6 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   EntitiesApi<T> orderByFunction(Function f);
 
   EntitiesApi<T> copy();
-  List<T> get list;
   List<Map<String, Object>> toJson();
 
 }
@@ -90,10 +81,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   Concept get concept => _concept;
   Entities<T> get source => _source;
   ValidationErrors get errors => _errors;
-  int get count => _entityList.length;
-  int get length => count;
-  bool get empty => _entityList.isEmpty;
-
+  
   void clear() {
     _entityList.clear();
     _oidEntityMap.clear();
@@ -101,20 +89,31 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     _idEntityMap.clear();
     _errors.clear();
   }
+  
+  T get first => _entityList.first;
+  bool get isEmpty => _entityList.isEmpty;
+  Iterator<T> get iterator => _entityList.iterator;
+  T get last => _entityList.last;
+  int get length => _entityList.length;
+  int get count => length;
+  T get single => _entityList.single;
 
-  Iterator<T> iterator() => _entityList.iterator();
-
-  void forEach(Function f) {
-    _entityList.forEach(f);
+  bool any(Function f) => _entityList.any(f);
+  
+  bool contains(T entity) {
+    T element = _oidEntityMap[entity.oid.timeStamp];
+    if (entity == element) {
+      return true;
+    }
+    return false;
   }
-
-  bool every(Function f) {
-    return _entityList.every(f);
-  }
-
-  bool some(Function f) {
-    return _entityList.some(f);
-  }
+  
+  T elementAt(int index) => _entityList.elementAt(index);
+  bool every(Function f) => _entityList.every(f);
+  void forEach(Function f) =>  _entityList.forEach(f);  
+  String join([String separator]) => _entityList.join(separator); 
+  List<T> toList() => _entityList.toList();
+  Set<T> toSet() => _entityList.toSet();
 
   bool preAdd(T entity) {
     if (!pre) {
@@ -158,7 +157,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
         if (count == 0) {
           entity.setAttribute(a.code, a.increment);
         } else if (a.type.base == 'int') {
-          var lastEntity = last();
+          var lastEntity = last;
           int incrementAttribute = lastEntity.getAttribute(a.code);
           entity.setAttribute(a.code, incrementAttribute + a.increment);
         } else {
@@ -389,28 +388,8 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     return false;
   }
 
-  bool contains(T entity) {
-    T element = _oidEntityMap[entity.oid.timeStamp];
-    if (entity == element) {
-      return true;
-    }
-    return false;
-  }
-
-  T first() {
-    if (!empty) {
-      return _entityList[0];
-    }
-  }
-
-  T last() {
-    if (!empty) {
-      return _entityList.last;
-    }
-  }
-
   T random() {
-    if (!empty) {
+    if (!isEmpty) {
       return _entityList[randomGen.nextInt(count)];
     }
   }
@@ -420,14 +399,14 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   }
 
   T deepFind(Oid oid) {
-    if (empty) {
+    if (isEmpty) {
       return null;
     }
     ConceptEntity foundEntity = find(oid);
     if (foundEntity != null) {
       return foundEntity;
     }
-    if (!_concept.children.empty) {
+    if (!_concept.children.isEmpty) {
       for (ConceptEntity entity in _entityList) {
         for (Child child in _concept.children) {
           Entities childEntities = entity.getChild(child.code);
@@ -452,18 +431,18 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   T findByAttribute(String code, Object attribute) {
     var selectionEntities = selectByAttribute(code, attribute);
     if (selectionEntities.count > 0) {
-      return selectionEntities.list[0];
+      return selectionEntities.first;
     }
     return null;
   }
 
-  Entities<T> select(Function f) {
+  Entities<T> where(Function f) {
     Entities<T> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.post = false;
     selectedEntities.propagateToSource = false;
     // filter returns a new list
-    List<T> selectedList = _entityList.filter(f);
+    List<T> selectedList = _entityList.where(f);
     selectedEntities._addFromList(selectedList);
     selectedEntities.pre = true;
     selectedEntities.post = true;
@@ -471,6 +450,8 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     selectedEntities._source = this;
     return selectedEntities;
   }
+  
+  Entities<T> select(Function f) => where(f);
 
   Entities<T> selectByParent(String code, Object parent) {
     if (_concept == null) {
@@ -531,7 +512,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     orderedEntities.pre = false;
     orderedEntities.post = false;
     orderedEntities.propagateToSource = false;
-    List<T> sortedList = list;
+    List<T> sortedList = toList();
     // in place sort
     sortedList.sort((m,n) => m.compareTo(n));
     orderedEntities._addFromList(sortedList);
@@ -547,7 +528,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     orderedEntities.pre = false;
     orderedEntities.post = false;
     orderedEntities.propagateToSource = false;
-    List<T> sortedList = list;
+    List<T> sortedList = toList();
     // in place sort
     sortedList.sort(f);
     orderedEntities._addFromList(sortedList);
@@ -592,8 +573,6 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     }
     return allAdded;
   }
-
-  List<T> get list => new List.from(_entityList);
 
   /**
    * Returns a string that represents this entity by using oid and code.

@@ -27,7 +27,7 @@ class EntitiesSimpleTable {
       if (view.essentialOnly) {
         attributes = view.entities.concept.essentialAttributes;
       } else {
-        attributes = view.entities.concept.attributes.list;
+        attributes = view.entities.concept.attributes.toList();
       }
       String label;
       var value;
@@ -100,7 +100,7 @@ class EntitiesTable {
       if (view.essentialOnly) {
         attributes = view.entities.concept.essentialAttributes;
       } else {
-        attributes = view.entities.concept.attributes.list;
+        attributes = view.entities.concept.attributes.toList();
       }
       Parents parents = view.entities.concept.parents;
       Children children = view.entities.concept.children;
@@ -239,7 +239,7 @@ class EntitiesTable {
               '${destinationConcept.code}';
           View childView = new View.from(view, childCodePath);
           childView.entities = entity.getChild(child.code);
-          if (!childView.entities.empty) {
+          if (!childView.entities.isEmpty) {
             if (entity.concept.identifier) {
               childView.title = '${entity.id}.${child.code}';
             } else {

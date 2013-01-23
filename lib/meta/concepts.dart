@@ -101,8 +101,8 @@ class Concept extends ConceptEntity<Concept> {
 
   List<Property> get singleValueProperties {
   List<Property> propertyList = new List<Property>();
-    propertyList.addAll(attributes.list);
-    propertyList.addAll(parents.list);
+    propertyList.addAll(attributes.toList());
+    propertyList.addAll(parents.toList());
     return propertyList;
   }
 

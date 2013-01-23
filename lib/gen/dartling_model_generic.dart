@@ -151,7 +151,7 @@ String genConceptGen(Concept concept, String library) {
   sc = '${sc}abstract class ${concept.code}Gen extends '
        'ConceptEntity<${concept.code}> { \n';
   sc = '${sc} \n';
-  if (concept.children.empty) {
+  if (concept.children.isEmpty) {
     sc = '${sc}  ${concept.code}Gen(Concept concept) : super.of(concept); \n';
   } else {
     sc = '${sc}  ${concept.code}Gen(Concept concept) : super.of(concept) { \n';

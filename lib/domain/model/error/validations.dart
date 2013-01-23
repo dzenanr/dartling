@@ -58,7 +58,7 @@ class ValidationErrors implements ValidationErrorsApi {
     _errorList.clear();
   }
 
-  Iterator<ValidationError> iterator() => _errorList.iterator();
+  Iterator<ValidationError> get iterator => _errorList.iterator;
 
   /**
    * Returns a string that represents the errors.

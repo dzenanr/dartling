@@ -8,7 +8,7 @@ abstract class ModelEntriesApi {
   EntityApi find(Oid oid);
   EntityApi findInInternalTree(Concept entryConcept, Oid oid);
 
-  bool get empty;  clear();
+  bool get isEmpty;  void clear();
 
   String toJson();
   fromJson(String json);
@@ -76,17 +76,17 @@ class ModelEntries implements ModelEntriesApi {
     return entryEntities.deepFind(oid);
   }
 
-  bool get empty {
+  bool get isEmpty {
   for (Concept entryConcept in _model.entryConcepts) {
       Entities entryEntities = getEntry(entryConcept.code);
-      if (!entryEntities.empty) {
+      if (!entryEntities.isEmpty) {
         return false;
       }
     }
     return true;
   }
 
-  clear() {
+  void clear() {
     _model.entryConcepts.forEach((entryConcept) {
       var entryEntities = getEntry(entryConcept.code);
       entryEntities.clear();
@@ -98,7 +98,7 @@ class ModelEntries implements ModelEntriesApi {
     modelMap['domain'] = _model.domain.code;
     modelMap['model'] = _model.code;
     modelMap['entries'] = _entriesToJson();
-    return JSON.stringify(modelMap);
+    return stringify(modelMap);
   }
 
   List<Map<String, Object>> _entriesToJson() {
@@ -114,7 +114,7 @@ class ModelEntries implements ModelEntriesApi {
   }
 
   fromJson(String json) {
-    Map<String, Object> modelMap = JSON.parse(json);
+    Map<String, Object> modelMap = parse(json);
     var domain = modelMap['domain'];
     var model = modelMap['model'];
     if (_model.domain.code != domain) {
