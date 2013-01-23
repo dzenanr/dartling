@@ -19,7 +19,12 @@ class Model extends ConceptEntity<Model> {
     concepts = new Concepts();
   }
 
-  List<Concept> get entryConcepts => concepts.toList().where((c) => c.entry);
+  List<Concept> get entryConcepts {
+    var selectedElements = concepts.toList().where((c) => c.entry);
+    var entryList = new List<Concept>();
+    selectedElements.forEach((concept) => entryList.add(concept));
+    return entryList;
+  }
 
   int get entryConceptCount => entryConcepts.length;
 
