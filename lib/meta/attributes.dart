@@ -1,6 +1,6 @@
 part of dartling;
 
-class Attributes extends Entities<Property> {
+class Attributes extends Entities<Attribute> {
 
 }
 
