@@ -1,6 +1,6 @@
 Dartling To Do
 
-copy on entities produces entities with different oids (is this correct?)
+copy on entities produces entities that are not equal (is this correct?)
 
 fromJson for entity and entities is now without neighbors
 
