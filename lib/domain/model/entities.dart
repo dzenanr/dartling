@@ -429,7 +429,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     return null;
   }
 
-  Entities<T> where(Function f) {
+  Entities<T> select(Function f) {
     Entities<T> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.post = false;
@@ -442,8 +442,6 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     selectedEntities._source = this;
     return selectedEntities;
   }
-
-  Entities<T> select(Function f) => where(f);
 
   Entities<T> selectByParent(String code, Object parent) {
     if (_concept == null) {
