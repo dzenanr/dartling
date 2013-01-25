@@ -4,7 +4,9 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
 
   Concept get concept;
   ValidationErrorsApi get errors;
+  Oid get oid;
   String get code;  void set code(String code);
+  IdApi get id;
 
   Object getAttribute(String name);
   bool setAttribute(String name, Object value);
@@ -15,7 +17,6 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
   EntitiesApi getChild(String name);
   bool setChild(String name, EntitiesApi entities);
 
-  IdApi get id;
   T copy();
   Map<String, Object> toJson();
 
@@ -122,6 +123,27 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     } else {
       throw new CodeError('Entity code cannot be updated.');
     }
+  }
+
+  Id get id {
+    if (_concept == null) {
+      throw new ConceptError('Entity concept is not defined.');
+    }
+    Id id = new Id(_concept);
+    for (Parent p in _concept.parents) {
+      if (p.identifier) {
+        id.setParent(p.code, _parentMap[p.code]);
+      }
+    }
+    for (Attribute a in _concept.attributes) {
+      if (a.identifier) {
+        id.setAttribute(a.code, _attributeMap[a.code]);
+      }
+    }
+    if (id.length == 0) {
+      return null;
+    }
+    return id;
   }
 
   String get codeFirstLetterLower => _firstLetterLowerCase();
@@ -387,27 +409,6 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       throw new UpdateError(msg);
     }
     return false;
-  }
-
-  Id get id {
-    if (_concept == null) {
-      throw new ConceptError('Entity concept is not defined.');
-    }
-    Id id = new Id(_concept);
-    for (Parent p in _concept.parents) {
-      if (p.identifier) {
-        id.setParent(p.code, _parentMap[p.code]);
-      }
-    }
-    for (Attribute a in _concept.attributes) {
-      if (a.identifier) {
-        id.setAttribute(a.code, _attributeMap[a.code]);
-      }
-    }
-    if (id.length == 0) {
-      return null;
-    }
-    return id;
   }
 
   /**
