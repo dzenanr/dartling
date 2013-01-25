@@ -404,7 +404,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
         id.setAttribute(a.code, _attributeMap[a.code]);
       }
     }
-    if (id.count == 0) {
+    if (id.length == 0) {
       return null;
     }
     return id;

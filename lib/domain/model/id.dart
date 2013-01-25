@@ -3,7 +3,8 @@ part of dartling;
 abstract class IdApi implements Comparable {
 
   Concept get concept;
-  int get parentCount;  int get attributeCount;
+  int get parentLength;  int get attributeLength;
+  int get length;
   EntityApi getParent(String code);
   setParent(String code, EntityApi parent);
 
@@ -36,9 +37,9 @@ class Id implements IdApi {
 
   Concept get concept => _concept;
 
-  int get parentCount => _parentMap.length;
-  int get attributeCount => _attributeMap.length;
-  int get count => parentCount + attributeCount;
+  int get parentLength => _parentMap.length;
+  int get attributeLength => _attributeMap.length;
+  int get length => parentLength + attributeLength;
 
   ConceptEntity getParent(String code) => _parentMap[code];
   setParent(String code, ConceptEntity parent) => _parentMap[code] = parent;
@@ -141,7 +142,7 @@ class Id implements IdApi {
     * if the result is greater than 0 then the first is greater than the second.
     */
    int compareParents(Id id) {
-     if (id.parentCount > 0) {
+     if (id.parentLength > 0) {
        var compare = 0;
        for (Parent p in _concept.parents) {
          if (p.identifier) {
@@ -163,7 +164,7 @@ class Id implements IdApi {
     * if the result is greater than 0 then the first is greater than the second.
     */
    int compareAttributes(Id id) {
-     if (id.attributeCount > 0) {
+     if (id.attributeLength > 0) {
        var compare = 0;
        for (Attribute a in concept.attributes) {
          if (a.identifier) {
@@ -199,9 +200,9 @@ class Id implements IdApi {
    * if the result is greater than 0 then the first is greater than the second.
    */
   int compareTo(Id id) {
-    if (id.count > 0) {
+    if (id.length > 0) {
       var compare = 0;
-      if (id.parentCount > 0) {
+      if (id.parentLength > 0) {
         compare = compareParents(id);
       }
       if (compare == 0) {
@@ -227,10 +228,10 @@ class Id implements IdApi {
    */
   String toString() {
      String result = '' ;
-     if (parentCount > 0) {
+     if (parentLength > 0) {
        _parentMap.forEach((k,v) => result = '$result ${v},');
      }
-     if (attributeCount > 0) {
+     if (attributeLength > 0) {
        _attributeMap.forEach((k,v) => result = '$result ${v},');
      }
     return '(${_dropEnd(result.trim(), ',')})';

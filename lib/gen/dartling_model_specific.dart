@@ -40,9 +40,9 @@ String genConcept(Concept concept, String library) {
   sc = '${sc} \n';
 
   Id id = concept.id;
-  if (id.count > 0) {
+  if (id.length > 0) {
     sc = '${sc}  ${concept.code}.withId(Concept concept';
-    if (id.parentCount > 0) {
+    if (id.parentLength > 0) {
       for (Parent parent in concept.parents) {
         if (parent.identifier) {
           Concept destinationConcept = parent.destinationConcept;
@@ -50,7 +50,7 @@ String genConcept(Concept concept, String library) {
         }
       }
     }
-    if (id.attributeCount > 0) {
+    if (id.attributeLength > 0) {
       for (Attribute attribute in concept.attributes) {
         if (attribute.identifier) {
           sc = '${sc}, ${attribute.type.base} ${attribute.code}';
@@ -59,14 +59,14 @@ String genConcept(Concept concept, String library) {
     }
     sc = '${sc}) : \n';
     sc = '${sc}    super.withId(concept';
-    if (id.parentCount > 0) {
+    if (id.parentLength > 0) {
       for (Parent parent in concept.parents) {
         if (parent.identifier) {
           sc = '${sc}, ${parent.code}';
         }
       }
     }
-    if (id.attributeCount > 0) {
+    if (id.attributeLength > 0) {
       for (Attribute attribute in concept.attributes) {
         if (attribute.identifier) {
           sc = '${sc}, ${attribute.code}';
