@@ -6,23 +6,23 @@ import 'package:unittest/unittest.dart';
 Model createDomainModel() {
   Domain domain = new Domain('CategoryQuestion');
   Model model = new Model(domain, 'Link');
-  assert(domain.models.count == 1);
+  assert(domain.models.length == 1);
 
   Concept categoryConcept = new Concept(model, 'Category');
   categoryConcept.description = 'Category of web links.';
-  assert(model.concepts.count == 1);
+  assert(model.concepts.length == 1);
   new Attribute(categoryConcept, 'name').identifier = true;
   new Attribute(categoryConcept, 'description');
-  assert(categoryConcept.attributes.count == 2);
+  assert(categoryConcept.attributes.length == 2);
 
   Concept webLinkConcept = new Concept(model, 'WebLink');
   webLinkConcept.entry = false;
   webLinkConcept.description = 'Web links of interest.';
-  assert(model.concepts.count == 2);
+  assert(model.concepts.length == 2);
   new Attribute(webLinkConcept, 'subject').identifier = true;
   new Attribute(webLinkConcept, 'url');
   new Attribute(webLinkConcept, 'description');
-  assert(webLinkConcept.attributes.count == 3);
+  assert(webLinkConcept.attributes.length == 3);
 
   Child categoryWebLinksNeighbor =
       new Child(categoryConcept, webLinkConcept, 'webLinks');
@@ -31,10 +31,10 @@ Model createDomainModel() {
   webLinkCategoryNeighbor.identifier = true;
   categoryWebLinksNeighbor.opposite = webLinkCategoryNeighbor;
   webLinkCategoryNeighbor.opposite = categoryWebLinksNeighbor;
-  assert(categoryConcept.children.count == 1);
-  assert(webLinkConcept.parents.count == 1);
-  assert(categoryConcept.sourceParents.count == 1);
-  assert(webLinkConcept.sourceChildren.count == 1);
+  assert(categoryConcept.children.length == 1);
+  assert(webLinkConcept.parents.length == 1);
+  assert(categoryConcept.sourceParents.length == 1);
+  assert(webLinkConcept.sourceChildren.length == 1);
 
   return model;
 }
@@ -42,13 +42,13 @@ Model createDomainModel() {
 ModelEntries createModelData(Model model) {
   var entries = new ModelEntries(model);
   Entities categories = entries.getEntry('Category');
-  assert(categories.count == 0);
+  assert(categories.length == 0);
 
   ConceptEntity dartCategory = new ConceptEntity.of(categories.concept);
   dartCategory.setAttribute('name', 'Dart');
   dartCategory.setAttribute('description', 'Dart Web language.');
   categories.add(dartCategory);
-  assert(categories.count == 1);
+  assert(categories.length == 1);
 
   ConceptEntity html5Category = new ConceptEntity.of(categories.concept);
   html5Category.setAttribute('name', 'HTML5');
@@ -57,7 +57,7 @@ ModelEntries createModelData(Model model) {
   categories.add(html5Category);
 
   Entities dartWebLinks = dartCategory.getChild('webLinks');
-  assert(dartWebLinks.count == 0);
+  assert(dartWebLinks.length == 0);
 
   ConceptEntity dartHomeWebLink = new ConceptEntity.of(dartWebLinks.concept);
   dartHomeWebLink.setAttribute('subject', 'Dart Home');
@@ -66,7 +66,7 @@ ModelEntries createModelData(Model model) {
     'Dart brings structure to web app engineering with a new language, libraries, and tools.');
   dartHomeWebLink.setParent('category', dartCategory);
   dartWebLinks.add(dartHomeWebLink);
-  assert(dartWebLinks.count == 1);
+  assert(dartWebLinks.length == 1);
   assert(dartHomeWebLink.getParent('category').getAttribute('name') == 'Dart');
 
   ConceptEntity tryDartWebLink = new ConceptEntity.of(dartWebLinks.concept);
@@ -76,7 +76,7 @@ ModelEntries createModelData(Model model) {
     'Try out the Dart Language from the comfort of your web browser.');
   tryDartWebLink.setParent('category', dartCategory);
   dartWebLinks.add(tryDartWebLink);
-  assert(dartWebLinks.count == 2);
+  assert(dartWebLinks.length == 2);
   assert(tryDartWebLink.getParent('category').getAttribute('name') == 'Dart');
 
   return entries;
@@ -115,7 +115,7 @@ testModelData(Model model) {
       expect(orderedCategories.toList(), isNot(isEmpty));
       expect(orderedCategories.source, isNotNull);
       expect(orderedCategories.source.toList(), isNot(isEmpty));
-      expect(orderedCategories.source.count, equals(categories.count));
+      expect(orderedCategories.source.length, equals(categories.length));
 
       orderedCategories.display(title:
         'Categories Ordered By Id (code not used, id is name)');
@@ -127,28 +127,28 @@ testModelData(Model model) {
       var dartWebLinks = dartCategory.getChild('webLinks');
 
       var orderedDartWebLinks = dartWebLinks.order();
-      expect(orderedDartWebLinks.list, isNot(isEmpty));
+      expect(orderedDartWebLinks.toList(), isNot(isEmpty));
       expect(orderedDartWebLinks.source, isNotNull);
-      expect(orderedDartWebLinks.source.list, isNot(isEmpty));
-      expect(orderedDartWebLinks.source.count, equals(dartWebLinks.count));
+      expect(orderedDartWebLinks.source.toList(), isNot(isEmpty));
+      expect(orderedDartWebLinks.source.length, equals(dartWebLinks.length));
 
       orderedDartWebLinks.display(title:'Ordered Dart Web Links');
     });
     test('New Category with Id', () {
       var categories = entries.getEntry('Category');
-      var categoryCount = categories.count;
+      var categoryCount = categories.length;
       var webFrameworkCategory = new ConceptEntity.of(categories.concept);
       webFrameworkCategory.setAttribute('name', 'Web Framework');
       expect(webFrameworkCategory, isNotNull);
-      expect(webFrameworkCategory.getChild('webLinks').count, equals(0));
+      expect(webFrameworkCategory.getChild('webLinks').length, equals(0));
       categories.add(webFrameworkCategory);
-      expect(categories.count, equals(++categoryCount));
+      expect(categories.length, equals(++categoryCount));
 
       categories.display(title:'Categories Including Web Framework');
     });
     test('New WebLink No Category Error', () {
       var categories = entries.getEntry('Category');
-      var categoryCount = categories.count;
+      var categoryCount = categories.length;
       var dartCategory = categories.findByAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
 
@@ -162,9 +162,9 @@ testModelData(Model model) {
       dartHomeWebLink.setAttribute('description', 'Dart brings structure to '
           'web app engineering with a new language, libraries, and tools.');
       dartCategory.getChild('webLinks').add(dartHomeWebLink);
-      expect(dartCategory.getChild('webLinks').count, equals(dartWebLinks.count));
-      expect(dartCategory.getChild('webLinks').errors.count, equals(1));
-      expect(dartCategory.getChild('webLinks').errors.list[0].category,
+      expect(dartCategory.getChild('webLinks').length, equals(dartWebLinks.length));
+      expect(dartCategory.getChild('webLinks').errors.length, equals(1));
+      expect(dartCategory.getChild('webLinks').errors.toList()[0].category,
           equals('required'));
       dartCategory.getChild('webLinks').errors.display(title:'WebLink Error');
     });

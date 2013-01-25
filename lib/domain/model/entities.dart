@@ -1,11 +1,12 @@
 part of dartling;
 
-abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
+abstract class EntitiesApi<T extends EntityApi<T>> {
 
   Concept get concept;
   EntitiesApi<T> get source;  ValidationErrorsApi get errors;
-  int get count;
-  void clear();
+  int get length;
+  bool get isEmpty;
+  Iterator<T> get iterator;
 
   bool preAdd(T entity);
   bool add(T entity);
@@ -13,6 +14,11 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   bool preRemove(T entity);
   bool remove(T entity);
   bool postRemove(T entity);
+
+  bool any(Function f);
+  bool contains(T entity);
+  bool every(Function f);
+  void forEach(Function f);
 
   T random();
   T find(Oid oid);
@@ -28,7 +34,9 @@ abstract class EntitiesApi<T extends EntityApi<T>> implements Iterable<T> {
   EntitiesApi<T> order();
   EntitiesApi<T> orderByFunction(Function f);
 
+  void clear();
   EntitiesApi<T> copy();
+  List<T> toList();
   List<Map<String, Object>> toJson();
 
 }
@@ -81,25 +89,14 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   Concept get concept => _concept;
   Entities<T> get source => _source;
   ValidationErrors get errors => _errors;
-  
-  void clear() {
-    _entityList.clear();
-    _oidEntityMap.clear();
-    _codeEntityMap.clear();
-    _idEntityMap.clear();
-    _errors.clear();
-  }
-  
-  T get first => _entityList.first;
   bool get isEmpty => _entityList.isEmpty;
   Iterator<T> get iterator => _entityList.iterator;
-  T get last => _entityList.last;
   int get length => _entityList.length;
-  int get count => length;
-  T get single => _entityList.single;
+  T get first => _entityList.first;
+  T get last => _entityList.last;
 
   bool any(Function f) => _entityList.any(f);
-  
+
   bool contains(T entity) {
     T element = _oidEntityMap[entity.oid.timeStamp];
     if (entity == element) {
@@ -107,13 +104,9 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     }
     return false;
   }
-  
-  T elementAt(int index) => _entityList.elementAt(index);
+
   bool every(Function f) => _entityList.every(f);
-  void forEach(Function f) =>  _entityList.forEach(f);  
-  String join([String separator]) => _entityList.join(separator); 
-  List<T> toList() => _entityList.toList();
-  Set<T> toSet() => _entityList.toSet();
+  void forEach(Function f) =>  _entityList.forEach(f);
 
   bool preAdd(T entity) {
     if (!pre) {
@@ -138,7 +131,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       int maxInt;
       try {
         maxInt = int.parse(maxc);
-        if (count == maxInt) {
+        if (length == maxInt) {
           var error = new ValidationError('max');
           error.message = '${_concept.codes}.max is $maxc.';
 
@@ -154,7 +147,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     // increment and required validation
     for (Attribute a in _concept.attributes) {
       if (a.increment != null) {
-        if (count == 0) {
+        if (length == 0) {
           entity.setAttribute(a.code, a.increment);
         } else if (a.type.base == 'int') {
           var lastEntity = last;
@@ -276,7 +269,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       int minInt;
       try {
         minInt = int.parse(minc);
-        if (count == minInt) {
+        if (length == minInt) {
           ValidationError error = new ValidationError('min');
           error.message = '${_concept.codes}.min is $minc.';
           _errors.add(error);
@@ -390,7 +383,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
 
   T random() {
     if (!isEmpty) {
-      return _entityList[randomGen.nextInt(count)];
+      return _entityList[randomGen.nextInt(length)];
     }
   }
 
@@ -430,7 +423,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
 
   T findByAttribute(String code, Object attribute) {
     var selectionEntities = selectByAttribute(code, attribute);
-    if (selectionEntities.count > 0) {
+    if (selectionEntities.length > 0) {
       return selectionEntities.first;
     }
     return null;
@@ -449,7 +442,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     selectedEntities._source = this;
     return selectedEntities;
   }
-  
+
   Entities<T> select(Function f) => where(f);
 
   Entities<T> selectByParent(String code, Object parent) {
@@ -574,7 +567,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
    */
   String toString() {
     if (_concept != null) {
-      return '${_concept.code}: entities:${count}';
+      return '${_concept.code}: entities:${length}';
     } else {
       print('Entities.toString(): entities concept is null.');
     }
@@ -586,7 +579,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   display({String title:'Entities', String prefix:'',
       bool withOid:true, bool withChildren:true}) {
     var s = prefix;
-    if (!_concept.entry || (_concept.entry && _concept.parents.count > 0)) {
+    if (!_concept.entry || (_concept.entry && _concept.parents.length > 0)) {
       s = '$prefix  ';
     }
     if (title != '') {
@@ -619,6 +612,16 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     });
   }
 
+  void clear() {
+    _entityList.clear();
+    _oidEntityMap.clear();
+    _codeEntityMap.clear();
+    _idEntityMap.clear();
+    _errors.clear();
+  }
+
+  List<T> toList() => _entityList.toList();
+
   List<Map<String, Object>> toJson() {
     List<Map<String, Object>> entityList = new List<Map<String, Object>>();
     for (ConceptEntity entity in _entityList) {
@@ -636,7 +639,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     if (concept == null) {
       throw new ConceptError('entities concept does not exist.');
     }
-    if (count > 0) {
+    if (length > 0) {
       throw new JsonError('entities are not empty');
     }
     for (Map<String, Object> entityMap in entitiesList) {

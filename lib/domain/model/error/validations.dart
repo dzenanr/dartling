@@ -2,10 +2,10 @@ part of dartling;
 
 abstract class ValidationErrorsApi {
 
-  int get count;
-  List<ValidationError> get list;
+  int get length;
   add(ValidationError error);
   clear();
+  List<ValidationError> toList();
 
 }
 
@@ -45,10 +45,8 @@ class ValidationErrors implements ValidationErrorsApi {
     _errorList = new List<ValidationError>();
   }
 
-  int get count => _errorList.length;
-  int get length => count;
-
-  List<ValidationError> get list => _errorList;
+  int get length => _errorList.length;
+  Iterator<ValidationError> get iterator => _errorList.iterator;
 
   add(ValidationError error) {
     _errorList.add(error);
@@ -58,7 +56,7 @@ class ValidationErrors implements ValidationErrorsApi {
     _errorList.clear();
   }
 
-  Iterator<ValidationError> get iterator => _errorList.iterator;
+  List<ValidationError> toList() => _errorList.toList();
 
   /**
    * Returns a string that represents the errors.

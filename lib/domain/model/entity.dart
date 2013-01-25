@@ -592,7 +592,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       throw new ConceptError('Entity concept is not defined.');
     }
     var s = prefix;
-    if (!_concept.entry || (_concept.entry && _concept.parents.count > 0)) {
+    if (!_concept.entry || (_concept.entry && _concept.parents.length > 0)) {
       s = '$prefix  ';
     }
     print('${s}------------------------------------');

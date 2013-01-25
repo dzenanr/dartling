@@ -167,7 +167,7 @@ class ModelEntries implements ModelEntriesApi {
         throw new ConceptError('${entryConceptCode} concept does not exist.');
       }
       Entities entryEntities = getEntry(entryConceptCode);
-      if (entryEntities.count > 0) {
+      if (entryEntities.length > 0) {
         throw new JsonError(
             '$entryConceptCode entry receiving entities are not empty');
       }

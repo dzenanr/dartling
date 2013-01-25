@@ -32,7 +32,7 @@ class Domain extends ConceptEntity<Domain> {
     new AttributeType(this, 'bool');
     new AttributeType(this, 'Date');
     new AttributeType(this, 'Uri');
-    assert(types.count == 7);
+    assert(types.length == 7);
   }
 
   Domain getDomain(String domainCode) => domains.findByCode(domainCode);
