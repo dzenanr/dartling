@@ -1,5 +1,7 @@
 Dartling To Do
 
+copy on entities produces entities with different oids (is this correct?)
+
 fromJson for entity and entities is now without neighbors
 
 http://api.dartlang.org/docs/continuous/dart_math/Random.html
