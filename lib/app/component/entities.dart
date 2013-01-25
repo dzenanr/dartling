@@ -152,7 +152,7 @@ class EntitiesTable {
           section = '${section}    </td> \n';
         }
 
-        if (entity.concept.attributes.count > 0) {
+        if (entity.concept.attributes.length > 0) {
           section =
             '${section}    '
             '<td id="${entity.concept.codeFirstLetterLower}${entity.oid}"> \n';
@@ -190,7 +190,7 @@ class EntitiesTable {
       view.document.query('#${view.did}').innerHtml = section;
 
       for (var entity in view.entities) {
-        if (entity.concept.attributes.count > 0) {
+        if (entity.concept.attributes.length > 0) {
           Element entityTdElement = view.document.query(
               '#${entity.concept.codeFirstLetterLower}${entity.oid}');
           ButtonElement entityButton = new ButtonElement();
