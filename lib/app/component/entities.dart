@@ -207,7 +207,7 @@ class EntitiesTable {
           entityView.essentialOnly = false;
           EntityTable entityTable = new EntityTable(entityView);
 
-          entityButton.on.click.add((MouseEvent e) {
+          entityButton.onClick.listen((MouseEvent e) {
             if (entityTable.hidden) {
               entityTable.show();
               entityButton.text = 'Hide';
@@ -247,7 +247,7 @@ class EntitiesTable {
             }
             EntitiesTable childTable = new EntitiesTable(childView);
 
-            childButton.on.click.add((MouseEvent e) {
+            childButton.onClick.listen((MouseEvent e) {
               if (childTable.hidden) {
                 childTable.show();
                 childButton.text = 'Hide';

@@ -77,7 +77,7 @@ class RepoMenuBar {
           entryEntitiesView.entities = entryEntities;
           entryEntitiesView.title = concept.codes;
           EntitiesTable entryEntitiesTable = new EntitiesTable(entryEntitiesView);
-          buttonElement.on.click.add((MouseEvent e) {
+          buttonElement.onClick.listen((MouseEvent e) {
             if (buttonElement.text.startsWith('Show')) {
               entryEntitiesTable.show();
               buttonElement.text = 'Hide ${concept.codes}';
