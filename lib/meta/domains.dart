@@ -30,7 +30,7 @@ class Domain extends ConceptEntity<Domain> {
     new AttributeType(this, 'int');
     new AttributeType(this, 'double');
     new AttributeType(this, 'bool');
-    new AttributeType(this, 'Date');
+    new AttributeType(this, 'DateTime');
     new AttributeType(this, 'Uri');
     assert(types.length == 7);
   }

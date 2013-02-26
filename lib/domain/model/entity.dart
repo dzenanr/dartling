@@ -49,8 +49,8 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     for (Attribute a in _concept.attributes) {
       if (a.init == null) {
         _attributeMap[a.code] = null;
-      } else if (a.type.base == 'Date' && a.init == 'now') {
-          _attributeMap[a.code] = new Date.now();
+      } else if (a.type.base == 'DateTime' && a.init == 'now') {
+          _attributeMap[a.code] = new DateTime.now();
       } else if (a.type.base == 'bool' && a.init == 'true') {
           _attributeMap[a.code] = true;
       } else if (a.type.base == 'bool' && a.init == 'false') {
@@ -192,7 +192,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       c = codePlural;
     }
     if (c != null) {
-      List<String> letterList = c.splitChars();
+      List<String> letterList = c.split('');
       letterList[0] = letterList[0].toLowerCase();
       String result = '';
       for (String letter in letterList) {
@@ -208,7 +208,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       c = codePlural;
     }
     if (c != null) {
-      List<String> letterList = c.splitChars();
+      List<String> letterList = c.split('');
       letterList[0] = letterList[0].toUpperCase();
       String result = '';
       for (String letter in letterList) {
@@ -309,13 +309,13 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     if (string == null  || string == 'null') {
       return setAttribute(name, null);
     }
-    if (attribute.type.base == 'Date') {
+    if (attribute.type.base == 'DateTime') {
       try {
         assert(string != null);
-        return setAttribute(name, new Date.fromString(string));
+        return setAttribute(name, DateTime.parse(string));
       } on ArgumentError catch (e) {
         throw new TypeError('${_concept.code}.${attribute.code} '
-                                'attribute value is not Date: $e');
+                                'attribute value is not DateTime: $e');
       }
     } else if (attribute.type.base == 'bool') {
       if (string == 'true') {

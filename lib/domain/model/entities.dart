@@ -31,8 +31,10 @@ abstract class EntitiesApi<T extends EntityApi<T>> {
   EntitiesApi<T> select(Function f);
   EntitiesApi<T> selectByParent(String code, Object parent);
   EntitiesApi<T> selectByAttribute(String code, Object attribute);
-  EntitiesApi<T> order();
-  EntitiesApi<T> orderByFunction(Function f);
+  //EntitiesApi<T> order();
+  void order();
+  //EntitiesApi<T> orderByFunction(Function f);
+  void orderByFunction(Function f);
 
   void clear();
   EntitiesApi<T> copy();
@@ -497,6 +499,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
    * If there is no compareTo method on a specific entity,
    * the Entity.compareTo method will be used (code if not null, otherwise id).
    */
+  /*
   Entities<T> order() {
     Entities<T> orderedEntities = newEntities();
     orderedEntities.pre = false;
@@ -512,7 +515,13 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     orderedEntities._source = this;
     return orderedEntities;
   }
+  */
+  void order() {
+    // in place sort
+    _entityList.sort((m,n) => m.compareTo(n));
+  }
 
+  /*
   Entities<T> orderByFunction(Function f) {
     Entities<T> orderedEntities = newEntities();
     orderedEntities.pre = false;
@@ -527,6 +536,11 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     orderedEntities.propagateToSource = false;
     orderedEntities._source = this;
     return orderedEntities;
+  }
+  */
+  void orderByFunction(Function f) {
+    // in place sort
+    _entityList.sort(f);
   }
 
   /**
@@ -622,7 +636,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
 
   List<Map<String, Object>> toJson() {
     List<Map<String, Object>> entityList = new List<Map<String, Object>>();
-    for (ConceptEntity entity in _entityList) {
+    for (T entity in _entityList) {
       entityList.add(entity.toJson());
     }
     return entityList;
@@ -641,7 +655,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       throw new JsonError('entities are not empty');
     }
     for (Map<String, Object> entityMap in entitiesList) {
-      ConceptEntity entity = newEntity();
+      T entity = newEntity();
       entity.fromJson(entityMap);
       pre = false;
       post = false;

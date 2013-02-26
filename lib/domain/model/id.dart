@@ -171,8 +171,8 @@ class Id implements IdApi {
            if (a.type.base == 'String') {
              String attribute = _attributeMap[a.code];
              compare = attribute.compareTo(id.getAttribute(a.code));
-           } else if (a.type.base == 'Date') {
-             Date attribute = _attributeMap[a.code];
+           } else if (a.type.base == 'DateTime') {
+             DateTime attribute = _attributeMap[a.code];
              compare = attribute.compareTo(id.getAttribute(a.code));
            } else if (a.type.base == 'num' ||
              a.type.code == 'int' || a.type.code == 'double') {

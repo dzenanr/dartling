@@ -7,7 +7,7 @@ class Oid implements Comparable {
   int _timeStamp;
 
   Oid() {
-    Date nowDate = new Date.now();
+    DateTime nowDate = new DateTime.now();
     int nowValue = nowDate.millisecondsSinceEpoch;  // versus nowDate.millisecond ?
     _timeStamp = nowValue + _increment++;
   }

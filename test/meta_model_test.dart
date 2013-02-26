@@ -111,13 +111,8 @@ testModelData(Model model) {
     });
     test('Order Categories by Id (code not used, id is name)', () {
       var categories = entries.getEntry('Category');
-      var orderedCategories = categories.order();
-      expect(orderedCategories.toList(), isNot(isEmpty));
-      expect(orderedCategories.source, isNotNull);
-      expect(orderedCategories.source.toList(), isNot(isEmpty));
-      expect(orderedCategories.source.length, equals(categories.length));
-
-      orderedCategories.display(title:
+      categories.order();
+      categories.display(title:
         'Categories Ordered By Id (code not used, id is name)');
     });
     test('Order Dart Web Links by Name', () {
@@ -125,14 +120,8 @@ testModelData(Model model) {
       var dartCategory = categories.findByAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
       var dartWebLinks = dartCategory.getChild('webLinks');
-
-      var orderedDartWebLinks = dartWebLinks.order();
-      expect(orderedDartWebLinks.toList(), isNot(isEmpty));
-      expect(orderedDartWebLinks.source, isNotNull);
-      expect(orderedDartWebLinks.source.toList(), isNot(isEmpty));
-      expect(orderedDartWebLinks.source.length, equals(dartWebLinks.length));
-
-      orderedDartWebLinks.display(title:'Ordered Dart Web Links');
+      dartWebLinks.order();
+      dartWebLinks.display(title:'Ordered Dart Web Links');
     });
     test('New Category with Id', () {
       var categories = entries.getEntry('Category');
