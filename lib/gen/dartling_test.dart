@@ -36,7 +36,7 @@ String genDartlingTest(Repo repo, Model model) {
   sc = '${sc}      entries.clear(); \n';
   sc = '${sc}    }); \n';
   sc = '${sc}    test("Empty Entries Test", () { \n';
-  sc = '${sc}      expect(entries.empty, isTrue); \n';
+  sc = '${sc}      expect(entries.isEmpty, isTrue); \n';
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   sc = '${sc}  }); \n';
