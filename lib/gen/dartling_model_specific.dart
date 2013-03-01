@@ -26,7 +26,7 @@ String genInitDomainModel(Model model, String library) {
         sc = '${sc}"${attribute.code} value"; \n';
       }
     }
-    sc = '${sc}entries.${entryConcept.codesFirstLetterLower}.';
+    sc = '${sc}  entries.${entryConcept.codesFirstLetterLower}.';
     sc = '${sc}add(${entryConcept.codeFirstLetterLower}); \n';
     sc = '${sc} \n';
     sc = '${sc}} \n';
