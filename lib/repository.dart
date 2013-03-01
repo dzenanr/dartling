@@ -44,7 +44,7 @@ class Repo implements RepoApi {
 
   gen(String library, [bool specific=true]) {
     title('Generated code, which you must not change, ',
-          'in the lin/gen folder of the ${code} repository.');
+          'in the lib/gen folder of the ${code} repository.');
     for (Domain domain in domains) {
       subTitle('The ${domain.code} domain repository.');
       print(genRepository(domain, library));

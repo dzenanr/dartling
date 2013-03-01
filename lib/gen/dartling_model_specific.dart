@@ -18,6 +18,18 @@ String genInitDomainModel(Model model, String library) {
   for (Concept entryConcept in model.entryConcepts) {
     sc = '${sc}_init${entryConcept.codes}(var entries) { \n';
     sc = '${sc} \n';
+    sc = '${sc}  ${entryConcept.code} ${entryConcept.codeFirstLetterLower} = \n';
+    sc = '${sc}    ${entryConcept.code}';
+    sc = '${sc}(entries.${entryConcept.codesFirstLetterLower}.concept); \n';
+    for (var attribute in entryConcept.attributes) {
+      if (attribute.type.code == 'String') {
+        sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} =';
+        sc = '${sc} "${attribute.code} value"; \n';
+      }
+    }
+    sc = '${sc}entries.${entryConcept.codesFirstLetterLower}.';
+    sc = '${sc}add(${entryConcept.codeFirstLetterLower}); \n';
+    sc = '${sc} \n';
     sc = '${sc}} \n';
     sc = '${sc} \n';
   }
