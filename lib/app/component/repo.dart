@@ -51,11 +51,6 @@ class RepoMenuBar {
     section = '${section}            Dart \n';
     section = '${section}          </a> \n';
     section = '${section}        </li> \n';
-    section = '${section}        <li> \n';
-    section = '${section}          <a href="https://plus.google.com/113649577593294551754"> \n';
-    section = '${section}            | On Dart \n';
-    section = '${section}          </a> \n';
-    section = '${section}        </li> \n';
     section = '${section}      </ul> \n';
     section = '${section}    </li> \n';
 
