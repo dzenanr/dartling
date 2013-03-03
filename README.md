@@ -13,11 +13,9 @@ A graphical model designed in [Magic Boxes](https://github.com/dzenanr/magic_box
 
 * design a domain model in Magic Boxes
 * transform the model into a JSON representation
-* prepare your dartling project based on the [dartling_skeleton] (https://github.com/dzenanr/dartling_skeleton) project
-* copy the JSON representation of the model to your project
-* generate the code for your project from your project
-* test your model with some data
+* generate code from the JSON representation for a new dartling project in [dartling_gen] (https://github.com/dzenanr/dartling_gen)
 * init your model with some data
+* test your model with some data
 * add some specific code if you wish
 * run the prototype application that uses the model and dartling web components
 
@@ -59,21 +57,15 @@ The dartling project has three folders: lib, test and web. The lib folder has th
 
 The domain (your domain name) folder has the model (your model name) folder that contains the json folder with JSON representations of the model and its data. The model.dart file in the model folder contains a model from Magic Boxes. The data.dart file in the json folder contains data of the model.
 
-## dartling_skeleton
-
-[dartling_skeleton](https://github.com/dzenanr/dartling_skeleton) is a [Dart Editor] 
-(http://www.dartlang.org/docs/editor/getting-started/) 
-project template for a new dartling project.
-
 ## More Details
  
 [**About dartling**] (https://docs.google.com/document/d/1IYs9jqWfKXmflTIGYob7qIE01wwJpWRQkWHQXZLNSvo/edit)
 
-[**On Dart g+ page**] (https://plus.google.com/b/113649577593294551754/113649577593294551754/posts)
+[**On Dart g+ page**] (https://plus.google.com/113649577593294551754)
 
 [**On Dart blog**] (http://dzenanr.github.com/)
 
-[**On Dart course**] (http://ondart.me/)
+[**On Dart education**] (http://ondart.me/)
 
 #### ![Alt dartling] (https://raw.github.com/dzenanr/dartling/master/resources/dartling5.png) image created by Rafik Benmoussa
 
