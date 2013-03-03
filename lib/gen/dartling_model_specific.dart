@@ -17,18 +17,38 @@ String genInitDomainModel(Model model, String library) {
 
   for (Concept entryConcept in model.entryConcepts) {
     sc = '${sc}_init${entryConcept.codes}(var entries) { \n';
-    sc = '${sc}  ${entryConcept.code} ${entryConcept.codeFirstLetterLower} = ';
-    sc = '${sc}new ${entryConcept.code}';
-    sc = '${sc}(entries.${entryConcept.codesFirstLetterLower}.concept); \n';
-    for (var attribute in entryConcept.attributes) {
-      if (attribute.type.code == 'String') {
-        sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
-        sc = '${sc}"${attribute.code} value"; \n';
+    for (var i = 0; i < 10; i++) {
+      sc = '${sc}  ${entryConcept.code} ${entryConcept.codeFirstLetterLower} = ';
+      sc = '${sc}new ${entryConcept.code}';
+      sc = '${sc}(entries.${entryConcept.codesFirstLetterLower}.concept); \n';
+      for (var attribute in entryConcept.attributes) {
+        if (attribute.type.code == 'String') {
+          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}"value${i}"; \n';
+        } else if (attribute.type.code == 'num') {
+          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}${randomNum(1000)}; \n';
+        } else if (attribute.type.code == 'int') {
+          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}${randomInt(10000)}; \n';
+        } else if (attribute.type.code == 'double') {
+          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}${randomDouble(100)}; \n';
+        } else if (attribute.type.code == 'bool') {
+          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}${randomBool()}; \n';
+        } else if (attribute.type.code == 'DateTime') {
+          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}new DateTime.now(); \n';
+        } else if (attribute.type.code == 'Uri') {
+          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}new Uri.fromString("${randomUriString()}"); \n';
+        }
       }
+      sc = '${sc}  entries.${entryConcept.codesFirstLetterLower}.';
+      sc = '${sc}add(${entryConcept.codeFirstLetterLower}); \n';
+      sc = '${sc} \n';
     }
-    sc = '${sc}  entries.${entryConcept.codesFirstLetterLower}.';
-    sc = '${sc}add(${entryConcept.codeFirstLetterLower}); \n';
-    sc = '${sc} \n';
     sc = '${sc}} \n';
     sc = '${sc} \n';
   }
@@ -100,3 +120,80 @@ String genConcept(Concept concept, String library) {
 
   return sc;
 }
+
+randomBool() => new Random().nextBool();
+
+randomDouble(num max) => new Random().nextDouble() * max;
+
+randomInt(int max) => new Random().nextInt(max);
+
+num randomNum(int max) {
+  var logic = randomBool();
+  var sign = randomSign();
+  if (logic) {
+    return sign * randomInt(max);
+  } else {
+    return sign * randomDouble(max);
+  }
+}
+
+randomSign() {
+  int result = 1;
+  var random = randomInt(10);
+  if (random == 0 || random == 5 || random == 10) {
+    result = -1;
+  }
+  return result;
+}
+
+randomUriString() => randomListElement(uriList);
+
+randomListElement(List list) => list[randomInt(list.length - 1)];
+
+var uriList = [
+'http://www.useit.com/alertbox/articles-not-blogs.html',
+'http://cci.mit.edu/ci2012/plenaries/index.html',
+'http://www.typescriptlang.org/',
+'http://whoapi.com/',
+'http://news.ycombinator.com/item?id=4530217',
+'http://www.pythontutor.com/',
+'https://github.com/languages/Dart',
+'http://www.drdobbs.com/open-source/dart-build-html5-apps-fast/240005631',
+'http://darttrials.blogspot.ca/2012/09/contributed-contributions.html',
+'http://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis',
+'http://code.google.com/p/dart-enumerators/',
+'http://gsdview.appspot.com/dart-editor-archive-continuous/latest/',
+'http://www.villa-marrakech.ma/',
+'http://www.dartlang.org/articles/idiomatic-dart/',
+'http://dartery.blogspot.ca/2012/09/memoizing-functions-in-dart.html',
+'http://blog.dynamicprogrammer.com/2012/09/01/first-steps-with-dart.html',
+'http://www.dartlang.org/',
+'https://github.com/dart-lang',
+'http://pub.dartlang.org/',
+'http://www.builtwithdart.com/',
+'http://www.drdobbs.com/open-source/dart-build-html5-apps-fast/240005631',
+'https://code.google.com/p/dart/',
+'https://groups.google.com/a/dartlang.org/forum/?fromgroups#!forum/misc',
+'https://groups.google.com/a/dartlang.org/forum/?fromgroups#!forum/web-ui',
+'http://www.dartlang.org/support/',
+'http://code.google.com/p/dart/issues/list',
+'http://try.dartlang.org/',
+'http://www.dartlang.org/articles/style-guide/',
+'http://code.google.com/p/dart/wiki/Contributing',
+'http://news.dartlang.org/2012/08/tracking-darts-m1-progress.html',
+'http://www.dartlang.org/articles/m1-language-changes/',
+'https://github.com/dart-lang',
+'http://blog.dartwatch.com/p/community-dart-packages-and-examples.html',
+'http://api.dartlang.org/docs/continuous/',
+'http://www.dartlang.org/articles/style-guide/',
+'http://hilite.me/',
+'http://jsonformatter.curiousconcept.com/',
+'http://stackoverflow.com/tags/dart',
+'http://www.dartlang.org/articles/m1-language-changes/',
+'http://www.dartlang.org/articles/dart-unit-tests/',
+'http://www.dartlang.org/docs/editor/',
+'http://blog.dartwatch.com/p/community-dart-packages-and-examples.html',
+'http://www.dartlang.org/slides/2012/06/io12/Bullseye-Your-first-Dart-app-Codelab-GoogleIO2012.pdf',
+'http://www.mendeley.com/',
+'http://www.google.com/+/learnmore/hangouts/?hl=en'
+];
