@@ -41,6 +41,8 @@ To understand what else you can do with dartling examine its API defined in abst
 
 dartling has several examples, all at [dzenanr] (https://github.com/dzenanr), which show how different web applications may be developed quickly based on a domain model generated from the JSON representation of a graphical model. One of them is [art_pen] (https://github.com/dzenanr/art_pen) (Art.Pen), which is a version of the Logo programming language for children. I use Art.Pen to teach basic control structures in programming by drawing fun "art" with positional pen commands. Another example is [game_parking] (https://github.com/dzenanr/game_parking) (Game.Parking), which is a strategy puzzle designed by a mathematician to teach children abstract thinking. In the [dartling_examples] (https://github.com/dzenanr/dartling_examples) there are three examples of models with standard modeling patterns: one-to-many, many-to-many and reflexive relationships.
 
+Other examples are:  [concept_attribute] (https://github.com/dzenanr/concept_attribute) (with different categories of test data that can be used in a generation of tests), [dartling_todos] (https://github.com/dzenanr/dartling_todos) (with action undos),  [membership] (https://github.com/dzenanr/membership) and [category_links] (https://github.com/dzenanr/category_links) (both with web components).
+
 **Warning**: I have run my projects only in the [Chrome] (https://www.google.com/intl/en/chrome/browser/) browser.
 
 ### Models

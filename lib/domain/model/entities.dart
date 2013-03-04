@@ -31,9 +31,7 @@ abstract class EntitiesApi<T extends EntityApi<T>> {
   EntitiesApi<T> select(Function f);
   EntitiesApi<T> selectByParent(String code, Object parent);
   EntitiesApi<T> selectByAttribute(String code, Object attribute);
-  //EntitiesApi<T> order();
   void order();
-  //EntitiesApi<T> orderByFunction(Function f);
   void orderByFunction(Function f);
 
   void clear();
