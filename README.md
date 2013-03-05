@@ -21,7 +21,7 @@ A graphical model designed in [Magic Boxes](https://github.com/dzenanr/magic_box
 
 **What Could You Do with dartling in Future?**
 
-* [research guidelines] 
+* [research projects] 
   (https://docs.google.com/document/d/15rvqT1QOEusUniqNJOad-vwJDwRLombVmG3X87T6xkM/edit)
 * let me know what you would like to see in dartling?
 * join me, as a regular project member, in making dartling a darling of the Dart community

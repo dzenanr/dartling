@@ -9,7 +9,7 @@ class Attributes extends Entities<Property> {
     }
     return attributeList;
   }
-  
+
 }
 
 class Attribute extends Property {

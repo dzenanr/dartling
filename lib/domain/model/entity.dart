@@ -82,7 +82,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
         }
       } else if (a.type.base == 'Uri') {
         try {
-          _attributeMap[a.code] = new Uri.fromString(a.init);
+          _attributeMap[a.code] = Uri.parse(a.init);
         } on ArgumentError catch (e) {
           throw new TypeError(
               '${a.code} attribute init (default) value is not Uri: $e');
@@ -353,7 +353,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
       }
     } else if (attribute.type.base == 'Uri') {
       try {
-        return setAttribute(name, new Uri.fromString(string));
+        return setAttribute(name, Uri.parse(string));
       } on ArgumentError catch (e) {
         throw new TypeError('${attribute.code} '
                                 'attribute value is not Uri: $e');
