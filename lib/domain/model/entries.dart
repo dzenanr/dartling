@@ -242,7 +242,7 @@ class ModelEntries implements ModelEntriesApi {
         try {
           int parentTimeStamp = int.parse(parentOidString);
           Oid parentOid = new Oid.ts(parentTimeStamp);
-          List nullParent = new List.fixedLength(3);
+          List nullParent = new List(3);
           nullParent[0] = parentOid;
           nullParent[1] = entity;
           nullParent[2] = parent;

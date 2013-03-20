@@ -33,7 +33,7 @@ A graphical model designed in [Magic Boxes](https://github.com/dzenanr/magic_box
 
 dartling repository may have several domains. A domain may have several models. A model has entry points that are entities. From an entity in one of entry entities, child entities may be obtained. Data navigation is done by following parent or child neighbors.
 
-You can add, remove, update, find, select and order data. Actions or transactions may be used to support unrestricted undos and redos in a domain session. A transaction is an action that contains other actions. The domain allows any object to react to actions in its models.
+You can add, remove, update, validate, find, select and order data. Actions or transactions may be used to support unrestricted undos and redos in a domain session. A transaction is an action that contains other actions. The domain allows any object to react to actions in its models.
 
 To understand what else you can do with dartling examine its API defined in abstract classes with Api at the end of their names. The two most important ones are EntitiesApi (in lib/domain/model/entities.dart) and EntityApi (in lib/domain/model/entity.dart).
 

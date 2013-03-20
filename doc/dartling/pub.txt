@@ -26,6 +26,7 @@ backwards compatible API additions/changes increment the minor version,
 and backwards incompatible API changes increment the major version.
 
 System variables in Windows 7
+http://superuser.com/questions/284342/what-are-path-and-other-environment-variables-and-how-can-i-set-or-use-them
 http://www.itechtalk.com/thread3595.html
 DART_SDK :
 C:\darteditor-win-32-64\dart\dart-sdk
@@ -59,7 +60,7 @@ packages
   unittest
     
 in dartling:
-#import('package:unittest/unittest.dart');
+import 'package:unittest/unittest.dart';
 
 in Dart Editor:
 Tools/Preferences
