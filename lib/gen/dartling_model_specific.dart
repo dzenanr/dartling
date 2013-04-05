@@ -18,7 +18,11 @@ String genInitDomainModel(Model model, String library) {
   for (Concept entryConcept in model.entryConcepts) {
     sc = '${sc}_init${entryConcept.codes}(var entries) { \n';
     for (var i = 0; i < 10; i++) {
-      sc = '${sc}  ${entryConcept.code} ${entryConcept.codeFirstLetterLower} = ';
+      if (i == 0) {
+        sc = '${sc}  ${entryConcept.code} ${entryConcept.codeFirstLetterLower} = ';
+      } else {
+        sc = '${sc}  ${entryConcept.codeFirstLetterLower} = ';
+      }     
       sc = '${sc}new ${entryConcept.code}';
       sc = '${sc}(entries.${entryConcept.codesFirstLetterLower}.concept); \n';
       for (var attribute in entryConcept.attributes) {
