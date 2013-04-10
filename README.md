@@ -1,19 +1,31 @@
+# ![Alt dartling] 
+(https://raw.github.com/dzenanr/dartling/master/resources/dartling.png) 
 
+[dartling] (https://github.com/dzenanr/dartling) is a domain model framework. 
+Its open source license is the 3-clause BSD license -- 
+["New BSD License" or "Modified BSD License"] 
+(http://en.wikipedia.org/wiki/BSD_license).
 
+dartling model consists of concepts, concept attributes and concept neighbors. 
+Two neighbors make a relationship between two concepts. A relationship has two 
+directions, each direction going from one concept to another neighbor concept. 
+Standard one-to-many and many-to-many relationships are supported. When both 
+concepts are the same, the relationship is reflexive. When there are two 
+relationships between the same but different concepts, the relationships are 
+twins.
 
-# ![Alt dartling] (https://raw.github.com/dzenanr/dartling/master/resources/dartling.png)
-
-[dartling] (https://github.com/dzenanr/dartling) is a domain model framework. Its open source license is the 3-clause BSD license -- ["New BSD License" or "Modified BSD License"] (http://en.wikipedia.org/wiki/BSD_license).
-
-dartling model consists of concepts, concept attributes and concept neighbors. Two neighbors make a relationship between two concepts. A relationship has two directions, each direction going from one concept to another neighbor concept. Standard one-to-many and many-to-many relationships are supported. When both concepts are the same, the relationship is reflexive. When there are two relationships between the same but different concepts, the relationships are twins.
-
-A graphical model designed in [Magic Boxes](https://github.com/dzenanr/magic_boxes) is transformed into [JSON] (http://www.json.org/) representation that is imported to [dartling_gen] (https://github.com/dzenanr/dartling_gen). In dartling_gen, the JSON document is used to generate code for the model and its context project.
+A graphical model designed in 
+[Magic Boxes](https://github.com/dzenanr/magic_boxes) is transformed into 
+[JSON] (http://www.json.org/) representation that is imported to [dartling_gen] 
+(https://github.com/dzenanr/dartling_gen). In dartling_gen, the JSON document 
+is used to generate code for the model and its context project.
 
 **What Can You Do with dartling?**
 
 * design a domain model in Magic Boxes
 * transform the model into a JSON representation
-* generate code from the JSON representation for a new dartling project in [dartling_gen] (https://github.com/dzenanr/dartling_gen)
+* generate code from the JSON representation for a new dartling project in 
+  [dartling_gen] (https://github.com/dzenanr/dartling_gen)
 * init your model with some data
 * test your model with some data
 * add some specific code if you wish
@@ -31,19 +43,48 @@ A graphical model designed in [Magic Boxes](https://github.com/dzenanr/magic_box
 
 ## dartling API
 
-dartling repository may have several domains. A domain may have several models. A model has entry points that are entities. From an entity in one of entry entities, child entities may be obtained. Data navigation is done by following parent or child neighbors.
+dartling repository may have several domains. A domain may have several models. 
+A model has entry points that are entities. From an entity in one of entry 
+entities, child entities may be obtained. Data navigation is done by following 
+parent or child neighbors.
 
-You can add, remove, update, validate, find, select and order data. Actions or transactions may be used to support unrestricted undos and redos in a domain session. A transaction is an action that contains other actions. The domain allows any object to react to actions in its models.
+You can add, remove, update, validate, find, select and order data. Actions or 
+transactions may be used to support unrestricted undos and redos in a domain 
+session. A transaction is an action that contains other actions. The domain 
+allows any object to react to actions in its models.
 
-To understand what else you can do with dartling examine its API defined in abstract classes with Api at the end of their names. The two most important ones are EntitiesApi (in lib/domain/model/entities.dart) and EntityApi (in lib/domain/model/entity.dart).
+To understand what else you can do with dartling examine its API defined in 
+abstract classes with Api at the end of their names. The two most important ones 
+are EntitiesApi (in lib/domain/model/entities.dart) and EntityApi 
+(in lib/domain/model/entity.dart).
 
 ## Examples
 
-dartling has several examples, all at [dzenanr] (https://github.com/dzenanr), which show how different web applications may be developed quickly based on a domain model generated from the JSON representation of a graphical model. One of them is [art_pen] (https://github.com/dzenanr/art_pen) (DArt.Pen), which is a version of the Logo programming language for children. I use Art.Pen to teach basic control structures in programming by drawing fun "art" with positional pen commands. Another example is [game_parking] (https://github.com/dzenanr/game_parking) (Game.Parking), which is a strategy puzzle designed by a mathematician to teach children abstract thinking. In the [dartling_examples] (https://github.com/dzenanr/dartling_examples) there are three examples of models with standard modeling patterns: one-to-many, many-to-many and reflexive relationships.
+dartling has several examples, all at [dzenanr] (https://github.com/dzenanr), 
+which show how different web applications may be developed quickly based on a 
+domain model generated from the JSON representation of a graphical model. One 
+of them is [art_pen] (https://github.com/dzenanr/art_pen) (DArt.Pen), which is 
+a version of the Logo programming language for children. I use Art.Pen to teach 
+basic control structures in programming by drawing fun "art" with positional pen 
+commands. Another example is 
+[game_parking] (https://github.com/dzenanr/game_parking) (Game.Parking), which 
+is a strategy puzzle designed by a mathematician to teach children abstract 
+thinking. In the [dartling_examples] 
+(https://github.com/dzenanr/dartling_examples) 
+there are three examples of models with standard modeling patterns: 
+one-to-many, many-to-many and reflexive relationships.
 
-Other examples are:  [concept_attribute] (https://github.com/dzenanr/concept_attribute) (with different categories of test data that can be used in a generation of tests), [dartling_todos] (https://github.com/dzenanr/dartling_todos) (with action undos),  [membership] (https://github.com/dzenanr/membership) and [category_links] (https://github.com/dzenanr/category_links) (both with web components).
+Other examples are:  
+[concept_attribute] (https://github.com/dzenanr/concept_attribute) 
+(with different categories of test data that can be used in a generation of 
+tests), [dartling_todos] (https://github.com/dzenanr/dartling_todos) 
+(with action undos),  [membership] (https://github.com/dzenanr/membership) and 
+[category_links] (https://github.com/dzenanr/category_links) 
+(both with web components).
 
-**Warning**: I have run my projects only in the [Chrome] (https://www.google.com/intl/en/chrome/browser/) browser.
+**Warning**: 
+I have run my projects only in the [Chrome] 
+(https://www.google.com/intl/en/chrome/browser/) browser.
 
 ### Models
 
@@ -53,15 +94,43 @@ Other examples are:  [concept_attribute] (https://github.com/dzenanr/concept_att
 * [category_keyword] (https://dl.dropbox.com/u/161496/dart/models/category_keyword.png)
 * [category_question_link] (https://dl.dropbox.com/u/161496/dart/models/category_question_link.png)
 
-## dartling Project Structure
+## dartling Project Struc# ![Alt dartling] 
+(https://raw.github.com/dzenanr/dartling/master/resources/dartling.png) 
+default app
 
-The dartling project has three folders: lib, test and web. The lib folder has the gen subfolder where the code is generated from a domain model and regenerated if the model changes. A programmer should not change anything in the gen folder.
+[dartling] (https://github.com/dzenanr/dartling) is a domain model framework. 
+Its open source license is the 3-clause BSD license -- 
+["New BSD License" or "Modified BSD License"] 
+(http://en.wikipedia.org/wiki/BSD_license).
 
-The domain (your domain name) folder has the model (your model name) folder that contains the json folder with JSON representations of the model and its data. The model.dart file in the model folder contains a model from Magic Boxes. The data.dart file in the json folder contains data of the model.
+dartling model consists of concepts, concept attributes and concept neighbors. 
+Two neighbors make a relationship between two concepts. A relationship has two 
+directions, each direction going from one concept to another neighbor concept. 
+Standard one-to-many and many-to-many relationships are supported. When both 
+concepts are the same, the relationship is reflexive. When there are two 
+relationships between the same but different concepts, the relationships are 
+twins.
+
+A graphical model designed in 
+[Magic Boxes](https://github.com/dzenanr/magic_boxes) is transformed into 
+[JSON] (http://www.json.org/) representation that is imported to [dartling_gen] 
+(https://github.com/dzenanr/dartling_gen). In dartling_gen, the JSON document 
+is used to generate code for the model and its context project.ture
+
+The dartling project has three folders: lib, test and web. The lib folder has 
+the gen subfolder where the code is generated from a domain model and 
+regenerated if the model changes. A programmer should not change anything in 
+the gen folder.
+
+The domain (your domain name) folder has the model (your model name) folder 
+that contains the json folder with JSON representations of the model and its 
+data. The model.dart file in the model folder contains a model from Magic Boxes. 
+The data.dart file in the json folder contains data of the model.
 
 ## More Details
  
-[**About dartling**] (https://docs.google.com/document/d/1IYs9jqWfKXmflTIGYob7qIE01wwJpWRQkWHQXZLNSvo/edit)
+[**About dartling**] 
+(https://docs.google.com/document/d/1IYs9jqWfKXmflTIGYob7qIE01wwJpWRQkWHQXZLNSvo/edit)
 
 [**On Dart g+ page**] (https://plus.google.com/113649577593294551754)
 
@@ -71,7 +140,8 @@ The domain (your domain name) folder has the model (your model name) folder that
 
 __________
 
-![Alt dartling] (https://raw.github.com/dzenanr/dartling/master/resources/dartling5.png) image created by Rafik Benmoussa
-
+![Alt dartling] 
+(https://raw.github.com/dzenanr/dartling/master/resources/dartling5.png) image 
+created by Rafik Benmoussa
 
 
