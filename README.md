@@ -18,8 +18,8 @@ A graphical model designed in
 [dartling_gen] (https://github.com/dzenanr/dartling_gen). 
 In dartling_gen, the JSON document is used to generate code for the model and 
 its context project. [dartling_default_app] (https://github.com/dzenanr/dartling_default_app)
-is used to interpret a dartling model and provide a default web app to navigate 
-through the model starting by entry points.
+is used to interpret a dartling model and navigate through the model, 
+starting by entry points.
 
 **What Can You Do with dartling?**
 
@@ -65,15 +65,8 @@ which show how different web applications may be developed quickly based on a
 domain model generated from the JSON representation of a graphical model. One 
 of them is [art_pen] (https://github.com/dzenanr/art_pen) (DArt.Pen), which is 
 a version of the Logo programming language for children. I use Art.Pen to teach 
-basic control structures in programming by drawing fun "art" with positional pen 
-commands. Another example is 
-[game_parking] (https://github.com/dzenanr/game_parking) (Game.Parking), which 
-is a strategy puzzle designed by a mathematician to teach children abstract 
-thinking. In the [dartling_examples] (https://github.com/dzenanr/dartling_examples) 
-there are three examples of models with standard modeling patterns: 
-one-to-many, many-to-many and reflexive relationships.
-
-Other examples are: [concept_attribute] (https://github.com/dzenanr/concept_attribute) 
+basic control structures in prog
+s are: [concept_attribute] (https://github.com/dzenanr/concept_attribute) 
 (with different categories of test data that can be used in a generation of 
 tests), [dartling_todos] (https://github.com/dzenanr/dartling_todos) 
 (with action undos), [membership] (https://github.com/dzenanr/membership) and 
