@@ -1,10 +1,8 @@
-# ![Alt dartling] 
-(https://raw.github.com/dzenanr/dartling/master/resources/dartling.png) 
+# ![Alt dartling] (https://raw.github.com/dzenanr/dartling/master/resources/dartling.png) 
 
 [dartling] (https://github.com/dzenanr/dartling) is a domain model framework. 
 Its open source license is the 3-clause BSD license -- 
-["New BSD License" or "Modified BSD License"] 
-(http://en.wikipedia.org/wiki/BSD_license).
+["New BSD License" or "Modified BSD License"] (http://en.wikipedia.org/wiki/BSD_license).
 
 dartling model consists of concepts, concept attributes and concept neighbors. 
 Two neighbors make a relationship between two concepts. A relationship has two 
@@ -16,9 +14,10 @@ twins.
 
 A graphical model designed in 
 [Magic Boxes](https://github.com/dzenanr/magic_boxes) is transformed into 
-[JSON] (http://www.json.org/) representation that is imported to [dartling_gen] 
-(https://github.com/dzenanr/dartling_gen). In dartling_gen, the JSON document 
-is used to generate code for the model and its context project.
+[JSON] (http://www.json.org/) representation that is imported to 
+[dartling_gen] (https://github.com/dzenanr/dartling_gen). 
+In dartling_gen, the JSON document is used to generate code for the model and 
+its context project.
 
 **What Can You Do with dartling?**
 
@@ -33,12 +32,11 @@ is used to generate code for the model and its context project.
 
 **What Could You Do with dartling in Future?**
 
-* [research projects] 
-  (https://docs.google.com/document/d/15rvqT1QOEusUniqNJOad-vwJDwRLombVmG3X87T6xkM/edit)
+* [research projects] (https://docs.google.com/document/d/15rvqT1QOEusUniqNJOad-vwJDwRLombVmG3X87T6xkM/edit)
 * let me know what you would like to see in dartling?
 * join me, as a regular project member, in making dartling a darling of the Dart community
-* if you are a student [work with me]  
-  (https://docs.google.com/document/d/1cZWkOlzy8lqHhe_0q0mEyQlvI-Xjc8q07BwLaWqqyE8/edit)
+* if you are a student 
+  [work with me] (https://docs.google.com/document/d/1cZWkOlzy8lqHhe_0q0mEyQlvI-Xjc8q07BwLaWqqyE8/edit)
   on making dartling easier to learn
 
 ## dartling API
@@ -69,8 +67,7 @@ basic control structures in programming by drawing fun "art" with positional pen
 commands. Another example is 
 [game_parking] (https://github.com/dzenanr/game_parking) (Game.Parking), which 
 is a strategy puzzle designed by a mathematician to teach children abstract 
-thinking. In the [dartling_examples] 
-(https://github.com/dzenanr/dartling_examples) 
+thinking. In the [dartling_examples] (https://github.com/dzenanr/dartling_examples) 
 there are three examples of models with standard modeling patterns: 
 one-to-many, many-to-many and reflexive relationships.
 
@@ -78,13 +75,14 @@ Other examples are:
 [concept_attribute] (https://github.com/dzenanr/concept_attribute) 
 (with different categories of test data that can be used in a generation of 
 tests), [dartling_todos] (https://github.com/dzenanr/dartling_todos) 
-(with action undos),  [membership] (https://github.com/dzenanr/membership) and 
+(with action undos), [membership] (https://github.com/dzenanr/membership) and 
 [category_links] (https://github.com/dzenanr/category_links) 
 (both with web components).
 
 **Warning**: 
-I have run my projects only in the [Chrome] 
-(https://www.google.com/intl/en/chrome/browser/) browser.
+I have run my projects only in the 
+[Chrome] (https://www.google.com/intl/en/chrome/browser/) 
+browser.
 
 ### Models
 
@@ -94,14 +92,12 @@ I have run my projects only in the [Chrome]
 * [category_keyword] (https://dl.dropbox.com/u/161496/dart/models/category_keyword.png)
 * [category_question_link] (https://dl.dropbox.com/u/161496/dart/models/category_question_link.png)
 
-## dartling Project Struc# ![Alt dartling] 
-(https://raw.github.com/dzenanr/dartling/master/resources/dartling.png) 
-default app
+## dartling Project Struc# 
+![Alt dartling] (https://raw.github.com/dzenanr/dartling/master/resources/dartling.png) default app
 
 [dartling] (https://github.com/dzenanr/dartling) is a domain model framework. 
 Its open source license is the 3-clause BSD license -- 
-["New BSD License" or "Modified BSD License"] 
-(http://en.wikipedia.org/wiki/BSD_license).
+["New BSD License" or "Modified BSD License"] (http://en.wikipedia.org/wiki/BSD_license).
 
 dartling model consists of concepts, concept attributes and concept neighbors. 
 Two neighbors make a relationship between two concepts. A relationship has two 
@@ -113,9 +109,10 @@ twins.
 
 A graphical model designed in 
 [Magic Boxes](https://github.com/dzenanr/magic_boxes) is transformed into 
-[JSON] (http://www.json.org/) representation that is imported to [dartling_gen] 
-(https://github.com/dzenanr/dartling_gen). In dartling_gen, the JSON document 
-is used to generate code for the model and its context project.ture
+[JSON] (http://www.json.org/) representation that is imported to 
+[dartling_gen] (https://github.com/dzenanr/dartling_gen). 
+In dartling_gen, the JSON document is used to generate code for the model and 
+its context project.ture
 
 The dartling project has three folders: lib, test and web. The lib folder has 
 the gen subfolder where the code is generated from a domain model and 
@@ -129,8 +126,7 @@ The data.dart file in the json folder contains data of the model.
 
 ## More Details
  
-[**About dartling**] 
-(https://docs.google.com/document/d/1IYs9jqWfKXmflTIGYob7qIE01wwJpWRQkWHQXZLNSvo/edit)
+[**About dartling**] (https://docs.google.com/document/d/1IYs9jqWfKXmflTIGYob7qIE01wwJpWRQkWHQXZLNSvo/edit)
 
 [**On Dart g+ page**] (https://plus.google.com/113649577593294551754)
 
@@ -140,8 +136,6 @@ The data.dart file in the json folder contains data of the model.
 
 __________
 
-![Alt dartling] 
-(https://raw.github.com/dzenanr/dartling/master/resources/dartling5.png) image 
-created by Rafik Benmoussa
+![Alt dartling] (https://raw.github.com/dzenanr/dartling/master/resources/dartling5.png) image created by Rafik Benmoussa
 
 
