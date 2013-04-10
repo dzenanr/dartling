@@ -11,7 +11,7 @@ String genDartlingWeb(Model model) {
   sc = '${sc}import "dart:html"; \n';
   sc = '${sc} \n';
   sc = '${sc}import "package:dartling/dartling.dart"; \n';
-  sc = '${sc}import "package:dartling/dartling_app.dart"; \n';
+  sc = '${sc}import "package:dartling_default_app/dartling_default_app.dart"; \n';
   sc = '${sc} \n';
   sc = '${sc}import "package:${domain.codeLowerUnderscore}_'
        '${model.codeLowerUnderscore}/${domain.codeLowerUnderscore}_'
