@@ -17,7 +17,9 @@ A graphical model designed in
 [JSON] (http://www.json.org/) representation that is imported to 
 [dartling_gen] (https://github.com/dzenanr/dartling_gen). 
 In dartling_gen, the JSON document is used to generate code for the model and 
-its context project.
+its context project. [dartling_default_app] (https://github.com/dzenanr/dartling_default_app)
+is used to interpret a dartling model and provide a default web app to navigate 
+through the model starting by entry points.
 
 **What Can You Do with dartling?**
 
@@ -28,7 +30,7 @@ its context project.
 * init your model with some data
 * test your model with some data
 * add some specific code if you wish
-* run the prototype application that uses the model and dartling web components
+* run the default application that interprets the model
 
 **What Could You Do with dartling in Future?**
 
@@ -71,8 +73,7 @@ thinking. In the [dartling_examples] (https://github.com/dzenanr/dartling_exampl
 there are three examples of models with standard modeling patterns: 
 one-to-many, many-to-many and reflexive relationships.
 
-Other examples are:  
-[concept_attribute] (https://github.com/dzenanr/concept_attribute) 
+Other examples are: [concept_attribute] (https://github.com/dzenanr/concept_attribute) 
 (with different categories of test data that can be used in a generation of 
 tests), [dartling_todos] (https://github.com/dzenanr/dartling_todos) 
 (with action undos), [membership] (https://github.com/dzenanr/membership) and 
