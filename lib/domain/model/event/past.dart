@@ -45,7 +45,9 @@ class Past implements PastApi {
       _actions.removeRange(i, 1);
     }
     */
-    _actions.removeRange(cursor + 1, _actions.length);
+    if (_actions.length > 0 && cursor < _actions.length - 1) {
+      _actions.removeRange(cursor + 1, _actions.length);
+    }
   }
 
   _notifyUndoRedo() {
