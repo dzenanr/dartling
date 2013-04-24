@@ -140,8 +140,11 @@ class Past implements PastApi {
 
   startPastReaction(PastReactionApi reaction) => _pastReactions.add(reaction);
   cancelPastReaction(PastReactionApi reaction) {
+    /*
     int index = _pastReactions.indexOf(reaction, 0);
     _pastReactions.removeRange(index, 1);
+    */
+    _pastReactions.remove(reaction);
   }
 
   notifyCannotUndo() {
