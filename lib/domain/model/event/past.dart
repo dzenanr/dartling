@@ -40,9 +40,12 @@ class Past implements PastApi {
   }
 
   _removeRightOfCursor() {
+    /*
     for (int i = _actions.length - 1; i >= cursor; i--) {
       _actions.removeRange(i, 1);
     }
+    */
+    _actions.removeRange(cursor + 1, _actions.length);
   }
 
   _notifyUndoRedo() {
