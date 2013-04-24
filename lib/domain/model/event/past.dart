@@ -40,14 +40,16 @@ class Past implements PastApi {
   }
 
   _removeRightOfCursor() {
+    /*
     for (int i = _actions.length - 1; i >= cursor; i--) {
       _actions.removeRange(i, i + 1);
     }
-    /*
-    if (_actions.length > 0 && cursor < _actions.length - 1) {
-      _actions.removeRange(cursor + 1, _actions.length);
-    }
     */
+
+    if (_actions.length > 0 && cursor < _actions.length) {
+      _actions.removeRange(cursor, _actions.length);
+    }
+
   }
 
   _notifyUndoRedo() {
@@ -145,10 +147,6 @@ class Past implements PastApi {
 
   startPastReaction(PastReactionApi reaction) => _pastReactions.add(reaction);
   cancelPastReaction(PastReactionApi reaction) {
-    /*
-    int index = _pastReactions.indexOf(reaction, 0);
-    _pastReactions.removeRange(index, 1);
-    */
     _pastReactions.remove(reaction);
   }
 
