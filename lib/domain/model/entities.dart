@@ -289,8 +289,6 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     if (preRemove(entity)) {
       for (T element in _entityList) {
         if (element == entity) {
-          //int index = _entityList.indexOf(element, 0);
-          //_entityList.removeRange(index, 1);
           _entityList.remove(entity);
           _oidEntityMap.remove(entity.oid.timeStamp);
           if (entity.code != null) {
