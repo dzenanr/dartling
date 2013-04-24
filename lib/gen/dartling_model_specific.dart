@@ -22,10 +22,10 @@ String genInitDomainModel(Model model, String library) {
         sc = '${sc}  ${entryConcept.code} ${entryConcept.codeFirstLetterLower} = ';
       } else {
         sc = '${sc}  ${entryConcept.codeFirstLetterLower} = ';
-      }     
+      }
       sc = '${sc}new ${entryConcept.code}';
       sc = '${sc}(entries.${entryConcept.codesFirstLetterLower}.concept); \n';
-      for (var attribute in entryConcept.attributes) {
+      for (Attribute attribute in entryConcept.attributes) {
         if (attribute.type.code == 'String') {
           sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
           sc = '${sc}"value${i}"; \n';
