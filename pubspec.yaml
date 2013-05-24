@@ -1,7 +1,2 @@
-name: dartling
-version: 0.0.9
-author: Dzenan Ridjanovic <dzenanr@gmail.com>
-description: Dartling is a domain model framework.
-homepage: http://ondart.me/
-dependencies:
-  unittest: any
+name: ''
+version: 0.0.8
