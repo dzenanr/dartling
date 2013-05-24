@@ -2,11 +2,11 @@ part of dartling;
 
 abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
 
-  Concept get concept;
-  ValidationErrorsApi get errors;
-  Oid get oid;
-  String get code;  void set code(String code);
-  IdApi get id;
+  final Concept concept;
+  final ValidationErrorsApi errors;
+  final Oid oid;
+  final IdApi id;
+  String code;
 
   Object getAttribute(String name);
   bool setAttribute(String name, Object value);

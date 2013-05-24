@@ -1,13 +1,32 @@
 part of dartling;
 
-abstract class EntitiesApi<E extends EntityApi<E>> {
+abstract class EntitiesApi<E extends EntityApi<E>> implements Iterable<E> {
 
   final Concept concept;
   final ValidationErrorsApi errors;
-  final bool isEmpty;
-  final int length;
   final EntitiesApi<E> source;
-  final Iterator<E> iterator;
+
+  E firstWhereAttribute(String code, Object attribute);
+  E random();
+  E singleWhereOid(Oid oid);
+  E singleDownWhereOid(Oid oid);
+  E singleWhereCode(String code);
+  E singleWhereId(IdApi id);
+  E singleWhereAttributeId(String code, Object attribute);
+
+  EntitiesApi<E> copy();
+  EntitiesApi<E> order([int compare(E a, E b)]); // sort
+  EntitiesApi<E> selectWhere(bool f(E entity));
+  EntitiesApi<E> selectWhereAttribute(String code, Object attribute);
+  EntitiesApi<E> selectWhereParent(String code, EntityApi parent);
+  EntitiesApi<E> skipFirst(int n);
+  EntitiesApi<E> skipFirstWhile(bool f(E entity));
+  EntitiesApi<E> takeFirst(int n);
+  EntitiesApi<E> takeFirstWhile(bool f(E entity));
+  List<Map<String, Object>> toJson();
+
+  void clear();
+  void sort([int compare(E a, E b)]); // in place sort
 
   bool preAdd(E entity);
   bool add(E entity);
@@ -15,31 +34,6 @@ abstract class EntitiesApi<E extends EntityApi<E>> {
   bool preRemove(E entity);
   bool remove(E entity);
   bool postRemove(E entity);
-
-  bool contains(E entity);
-  bool any(bool f(E entity));
-  bool every(bool f(E entity));
-
-  E singleWhereOid(Oid oid);
-  E singleDownWhereOid(Oid oid);
-  E singleWhereCode(String code);
-  E singleWhereId(IdApi id);
-  E singleWhereAttributeId(String code, Object attribute);
-  E firstWhereAttribute(String code, Object attribute);
-  E random();
-
-  EntitiesApi<E> copy();
-  EntitiesApi<T> order([int compare(E a, E b)]);
-  EntitiesApi<E> selectWhere(bool f(E entity));
-  EntitiesApi<E> selectWhereAttribute(String code, Object attribute);
-  EntitiesApi<E> selectWhereParent(String code, EntityApi parent);
-
-  void clear();
-  void forEach(bool f(E entity));
-  void sort([int compare(E a, E b)]); // in place sort
-
-  List<Map<String, Object>> toJson();
-  List<E> toList();
 
 }
 
@@ -84,15 +78,329 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   ConceptEntity<E> newEntity() => new ConceptEntity.of(_concept);
 
 
-  Concept get concept => _concept;
-  ValidationErrors get errors => _errors;
-  bool get isEmpty => _entityList.isEmpty;
-  int get length => _entityList.length;
-  Entities<E> get source => _source;
-  Iterator<E> get iterator => _entityList.iterator;
-
   E get first => _entityList.first;
+  bool get isEmpty => _entityList.isEmpty;
+  Iterator<E> get iterator => _entityList.iterator;
   E get last => _entityList.last;
+  int get length => _entityList.length;
+  E get single => _entityList.single;
+
+  Concept get concept => _concept;
+  Entities<E> get source => _source;
+  ValidationErrors get errors => _errors;
+
+
+  bool any(bool f(E entity)) => _entityList.any(f);
+
+  bool contains(E entity) {
+    E element = _oidEntityMap[entity.oid.timeStamp];
+    if (entity == element) {
+      return true;
+    }
+    return false;
+  }
+
+  E elementAt(int index) => _entityList.elementAt(index); // should we keep it?
+  bool every(bool f(E entity)) => _entityList.every(f);
+  Iterable expand(Iterable f(E entity)) => _entityList.expand(f); // should we keep it?
+  E firstWhere(bool f(E entity), {E orElse()}) =>  _entityList.firstWhere(f);
+  dynamic fold(initialValue, combine(previousValue, E entity)) =>
+      _entityList.fold(initialValue, combine);
+  void forEach(bool f(E entity)) =>  _entityList.forEach(f);
+  String join([String separator = '']) => _entityList.join(separator);
+  E lastWhere(bool f(E entity), {E orElse()}) => _entityList.lastWhere(f);
+  Iterable map(f(E entity)) => _entityList.map(f);
+  E reduce(E combine(E value, E entity)) => _entityList.map(combine); // E(?) value
+  E singleWhere(bool f(E entity)) => _entityList.singleWhere(f);
+  Iterable<E> skip(int n) => _entityList.skip(n);
+  Iterable<E> skipWhile(bool f(E entity)) => _entityList.skipWhile(f);
+  Iterable<E> take(int n) => _entityList.take(n);
+  Iterable<E> takeWhile(bool f(E entity)) => _entityList.takeWhile(f);
+  //List<E> toList({bool growable: true}) => _entityList.toList({}); ??
+  List<E> toList() => _entityList.toList();
+  Set<E> toSet() => _entityList.toSet();
+  Iterable<E> where(bool f(E entity)) => _entityList.where(f);
+
+
+  E firstWhereAttribute(String code, Object attribute) {
+    var selectionEntities = selectWhereAttribute(code, attribute);
+    if (selectionEntities.length > 0) {
+      return selectionEntities.first;
+    }
+    return null;
+  }
+
+  E random() {
+    if (!isEmpty) {
+      return _entityList[randomGen.nextInt(length)];
+    }
+  }
+
+  E singleWhereOid(Oid oid) {
+    return _oidEntityMap[oid.timeStamp];
+  }
+
+  E singleDownWhereOid(Oid oid) {
+    if (isEmpty) {
+      return null;
+    }
+    ConceptEntity foundEntity = singleWhereOid(oid);
+    if (foundEntity != null) {
+      return foundEntity;
+    }
+    if (!_concept.children.isEmpty) {
+      for (ConceptEntity entity in _entityList) {
+        for (Child child in _concept.children) {
+          Entities childEntities = entity.getChild(child.code);
+          return childEntities.singleDownWhereOid(oid);
+        }
+      }
+    }
+  }
+
+  E singleWhereCode(String code) {
+    return _codeEntityMap[code];
+  }
+
+  E singleWhereId(Id id) {
+    return _idEntityMap[id.toString()];
+  }
+
+  E singleWhereAttributeId(String code, Object attribute) {
+    return singleWhereId(new Id(_concept)..setAttribute(code, attribute));
+  }
+
+
+  /**
+   * Copies the entities.
+   * It is not a deep copy.
+   */
+  Entities<E> copy() {
+    if (_concept == null) {
+      throw new ConceptError('Entities.copy: concept is not defined.');
+    }
+    Entities<E> copiedEntities = newEntities();
+    copiedEntities.pre = false;
+    copiedEntities.post = false;
+    copiedEntities.propagateToSource = false;
+    for (ConceptEntity entity in this) {
+      copiedEntities.add(entity.copy());
+    }
+    copiedEntities.pre = true;
+    copiedEntities.post = true;
+    copiedEntities.propagateToSource = true;
+    return copiedEntities;
+  }
+
+  /**
+   * If compare function is not passed, compareTo method will be used.
+   * If there is no compareTo method on specific entity,
+   * the Entity.compareTo method will be used (code if not null, otherwise id).
+   */
+  Entities<E> order([int compare(E a, E b)]) {
+    Entities<E> orderedEntities = newEntities();
+    orderedEntities.pre = false;
+    orderedEntities.post = false;
+    orderedEntities.propagateToSource = false;
+    List<E> sortedList = toList();
+    // in place sort
+    if (?compare) {
+      sortedList.sort(compare);
+    } else {
+      sortedList.sort((m,n) => m.compareTo(n));
+    }
+    sortedList.forEach((entity) => orderedEntities.add(entity));
+    orderedEntities.pre = true;
+    orderedEntities.post = true;
+    orderedEntities.propagateToSource = false;
+    orderedEntities._source = this;
+    return orderedEntities;
+  }
+
+  Entities<E> selectWhere(Function f) {
+    Entities<E> selectedEntities = newEntities();
+    selectedEntities.pre = false;
+    selectedEntities.post = false;
+    selectedEntities.propagateToSource = false;
+    var selectedElements = _entityList.where(f);
+    selectedElements.forEach((entity) => selectedEntities.add(entity));
+    selectedEntities.pre = true;
+    selectedEntities.post = true;
+    selectedEntities.propagateToSource = true;
+    selectedEntities._source = this;
+    return selectedEntities;
+  }
+
+  Entities<E> selectWhereAttribute(String code, Object attribute) {
+    if (_concept == null) {
+      throw new ConceptError(
+        'Entities.selectByAttribute($code, $attribute): concept is not defined.');
+    }
+    Entities<E> selectedEntities = newEntities();
+    selectedEntities.pre = false;
+    selectedEntities.post = false;
+    selectedEntities.propagateToSource = false;
+    for (E entity in _entityList) {
+      for (Attribute a in _concept.attributes) {
+        if (a.code == code) {
+          if (entity.getAttribute(a.code) == attribute) {
+            selectedEntities.add(entity);
+          }
+        }
+      }
+    }
+    selectedEntities.pre = true;
+    selectedEntities.post = true;
+    selectedEntities.propagateToSource = true;
+    selectedEntities._source = this;
+    return selectedEntities;
+  }
+
+  Entities<E> selectWhereParent(String code, EntityApi parent) {
+    if (_concept == null) {
+      throw new ConceptError(
+        'Entities.selectByParent($code, $parent): concept is not defined.');
+    }
+    Entities<E> selectedEntities = newEntities();
+    selectedEntities.pre = false;
+    selectedEntities.post = false;
+    selectedEntities.propagateToSource = false;
+    for (E entity in _entityList) {
+      for (Parent p in _concept.parents) {
+        if (p.code == code) {
+          if (entity.getParent(p.code) == parent) {
+            selectedEntities.add(entity);
+          }
+        }
+      }
+    }
+    selectedEntities.pre = true;
+    selectedEntities.post = true;
+    selectedEntities.propagateToSource = true;
+    selectedEntities._source = this;
+    return selectedEntities;
+  }
+
+  Entities<E> skipFirst(int n) {
+    Entities<E> selectedEntities = newEntities();
+    selectedEntities.pre = false;
+    selectedEntities.post = false;
+    selectedEntities.propagateToSource = false;
+    var selectedElements = _entityList.skip(n);
+    selectedElements.forEach((entity) => selectedEntities.add(entity));
+    selectedEntities.pre = true;
+    selectedEntities.post = true;
+    selectedEntities.propagateToSource = true;
+    selectedEntities._source = this;
+    return selectedEntities;
+  }
+
+  Entities<E> skipFirstWhile(bool f(E entity)) {
+    Entities<E> selectedEntities = newEntities();
+    selectedEntities.pre = false;
+    selectedEntities.post = false;
+    selectedEntities.propagateToSource = false;
+    var selectedElements = _entityList.skipWhile(f);
+    selectedElements.forEach((entity) => selectedEntities.add(entity));
+    selectedEntities.pre = true;
+    selectedEntities.post = true;
+    selectedEntities.propagateToSource = true;
+    selectedEntities._source = this;
+    return selectedEntities;
+  }
+
+  Entities<E> takeFirst(int n) {
+    Entities<E> selectedEntities = newEntities();
+    selectedEntities.pre = false;
+    selectedEntities.post = false;
+    selectedEntities.propagateToSource = false;
+    var selectedElements = _entityList.take(n);
+    selectedElements.forEach((entity) => selectedEntities.add(entity));
+    selectedEntities.pre = true;
+    selectedEntities.post = true;
+    selectedEntities.propagateToSource = true;
+    selectedEntities._source = this;
+    return selectedEntities;
+  }
+
+  Entities<E> takeFirstWhile(bool f(E entity)) {
+    Entities<E> selectedEntities = newEntities();
+    selectedEntities.pre = false;
+    selectedEntities.post = false;
+    selectedEntities.propagateToSource = false;
+    var selectedElements = _entityList.takeWhile(f);
+    selectedElements.forEach((entity) => selectedEntities.add(entity));
+    selectedEntities.pre = true;
+    selectedEntities.post = true;
+    selectedEntities.propagateToSource = true;
+    selectedEntities._source = this;
+    return selectedEntities;
+  }
+
+  List<Map<String, Object>> toJson() {
+    List<Map<String, Object>> entityList = new List<Map<String, Object>>();
+    for (E entity in _entityList) {
+      entityList.add(entity.toJson());
+    }
+    return entityList;
+  }
+
+  /**
+   * Loads entities without validations to this, which must be empty.
+   * It does not handle neighbors.
+   * See ModelEntries for the JSON transfer at the level of a model.
+   */
+  fromJson(List<Map<String, Object>> entitiesList) {
+    if (concept == null) {
+      throw new ConceptError('entities concept does not exist.');
+    }
+    if (length > 0) {
+      throw new JsonError('entities are not empty');
+    }
+    for (Map<String, Object> entityMap in entitiesList) {
+      E entity = newEntity();
+      entity.fromJson(entityMap);
+      pre = false;
+      post = false;
+      add(entity);
+      pre = true;
+      post = true;
+    }
+  }
+
+  /**
+   * Returns a string that represents this entity by using oid and code.
+   */
+  String toString() {
+    if (_concept != null) {
+      return '${_concept.code}: entities:${length}';
+    } else {
+      print('Entities.toString(): entities concept is null.');
+    }
+  }
+
+
+  void clear() {
+    _entityList.clear();
+    _oidEntityMap.clear();
+    _codeEntityMap.clear();
+    _idEntityMap.clear();
+    _errors.clear();
+  }
+
+  /**
+   * If compare function is not passed, compareTo method will be used.
+   * If there is no compareTo method on specific entity,
+   * the Entity.compareTo method will be used (code if not null, otherwise id).
+   */
+  void sort([int compare(E a, E b)]) {
+    // in place sort
+    if (?compare) {
+      _entityList.sort(compare);
+    } else {
+      _entityList.sort((m,n) => m.compareTo(n));
+    }
+  }
 
 
   bool preAdd(E entity) {
@@ -375,249 +683,6 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       throw new ConceptError('The concept of the argument is different.');
     }
     return allAdded;
-  }
-
-
-  bool any(bool f(E entity)) => _entityList.any(f);
-
-  bool contains(E entity) {
-    E element = _oidEntityMap[entity.oid.timeStamp];
-    if (entity == element) {
-      return true;
-    }
-    return false;
-  }
-
-  bool every(bool f(E entity)) => _entityList.every(f);
-
-
-  E singleWhereOid(Oid oid) {
-    return _oidEntityMap[oid.timeStamp];
-  }
-
-  E singleDownWhereOid(Oid oid) {
-    if (isEmpty) {
-      return null;
-    }
-    ConceptEntity foundEntity = singleWhereOid(oid);
-    if (foundEntity != null) {
-      return foundEntity;
-    }
-    if (!_concept.children.isEmpty) {
-      for (ConceptEntity entity in _entityList) {
-        for (Child child in _concept.children) {
-          Entities childEntities = entity.getChild(child.code);
-          return childEntities.singleDownWhereOid(oid);
-        }
-      }
-    }
-  }
-
-  E singleWhereCode(String code) {
-    return _codeEntityMap[code];
-  }
-
-  E singleWhereId(Id id) {
-    return _idEntityMap[id.toString()];
-  }
-
-  E singleWhereAttributeId(String code, Object attribute) {
-    return singleWhereId(new Id(_concept)..setAttribute(code, attribute));
-  }
-
-  E firstWhereAttribute(String code, Object attribute) {
-    var selectionEntities = selectWhereAttribute(code, attribute);
-    if (selectionEntities.length > 0) {
-      return selectionEntities.first;
-    }
-    return null;
-  }
-
-  E random() {
-    if (!isEmpty) {
-      return _entityList[randomGen.nextInt(length)];
-    }
-  }
-
-
-  /**
-   * Copies the entities.
-   * It is not a deep copy.
-   */
-  Entities<E> copy() {
-    if (_concept == null) {
-      throw new ConceptError('Entities.copy: concept is not defined.');
-    }
-    Entities<E> copiedEntities = newEntities();
-    copiedEntities.pre = false;
-    copiedEntities.post = false;
-    copiedEntities.propagateToSource = false;
-    for (ConceptEntity entity in this) {
-      copiedEntities.add(entity.copy());
-    }
-    copiedEntities.pre = true;
-    copiedEntities.post = true;
-    copiedEntities.propagateToSource = true;
-    return copiedEntities;
-  }
-
-  /**
-   * If compare function is not passed, compareTo method will be used.
-   * If there is no compareTo method on specific entity,
-   * the Entity.compareTo method will be used (code if not null, otherwise id).
-   */
-  Entities<E> order([int compare(E a, E b)]) {
-    Entities<E> orderedEntities = newEntities();
-    orderedEntities.pre = false;
-    orderedEntities.post = false;
-    orderedEntities.propagateToSource = false;
-    List<E> sortedList = toList();
-    // in place sort
-    if (?compare) {
-      sortedList.sort(compare);
-    } else {
-      sortedList.sort((m,n) => m.compareTo(n));
-    }
-    sortedList.forEach((entity) => orderedEntities.add(entity));
-    orderedEntities.pre = true;
-    orderedEntities.post = true;
-    orderedEntities.propagateToSource = false;
-    orderedEntities._source = this;
-    return orderedEntities;
-  }
-
-  Entities<E> selectWhere(Function f) {
-    Entities<E> selectedEntities = newEntities();
-    selectedEntities.pre = false;
-    selectedEntities.post = false;
-    selectedEntities.propagateToSource = false;
-    var selectedElements = _entityList.where(f);
-    selectedElements.forEach((entity) => selectedEntities.add(entity));
-    selectedEntities.pre = true;
-    selectedEntities.post = true;
-    selectedEntities.propagateToSource = true;
-    selectedEntities._source = this;
-    return selectedEntities;
-  }
-
-  Entities<E> selectWhereAttribute(String code, Object attribute) {
-    if (_concept == null) {
-      throw new ConceptError(
-        'Entities.selectByAttribute($code, $attribute): concept is not defined.');
-    }
-    Entities<E> selectedEntities = newEntities();
-    selectedEntities.pre = false;
-    selectedEntities.post = false;
-    selectedEntities.propagateToSource = false;
-    for (E entity in _entityList) {
-      for (Attribute a in _concept.attributes) {
-        if (a.code == code) {
-          if (entity.getAttribute(a.code) == attribute) {
-            selectedEntities.add(entity);
-          }
-        }
-      }
-    }
-    selectedEntities.pre = true;
-    selectedEntities.post = true;
-    selectedEntities.propagateToSource = true;
-    selectedEntities._source = this;
-    return selectedEntities;
-  }
-
-  Entities<E> selectByParent(String code, EntityApi parent) {
-    if (_concept == null) {
-      throw new ConceptError(
-        'Entities.selectByParent($code, $parent): concept is not defined.');
-    }
-    Entities<E> selectedEntities = newEntities();
-    selectedEntities.pre = false;
-    selectedEntities.post = false;
-    selectedEntities.propagateToSource = false;
-    for (E entity in _entityList) {
-      for (Parent p in _concept.parents) {
-        if (p.code == code) {
-          if (entity.getParent(p.code) == parent) {
-            selectedEntities.add(entity);
-          }
-        }
-      }
-    }
-    selectedEntities.pre = true;
-    selectedEntities.post = true;
-    selectedEntities.propagateToSource = true;
-    selectedEntities._source = this;
-    return selectedEntities;
-  }
-
-
-  void clear() {
-    _entityList.clear();
-    _oidEntityMap.clear();
-    _codeEntityMap.clear();
-    _idEntityMap.clear();
-    _errors.clear();
-  }
-
-  void forEach(bool f(E entity)) =>  _entityList.forEach(f);
-
-  /**
-   * If compare function is not passed, compareTo method will be used.
-   * If there is no compareTo method on specific entity,
-   * the Entity.compareTo method will be used (code if not null, otherwise id).
-   */
-  void sort([int compare(E a, E b)]) {
-    // in place sort
-    if (?compare) {
-      _entityList.sort(compare);
-    } else {
-      _entityList.sort((m,n) => m.compareTo(n));
-    }
-  }
-
-
-  /**
-   * Loads entities without validations to this, which must be empty.
-   * It does not handle neighbors.
-   * See ModelEntries for the JSON transfer at the level of a model.
-   */
-  fromJson(List<Map<String, Object>> entitiesList) {
-    if (concept == null) {
-      throw new ConceptError('entities concept does not exist.');
-    }
-    if (length > 0) {
-      throw new JsonError('entities are not empty');
-    }
-    for (Map<String, Object> entityMap in entitiesList) {
-      E entity = newEntity();
-      entity.fromJson(entityMap);
-      pre = false;
-      post = false;
-      add(entity);
-      pre = true;
-      post = true;
-    }
-  }
-
-  List<Map<String, Object>> toJson() {
-    List<Map<String, Object>> entityList = new List<Map<String, Object>>();
-    for (E entity in _entityList) {
-      entityList.add(entity.toJson());
-    }
-    return entityList;
-  }
-
-  List<E> toList() => _entityList.toList();
-
-  /**
-   * Returns a string that represents this entity by using oid and code.
-   */
-  String toString() {
-    if (_concept != null) {
-      return '${_concept.code}: entities:${length}';
-    } else {
-      print('Entities.toString(): entities concept is null.');
-    }
   }
 
 

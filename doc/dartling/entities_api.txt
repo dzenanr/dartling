@@ -1,0 +1,55 @@
+Iterable
+
+  //* final E first;
+  //  final bool isEmpty;
+  //  final Iterator<T> iterator;
+  //* final E last;
+  //  final int length;
+  //* final E single;
+
+  //  bool any(bool f(E entity));
+  //  void clear(); 
+  //  bool contains(E entity);
+  //* E elementAt(int index);  // ??
+  //  bool every(bool f(E entity));
+  //* Iterable expand(Iterable f(E entity)); // ??
+  //* E firstWhere(bool f(E entity), {E orElse()});
+  //* dynamic fold(initialValue, combine(previousValue, E entity));
+  //  void forEach(void f(E entity));
+  //* String join([String separator = ""]);
+  //* E lastWhere(bool f(E entity), {E orElse()});
+  //* Iterable map(f(E entity)); // !
+  //* E reduce(E combine(E value, E entity));
+  //* E singleWhere(bool f(E entity));
+  //* Iterable<E> skip(int n); // !
+  //* Iterable<E> skipWhile(bool f(E entity)); // !
+  //* Iterable<E> take(int n); // !
+  //* Iterable<E> takeWhile(bool f(E entity)); // !
+  //  List<E> toList({bool growable: true});
+  //* Set<E> toSet();
+  //* Iterable<E> where(bool f(E entity)); // !
+  
+List
+  //* final Iterable<E> reversed; // !! NO
+    
+  //  void add(E value); // !! YES but returns bool
+  //  void addAll(Iterable<E> iterable); // !! YES (not in api) but returns bool
+  
+  //* Map<int, E> asMap(); // !! NO
+  //* void fillRange(int start, int end, [E fillValue]); // !! NO
+  //* Iterable<E> getRange(int start, int end); // !! NO
+  //* int indexOf(E element, [int start = 0]); // !! NO
+  //* void insert(int index, E element); // !! NO
+  //* void insertAll(int index, Iterable<E> iterable); // !! NO
+  //* int lastIndexOf(E element, [int start]); // !! NO
+  //  bool remove(Object value); // !! YES but Entity param
+  //* E removeAt(int index); // !! NO
+  //* E removeLast(); // !! NO
+  //* void removeRange(int start, int end); // !! NO
+  //* void removeWhere(bool f(E entity)); // !! NO ??
+  //* void replaceRange(int start, int end, Iterable<E> iterable); // !! NO
+  //* void retainWhere(bool test(E entity)); // !! NO
+  //* void setAll(int index, Iterable<E> iterable); // !! NO
+  //* void setRange(int start, int end, Iterable<E> iterable, [int skipCount = 0]); // !! NO
+  //* List<E> sublist(int start, [int end])// !! NO
+  
