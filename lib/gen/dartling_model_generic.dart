@@ -83,7 +83,7 @@ String genEntries(Model model, String library) {
   sc = '${sc}    var entries = new Map<String, Entities>(); \n';
   sc = '${sc}    var concept; \n';
   for (Concept entryConcept in model.entryConcepts) {
-    var concept = model.concepts.findByCode('Project');
+    var concept = model.concepts.singleWhereCode('Project');
     sc = '${sc}    concept = model.concepts.findByCode('
          '"${entryConcept.code}"); \n';
     sc = '${sc}    entries["${entryConcept.code}"] = '

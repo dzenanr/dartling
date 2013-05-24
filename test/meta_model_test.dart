@@ -97,7 +97,7 @@ testModelData(Model model) {
       var categories = entries.getEntry('Category');
       Id categoryId = new Id(entries.getConcept('Category'));
       categoryId.setAttribute('name', 'Dart');
-      var dartCategory = categories.findById(categoryId);
+      var dartCategory = categories.singleWhereId(categoryId);
       expect(dartCategory, isNotNull);
       expect(dartCategory.getAttribute('name'), equals('Dart'));
 
@@ -105,23 +105,23 @@ testModelData(Model model) {
       Id dartHomeId = new Id(entries.getConcept('WebLink'));
       dartHomeId.setParent('category', dartCategory);
       dartHomeId.setAttribute('subject', 'Dart Home');
-      var dartHomeWebLink = dartWebLinks.findById(dartHomeId);
+      var dartHomeWebLink = dartWebLinks.singleWhereId(dartHomeId);
       expect(dartHomeWebLink, isNotNull);
       expect(dartHomeWebLink.getAttribute('subject'), equals('Dart Home'));
     });
-    test('Order Categories by Id (code not used, id is name)', () {
+    test('Sort Categories by Id (code not used, id is name)', () {
       var categories = entries.getEntry('Category');
-      categories.order();
+      categories.sort();
       categories.display(title:
-        'Categories Ordered By Id (code not used, id is name)');
+        'Categories Sorted By Id (code not used, id is name)');
     });
-    test('Order Dart Web Links by Name', () {
+    test('Sort Dart Web Links by Name', () {
       var categories = entries.getEntry('Category');
-      var dartCategory = categories.findByAttribute('name', 'Dart');
+      var dartCategory = categories.firstWhereAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
       var dartWebLinks = dartCategory.getChild('webLinks');
-      dartWebLinks.order();
-      dartWebLinks.display(title:'Ordered Dart Web Links');
+      dartWebLinks.sort();
+      dartWebLinks.display(title:'Sorted Dart Web Links');
     });
     test('New Category with Id', () {
       var categories = entries.getEntry('Category');
@@ -138,7 +138,7 @@ testModelData(Model model) {
     test('New WebLink No Category Error', () {
       var categories = entries.getEntry('Category');
       var categoryCount = categories.length;
-      var dartCategory = categories.findByAttribute('name', 'Dart');
+      var dartCategory = categories.firstWhereAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
 
       var dartWebLinks = dartCategory.getChild('webLinks');

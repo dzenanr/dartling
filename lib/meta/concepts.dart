@@ -77,17 +77,17 @@ class Concept extends ConceptEntity<Concept> {
   }
 
   Attribute getAttribute(String attributeCode) =>
-      attributes.findByCode(attributeCode);
+      attributes.singleWhereCode(attributeCode);
 
   Parent getDestinationParent(String parentCode) =>
-      parents.findByCode(parentCode);
+      parents.singleWhereCode(parentCode);
   Child getDestinationChild(String childCode) =>
-      children.findByCode(childCode);
+      children.singleWhereCode(childCode);
 
   Parent getSourceParent(String parentCode) =>
-      sourceParents.findByCode(parentCode);
+      sourceParents.singleWhereCode(parentCode);
   Child getSourceChild(String childCode) =>
-      sourceChildren.findByCode(childCode);
+      sourceChildren.singleWhereCode(childCode);
 
   List<Attribute> get essentialAttributes {
     List<Attribute> essentialList= new List<Attribute>();
@@ -120,17 +120,17 @@ class Concept extends ConceptEntity<Concept> {
   }
 
   bool isAttributeSensitive(String attributeCode) {
-    Attribute a = attributes.findByCode(attributeCode);
+    Attribute a = attributes.singleWhereCode(attributeCode);
     return a!= null && a.sensitive ? true : false;
   }
 
   bool isParentSensitive(String parentCode) {
-    Parent p = parents.findByCode(parentCode);
+    Parent p = parents.singleWhereCode(parentCode);
     return p!= null && p.sensitive ? true : false;
   }
 
   bool isChildSensitive(String childCode) {
-    Child c = children.findByCode(childCode);
+    Child c = children.singleWhereCode(childCode);
     return c!= null && c.sensitive ? true : false;
   }
 

@@ -2,7 +2,7 @@ part of dartling;
 
 class Attributes extends Entities<Property> {
 
-  List<Attribute> toList() {
+  List<Attribute> toList({bool growable: true}) {
     var attributeList = new List<Attribute>();
     for (var attribute in this) {
       attributeList.add(attribute);

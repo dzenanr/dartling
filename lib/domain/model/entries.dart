@@ -38,7 +38,7 @@ class ModelEntries implements ModelEntriesApi {
   }
 
   EntitiesApi newEntities(String conceptCode) {
-    var concept = _model.concepts.findByCode(conceptCode);
+    var concept = _model.concepts.singleWhereCode(conceptCode);
     if (concept == null) {
       throw new ConceptError('${concept.code} concept does not exist.');
     }
@@ -48,7 +48,7 @@ class ModelEntries implements ModelEntriesApi {
   }
 
   EntityApi newEntity(String conceptCode) {
-    var concept = _model.concepts.findByCode(conceptCode);
+    var concept = _model.concepts.singleWhereCode(conceptCode);
     if (concept == null) {
       throw new ConceptError('${concept.code} concept does not exist.');
     }
@@ -73,7 +73,7 @@ class ModelEntries implements ModelEntriesApi {
 
   ConceptEntity findInInternalTree(Concept entryConcept, Oid oid) {
     Entities entryEntities = getEntry(entryConcept.code);
-    return entryEntities.deepFind(oid);
+    return entryEntities.singleDownWhereOid(oid);
   }
 
   bool get isEmpty {
@@ -162,7 +162,7 @@ class ModelEntries implements ModelEntriesApi {
   _entriesFromJson(List<Map<String, Object>> entriesList) {
     for (Map<String, Object> entriesMap in entriesList) {
       String entryConceptCode = entriesMap['concept'];
-      var concept = model.concepts.findByCode(entryConceptCode);
+      var concept = model.concepts.singleWhereCode(entryConceptCode);
       if (concept == null) {
         throw new ConceptError('${entryConceptCode} concept does not exist.');
       }
@@ -259,7 +259,7 @@ class ModelEntries implements ModelEntriesApi {
   ConceptEntity _findParentEntity(Concept parentConcept, Oid oid) {
     if (parentConcept.entry) {
       var entities = getEntry(parentConcept.code);
-      return entities.find(oid);
+      return entities.singleWhereOid(oid);
     } else {
       _model.entryConcepts.forEach((entryConcept) {
         var entryEntities = getEntry(entryConcept.code);
@@ -273,7 +273,7 @@ class ModelEntries implements ModelEntriesApi {
   }
 
   ConceptEntity _findEntityFromEntities(Entities entities, oid) {
-    ConceptEntity foundEntity = entities.find(oid);
+    ConceptEntity foundEntity = entities.singleWhereOid(oid);
     if (foundEntity != null) {
       return foundEntity;
     }

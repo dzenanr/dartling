@@ -1,6 +1,6 @@
 part of dartling;
 
-abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
+abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
 
   Concept get concept;
   ValidationErrorsApi get errors;
@@ -17,12 +17,12 @@ abstract class EntityApi<T extends EntityApi<T>> implements Comparable {
   EntitiesApi getChild(String name);
   bool setChild(String name, EntitiesApi entities);
 
-  T copy();
+  E copy();
   Map<String, Object> toJson();
 
 }
 
-class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
+class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
 
   Concept _concept;
   ValidationErrors _errors;
@@ -101,8 +101,8 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     }
   }
 
-  ConceptEntity<T> newEntity() => new ConceptEntity.of(_concept);
-  Entities<T> newEntities() => new Entities.of(_concept);
+  ConceptEntity<E> newEntity() => new ConceptEntity.of(_concept);
+  Entities<E> newEntities() => new Entities.of(_concept);
 
   Concept get concept => _concept;
   ValidationErrors get errors => _errors;
@@ -264,7 +264,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
     }
-    Attribute attribute = _concept.attributes.findByCode(name);
+    Attribute attribute = _concept.attributes.singleWhereCode(name);
     if (attribute == null) {
       String msg = '${_concept.code}.$name is not correct attribute name.';
       throw new UpdateError(msg);
@@ -300,7 +300,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
     }
-    Attribute attribute = _concept.attributes.findByCode(name);
+    Attribute attribute = _concept.attributes.singleWhereCode(name);
     if (attribute == null) {
       String msg = '${_concept.code}.$name is not correct attribute name.';
       throw new UpdateError(msg);
@@ -368,7 +368,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
     }
-    Parent parent = _concept.parents.findByCode(name);
+    Parent parent = _concept.parents.singleWhereCode(name);
     if (parent == null) {
       String msg = '${_concept.code}.$name is not correct parent entity name.';
       throw new UpdateError(msg);
@@ -396,7 +396,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
     }
-    Child child = _concept.children.findByCode(name);
+    Child child = _concept.children.singleWhereCode(name);
     if (child == null) {
       String msg = '${_concept.code}.$name is not correct child entities name.';
       throw new UpdateError(msg);
@@ -415,11 +415,11 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
    * Copies the entity (oid, code, attributes and neighbors).
    * It is not a deep copy.
    */
-  T copy() {
+  E copy() {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
     }
-    T entity = newEntity();
+    E entity = newEntity();
     assert(entity.concept != null);
 
     var beforeUpdateOid = entity.concept.updateOid;
@@ -466,7 +466,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
   /**
   * Two entities are equal if their oids are equal.
   */
-  bool equals(T entity) {
+  bool equals(E entity) {
     if (_oid.equals(entity.oid)) {
       return true;
     }
@@ -519,7 +519,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
    * Checks if the entity is equal in content to the given entity.
    * Two entities are equal if they have the same content, ignoring oid.
    */
-   bool equalContent(T entity) {
+   bool equalContent(E entity) {
      if (_concept == null) {
        throw new ConceptError('Entity concept is not defined.');
      }
@@ -550,7 +550,7 @@ class ConceptEntity<T extends ConceptEntity<T>> implements EntityApi {
    * if it is equal to 0 they are equal and
    * if the result is greater than 0 then the first is greater than the second.
    */
-  int compareTo(T entity) {
+  int compareTo(E entity) {
     if (code != null) {
       return _code.compareTo(entity.code);
     } else {

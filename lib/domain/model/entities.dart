@@ -1,54 +1,56 @@
 part of dartling;
 
-abstract class EntitiesApi<T extends EntityApi<T>> {
+abstract class EntitiesApi<E extends EntityApi<E>> {
 
-  Concept get concept;
-  EntitiesApi<T> get source;  ValidationErrorsApi get errors;
-  int get length;
-  bool get isEmpty;
-  Iterator<T> get iterator;
+  final Concept concept;
+  final ValidationErrorsApi errors;
+  final bool isEmpty;
+  final int length;
+  final EntitiesApi<E> source;
+  final Iterator<E> iterator;
 
-  bool preAdd(T entity);
-  bool add(T entity);
-  bool postAdd(T entity);
-  bool preRemove(T entity);
-  bool remove(T entity);
-  bool postRemove(T entity);
+  bool preAdd(E entity);
+  bool add(E entity);
+  bool postAdd(E entity);
+  bool preRemove(E entity);
+  bool remove(E entity);
+  bool postRemove(E entity);
 
-  bool any(Function f);
-  bool contains(T entity);
-  bool every(Function f);
-  void forEach(Function f);
+  bool contains(E entity);
+  bool any(bool f(E entity));
+  bool every(bool f(E entity));
 
-  T random();
-  T find(Oid oid);
-  T deepFind(Oid oid);
-  T findByCode(String code);
-  T findById(IdApi id);
-  T findByAttributeId(String code, Object attribute);
-  T findByAttribute(String code, Object attribute);
+  E singleWhereOid(Oid oid);
+  E singleDownWhereOid(Oid oid);
+  E singleWhereCode(String code);
+  E singleWhereId(IdApi id);
+  E singleWhereAttributeId(String code, Object attribute);
+  E firstWhereAttribute(String code, Object attribute);
+  E random();
 
-  EntitiesApi<T> select(Function f);
-  EntitiesApi<T> selectByParent(String code, Object parent);
-  EntitiesApi<T> selectByAttribute(String code, Object attribute);
-  void order();
-  void orderByFunction(Function f);
+  EntitiesApi<E> copy();
+  EntitiesApi<T> order([int compare(E a, E b)]);
+  EntitiesApi<E> selectWhere(bool f(E entity));
+  EntitiesApi<E> selectWhereAttribute(String code, Object attribute);
+  EntitiesApi<E> selectWhereParent(String code, EntityApi parent);
 
   void clear();
-  EntitiesApi<T> copy();
-  List<T> toList();
+  void forEach(bool f(E entity));
+  void sort([int compare(E a, E b)]); // in place sort
+
   List<Map<String, Object>> toJson();
+  List<E> toList();
 
 }
 
-class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
+class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
 
   Concept _concept;
-  List<T> _entityList;
-  Map<int, T> _oidEntityMap;
-  Map<String, T> _codeEntityMap;
-  Map<String, T> _idEntityMap;
-  Entities<T> _source;
+  List<E> _entityList;
+  Map<int, E> _oidEntityMap;
+  Map<String, E> _codeEntityMap;
+  Map<String, E> _idEntityMap;
+  Entities<E> _source;
   ValidationErrors _errors;
 
   String minc = '0';
@@ -56,59 +58,44 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
   bool pre = true;
   bool post = true;
   bool propagateToSource = true;
-
-  Random randomGen;
+  Random randomGen = new Random();
 
   Entities() {
-    _entityList = new List<T>();
-    _oidEntityMap = new Map<int, T>();
-    _codeEntityMap = new Map<String, T>();
-    _idEntityMap = new Map<String, T>();
+    _entityList = new List<E>();
+    _oidEntityMap = new Map<int, E>();
+    _codeEntityMap = new Map<String, E>();
+    _idEntityMap = new Map<String, E>();
     _errors = new ValidationErrors();
 
     pre = false;
     post = false;
     propagateToSource = false;
-
-    randomGen = new Random();
   }
 
   Entities.of(this._concept) {
-    _entityList = new List<T>();
-    _oidEntityMap = new Map<int, T>();
-    _codeEntityMap = new Map<String, T>();
-    _idEntityMap = new Map<String, T>();
+    _entityList = new List<E>();
+    _oidEntityMap = new Map<int, E>();
+    _codeEntityMap = new Map<String, E>();
+    _idEntityMap = new Map<String, E>();
     _errors = new ValidationErrors();
-
-    randomGen = new Random();
   }
 
-  Entities<T> newEntities() => new Entities.of(_concept);
-  ConceptEntity<T> newEntity() => new ConceptEntity.of(_concept);
+  Entities<E> newEntities() => new Entities.of(_concept);
+  ConceptEntity<E> newEntity() => new ConceptEntity.of(_concept);
+
 
   Concept get concept => _concept;
-  Entities<T> get source => _source;
   ValidationErrors get errors => _errors;
   bool get isEmpty => _entityList.isEmpty;
-  Iterator<T> get iterator => _entityList.iterator;
   int get length => _entityList.length;
-  T get first => _entityList.first;
-  T get last => _entityList.last;
+  Entities<E> get source => _source;
+  Iterator<E> get iterator => _entityList.iterator;
 
-  bool any(Function f) => _entityList.any(f);
+  E get first => _entityList.first;
+  E get last => _entityList.last;
 
-  bool contains(T entity) {
-    T element = _oidEntityMap[entity.oid.timeStamp];
-    if (entity == element) {
-      return true;
-    }
-    return false;
-  }
 
-  bool every(Function f) => _entityList.every(f);
-  void forEach(Function f) =>  _entityList.forEach(f);
-
-  bool preAdd(T entity) {
+  bool preAdd(E entity) {
     if (!pre) {
       return true;
     }
@@ -174,13 +161,13 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     }
 
     // uniqueness validation
-    if (entity.code != null && findByCode(entity.code) != null) {
+    if (entity.code != null && singleWhereCode(entity.code) != null) {
       var error = new ValidationError('unique');
       error.message = '${entity.concept.code}.code is not unique.';
       _errors.add(error);
       result = false;
     }
-    if (entity.id != null && findById(entity.id) != null) {
+    if (entity.id != null && singleWhereId(entity.id) != null) {
       ValidationError error = new ValidationError('unique');
       error.message =
           '${entity.concept.code}.id ${entity.id.toString()} is not unique.';
@@ -191,7 +178,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     return result;
   }
 
-  bool add(T entity) {
+  bool add(E entity) {
     bool added = false;
     if (preAdd(entity)) {
       _entityList.add(entity);
@@ -225,7 +212,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     return added;
   }
 
-  bool postAdd(T entity) {
+  bool postAdd(E entity) {
     if (!post) {
       return true;
     }
@@ -245,7 +232,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     return result;
   }
 
-  bool preRemove(T entity) {
+  bool preRemove(E entity) {
     if (!pre) {
       return true;
     }
@@ -284,10 +271,10 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     return result;
   }
 
-  bool remove(T entity) {
+  bool remove(E entity) {
     bool removed = false;
     if (preRemove(entity)) {
-      for (T element in _entityList) {
+      for (E element in _entityList) {
         if (element == entity) {
           _entityList.remove(entity);
           _oidEntityMap.remove(entity.oid.timeStamp);
@@ -322,7 +309,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     return removed;
   }
 
-  bool postRemove(T entity) {
+  bool postRemove(E entity) {
     if (!post) {
       return true;
     }
@@ -350,7 +337,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
    * They can be set only with the help of meta:
    * concept.updateOid, concept.updateCode or property.update.
    */
-  bool update(T beforeEntity, T afterEntity) {
+  bool update(E beforeEntity, E afterEntity) {
     if (beforeEntity.oid == afterEntity.oid &&
         beforeEntity.code == afterEntity.code &&
         beforeEntity.id == afterEntity.id) {
@@ -380,21 +367,39 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     return false;
   }
 
-  T random() {
-    if (!isEmpty) {
-      return _entityList[randomGen.nextInt(length)];
+  bool addFrom(Entities<E> entities) {
+    bool allAdded = true;
+    if (_concept == entities.concept) {
+      entities.forEach((entity) => add(entity) ? true : allAdded = false);
+    } else {
+      throw new ConceptError('The concept of the argument is different.');
     }
+    return allAdded;
   }
 
-  T find(Oid oid) {
+
+  bool any(bool f(E entity)) => _entityList.any(f);
+
+  bool contains(E entity) {
+    E element = _oidEntityMap[entity.oid.timeStamp];
+    if (entity == element) {
+      return true;
+    }
+    return false;
+  }
+
+  bool every(bool f(E entity)) => _entityList.every(f);
+
+
+  E singleWhereOid(Oid oid) {
     return _oidEntityMap[oid.timeStamp];
   }
 
-  T deepFind(Oid oid) {
+  E singleDownWhereOid(Oid oid) {
     if (isEmpty) {
       return null;
     }
-    ConceptEntity foundEntity = find(oid);
+    ConceptEntity foundEntity = singleWhereOid(oid);
     if (foundEntity != null) {
       return foundEntity;
     }
@@ -402,34 +407,87 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       for (ConceptEntity entity in _entityList) {
         for (Child child in _concept.children) {
           Entities childEntities = entity.getChild(child.code);
-          return childEntities.deepFind(oid);
+          return childEntities.singleDownWhereOid(oid);
         }
       }
     }
   }
 
-  T findByCode(String code) {
+  E singleWhereCode(String code) {
     return _codeEntityMap[code];
   }
 
-  T findById(Id id) {
+  E singleWhereId(Id id) {
     return _idEntityMap[id.toString()];
   }
 
-  T findByAttributeId(String code, Object attribute) {
-    return findById(new Id(_concept)..setAttribute(code, attribute));
+  E singleWhereAttributeId(String code, Object attribute) {
+    return singleWhereId(new Id(_concept)..setAttribute(code, attribute));
   }
 
-  T findByAttribute(String code, Object attribute) {
-    var selectionEntities = selectByAttribute(code, attribute);
+  E firstWhereAttribute(String code, Object attribute) {
+    var selectionEntities = selectWhereAttribute(code, attribute);
     if (selectionEntities.length > 0) {
       return selectionEntities.first;
     }
     return null;
   }
 
-  Entities<T> select(Function f) {
-    Entities<T> selectedEntities = newEntities();
+  E random() {
+    if (!isEmpty) {
+      return _entityList[randomGen.nextInt(length)];
+    }
+  }
+
+
+  /**
+   * Copies the entities.
+   * It is not a deep copy.
+   */
+  Entities<E> copy() {
+    if (_concept == null) {
+      throw new ConceptError('Entities.copy: concept is not defined.');
+    }
+    Entities<E> copiedEntities = newEntities();
+    copiedEntities.pre = false;
+    copiedEntities.post = false;
+    copiedEntities.propagateToSource = false;
+    for (ConceptEntity entity in this) {
+      copiedEntities.add(entity.copy());
+    }
+    copiedEntities.pre = true;
+    copiedEntities.post = true;
+    copiedEntities.propagateToSource = true;
+    return copiedEntities;
+  }
+
+  /**
+   * If compare function is not passed, compareTo method will be used.
+   * If there is no compareTo method on specific entity,
+   * the Entity.compareTo method will be used (code if not null, otherwise id).
+   */
+  Entities<E> order([int compare(E a, E b)]) {
+    Entities<E> orderedEntities = newEntities();
+    orderedEntities.pre = false;
+    orderedEntities.post = false;
+    orderedEntities.propagateToSource = false;
+    List<E> sortedList = toList();
+    // in place sort
+    if (?compare) {
+      sortedList.sort(compare);
+    } else {
+      sortedList.sort((m,n) => m.compareTo(n));
+    }
+    sortedList.forEach((entity) => orderedEntities.add(entity));
+    orderedEntities.pre = true;
+    orderedEntities.post = true;
+    orderedEntities.propagateToSource = false;
+    orderedEntities._source = this;
+    return orderedEntities;
+  }
+
+  Entities<E> selectWhere(Function f) {
+    Entities<E> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.post = false;
     selectedEntities.propagateToSource = false;
@@ -442,41 +500,16 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     return selectedEntities;
   }
 
-  Entities<T> selectByParent(String code, Object parent) {
-    if (_concept == null) {
-      throw new ConceptError(
-        'Entities.selectByParent($code, $parent): concept is not defined.');
-    }
-    Entities<T> selectedEntities = newEntities();
-    selectedEntities.pre = false;
-    selectedEntities.post = false;
-    selectedEntities.propagateToSource = false;
-    for (T entity in _entityList) {
-      for (Parent p in _concept.parents) {
-        if (p.code == code) {
-          if (entity.getParent(p.code) == parent) {
-            selectedEntities.add(entity);
-          }
-        }
-      }
-    }
-    selectedEntities.pre = true;
-    selectedEntities.post = true;
-    selectedEntities.propagateToSource = true;
-    selectedEntities._source = this;
-    return selectedEntities;
-  }
-
-  Entities<T> selectByAttribute(String code, Object attribute) {
+  Entities<E> selectWhereAttribute(String code, Object attribute) {
     if (_concept == null) {
       throw new ConceptError(
         'Entities.selectByAttribute($code, $attribute): concept is not defined.');
     }
-    Entities<T> selectedEntities = newEntities();
+    Entities<E> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.post = false;
     selectedEntities.propagateToSource = false;
-    for (T entity in _entityList) {
+    for (E entity in _entityList) {
       for (Attribute a in _concept.attributes) {
         if (a.code == code) {
           if (entity.getAttribute(a.code) == attribute) {
@@ -492,84 +525,89 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     return selectedEntities;
   }
 
+  Entities<E> selectByParent(String code, EntityApi parent) {
+    if (_concept == null) {
+      throw new ConceptError(
+        'Entities.selectByParent($code, $parent): concept is not defined.');
+    }
+    Entities<E> selectedEntities = newEntities();
+    selectedEntities.pre = false;
+    selectedEntities.post = false;
+    selectedEntities.propagateToSource = false;
+    for (E entity in _entityList) {
+      for (Parent p in _concept.parents) {
+        if (p.code == code) {
+          if (entity.getParent(p.code) == parent) {
+            selectedEntities.add(entity);
+          }
+        }
+      }
+    }
+    selectedEntities.pre = true;
+    selectedEntities.post = true;
+    selectedEntities.propagateToSource = true;
+    selectedEntities._source = this;
+    return selectedEntities;
+  }
+
+
+  void clear() {
+    _entityList.clear();
+    _oidEntityMap.clear();
+    _codeEntityMap.clear();
+    _idEntityMap.clear();
+    _errors.clear();
+  }
+
+  void forEach(bool f(E entity)) =>  _entityList.forEach(f);
+
   /**
-   * If there is no compareTo method on a specific entity,
+   * If compare function is not passed, compareTo method will be used.
+   * If there is no compareTo method on specific entity,
    * the Entity.compareTo method will be used (code if not null, otherwise id).
    */
-  /*
-  Entities<T> order() {
-    Entities<T> orderedEntities = newEntities();
-    orderedEntities.pre = false;
-    orderedEntities.post = false;
-    orderedEntities.propagateToSource = false;
-    List<T> sortedList = toList();
+  void sort([int compare(E a, E b)]) {
     // in place sort
-    sortedList.sort((m,n) => m.compareTo(n));
-    sortedList.forEach((entity) => orderedEntities.add(entity));
-    orderedEntities.pre = true;
-    orderedEntities.post = true;
-    orderedEntities.propagateToSource = false;
-    orderedEntities._source = this;
-    return orderedEntities;
-  }
-  */
-  void order() {
-    // in place sort
-    _entityList.sort((m,n) => m.compareTo(n));
+    if (?compare) {
+      _entityList.sort(compare);
+    } else {
+      _entityList.sort((m,n) => m.compareTo(n));
+    }
   }
 
-  /*
-  Entities<T> orderByFunction(Function f) {
-    Entities<T> orderedEntities = newEntities();
-    orderedEntities.pre = false;
-    orderedEntities.post = false;
-    orderedEntities.propagateToSource = false;
-    List<T> sortedList = toList();
-    // in place sort
-    sortedList.sort(f);
-    sortedList.forEach((entity) => orderedEntities.add(entity));
-    orderedEntities.pre = true;
-    orderedEntities.post = true;
-    orderedEntities.propagateToSource = false;
-    orderedEntities._source = this;
-    return orderedEntities;
-  }
-  */
-  void orderByFunction(Function f) {
-    // in place sort
-    _entityList.sort(f);
-  }
 
   /**
-   * Copies the entities.
-   * It is not a deep copy.
+   * Loads entities without validations to this, which must be empty.
+   * It does not handle neighbors.
+   * See ModelEntries for the JSON transfer at the level of a model.
    */
-  Entities<T> copy() {
-    if (_concept == null) {
-      throw new ConceptError('Entities.copy: concept is not defined.');
+  fromJson(List<Map<String, Object>> entitiesList) {
+    if (concept == null) {
+      throw new ConceptError('entities concept does not exist.');
     }
-    Entities<T> copiedEntities = newEntities();
-    copiedEntities.pre = false;
-    copiedEntities.post = false;
-    copiedEntities.propagateToSource = false;
-    for (ConceptEntity entity in this) {
-      copiedEntities.add(entity.copy());
+    if (length > 0) {
+      throw new JsonError('entities are not empty');
     }
-    copiedEntities.pre = true;
-    copiedEntities.post = true;
-    copiedEntities.propagateToSource = true;
-    return copiedEntities;
+    for (Map<String, Object> entityMap in entitiesList) {
+      E entity = newEntity();
+      entity.fromJson(entityMap);
+      pre = false;
+      post = false;
+      add(entity);
+      pre = true;
+      post = true;
+    }
   }
 
-  bool addFrom(Entities<T> entities) {
-    bool allAdded = true;
-    if (_concept == entities.concept) {
-      entities.forEach((entity) => add(entity) ? true : allAdded = false);
-    } else {
-      throw new ConceptError('The concept of the argument is different.');
+  List<Map<String, Object>> toJson() {
+    List<Map<String, Object>> entityList = new List<Map<String, Object>>();
+    for (E entity in _entityList) {
+      entityList.add(entity.toJson());
     }
-    return allAdded;
+    return entityList;
   }
+
+  List<E> toList() => _entityList.toList();
 
   /**
    * Returns a string that represents this entity by using oid and code.
@@ -581,6 +619,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       print('Entities.toString(): entities concept is null.');
     }
   }
+
 
   /**
   * Displays (prints) a title, then entities.
@@ -598,7 +637,7 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
       print('${s}======================================');
       //print('');
     }
-    for (T e in _entityList) {
+    for (E e in _entityList) {
       e.display(prefix:s, withOid:withOid, withChildren:withChildren);
     }
   }
@@ -619,47 +658,6 @@ class Entities<T extends ConceptEntity<T>> implements EntitiesApi<T> {
     _idEntityMap.forEach((k,v) {
       print('id $k: $v');
     });
-  }
-
-  void clear() {
-    _entityList.clear();
-    _oidEntityMap.clear();
-    _codeEntityMap.clear();
-    _idEntityMap.clear();
-    _errors.clear();
-  }
-
-  List<T> toList() => _entityList.toList();
-
-  List<Map<String, Object>> toJson() {
-    List<Map<String, Object>> entityList = new List<Map<String, Object>>();
-    for (T entity in _entityList) {
-      entityList.add(entity.toJson());
-    }
-    return entityList;
-  }
-
-  /**
-   * Loads entities without validations to this, which must be empty.
-   * It does not handle neighbors.
-   * See ModelEntries for the JSON transfer at the level of a model.
-   */
-  fromJson(List<Map<String, Object>> entitiesList) {
-    if (concept == null) {
-      throw new ConceptError('entities concept does not exist.');
-    }
-    if (length > 0) {
-      throw new JsonError('entities are not empty');
-    }
-    for (Map<String, Object> entityMap in entitiesList) {
-      T entity = newEntity();
-      entity.fromJson(entityMap);
-      pre = false;
-      post = false;
-      add(entity);
-      pre = true;
-      post = true;
-    }
   }
 
 }

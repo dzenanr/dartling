@@ -49,7 +49,7 @@ Model fromMagicBoxes(String json, Domain domain, String modelCode) {
           attribute.init = itemInit;
         }
         String itemType = item["type"];
-        AttributeType type = domain.types.findByCode(itemType);
+        AttributeType type = domain.types.singleWhereCode(itemType);
         if (type != null) {
           attribute.type = type;
         } else {
@@ -63,8 +63,8 @@ Model fromMagicBoxes(String json, Domain domain, String modelCode) {
     String box1Name = line["box1Name"];
     String box2Name = line["box2Name"];
 
-    Concept concept1 = model.concepts.findByCode(box1Name);
-    Concept concept2 = model.concepts.findByCode(box2Name);
+    Concept concept1 = model.concepts.singleWhereCode(box1Name);
+    Concept concept2 = model.concepts.singleWhereCode(box2Name);
     if (concept1 == null) {
       throw new ConceptError(
         'Line concept is missing for the $box1Name box.');

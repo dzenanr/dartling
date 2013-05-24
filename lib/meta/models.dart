@@ -29,7 +29,7 @@ class Model extends ConceptEntity<Model> {
   int get entryConceptCount => entryConcepts.length;
 
   Concept getEntryConcept(String entryConceptCode) {
-    Concept concept = concepts.findByCode(entryConceptCode);
+    Concept concept = concepts.singleWhereCode(entryConceptCode);
     if (!concept.entry) {
       throw new Exception('$entryConceptCode concept is not entry.');
     }
@@ -38,7 +38,7 @@ class Model extends ConceptEntity<Model> {
 
   int get conceptCount => concepts.length;
 
-  Concept getConcept(String conceptCode) => concepts.findByCode(conceptCode);
+  Concept getConcept(String conceptCode) => concepts.singleWhereCode(conceptCode);
 
 }
 

@@ -2,7 +2,7 @@ part of dartling;
 
 class Domains extends Entities<Domain> {
 
-  Domain getDomain(String code) => findByCode(code);
+  Domain getDomain(String code) => singleWhereCode(code);
 
 }
 
@@ -35,10 +35,10 @@ class Domain extends ConceptEntity<Domain> {
     assert(types.length == 7);
   }
 
-  Domain getDomain(String domainCode) => domains.findByCode(domainCode);
+  Domain getDomain(String domainCode) => domains.singleWhereCode(domainCode);
 
-  Model getModel(String modelCode) => models.findByCode(modelCode);
+  Model getModel(String modelCode) => models.singleWhereCode(modelCode);
 
-  AttributeType getType(String typeCode) => types.findByCode(typeCode);
+  AttributeType getType(String typeCode) => types.singleWhereCode(typeCode);
 
 }
