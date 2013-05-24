@@ -84,7 +84,7 @@ String genEntries(Model model, String library) {
   sc = '${sc}    var concept; \n';
   for (Concept entryConcept in model.entryConcepts) {
     var concept = model.concepts.singleWhereCode('Project');
-    sc = '${sc}    concept = model.concepts.findByCode('
+    sc = '${sc}    concept = model.concepts.singleWhereCode('
          '"${entryConcept.code}"); \n';
     sc = '${sc}    entries["${entryConcept.code}"] = '
          'new ${entryConcept.codes}(concept); \n';
@@ -94,7 +94,7 @@ String genEntries(Model model, String library) {
   sc = '${sc} \n';
 
   sc = '${sc}  Entities newEntities(String conceptCode) { \n';
-  sc = '${sc}    var concept = model.concepts.findByCode(conceptCode); \n';
+  sc = '${sc}    var concept = model.concepts.singleWhereCode(conceptCode); \n';
   sc = '${sc}    if (concept == null) { \n';
   sc = '${sc}      throw new ConceptError('
        '"\${conceptCode} concept does not exist.") ; \n';
@@ -108,7 +108,7 @@ String genEntries(Model model, String library) {
   sc = '${sc} \n';
 
   sc = '${sc}  ConceptEntity newEntity(String conceptCode) { \n';
-  sc = '${sc}    var concept = model.concepts.findByCode(conceptCode); \n';
+  sc = '${sc}    var concept = model.concepts.singleWhereCode(conceptCode); \n';
   sc = '${sc}    if (concept == null) { \n';
   sc = '${sc}      throw new ConceptError('
        '"\${conceptCode} concept does not exist.") ; \n';
@@ -158,7 +158,7 @@ String genConceptGen(Concept concept, String library) {
     for (Child child in concept.children) {
       Concept destinationConcept = child.destinationConcept;
       sc = '${sc}    Concept ${destinationConcept.codeFirstLetterLower}'
-           'Concept = concept.model.concepts.findByCode('
+           'Concept = concept.model.concepts.singleWhereCode('
            '"${destinationConcept.code}"); \n';
       sc = '${sc}    setChild("${child.code}", new ${destinationConcept.codes}('
            '${destinationConcept.codeFirstLetterLower}Concept)); \n';
@@ -205,7 +205,7 @@ String genConceptGen(Concept concept, String library) {
     for (Child child in concept.children) {
       Concept destinationConcept = child.destinationConcept;
       sc = '${sc}    Concept ${destinationConcept.codeFirstLetterLower}'
-           'Concept = concept.model.concepts.findByCode('
+           'Concept = concept.model.concepts.singleWhereCode('
            '"${destinationConcept.code}"); \n';
       sc = '${sc}    setChild("${child.code}", new ${destinationConcept.codes}('
            '${destinationConcept.codeFirstLetterLower}Concept)); \n';
