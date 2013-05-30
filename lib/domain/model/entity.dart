@@ -2,10 +2,10 @@ part of dartling;
 
 abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
 
-  final Concept concept;
-  final ValidationErrorsApi errors;
-  final Oid oid;
-  final IdApi id;
+  Concept get concept;
+  ValidationErrorsApi get errors;
+  Oid get oid;
+  IdApi get id;
   String code;
 
   Object getAttribute(String name);

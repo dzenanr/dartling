@@ -1,10 +1,10 @@
 part of dartling;
 
-abstract class EntitiesApi<E extends EntityApi<E>> implements Iterable<E> {
+abstract class EntitiesApi<E extends EntityApi<E>> { // implements Iterable<E>
 
-  final Concept concept;
-  final ValidationErrorsApi errors;
-  final EntitiesApi<E> source;
+  Concept get concept;
+  ValidationErrorsApi get errors;
+  EntitiesApi<E> get source;
 
   E firstWhereAttribute(String code, Object attribute);
   E random();
@@ -15,7 +15,7 @@ abstract class EntitiesApi<E extends EntityApi<E>> implements Iterable<E> {
   E singleWhereAttributeId(String code, Object attribute);
 
   EntitiesApi<E> copy();
-  EntitiesApi<E> order([int compare(E a, E b)]); // sort
+  EntitiesApi<E> order([int compare(E a, E b)]); // sort, but not in place
   EntitiesApi<E> selectWhere(bool f(E entity));
   EntitiesApi<E> selectWhereAttribute(String code, Object attribute);
   EntitiesApi<E> selectWhereParent(String code, EntityApi parent);
@@ -83,6 +83,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   Iterator<E> get iterator => _entityList.iterator;
   E get last => _entityList.last;
   int get length => _entityList.length;
+  int get count => length; // for my soul
   E get single => _entityList.single;
 
   Concept get concept => _concept;
@@ -101,6 +102,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   }
 
   E elementAt(int index) => _entityList.elementAt(index); // should we keep it?
+  E at(int index) => elementAt(index); // should we keep it?
   bool every(bool f(E entity)) => _entityList.every(f);
   Iterable expand(Iterable f(E entity)) => _entityList.expand(f); // should we keep it?
   E firstWhere(bool f(E entity), {E orElse()}) =>  _entityList.firstWhere(f);
@@ -110,7 +112,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   String join([String separator = '']) => _entityList.join(separator);
   E lastWhere(bool f(E entity), {E orElse()}) => _entityList.lastWhere(f);
   Iterable map(f(E entity)) => _entityList.map(f);
-  E reduce(E combine(E value, E entity)) => _entityList.map(combine); // E(?) value
+  E reduce(E combine(E value, E entity)) => _entityList.reduce(combine); // E(?) value
   E singleWhere(bool f(E entity)) => _entityList.singleWhere(f);
   Iterable<E> skip(int n) => _entityList.skip(n);
   Iterable<E> skipWhile(bool f(E entity)) => _entityList.skipWhile(f);
