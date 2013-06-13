@@ -34,7 +34,6 @@ library dartling;
 
 import 'dart:json';
 import 'dart:math';
-import 'dart:uri';
 
 import 'package:unittest/unittest.dart';
 

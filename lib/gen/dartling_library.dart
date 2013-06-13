@@ -51,7 +51,6 @@ String genDartlingLibrary(Model model) {
 
   sc = '${sc}import "dart:json"; \n';
   sc = '${sc}import "dart:math"; \n';
-  sc = '${sc}import "dart:uri"; \n';
   sc = '${sc} \n';
 
   sc = '${sc}import "package:dartling/dartling.dart"; \n';
