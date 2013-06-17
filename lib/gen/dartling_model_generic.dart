@@ -155,11 +155,15 @@ String genConceptGen(Concept concept, String library) {
     sc = '${sc}  ${concept.code}Gen(Concept concept) : super.of(concept); \n';
   } else {
     sc = '${sc}  ${concept.code}Gen(Concept concept) : super.of(concept) { \n';
+    var generatedConcepts = new List<Concept>();
     for (Child child in concept.children) {
       Concept destinationConcept = child.destinationConcept;
-      sc = '${sc}    Concept ${destinationConcept.codeFirstLetterLower}'
-           'Concept = concept.model.concepts.singleWhereCode('
-           '"${destinationConcept.code}"); \n';
+      if (!generatedConcepts.contains(destinationConcept)) {
+        generatedConcepts.add(destinationConcept);
+        sc = '${sc}    Concept ${destinationConcept.codeFirstLetterLower}'
+        'Concept = concept.model.concepts.singleWhereCode('
+        '"${destinationConcept.code}"); \n';
+      }
       sc = '${sc}    setChild("${child.code}", new ${destinationConcept.codes}('
            '${destinationConcept.codeFirstLetterLower}Concept)); \n';
     }
@@ -202,11 +206,15 @@ String genConceptGen(Concept concept, String library) {
         }
       }
     }
+    var generatedConcepts = new List<Concept>();
     for (Child child in concept.children) {
       Concept destinationConcept = child.destinationConcept;
-      sc = '${sc}    Concept ${destinationConcept.codeFirstLetterLower}'
-           'Concept = concept.model.concepts.singleWhereCode('
-           '"${destinationConcept.code}"); \n';
+      if (!generatedConcepts.contains(destinationConcept)) {
+        generatedConcepts.add(destinationConcept);
+        sc = '${sc}    Concept ${destinationConcept.codeFirstLetterLower}'
+        'Concept = concept.model.concepts.singleWhereCode('
+        '"${destinationConcept.code}"); \n';
+      }
       sc = '${sc}    setChild("${child.code}", new ${destinationConcept.codes}('
            '${destinationConcept.codeFirstLetterLower}Concept)); \n';
     }
@@ -246,8 +254,13 @@ String genConceptGen(Concept concept, String library) {
     for (Attribute attribute in concept.attributes) {
       if (attribute.identifier) {
         sc = '${sc}  int ${attribute.code}CompareTo(${concept.code} other) { \n';
-        sc = '${sc}    return ${attribute.code}.compareTo('
-             'other.${attribute.code}); \n';
+        if (attribute.type.code == 'Uri') {
+          sc = '${sc}    return ${attribute.code}.toString().compareTo('
+          'other.${attribute.code}.toString()); \n';
+        } else {
+          sc = '${sc}    return ${attribute.code}.compareTo('
+          'other.${attribute.code}); \n';
+        }
         sc = '${sc}  } \n';
         sc = '${sc} \n';
       }
