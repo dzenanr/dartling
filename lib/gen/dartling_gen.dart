@@ -27,7 +27,7 @@ String genDartlingGen(Model model) {
   sc = '${sc}  // change "Skeleton" to "YourModelName" \n';
   sc = '${sc}  Model ${domain.codeFirstLetterLower}'
        '${model.code}Model = \n';
-  sc = '${sc}      fromMagicBoxes(${domain.codeFirstLetterLower}'
+  sc = '${sc}      fromJsonToModel(${domain.codeFirstLetterLower}'
        '${model.code}ModelJson, '
        '${domain.codeFirstLetterLower}'
        'Domain, "${model.code}"); \n';

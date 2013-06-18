@@ -51,7 +51,7 @@ String genModels(Domain domain, String library) {
 
   for (Model model in domain.models) {
     sc = '${sc}  ${model.code}Entries fromJsonTo${model.code}Entries() { \n';
-    sc = '${sc}    return new ${model.code}Entries(fromMagicBoxes( \n';
+    sc = '${sc}    return new ${model.code}Entries(fromJsonToModel( \n';
     sc = '${sc}      ${domain.codeFirstLetterLower}${model.code}ModelJson, \n';
     sc = '${sc}      domain, \n';
     sc = '${sc}      ${domain.code}Repo.${domain.codeFirstLetterLower}'
