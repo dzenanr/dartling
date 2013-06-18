@@ -18,13 +18,9 @@ String genDartlingGen(Model model) {
   sc = '${sc}genCode() { \n';
   sc = '${sc}  var repo = new Repo(); \n';
   sc = '${sc} \n';
-  sc = '${sc}  // change "Dartling" to "YourDomainName" \n';
   sc = '${sc}  var ${domain.codeFirstLetterLower}Domain = '
        'new Domain("${domain.code}"); \n';
   sc = '${sc} \n';
-  sc = '${sc}  // change dartling to yourDomainName \n';
-  sc = '${sc}  // change Skeleton to YourModelName \n';
-  sc = '${sc}  // change "Skeleton" to "YourModelName" \n';
   sc = '${sc}  Model ${domain.codeFirstLetterLower}'
        '${model.code}Model = \n';
   sc = '${sc}      fromJsonToModel(${domain.codeFirstLetterLower}'
