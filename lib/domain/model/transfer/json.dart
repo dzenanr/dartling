@@ -1,6 +1,6 @@
 part of dartling;
 
-Model fromMagicBoxes(String json, Domain domain, String modelCode) {
+Model fromJsonToModel(String json, Domain domain, String modelCode) {
   if (json == null || json.trim() == '') {
     return null;
   }
@@ -34,20 +34,18 @@ Model fromMagicBoxes(String json, Domain domain, String modelCode) {
         String itemInit = item["init"];
         if (itemInit == null || itemInit.trim() == '') {
           attribute.init = null;
-        } else if (itemInit  == 'essential') {
-          attribute.essential = true;
-          attribute.init = null;
         } else if (itemInit  == 'increment') {
           attribute.increment = 1;
-          attribute.init = null;
-        } else if (itemInit  == 'sensitive') {
-          attribute.sensitive = true;
           attribute.init = null;
         } else if (itemInit  == 'empty') {
           attribute.init = '';
         } else {
           attribute.init = itemInit;
         }
+        bool itemEssential = item["essential"];
+        attribute.essential = itemEssential;
+        bool itemSensitive = item["sensitive"];
+        attribute.sensitive = itemSensitive;
         String itemType = item["type"];
         AttributeType type = domain.types.singleWhereCode(itemType);
         if (type != null) {
