@@ -1,5 +1,6 @@
 part of dartling;
 
+// http://dartlangfr.net/dart-cheat-sheet/
 abstract class EntitiesApi<E extends EntityApi<E>> { // implements Iterable<E>
 
   Concept get concept;
