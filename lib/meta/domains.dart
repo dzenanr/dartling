@@ -31,8 +31,11 @@ class Domain extends ConceptEntity<Domain> {
     new AttributeType(this, 'double');
     new AttributeType(this, 'bool');
     new AttributeType(this, 'DateTime');
+    new AttributeType(this, 'dynamic');
     new AttributeType(this, 'Uri');
-    assert(types.length == 7);
+    new AttributeType(this, 'Email');
+    new AttributeType(this, 'Other');
+    assert(types.length == 10);
   }
 
   Domain getDomain(String domainCode) => domains.singleWhereCode(domainCode);
