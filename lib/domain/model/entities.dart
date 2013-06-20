@@ -10,7 +10,7 @@ abstract class EntitiesApi<E extends EntityApi<E>> { // implements Iterable<E>
   E firstWhereAttribute(String code, Object attribute);
   E random();
   E singleWhereOid(Oid oid);
-  E singleDownWhereOid(Oid oid);
+  EntityApi singleDownWhereOid(Oid oid);
   E singleWhereCode(String code);
   E singleWhereId(IdApi id);
   E singleWhereAttributeId(String code, Object attribute);
@@ -143,7 +143,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     return _oidEntityMap[oid.timeStamp];
   }
 
-  E singleDownWhereOid(Oid oid) {
+  ConceptEntity singleDownWhereOid(Oid oid) {
     if (isEmpty) {
       return null;
     }
