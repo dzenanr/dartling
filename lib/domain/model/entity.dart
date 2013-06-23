@@ -576,8 +576,6 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       } else {
         return '{${_concept.code}: {oid:${_oid.toString()}, code:${_code}}}';
       }
-    } else {
-      print('ConceptEntity.toString(): entity concept is null.');
     }
   }
 
