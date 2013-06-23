@@ -377,8 +377,6 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   String toString() {
     if (_concept != null) {
       return '${_concept.code}: entities:${length}';
-    } else {
-      print('Entities.toString(): entities concept is null.');
     }
   }
 
