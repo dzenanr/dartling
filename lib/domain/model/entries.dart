@@ -146,7 +146,8 @@ class ModelEntries implements ModelEntriesApi {
         var msg =
         '${entity.concept.code}.${parent.code} ${parent.destinationConcept.code}'
          ' parent entity is not found for the ${parentOid} parent oid.';
-        throw new ParentError(msg);
+        //throw new ParentError(msg);
+         print(msg);
       }
       if (parent.identifier) {
         var beforUpdate = parent.update;
