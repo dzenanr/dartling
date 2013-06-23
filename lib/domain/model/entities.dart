@@ -155,7 +155,10 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       for (ConceptEntity entity in _entityList) {
         for (Child child in _concept.children) {
           Entities childEntities = entity.getChild(child.code);
-          return childEntities.singleDownWhereOid(oid);
+          ConceptEntity childEntity = childEntities.singleDownWhereOid(oid);
+          if (childEntity != null) {
+            return childEntity;
+          }
         }
       }
     }
