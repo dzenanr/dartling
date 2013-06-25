@@ -1,7 +1,7 @@
 part of dartling;
 
 // http://dartlangfr.net/dart-cheat-sheet/
-abstract class EntitiesApi<E extends EntityApi<E>> { // implements Iterable<E>
+abstract class EntitiesApi<E extends EntityApi<E>> implements Iterable<E> {
 
   Concept get concept;
   ValidationErrorsApi get errors;
@@ -81,6 +81,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
 
   E get first => _entityList.first;
   bool get isEmpty => _entityList.isEmpty;
+  bool get isNotEmpty => _entityList.isNotEmpty;
   Iterator<E> get iterator => _entityList.iterator;
   E get last => _entityList.last;
   int get length => _entityList.length;
@@ -113,14 +114,13 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   String join([String separator = '']) => _entityList.join(separator);
   E lastWhere(bool f(E entity), {E orElse()}) => _entityList.lastWhere(f);
   Iterable map(f(E entity)) => _entityList.map(f);
-  E reduce(E combine(E value, E entity)) => _entityList.reduce(combine); // E(?) value
+  E reduce(E combine(E value, E entity)) => _entityList.reduce(combine); // E? value
   E singleWhere(bool f(E entity)) => _entityList.singleWhere(f);
   Iterable<E> skip(int n) => _entityList.skip(n);
   Iterable<E> skipWhile(bool f(E entity)) => _entityList.skipWhile(f);
   Iterable<E> take(int n) => _entityList.take(n);
   Iterable<E> takeWhile(bool f(E entity)) => _entityList.takeWhile(f);
-  //List<E> toList({bool growable: true}) => _entityList.toList({}); ??
-  List<E> toList() => _entityList.toList();
+  List<E> toList({bool growable: true}) => _entityList.toList(growable: true);
   Set<E> toSet() => _entityList.toSet();
   Iterable<E> where(bool f(E entity)) => _entityList.where(f);
 
