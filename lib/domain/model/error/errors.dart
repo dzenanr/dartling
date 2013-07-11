@@ -1,6 +1,6 @@
 part of dartling;
 
-class DartlingError implements Error {
+class DartlingError extends Error {
 
   final String msg;
 
