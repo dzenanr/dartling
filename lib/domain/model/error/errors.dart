@@ -4,7 +4,7 @@ class DartlingError extends Error {
 
   final String msg;
 
-  const DartlingError(this.msg);
+  DartlingError(this.msg);
 
   toString() => '*** $msg ***';
 
@@ -12,73 +12,73 @@ class DartlingError extends Error {
 
 class ActionError extends DartlingError {
 
-  const ActionError(String msg) : super(msg);
+  ActionError(String msg) : super(msg);
 
 }
 
 class AddError extends ActionError {
 
-  const AddError(String msg) : super(msg);
+  AddError(String msg) : super(msg);
 
 }
 
 class CodeError extends DartlingError {
 
-  const CodeError(String msg) : super(msg);
+  CodeError(String msg) : super(msg);
 
 }
 
 class ConceptError extends DartlingError {
 
-  const ConceptError(String msg) : super(msg);
+  ConceptError(String msg) : super(msg);
 
 }
 
 class IdError extends DartlingError {
 
-  const IdError(String msg) : super(msg);
+  IdError(String msg) : super(msg);
 
 }
 
 class JsonError extends DartlingError {
 
-  const JsonError(String msg) : super(msg);
+  JsonError(String msg) : super(msg);
 
 }
 
 class OidError extends DartlingError {
 
-  const OidError(String msg) : super(msg);
+  OidError(String msg) : super(msg);
 
 }
 
 class OrderError extends DartlingError {
 
-  const OrderError(String msg) : super(msg);
+  OrderError(String msg) : super(msg);
 
 }
 
 class ParentError extends DartlingError {
 
-  const ParentError(String msg) : super(msg);
+  ParentError(String msg) : super(msg);
 
 }
 
 class RemoveError extends ActionError {
 
-  const RemoveError(String msg) : super(msg);
+  RemoveError(String msg) : super(msg);
 
 }
 
 class TypeError extends DartlingError {
 
-  const TypeError(String msg) : super(msg);
+  TypeError(String msg) : super(msg);
 
 }
 
 class UpdateError extends ActionError {
 
-  const UpdateError(String msg) : super(msg);
+  UpdateError(String msg) : super(msg);
 
 }
 
