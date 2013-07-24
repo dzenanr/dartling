@@ -17,6 +17,8 @@ abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
   EntitiesApi getChild(String name);
   bool setChild(String name, EntitiesApi entities);
 
+  bool preSetAttribute(String name);
+
   E copy();
   Map<String, Object> toJson();
 
@@ -34,9 +36,13 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   Map<String, ConceptEntity> _parentMap;
   Map<String, Entities> _childMap;
 
+  bool pre = true;
+
   ConceptEntity() {
     _errors = new ValidationErrors();
     _oid = new Oid();
+
+    pre = false;
   }
 
   ConceptEntity.of(this._concept) {
@@ -258,39 +264,56 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
   }
 
+  bool preSetAttribute(String name) {
+    if (!pre) {
+      return true;
+    }
+
+    if (_concept == null) {
+      throw new ConceptError(
+        'Entity(oid: ${oid}) concept is not defined.');
+    }
+
+    bool result = true;
+
+    return result;
+  }
+
   Object getAttribute(String name) => _attributeMap[name];
   bool setAttribute(String name, Object value) {
     bool updated = false;
-    if (_concept == null) {
-      throw new ConceptError('Entity concept is not defined.');
-    }
-    Attribute attribute = _concept.attributes.singleWhereCode(name);
-    if (attribute == null) {
-      String msg = '${_concept.code}.$name is not correct attribute name.';
-      throw new UpdateError(msg);
-    }
-    /*
-     * validation done in Entities.preAdd
-    if (value == null && attribute.minc != '0') {
-      String msg = '${_concept.code}.$name cannot be null.';
-      throw new UpdateException(msg);
-    }
-    */
-    if (getAttribute(name) == null) {
-      _attributeMap[name] = value;
-      updated = true;
-    //} else if (!attribute.derive && attribute.update) {
-    } else if (attribute.update) {
-      _attributeMap[name] = value;
-      updated = true;
-    } else {
-      String msg = '${_concept.code}.${attribute.code} is not updateable.';
-      throw new UpdateError(msg);
+    if (preSetAttribute(name)) {
+      if (_concept == null) {
+        throw new ConceptError('Entity concept is not defined.');
+      }
+      Attribute attribute = _concept.attributes.singleWhereCode(name);
+      if (attribute == null) {
+        String msg = '${_concept.code}.$name is not correct attribute name.';
+        throw new UpdateError(msg);
+      }
       /*
-      EntityError error = new EntityError('read-only');
-      error.message = '${_concept.code}.${attribute.code} is not updateable.';
-      _errors.add(error);
+       * validation done in Entities.preAdd
+      if (value == null && attribute.minc != '0') {
+        String msg = '${_concept.code}.$name cannot be null.';
+        throw new UpdateException(msg);
+      }
       */
+      if (getAttribute(name) == null) {
+        _attributeMap[name] = value;
+        updated = true;
+      //} else if (!attribute.derive && attribute.update) {
+      } else if (attribute.update) {
+        _attributeMap[name] = value;
+        updated = true;
+      } else {
+        String msg = '${_concept.code}.${attribute.code} is not updateable.';
+        throw new UpdateError(msg);
+        /*
+        EntityError error = new EntityError('read-only');
+        error.message = '${_concept.code}.${attribute.code} is not updateable.';
+        _errors.add(error);
+        */
+      }
     }
     return updated;
   }
