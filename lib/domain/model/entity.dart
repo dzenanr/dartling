@@ -9,6 +9,7 @@ abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
   String code;
 
   Object getAttribute(String name);
+  bool preSetAttribute(String name, Object value);
   bool setAttribute(String name, Object value);
   String getStringFromAttribute(String name);
   bool setStringToAttribute(String name, String string);
@@ -16,8 +17,6 @@ abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
   bool setParent(String name, EntityApi entity);
   EntitiesApi getChild(String name);
   bool setChild(String name, EntitiesApi entities);
-
-  bool preSetAttribute(String name);
 
   E copy();
   Map<String, Object> toJson();
@@ -264,7 +263,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
   }
 
-  bool preSetAttribute(String name) {
+  bool preSetAttribute(String name, Object value) {
     if (!pre) {
       return true;
     }
@@ -282,7 +281,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   Object getAttribute(String name) => _attributeMap[name];
   bool setAttribute(String name, Object value) {
     bool updated = false;
-    if (preSetAttribute(name)) {
+    if (preSetAttribute(name, value)) {
       if (_concept == null) {
         throw new ConceptError('Entity concept is not defined.');
       }
