@@ -359,15 +359,15 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     if (length > 0) {
       throw new JsonError('entities are not empty');
     }
+    pre = false;
+    post = false;
     for (Map<String, Object> entityMap in entitiesList) {
       E entity = newEntity();
       entity.fromJson(entityMap);
-      pre = false;
-      post = false;
       add(entity);
-      pre = true;
-      post = true;
     }
+    pre = true;
+    post = true;
   }
 
   /**

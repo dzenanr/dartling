@@ -702,6 +702,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     code = entityMap['code'];
     concept.updateCode = beforeUpdateCode;
 
+    pre = false;
     for (Attribute attribute in concept.attributes) {
       if (attribute.identifier) {
         var beforUpdate = attribute.update;
@@ -712,6 +713,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
         setStringToAttribute(attribute.code, entityMap[attribute.code]);
       }
     }
+    pre = true;
   }
 
 }
