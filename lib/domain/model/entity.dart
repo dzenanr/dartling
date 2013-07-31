@@ -496,7 +496,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   }
 
   /**
-   * ==
+   * == see:
+   * https://www.dartlang.org/docs/dart-up-and-running/contents/ch02.html#op-equality
    *
    * If identical(x, y), return true.
    * Otherwise, if either x or y is null, return false.
@@ -523,7 +524,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       return false;
     }
   }
-  */
+
   bool operator ==(Object other) {
     if (other is ConceptEntity) {
       ConceptEntity entity = other;
@@ -536,6 +537,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       return false;
     }
   }
+  */
 
   /**
    * Checks if the entity is equal in content to the given entity.

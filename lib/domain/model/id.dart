@@ -94,7 +94,8 @@ class Id implements IdApi {
    }
 
    /**
-    * ==
+    * == see:
+    * https://www.dartlang.org/docs/dart-up-and-running/contents/ch02.html#op-equality
     *
     * If x===y, return true.
     * Otherwise, if either x or y is null, return false.
@@ -121,7 +122,7 @@ class Id implements IdApi {
        return false;
      }
    }
-   */
+
    bool operator ==(Object other) {
      if (other is Id) {
        Id id = other;
@@ -134,6 +135,7 @@ class Id implements IdApi {
        return false;
      }
    }
+   */
 
    /**
     * Compares two ids based on parents.
