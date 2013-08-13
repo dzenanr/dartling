@@ -11,6 +11,7 @@ abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
   Object getAttribute(String name);
   bool preSetAttribute(String name, Object value);
   bool setAttribute(String name, Object value);
+  bool postSetAttribute(String name, Object value);
   String getStringFromAttribute(String name);
   bool setStringToAttribute(String name, String string);
   EntityApi getParent(String name);
@@ -36,12 +37,14 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   Map<String, Entities> _childMap;
 
   bool pre = true;
+  bool post = true;
 
   ConceptEntity() {
     _errors = new ValidationErrors();
     _oid = new Oid();
 
     pre = false;
+    post = false;
   }
 
   ConceptEntity.of(this._concept) {
@@ -297,6 +300,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
         throw new UpdateException(msg);
       }
       */
+      Object beforeValue = _attributeMap[name];
       if (getAttribute(name) == null) {
         _attributeMap[name] = value;
         updated = true;
@@ -313,8 +317,39 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
         _errors.add(error);
         */
       }
+      if (postSetAttribute(name, value)) {
+        updated = true;
+      } else {
+        var beforePre = pre;
+        var beforePost = post;
+        pre = false;
+        post = false;
+        if (!setAttribute(name, beforeValue)) {
+          var msg = '${_concept.code}.${attribute.code} '
+            'was set to a new value, post was not successful, '
+            'set to the before value was not successful';
+          throw new RemoveError(msg);
+        }
+        pre = beforePre;
+        post = beforePost;
+      }
     }
     return updated;
+  }
+
+  bool postSetAttribute(String name, Object value) {
+    if (!post) {
+      return true;
+    }
+
+    if (_concept == null) {
+      throw new ConceptError(
+        'Entity(oid: ${oid}) concept is not defined.');
+    }
+
+    bool result = true;
+
+    return result;
   }
 
   String getStringFromAttribute(String name) => _attributeMap[name].toString();
