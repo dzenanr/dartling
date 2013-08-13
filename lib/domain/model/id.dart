@@ -97,19 +97,19 @@ class Id implements IdApi {
     * == see:
     * https://www.dartlang.org/docs/dart-up-and-running/contents/ch02.html#op-equality
     *
+    * Evolution:
+    *
     * If x===y, return true.
     * Otherwise, if either x or y is null, return false.
     * Otherwise, return the result of x.equals(y).
     *
-    * The newest spec is:
-    * a) if either x or y is null, do a ===
+    * a) if either x or y is null, do identical(x, y)
     * b) otherwise call operator ==
     */
-   /*
    bool operator ==(Object other) {
      if (other is Id) {
        Id id = other;
-       if (this===id) {
+       if (identical(this, id)) {
          return true;
        } else {
          if (this == null || id == null) {
@@ -123,11 +123,16 @@ class Id implements IdApi {
      }
    }
 
+  /*
    bool operator ==(Object other) {
      if (other is Id) {
        Id id = other;
-       if (this == null || id == null) {
-         return identical(this, id);
+       if (this == null && id == null) {
+         return true;
+       } else if (this == null || id == null) {
+         return false;
+       } else if (identical(this, id)) {
+         return true;
        } else {
          return equals(id);
        }

@@ -32,19 +32,20 @@ class Oid implements Comparable {
    * == see:
    * https://www.dartlang.org/docs/dart-up-and-running/contents/ch02.html#op-equality
    *
+   * Evolution:
+   *
    * If x===y, return true.
    * Otherwise, if either x or y is null, return false.
    * Otherwise, return the result of x.equals(y).
    *
    * The newest spec is:
-   * a) if either x or y is null, do a ===
+   * a) if either x or y is null, do identical(x, y)
    * b) otherwise call operator ==
    */
-  /*
   bool operator ==(Object other) {
     if (other is Oid) {
       Oid oid = other;
-      if (this===oid) {
+      if (identical(this, oid)) {
         return true;
       } else {
         if (this == null || oid == null) {
@@ -58,11 +59,16 @@ class Oid implements Comparable {
     }
   }
 
+  /*
   bool operator ==(Object other) {
     if (other is Oid) {
       Oid oid = other;
-      if (this == null || oid == null) {
-        return identical(this, oid);
+      if (this == null && oid == null) {
+        return true;
+      } else if (this == null || oid == null) {
+        return false;
+      } else if (identical(this, oid)) {
+        return true;
       } else {
         return equals(oid);
       }
