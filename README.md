@@ -48,6 +48,10 @@ A model has entry points that are entities. From an entity in one of entry
 entities, child entities may be obtained. Data navigation is done by following
 parent or child neighbors.
 
+A dartling model has access to actions, action pre and post validations,
+error handling, select data views, view update propagations, reaction events,
+transactions, sessions with the trans(action) past,
+so that undos and redos on the model may be done.
 You can add, remove, update, validate, find, select and order data. Actions or
 transactions may be used to support unrestricted undos and redos in a domain
 session. A transaction is an action that contains other actions. The domain
