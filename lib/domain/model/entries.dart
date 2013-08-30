@@ -98,7 +98,7 @@ class ModelEntries implements ModelEntriesApi {
     modelMap['domain'] = _model.domain.code;
     modelMap['model'] = _model.code;
     modelMap['entries'] = _entriesToJson();
-    return stringify(modelMap);
+    return JSON.encode(modelMap);
   }
 
   List<Map<String, Object>> _entriesToJson() {
@@ -114,7 +114,7 @@ class ModelEntries implements ModelEntriesApi {
   }
 
   fromJson(String json) {
-    Map<String, Object> modelMap = parse(json);
+    Map<String, Object> modelMap = JSON.decode(json);
     var domain = modelMap['domain'];
     var model = modelMap['model'];
     if (_model.domain.code != domain) {
