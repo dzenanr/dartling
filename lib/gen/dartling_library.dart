@@ -49,7 +49,7 @@ String genDartlingLibrary(Model model) {
   sc = '${sc}library ${domain.codeLowerUnderscore}_${model.codeLowerUnderscore}; \n';
   sc = '${sc} \n';
 
-  sc = '${sc}import "dart:json"; \n';
+  sc = '${sc}import "dart:convert"; \n';
   sc = '${sc}import "dart:math"; \n';
   sc = '${sc} \n';
 
