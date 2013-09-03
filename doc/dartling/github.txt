@@ -7,6 +7,12 @@ http://training.github.com/
 http://www.codeschool.com/courses/try-git
 http://git-scm.com/videos
 http://git-scm.com/book
+
+http://rogerdudler.github.io/git-guide/
+http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf
+http://think-like-a-git.net/
+http://tomayko.com/writings/the-thing-about-git
+https://peepcode.com/products/git-internals-pdf
 http://marklodato.github.com/visual-git-guide/index-en.html
 
 Education
