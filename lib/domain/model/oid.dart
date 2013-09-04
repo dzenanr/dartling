@@ -17,6 +17,8 @@ class Oid implements Comparable {
   }
 
   int get timeStamp => _timeStamp;
+  
+  int get hashCode => _timeStamp.hashCode;
 
   /**
    * Two oids are equal if their time stamps are equal.

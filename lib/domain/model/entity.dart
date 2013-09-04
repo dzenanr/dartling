@@ -519,6 +519,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
 
     return entity;
   }
+  
+  int get hashCode => _oid.hashCode;
 
   /**
   * Two entities are equal if their oids are equal.
