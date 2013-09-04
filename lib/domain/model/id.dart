@@ -47,7 +47,7 @@ class Id implements IdApi {
   Object getAttribute(String code) => _attributeMap[code];
   setAttribute(String code, Object attribute) => _attributeMap[code] = attribute;
   
-  int get hashCode => _concept.hashCode + _parentMap.hashCode + _attributeMap.hashCode;
+  int get hashCode => (_concept.hashCode + _parentMap.hashCode + _attributeMap.hashCode).hashCode;
 
   /** 
    * Two ids are equal if their parents are equal.

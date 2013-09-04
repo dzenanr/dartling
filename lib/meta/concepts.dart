@@ -46,7 +46,7 @@ class Concept extends ConceptEntity<Concept> {
     sourceChildren = new Children();
   }
   
-  int get hashCode => _parentMap.hashCode + _attributeMap.hashCode;
+  int get hashCode => _oid.hashCode;
   
   /**
   * Two concepts are equal if their oids are equal.
