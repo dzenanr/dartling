@@ -1,0 +1,27 @@
+For Mac users
+
+http://en.wikipedia.org/wiki/.DS_Store
+
+in the .gitignore file use:
+
+.DS_Store
+
+in addition to (for Linux, Windows users)
+
+packages
+pubspec.lock
+*.js
+*.js.deps
+*.js.map
+*~
+
+Thus, the .gitignore file content should be:
+
+.DS_Store
+packages
+pubspec.lock
+*.js
+*.js.deps
+*.js.map
+*~
+
