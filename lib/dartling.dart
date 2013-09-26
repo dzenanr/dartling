@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 library dartling;
 
-import 'dart:json';
+import 'dart:convert';
 import 'dart:math';
 
 part 'domain/model/event/actions.dart';

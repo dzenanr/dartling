@@ -4,7 +4,7 @@ Model fromJsonToModel(String json, Domain domain, String modelCode) {
   if (json == null || json.trim() == '') {
     return null;
   }
-  Map<String, Object> boardMap = parse(json);
+  Map<String, Object> boardMap = JSON.decode(json);
   List<Map<String, Object>> boxes = boardMap["boxes"];
   List<Map<String, Object>> lines = boardMap["lines"];
 

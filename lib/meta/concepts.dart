@@ -45,6 +45,49 @@ class Concept extends ConceptEntity<Concept> {
     sourceParents = new Parents();
     sourceChildren = new Children();
   }
+  
+  int get hashCode => _oid.hashCode;
+  
+  /**
+  * Two concepts are equal if their oids are equal.
+  */
+  bool equals(Concept concept) {
+    if (_oid.equals(concept.oid)) {
+      return true;
+    }
+    return false;
+  }
+  
+  /**
+   * == see:
+   * https://www.dartlang.org/docs/dart-up-and-running/contents/ch02.html#op-equality
+   *
+   * Evolution:
+   *
+   * If x===y, return true.
+   * Otherwise, if either x or y is null, return false.
+   * Otherwise, return the result of x.equals(y).
+   *
+   * The newest spec is:
+   * a) if either x or y is null, do identical(x, y)
+   * b) otherwise call operator ==
+   */
+  bool operator ==(Object other) {
+    if (other is Concept) {
+      Concept concept = other;
+      if (identical(this, concept)) {
+        return true;
+      } else {
+        if (this == null || concept == null) {
+          return false;
+        } else {
+          return equals(concept);
+        }
+      }
+    } else {
+      return false;
+    }
+  }
 
   String get codes {
     if (_codes == null) {

@@ -13,7 +13,7 @@ relationships between the same but different concepts, the relationships are
 twins.
 
 A graphical model designed in
-[Model Concepts] (https://github.com/dzenanr/magic_boxes) is transformed into
+[Model Concepts] (https://github.com/dzenanr/model_concepts) is transformed into
 [json] (http://www.json.org/) representation that is imported to
 [dartling_gen] (https://github.com/dzenanr/dartling_gen).
 In dartling_gen, the json document is used to generate code for the model and
