@@ -35,8 +35,6 @@ library dartling;
 import 'dart:json';
 import 'dart:math';
 
-import 'package:unittest/unittest.dart';
-
 part 'domain/model/event/actions.dart';
 part 'domain/model/event/past.dart';
 part 'domain/model/event/reactions.dart';
