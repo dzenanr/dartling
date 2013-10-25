@@ -125,6 +125,10 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   Iterable<E> where(bool f(E entity)) => _entityList.where(f);
 
 
+  List<E> get internalList => _entityList;
+  set internalList(List<E> observableList) => _entityList = observableList;
+
+
   E firstWhereAttribute(String code, Object attribute) {
     var selectionEntities = selectWhereAttribute(code, attribute);
     if (selectionEntities.length > 0) {
