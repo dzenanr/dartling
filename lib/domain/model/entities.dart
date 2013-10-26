@@ -126,6 +126,8 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
 
 
   List<E> get internalList => _entityList;
+  // set for Polymer only:
+  // entities.internalList = toObservable(entities.internalList);
   set internalList(List<E> observableList) => _entityList = observableList;
 
 
