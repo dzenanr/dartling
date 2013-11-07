@@ -1,8 +1,7 @@
 # License
 
-[licenses] (http://opensource.org/licenses/)
-[3-clause license ("New BSD License" or "Modified BSD License")]
-(http://en.wikipedia.org/wiki/BSD_license)
+[licenses](http://opensource.org/licenses/)
+[3-clause license ("New BSD License" or "Modified BSD License")](http://en.wikipedia.org/wiki/BSD_license)
 
 Copyright (c) 2012, dartling project authors
 All rights reserved.
