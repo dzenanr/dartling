@@ -70,15 +70,16 @@ domain model generated from the json representation of a graphical model. One
 of them is [art_pen] (https://github.com/dzenanr/art_pen) (DArt.Pen), which is
 a version of the Logo programming language for children.
 Other examples are:
+[dartling_examples] (https://github.com/dzenanr/dartling_examples)
+(3 typical models),
 [game_parking] (https://github.com/dzenanr/game_parking)
 (a game based on Rush Hour),
 [dartling_todos] (https://github.com/dzenanr/dartling_todos) (with action undos),
 [dartling_dwt_todo_mvc_spirals] (https://github.com/dzenanr/dartling_dwt_todo_mvc_spirals)
 (with Dart Web Toolkit),
-[polymer_category_links] (https://github.com/dzenanr/polymer_category_links) and
-[polymer_project_tasks] (https://github.com/dzenanr/polymer_project_tasks)
-(with web components),
-[todo_mysql ] (https://github.com/dzenanr/todo_mysql)
+[travel_impressions] (https://github.com/dzenanr/travel_impressions)
+(with the focus on modeling),
+[todo_mysql] (https://github.com/dzenanr/todo_mysql)
 (todo client - mysql server),
 [todo_mongodb] (https://github.com/dzenanr/todo_mongodb)
 (todo client - mongodb server).
