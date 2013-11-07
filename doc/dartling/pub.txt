@@ -18,11 +18,11 @@ http://blogs.msdn.com/b/ie/archive/2006/12/06/file-uris-in-windows.aspx
 
 Semantic versioning
 http://semver.org/
-Once you identify your public API, you communicate changes to it with specific 
-increments to your version number. 
-Consider a version format of X.Y.Z (Major.Minor.Patch). 
-Bug fixes not affecting the API increment the patch version, 
-backwards compatible API additions/changes increment the minor version, 
+Once you identify your public API, you communicate changes to it with specific
+increments to your version number.
+Consider a version format of X.Y.Z (Major.Minor.Patch).
+Bug fixes not affecting the API increment the patch version,
+backwards compatible API additions/changes increment the minor version,
 and backwards incompatible API changes increment the major version.
 
 System variables in Windows 7
@@ -32,7 +32,7 @@ DART_SDK :
 C:\darteditor-win-32-64\dart\dart-sdk
 SYSTEM PATH
 PATH
-add at the end: 
+add at the end:
 ;%DART_SDK%\bin
 
 C:\Program Files (x86)\Git\bin;%DART_SDK%\bin;
@@ -51,18 +51,80 @@ description: >
 dependencies:
   unittest:
     sdk: unittest
-    
+
 from the dartling folder:
 pub install
 
 the packages folder appears in the dartling folder:
 packages
   unittest
-    
+
 in dartling:
 import 'package:unittest/unittest.dart';
 
 in Dart Editor:
 Tools/Preferences
 Package directory: \\C:\Users\ridjanod\git\dart\dartling\packages
+
+______________________________________________________________________
+
+Now is the time to get your pub package ready for Dart's release.
+
+2013-11-06
+
+If you author Dart packages hosted on pub.dartlang.org ,
+please read on for this important call for participation.
+
+Hello Dart package authors! Time to test and stabilize your packages,
+and get ready for Dart 1.0. Wait, what?! 1.0? Forealz? Not yet, but soon.
+You can help the community, and new users, have a successful 1.0 launch by
+following these steps:
+
+1) Please update your Dart Editor and SDK to 0.8.10+6 or later.
+The team is done with any breaking changes,
+and this is the release to test against.
+
+2) Update your library's pubspec.yaml with specific version constraints.
+Please add:
+
+environment:
+  sdk: ">=0.8.10+6 <2.0.0"
+
+If your package depends on packages produced by the Dart team,
+like "args", "unittest", "polymer", etc,
+please use these specific lower and upper bounds:
+
+analyzer: >=0.10.1 < 0.11.0
+everything else: >=0.9.0 < 0.10.0
+
+These specific versions protect your package, and more importantly your users,
+in the face of potential breaking changes in dependencies.
+Sometime after the 1.0 launch, each package will get its own release cadence.
+
+That's right, the days of 'any' for library packages are over.
+With a stable SDK, there's no reason to force your users to live on the
+bleeding edge. Let's all stabilize the Dart community by specifying version
+dependencies for our libraries.
+
+3) Test your package, and fix any breaks.
+
+4) Bump the version of your package.
+
+If your package is >=1.0:
+  Add +1.0.0 if you introduced a breaking change, add +0.1.0 if you added a
+  feature (and it does not break existing users),
+  or add +0.0.1 if it is a bugfix.
+
+If your package is <1.0:
+  Technically anything less than 1.0 can break at any time. However we have
+  found the following scheme is helpful to users of your package: add +0.1.0
+  if it is a breaking change, otherwise add +0.0.1. If you follow this scheme,
+  let your users know!
+
+5) Publish to pub.dartlang.org !
+   Give yourself a high five for helping launch Dart.
+
+Thank you for your early support and your help to get ready for the launch.
+
+#dartlang
 
