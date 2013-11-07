@@ -128,3 +128,27 @@ Thank you for your early support and your help to get ready for the launch.
 
 #dartlang
 
+---
+
+Just to stress and clarify this. If your package is an application package,
+using "any" for your dependencies is still fine.
+Instead, your lockfile will be your safety net.
+
+This does mean that the days of "let me just try pub update/upgrade and see
+if that magically makes my problem go away" are ending. Now that things are
+getting more stable, you should be getting more stable too.
+
+Of course, if you want to keep upgrading your dependencies to the new hotness,
+great! But over time, "pub upgrade" should be something you do deliberately,
+carefully, and probably infrequently.
+
+Also, a friendly reminder that you can use "pub upgrade" to upgrade a single
+package while keeping the others locked at their current version. Just specify
+the name of the package to upgrade:
+
+$ pub upgrade foo
+
+This gets the latest "foo" but leaves your other dependencies unchanged.
+
+
+
