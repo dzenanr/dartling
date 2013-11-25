@@ -105,11 +105,11 @@ The data.dart file in the json folder contains data of the model.
 
 ## More Details
 
-[**dartling: Domain Model Framework**](https://docs.google.com/document/d/1xzjqxbJdYxn6Qpx_kIhCqCCjk5yabbXiOng8sixMjdc/edit?usp=sharing)
+[**dartling: Domain Model Framework**](http://goo.gl/Fd08zZ)
 
 [*Learning Dart*](http://www.packtpub.com/learning-dart/book) by Dzenan Ridjanovic & Ivo Balbaert
 
-[*Version History*](LOG.md)
+[*Version History*](CHANGELOG.md)
 
 [**On Dart g+ page**](https://plus.google.com/+OndartMe)
 
