@@ -1,4 +1,13 @@
-Dartling To Do
+dartling To Do
+
+Improve performance of loading data from a json document to a model by
+using internal and external relationships.
+Now, the algorithm is slow because, before creating an entity, I check in the
+whole model, based on the oid from the json document, if the entity has been
+already created.
+To improve the performance,
+traverse internal relatinships and create entities,
+then traverse external relationships and find already created entities.
 
 copy on entities produces entities that are not equal (is this correct?)
 
@@ -29,7 +38,7 @@ action.doit when called directly by a user avoids a session doit
   ok when session is null for undoing the action
   not ok if session is not null
     how to make a distinction between a user call and a session past call?
-  
+
 document code
   http://www.dartlang.org/docs/language-tour/#comments
   http://japhr.blogspot.ca/2012/03/pretty-dartdoc.html
@@ -60,7 +69,7 @@ deep copy
 attach/detach
 model integration
 many-to-many between models
-logging 
+logging
   http://www.trottercashion.com/2012/08/12/how-to-write-good-log-messages.html
   https://github.com/solvr/log4dart
 attribute validations (type, length)?
