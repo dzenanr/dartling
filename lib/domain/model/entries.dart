@@ -173,15 +173,15 @@ class ModelEntries implements ModelEntriesApi {
             '$entryConceptCode entry receiving entities are not empty');
       }
       List<Map<String, Object>> entitiesList = entriesMap['entities'];
-      entryEntities.addFrom(_entitiesFromJson(entitiesList, concept));
+      entryEntities.addFrom(_entitiesFromJson(entitiesList, concept, true));
     }
   }
 
   Entities _entitiesFromJson(List<Map<String, Object>> entitiesList,
-                            Concept concept) {
+                            Concept concept, bool internal) {
     Entities entities = newEntities(concept.code);
     for (Map<String, Object> entityMap in entitiesList) {
-      ConceptEntity entity = _entityFromJson(entityMap, concept);
+      ConceptEntity entity = _entityFromJson(entityMap, concept, internal);
       entities.pre = false;
       entities.post = false;
       entities.add(entity);
@@ -193,8 +193,8 @@ class ModelEntries implements ModelEntriesApi {
     return entities;
   }
 
-  ConceptEntity _entityFromJson(Map<String, Object> entityMap, Concept concept) {
-    ConceptEntity entity = newEntity(concept.code);
+  ConceptEntity _entityFromJson(Map<String, Object> entityMap, Concept concept, bool internal) {
+    ConceptEntity entity;
     int timeStamp;
     try {
       timeStamp = int.parse(entityMap['oid']);
@@ -202,55 +202,60 @@ class ModelEntries implements ModelEntriesApi {
       throw new TypeError('${entityMap['oid']} oid is not int: $e');
     }
 
-    var beforeUpdateOid = entity.concept.updateOid;
-    entity.concept.updateOid = true;
-    entity.oid = new Oid.ts(timeStamp);
-    entity.concept.updateOid = beforeUpdateOid;
+    var oid = new Oid.ts(timeStamp);
+    entity = find(oid);
+    if (entity == null) {
+      entity = newEntity(concept.code);
+      var beforeUpdateOid = entity.concept.updateOid;
+      entity.concept.updateOid = true;
+      entity.oid = oid;
+      entity.concept.updateOid = beforeUpdateOid;
 
-    var beforeUpdateCode = entity.concept.updateCode;
-    entity.concept.updateCode = true;
-    entity.code = entityMap['code'];
-    entity.concept.updateCode = beforeUpdateCode;
+      var beforeUpdateCode = entity.concept.updateCode;
+      entity.concept.updateCode = true;
+      entity.code = entityMap['code'];
+      entity.concept.updateCode = beforeUpdateCode;
 
-    for (Attribute attribute in concept.attributes) {
-      if (attribute.identifier) {
-        var beforUpdate = attribute.update;
-        attribute.update = true;
-        entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
-        attribute.update = beforUpdate;
-      } else {
-        entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
-      }
-    }
-
-    for (Child child in concept.children) {
-      List<Map<String, Object>> entitiesList = entityMap[child.code];
-      if (entitiesList != null) {
-        var childConcept = child.destinationConcept;
-        var entities = _entitiesFromJson(entitiesList, childConcept);
-        assert(entities != null);
-        entity.setChild(child.code, entities);
-      }
-    }
-
-    for (Parent parent in concept.parents) {
-      String parentOidString = entityMap[parent.code];
-      if (parentOidString == 'null') {
-        if (parent.minc != '0') {
-          throw new ParentError('${parent.code} parent cannot be null.');
+      for (Attribute attribute in concept.attributes) {
+        if (attribute.identifier) {
+          var beforUpdate = attribute.update;
+          attribute.update = true;
+          entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
+          attribute.update = beforUpdate;
+        } else {
+          entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
         }
-      } else {
-        try {
-          int parentTimeStamp = int.parse(parentOidString);
-          Oid parentOid = new Oid.ts(parentTimeStamp);
-          List nullParent = new List(3);
-          nullParent[0] = parentOid;
-          nullParent[1] = entity;
-          nullParent[2] = parent;
-          _nullParents.add(nullParent);
-        } on FormatException catch (e) {
-          throw new TypeError(
-              '${parent.code} parent oid value is not int: $e');
+      }
+
+      for (Child child in concept.children) {
+        List<Map<String, Object>> entitiesList = entityMap[child.code];
+        if (entitiesList != null) {
+          var childConcept = child.destinationConcept;
+          var entities = _entitiesFromJson(entitiesList, childConcept, child.internal);
+          assert(entities != null);
+          entity.setChild(child.code, entities);
+        }
+      }
+
+      for (Parent parent in concept.parents) {
+        String parentOidString = entityMap[parent.code];
+        if (parentOidString == 'null') {
+          if (parent.minc != '0') {
+            throw new ParentError('${parent.code} parent cannot be null.');
+          }
+        } else {
+          try {
+            int parentTimeStamp = int.parse(parentOidString);
+            Oid parentOid = new Oid.ts(parentTimeStamp);
+            List nullParent = new List(3);
+            nullParent[0] = parentOid;
+            nullParent[1] = entity;
+            nullParent[2] = parent;
+            _nullParents.add(nullParent);
+          } on FormatException catch (e) {
+            throw new TypeError(
+                '${parent.code} parent oid value is not int: $e');
+          }
         }
       }
     }
