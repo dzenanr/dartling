@@ -1,6 +1,6 @@
 # ![Alt dartling](https://raw.github.com/dzenanr/dartling/master/resources/dartling.png)
 
-[dartling](https://github.com/dzenanr/dartling) is a domain model framework.
+[dartling](http://pub.dartlang.org/packages/dartling) is a domain model framework.
 Its open source license is the 3-clause BSD license --
 ["New BSD License" or "Modified BSD License"](http://en.wikipedia.org/wiki/BSD_license).
 
