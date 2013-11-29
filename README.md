@@ -72,6 +72,7 @@ of them is [art_pen](https://github.com/dzenanr/art_pen) (DArt.Pen), which is
 a version of the Logo programming language for children.
 Other examples are:
 [dartling_examples](https://github.com/dzenanr/dartling_examples) (3 typical models),
+[dartling_tasks](https://github.com/dzenanr/dartling_tasks) (a many-to-many relationship),
 [game_parking](https://github.com/dzenanr/game_parking) (a game based on Rush Hour),
 [dartling_todos](https://github.com/dzenanr/dartling_todos) (with action undos),
 [dartling_dwt_todo_mvc_spirals](https://github.com/dzenanr/dartling_dwt_todo_mvc_spirals) (with Dart Web Toolkit),
@@ -107,15 +108,15 @@ The data.dart file in the json folder contains data of the model.
 
 [**dartling: Domain Model Framework**](http://goo.gl/Fd08zZ)
 
-[*Learning Dart*](http://www.packtpub.com/learning-dart/book) by Dzenan Ridjanovic & Ivo Balbaert
-
-[*Version History*](CHANGELOG.md)
-
 [**On Dart g+ page**](https://plus.google.com/+OndartMe)
 
 [**On Dart blog**](http://dzenanr.github.io/)
 
 [**On Dart education**](http://ondart.me/)
+
+[*Learning Dart*](http://www.packtpub.com/learning-dart/book) by Dzenan Ridjanovic & Ivo Balbaert
+
+[*Version History*](CHANGELOG.md)
 
 __________
 
