@@ -6,8 +6,9 @@ Now, the algorithm is slow because, before creating an entity, I check in the
 whole model, based on the oid from the json document, if the entity has been
 already created.
 To improve the performance,
-traverse internal relatinships and create entities,
+traverse internal relationships and create entities,
 then traverse external relationships and find already created entities.
+Add fromJson(entry, listOfEntriesForExternal) method to ModelEntries API.
 
 copy on entities produces entities that are not equal (is this correct?)
 
