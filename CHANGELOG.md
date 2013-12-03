@@ -1,6 +1,10 @@
 ## Version history of [dartling](http://pub.dartlang.org/packages/dartling)
 
-[based on](http://semver.org/)
+based on [Semantic Versioning](http://semver.org/)
+
+*1.0.4* 2013-12-03
+
++ remove unreachable code
 
 *1.0.3* 2013-11-28
 

@@ -1,8 +1,10 @@
 name: dartling
-version: 1.0.3
 author: Dzenan Ridjanovic <dzenanr@gmail.com>
-description: dartling is a domain model framework
+version: 1.0.4
 homepage: https://github.com/dzenanr/dartling
+sdk:
+  sdk: '>=0.8.10+8 <2.0.0'
+description: dartling is a domain model framework
 documentation: http://goo.gl/Fd08zZ
 environment:
   sdk: '>=0.8.10+8 <2.0.0'
