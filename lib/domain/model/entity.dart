@@ -444,8 +444,6 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       String msg = '${_concept.code}.${parent.code} is not updateable.';
       throw new UpdateError(msg);
     }
-
-    return false;
   }
 
   Entities getChild(String name) => _childMap[name];
@@ -465,7 +463,6 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       String msg = '${_concept.code}.${child.code} is not updateable.';
       throw new UpdateError(msg);
     }
-    return false;
   }
 
   /**
@@ -519,7 +516,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
 
     return entity;
   }
-  
+
   int get hashCode => _oid.hashCode;
 
   /**
