@@ -37,7 +37,7 @@ Model createDomainModel() {
   return model;
 }
 
-createModelData(Model model) {
+ModelEntries createModelData(Model model) {
   var entries = new ModelEntries(model);
   Entities categories = entries.getEntry('Category');
   assert(categories.length == 0);
@@ -80,9 +80,35 @@ createModelData(Model model) {
 
   // Display
   categories.display(title:'Link Model Creation');
+
+  return entries;
+}
+
+bool descriptionContains(ConceptEntity category, String keyWord) {
+  String descriptionValue = category.getAttribute('description');
+  return descriptionValue.contains(keyWord);
+}
+
+ConceptEntity findCategory(Entities categories, String description) {
+  return categories.firstWhereAttribute('description', description);
 }
 
 void main() {
   var model = createDomainModel();
-  createModelData(model);
+  var entries = createModelData(model);
+
+  Entities categories = entries.getEntry('Category');
+  ConceptEntity html5 =
+      findCategory(categories, 'HTML5 is the ubiquitous platform for the web.');
+  assert(html5 != null);
+  String nameValue = html5.getAttribute('name');
+  assert(nameValue == 'HTML5');
+
+  Entities darts = categories.selectWhere((c) {
+    String descriptionValue = c.getAttribute('description');
+    return descriptionValue.contains('Dart') ? true : false;
+  });
+  assert(darts != null);
+  assert(!darts.isEmpty);
+  assert(darts.length == 1);
 }
