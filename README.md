@@ -114,7 +114,7 @@ The data.dart file in the json folder contains data of the model.
 
 [**On Dart education**](http://ondart.me/)
 
-[*Learning Dart*](http://www.packtpub.com/learning-dart/book) by Dzenan Ridjanovic & Ivo Balbaert
+[*Learning Dart*](http://learningdart.org/)
 
 [*Version History*](CHANGELOG.md)
 
