@@ -2,6 +2,10 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
+*1.0.7* 2014-02-25
+
++ update README.md
+
 *1.0.6* 2014-02-25
 
 + add return null when there is a warning

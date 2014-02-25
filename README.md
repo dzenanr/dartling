@@ -18,7 +18,7 @@ A graphical model designed in
 [dartling_gen](https://github.com/dzenanr/dartling_gen).
 In dartling_gen, the json document is used to generate code for the model and
 its context project.
-[dartling_default_app](https://github.com/dzenanr/dartling_default_app)
+[dartling_default_app](http://pub.dartlang.org/packages/dartling_default_app)
 is used to interpret a dartling model and navigate through the model,
 starting by its entry points.
 
