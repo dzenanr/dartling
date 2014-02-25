@@ -46,7 +46,7 @@ String genInitDomainModel(Model model, String library) {
           sc = '${sc}new DateTime.now(); \n';
         } else if (attribute.type.code == 'Uri') {
           sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
-          sc = '${sc}new Uri.fromString("${randomUriString()}"); \n';
+          sc = '${sc}Uri.parse("${randomUriString()}"); \n';
         }
       }
       sc = '${sc}  entries.${entryConcept.codesFirstLetterLower}.';
