@@ -104,6 +104,7 @@ String genEntries(Model model, String library) {
     sc = '${sc}      return new ${concept.codes}(concept); \n';
     sc = '${sc}    } \n';
   }
+  sc = '${sc}  return null; \n';
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 
@@ -118,6 +119,7 @@ String genEntries(Model model, String library) {
     sc = '${sc}      return new ${concept.code}(concept); \n';
     sc = '${sc}    } \n';
   }
+  sc = '${sc}  return null; \n';
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 

@@ -192,6 +192,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       }
       return result;
     }
+    return null;
   }
 
   String _firstLetterLowerCase({plural:false}) {
@@ -208,6 +209,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       }
       return result;
     }
+    return null;
   }
 
   String _firstLetterUpperCase({plural:false}) {
@@ -224,6 +226,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       }
       return result;
     }
+    return null;
   }
 
   String _camelCaseLowerCaseUnderscore({plural:false}) {
@@ -264,6 +267,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       }
       return result.toLowerCase();
     }
+    return null;
   }
 
   bool preSetAttribute(String name, Object value) {
@@ -275,10 +279,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       throw new ConceptError(
         'Entity(oid: ${oid}) concept is not defined.');
     }
-
-    bool result = true;
-
-    return result;
+    return true;
   }
 
   Object getAttribute(String name) => _attributeMap[name];
@@ -346,10 +347,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       throw new ConceptError(
         'Entity(oid: ${oid}) concept is not defined.');
     }
-
-    bool result = true;
-
-    return result;
+    return true;
   }
 
   String getStringFromAttribute(String name) => _attributeMap[name].toString();
@@ -641,6 +639,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
         return '{${_concept.code}: {oid:${_oid.toString()}, code:${_code}}}';
       }
     }
+    return null;
   }
 
   void displayToString() {

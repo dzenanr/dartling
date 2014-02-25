@@ -45,6 +45,7 @@ class ModelEntries implements ModelEntriesApi {
     if (!concept.entry) {
       return new Entities.of(concept);
     }
+    return null;
   }
 
   EntityApi newEntity(String conceptCode) {
@@ -67,8 +68,10 @@ class ModelEntries implements ModelEntriesApi {
   ConceptEntity find(Oid oid) {
     ConceptEntity entity;
     for (Concept entryConcept in _model.entryConcepts) {
-      return findInInternalTree(entryConcept, oid);
+      var entity = findInInternalTree(entryConcept, oid);
+      if (entity != null) return entity;
     }
+    return null;
   }
 
   ConceptEntity findInInternalTree(Concept entryConcept, Oid oid) {
@@ -275,7 +278,7 @@ class ModelEntries implements ModelEntriesApi {
         }
       });
     }
-    // return null;
+    return null;
   }
 
   ConceptEntity _findEntityFromEntities(Entities entities, oid) {
@@ -289,7 +292,7 @@ class ModelEntries implements ModelEntriesApi {
         return foundEntity;
       }
     }
-    // return null;
+    return null;
   }
 
   ConceptEntity _findEntityFromEntity(ConceptEntity entity, oid) {
@@ -300,7 +303,7 @@ class ModelEntries implements ModelEntriesApi {
         return foundEntity;
       }
     }
-    // return null;
+    return null;
   }
 
   display() {

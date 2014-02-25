@@ -143,6 +143,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     if (!isEmpty) {
       return _entityList[randomGen.nextInt(length)];
     }
+    return null;
   }
 
   E singleWhereOid(Oid oid) {
@@ -168,6 +169,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
         }
       }
     }
+    return null;
   }
 
   E singleWhereCode(String code) {
@@ -383,6 +385,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     if (_concept != null) {
       return '${_concept.code}: entities:${length}';
     }
+    return null;
   }
 
 
