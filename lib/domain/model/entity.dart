@@ -432,9 +432,6 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     if (getParent(name) == null) {
       _parentMap[name] = entity;
       return true;
-    } else if (parent.identifier) {
-      String msg = '${_concept.code}.${parent.code} is not updateable.';
-      throw new UpdateError(msg);
     } else if (parent.update) {
       _parentMap[name] = entity;
       return true;
@@ -531,13 +528,27 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
    * == see:
    * https://www.dartlang.org/docs/dart-up-and-running/contents/ch02.html#op-equality
    *
+   * To test whether two objects x and y represent the same thing,
+   * use the == operator.
+   *
+   * (In the rare case where you need to know
+   * whether two objects are the exact same object, use the identical()
+   * function instead.)
+   *
+   * Here’s how the == operator works:
+   *
+   * If x or y is null, return true if both are null,
+   * and false if only one is null.
+   *
+   * Return the result of the method invocation x.==(y).
+   *
    * Evolution:
    *
    * If x===y, return true.
    * Otherwise, if either x or y is null, return false.
    * Otherwise, return the result of x.equals(y).
    *
-   * The newest spec is:
+   * The newer spec is:
    * a) if either x or y is null, do identical(x, y)
    * b) otherwise call operator ==
    */

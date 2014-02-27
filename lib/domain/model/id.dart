@@ -46,10 +46,10 @@ class Id implements IdApi {
 
   Object getAttribute(String code) => _attributeMap[code];
   setAttribute(String code, Object attribute) => _attributeMap[code] = attribute;
-  
+
   int get hashCode => (_concept.hashCode + _parentMap.hashCode + _attributeMap.hashCode).hashCode;
 
-  /** 
+  /**
    * Two ids are equal if their parents are equal.
    */
    bool equalParents(Id id) {
@@ -99,12 +99,27 @@ class Id implements IdApi {
     * == see:
     * https://www.dartlang.org/docs/dart-up-and-running/contents/ch02.html#op-equality
     *
+    * To test whether two objects x and y represent the same thing,
+    * use the == operator.
+    *
+    * (In the rare case where you need to know
+    * whether two objects are the exact same object, use the identical()
+    * function instead.)
+    *
+    * Here’s how the == operator works:
+    *
+    * If x or y is null, return true if both are null,
+    * and false if only one is null.
+    *
+    * Return the result of the method invocation x.==(y).
+    *
     * Evolution:
     *
     * If x===y, return true.
     * Otherwise, if either x or y is null, return false.
     * Otherwise, return the result of x.equals(y).
     *
+    * The newer spec is:
     * a) if either x or y is null, do identical(x, y)
     * b) otherwise call operator ==
     */
@@ -188,8 +203,12 @@ class Id implements IdApi {
              num attribute = _attributeMap[a.code];
              compare = attribute.compareTo(id.getAttribute(a.code));
            } else {
-             String msg =
-             '${a.concept.code}.${a.code} is of ${a.type.code} type: cannot order.';
+             String msg = 'cannot compare then order on this type';
+             if (a.concept != null) {
+               msg = '${a.concept.code}.${a.code} is of ${a.type.code} type: cannot order.';
+             } else {
+               msg = '${a.code} is of ${a.type.code} type: cannot order.';
+             }
              throw new OrderError(msg);
            }
            if (compare != 0) {

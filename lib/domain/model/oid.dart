@@ -17,7 +17,7 @@ class Oid implements Comparable {
   }
 
   int get timeStamp => _timeStamp;
-  
+
   int get hashCode => _timeStamp.hashCode;
 
   /**
@@ -34,13 +34,27 @@ class Oid implements Comparable {
    * == see:
    * https://www.dartlang.org/docs/dart-up-and-running/contents/ch02.html#op-equality
    *
+   * To test whether two objects x and y represent the same thing,
+   * use the == operator.
+   *
+   * (In the rare case where you need to know
+   * whether two objects are the exact same object, use the identical()
+   * function instead.)
+   *
+   * Here’s how the == operator works:
+   *
+   * If x or y is null, return true if both are null,
+   * and false if only one is null.
+   *
+   * Return the result of the method invocation x.==(y).
+   *
    * Evolution:
    *
    * If x===y, return true.
    * Otherwise, if either x or y is null, return false.
    * Otherwise, return the result of x.equals(y).
    *
-   * The newest spec is:
+   * The newer spec is:
    * a) if either x or y is null, do identical(x, y)
    * b) otherwise call operator ==
    */

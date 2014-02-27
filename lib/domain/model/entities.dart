@@ -24,6 +24,7 @@ abstract class EntitiesApi<E extends EntityApi<E>> implements Iterable<E> {
   EntitiesApi<E> skipFirstWhile(bool f(E entity));
   EntitiesApi<E> takeFirst(int n);
   EntitiesApi<E> takeFirstWhile(bool f(E entity));
+  EntitiesApi childDownWhereOid(Oid oid);
   List<Map<String, Object>> toJson();
 
   void clear();
@@ -171,6 +172,28 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     }
     return null;
   }
+
+  Entities childDownWhereOid(Oid oid) {
+      if (isEmpty) {
+        return null;
+      }
+      ConceptEntity foundEntity = singleWhereOid(oid);
+      if (foundEntity != null) {
+        return this;
+      }
+      if (!_concept.children.isEmpty) {
+        for (ConceptEntity entity in _entityList) {
+          for (Child child in _concept.children) {
+            Entities childEntities = entity.getChild(child.code);
+            ConceptEntity childEntity = childEntities.singleDownWhereOid(oid);
+            if (childEntity != null) {
+              return childEntities;
+            }
+          }
+        }
+      }
+      return null;
+    }
 
   E singleWhereCode(String code) {
     return _codeEntityMap[code];

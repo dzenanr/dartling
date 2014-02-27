@@ -6,7 +6,8 @@ abstract class ModelEntriesApi {
   Concept getConcept(String conceptCode);
   EntitiesApi getEntry(String entryConceptCode);
   EntityApi find(Oid oid);
-  EntityApi findInInternalTree(Concept entryConcept, Oid oid);
+  EntityApi findEntityInChildTree(Concept entryConcept, Oid oid);
+  EntitiesApi findEntitiesInChildTree(Concept entryConcept, Oid oid);
 
   bool get isEmpty;  void clear();
 
@@ -68,15 +69,20 @@ class ModelEntries implements ModelEntriesApi {
   ConceptEntity find(Oid oid) {
     ConceptEntity entity;
     for (Concept entryConcept in _model.entryConcepts) {
-      var entity = findInInternalTree(entryConcept, oid);
+      var entity = findEntityInChildTree(entryConcept, oid);
       if (entity != null) return entity;
     }
     return null;
   }
 
-  ConceptEntity findInInternalTree(Concept entryConcept, Oid oid) {
+  ConceptEntity findEntityInChildTree(Concept entryConcept, Oid oid) {
     Entities entryEntities = getEntry(entryConcept.code);
     return entryEntities.singleDownWhereOid(oid);
+  }
+
+  Entities findEntitiesInChildTree(Concept entryConcept, Oid oid) {
+    Entities entryEntities = getEntry(entryConcept.code);
+    return entryEntities.childDownWhereOid(oid);
   }
 
   bool get isEmpty {
@@ -144,18 +150,21 @@ class ModelEntries implements ModelEntriesApi {
       Parent parent = nullParent[2];
       Concept parentConcept = parent.destinationConcept;
       ConceptEntity parentEntity =
-          findInInternalTree(parentConcept.entryConcept, parentOid);
+          findEntityInChildTree(parentConcept.entryConcept, parentOid);
       if (parentEntity == null) {
         var msg =
         '${entity.concept.code}.${parent.code} ${parent.destinationConcept.code}'
          ' parent entity is not found for the ${parentOid} parent oid.';
         throw new ParentError(msg);
-        //print(msg);
       }
+      Entities parentEntities =
+          findEntitiesInChildTree(parentConcept.entryConcept, parentOid);
       if (parent.identifier) {
         var beforUpdate = parent.update;
         parent.update = true;
+        var beforeEntity = entity;
         entity.setParent(parent.code, parentEntity);
+        parentEntities.update(beforeEntity, entity);
         parent.update = beforUpdate;
       } else {
         entity.setParent(parent.code, parentEntity);
@@ -163,7 +172,8 @@ class ModelEntries implements ModelEntriesApi {
     }
   }
 
-  _entriesFromJson(List<Map<String, Object>> entriesList) {
+  List<Entities> _entriesFromJson(List<Map<String, Object>> entriesList) {
+    var entries = new List<Entities>();
     for (Map<String, Object> entriesMap in entriesList) {
       String entryConceptCode = entriesMap['concept'];
       var concept = model.concepts.singleWhereCode(entryConceptCode);
@@ -177,7 +187,9 @@ class ModelEntries implements ModelEntriesApi {
       }
       List<Map<String, Object>> entitiesList = entriesMap['entities'];
       entryEntities.addFrom(_entitiesFromJson(entitiesList, concept, true));
+      entries.add(entryEntities);
     }
+    return entries;
   }
 
   Entities _entitiesFromJson(List<Map<String, Object>> entitiesList,

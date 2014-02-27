@@ -2,8 +2,12 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*1.0.7* 2014-02-25
+*1.0.7* 2014-02-27
 
++ lib/domain/model/entries.dart: in ModelEntries, debug the fromJson method
+  (problem when set parent that is identifier)
++ can order only on String, num and DateTime attribute ids;
+  if other type then improve the error message
 + update README.md
 
 *1.0.6* 2014-02-25
