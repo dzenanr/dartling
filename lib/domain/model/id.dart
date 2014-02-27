@@ -106,7 +106,7 @@ class Id implements IdApi {
     * whether two objects are the exact same object, use the identical()
     * function instead.)
     *
-    * Here’s how the == operator works:
+    * Here is how the == operator works:
     *
     * If x or y is null, return true if both are null,
     * and false if only one is null.

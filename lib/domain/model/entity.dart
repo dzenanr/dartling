@@ -523,7 +523,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
     return false;
   }
-
+  
   /**
    * == see:
    * https://www.dartlang.org/docs/dart-up-and-running/contents/ch02.html#op-equality
@@ -535,7 +535,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
    * whether two objects are the exact same object, use the identical()
    * function instead.)
    *
-   * Here’s how the == operator works:
+   * Here is how the == operator works:
    *
    * If x or y is null, return true if both are null,
    * and false if only one is null.
