@@ -205,17 +205,13 @@ class ModelEntries implements ModelEntriesApi {
         }
       } else {
         String parentOidString = reference['oid'];
-        String entityConceptCode = reference['concept'];
+        String parentConceptCode = reference['parent'];
         String entryConceptCode = reference['entry'];
         var parentTimeStamp;
         try {
           parentTimeStamp = int.parse(parentOidString);   
         } on FormatException catch (e) {
           throw new TypeError('${parent.code} parent oid is not int: $e');
-        }
-        if (entityConceptCode != concept.code) {
-          throw new ConceptError(
-            '${entityConceptCode} entity concept is wrong, should be ${concept.code}.');
         }
         var parentOid = new Oid.ts(parentTimeStamp); 
         if (parent.internal) {        
@@ -232,8 +228,13 @@ class ModelEntries implements ModelEntriesApi {
             throw new ParentError(
               '${parent.code} external parent not found, from json it first.');
           } else {
-            entity.setParent(parent.code, externalParent);
             Concept externalParentConcept = externalParent.concept;
+            if (parentConceptCode != externalParentConcept.code) {
+              throw new ParentError(
+                '${parentConceptCode} parent concept is wrong, '
+                'should be ${externalParentConcept.code}.');
+            }
+            entity.setParent(parent.code, externalParent);
             var childNeighbor;
             for (var child in externalParentConcept.children) {
               if (child.opposite == parent) {

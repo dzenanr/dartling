@@ -9,7 +9,7 @@ based on [Semantic Versioning](http://semver.org/)
   you can order on Uri and bool attribute ids
 + improve entries.fromJson based on the entry concept internal tree
 + for a parent reference in JSON, instead of only oid string,
-  use a map of oid  string, concept code and entry concept code
+  use a map of oid  string, parent concept code and entry concept code
 + change API in lib/domain/model/entries.dart:
   EntityApi single(Oid oid);
   EntityApi internalSingle(String entryConceptCode, Oid oid);
