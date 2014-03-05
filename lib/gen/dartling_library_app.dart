@@ -16,7 +16,7 @@ String genDartlingLibraryApp(Model model) {
   sc = '${sc} \n';
 
   sc = '${sc}import "dart:html"; \n';
-  sc = '${sc}import "dart:math"; \n';
+  sc = '${sc}//import "dart:math"; \n';
   sc = '${sc} \n';
 
   sc = '${sc}import "package:dartling/dartling.dart"; \n';

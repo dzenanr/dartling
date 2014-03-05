@@ -2,12 +2,14 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-03-04
+*2.0.0* 2014-03-05
 
 + remove displayJson() in generated code
 + in addition to String, num and DateTime attribute ids,
   you can order on Uri and bool attribute ids
-+ improve entries.fromJson based on the entry concept internal tree 
++ improve entries.fromJson based on the entry concept internal tree
++ for a parent reference in JSON, instead of only oid string,
+  use a map of oid  string, concept code and entry concept code
 + change API in lib/domain/model/entries.dart:
   EntityApi single(Oid oid);
   EntityApi internalSingle(String entryConceptCode, Oid oid);

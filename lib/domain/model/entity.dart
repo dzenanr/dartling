@@ -741,7 +741,11 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     for (Parent parent in _concept.parents) {
       ConceptEntity parentEntity = getParent(parent.code);
       if (parentEntity != null) {
-        entityMap[parent.code] = parentEntity.oid.toString();
+        var reference = new Map<String, String>();
+        reference['oid'] = parentEntity.oid.toString();
+        reference['concept'] = _concept.code;
+        reference['entry'] = parentEntity.concept.entryConcept.code;
+        entityMap[parent.code] = reference;
       } else {
         entityMap[parent.code] = 'null';
       }

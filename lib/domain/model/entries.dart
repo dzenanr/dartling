@@ -198,29 +198,40 @@ class ModelEntries implements ModelEntriesApi {
     }
 
     for (Parent parent in concept.parents) {
-      String parentOidString = entityMap[parent.code];
-      if (parentOidString == 'null') {
+      Map<String, String> reference = entityMap[parent.code];
+      if (reference == 'null') {
         if (parent.minc != '0') {
           throw new ParentError('${parent.code} parent cannot be null.');
         }
       } else {
+        String parentOidString = reference['oid'];
+        String entityConceptCode = reference['concept'];
+        String entryConceptCode = reference['entry'];
         var parentTimeStamp;
         try {
           parentTimeStamp = int.parse(parentOidString);   
         } on FormatException catch (e) {
           throw new TypeError('${parent.code} parent oid is not int: $e');
         }
-        var parentOid = new Oid.ts(parentTimeStamp);       
+        if (entityConceptCode != concept.code) {
+          throw new ConceptError(
+            '${entityConceptCode} entity concept is wrong, should be ${concept.code}.');
+        }
+        var parentOid = new Oid.ts(parentTimeStamp); 
         if (parent.internal) {        
           if (parentOid == internalParent.oid) {
             entity.setParent(parent.code, internalParent);
           } else {
             throw new ParentError(
-              '${parent.code} internal parent oid is wrong.');
+                '${parent.code} internal parent oid is wrong.');
           }       
         } else { // parent is external
-          ConceptEntity externalParent = single(parentOid);
-          if (externalParent != null) {
+          ConceptEntity externalParent = 
+              internalSingle(entryConceptCode, parentOid);
+          if (externalParent == null) {
+            throw new ParentError(
+              '${parent.code} external parent not found, from json it first.');
+          } else {
             entity.setParent(parent.code, externalParent);
             Concept externalParentConcept = externalParent.concept;
             var childNeighbor;
@@ -236,11 +247,8 @@ class ModelEntries implements ModelEntriesApi {
             } else {
               throw new ParentError(
                 '${parent.code} external parent child entities not found.');
-            }
-          } else {
-            throw new ParentError(
-              '${parent.code} external parent not found, from json it first.');
-          } 
+            }            
+          }
         }
       }
     }
