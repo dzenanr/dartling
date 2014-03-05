@@ -2,12 +2,22 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*1.0.7* 2014-02-27
+*2.0.0* 2014-03-04
 
-+ lib/domain/model/entries.dart: in ModelEntries, debug the fromJson method
-  (problem when set parent that is identifier)
-+ can order only on String, num and DateTime attribute ids;
-  if other type then improve the error message
++ remove displayJson() in generated code
++ in addition to String, num and DateTime attribute ids,
+  you can order on Uri and bool attribute ids
++ improve entries.fromJson based on the entry concept internal tree 
++ change API in lib/domain/model/entries.dart:
+  EntityApi single(Oid oid);
+  EntityApi internalSingle(String entryConceptCode, Oid oid);
+  EntitiesApi internalChild(String entryConceptCode, Oid oid);
+  String toJson(String entryConceptCode);
+  fromJson(String json);
++ change API in lib/domain/model/entities.dart:
+  EntityApi internalSingle(Oid oid);
+  EntitiesApi internalChild(Oid oid);
+  removed: List<Map<String, Object>> toJson();
 + update README.md
 
 *1.0.6* 2014-02-25

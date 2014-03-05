@@ -54,8 +54,6 @@ String genDartlingGen(Model model) {
        'Entries); \n';
   sc = '${sc}   ${domain.codeFirstLetterLower}${model.code}'
        'Entries.display(); \n';
-  sc = '${sc}   ${domain.codeFirstLetterLower}${model.code}'
-       'Entries.displayJson(); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 

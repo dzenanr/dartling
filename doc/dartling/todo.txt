@@ -1,5 +1,10 @@
 dartling To Do
 
+uuid
+  http://www.ietf.org/rfc/rfc4122.txt
+  https://github.com/Daegalus/dart-uuid
+ 
+Done, to be tested: 
 Improve performance of loading data from a json document to a model by
 using internal and external relationships.
 Now, the algorithm is slow because, before creating an entity, I check in the

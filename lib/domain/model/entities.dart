@@ -10,7 +10,7 @@ abstract class EntitiesApi<E extends EntityApi<E>> implements Iterable<E> {
   E firstWhereAttribute(String code, Object attribute);
   E random();
   E singleWhereOid(Oid oid);
-  EntityApi singleDownWhereOid(Oid oid);
+  EntityApi internalSingle(Oid oid);
   E singleWhereCode(String code);
   E singleWhereId(IdApi id);
   E singleWhereAttributeId(String code, Object attribute);
@@ -24,8 +24,7 @@ abstract class EntitiesApi<E extends EntityApi<E>> implements Iterable<E> {
   EntitiesApi<E> skipFirstWhile(bool f(E entity));
   EntitiesApi<E> takeFirst(int n);
   EntitiesApi<E> takeFirstWhile(bool f(E entity));
-  EntitiesApi childDownWhereOid(Oid oid);
-  List<Map<String, Object>> toJson();
+  EntitiesApi internalChild(Oid oid);
 
   void clear();
   void sort([int compare(E a, E b)]); // in place sort
@@ -151,7 +150,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     return _oidEntityMap[oid.timeStamp];
   }
 
-  ConceptEntity singleDownWhereOid(Oid oid) {
+  ConceptEntity internalSingle(Oid oid) {
     if (isEmpty) {
       return null;
     }
@@ -162,10 +161,12 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     if (!_concept.children.isEmpty) {
       for (ConceptEntity entity in _entityList) {
         for (Child child in _concept.children) {
-          Entities childEntities = entity.getChild(child.code);
-          ConceptEntity childEntity = childEntities.singleDownWhereOid(oid);
-          if (childEntity != null) {
-            return childEntity;
+          if (child.internal) {
+            Entities childEntities = entity.getChild(child.code);
+            ConceptEntity childEntity = childEntities.internalSingle(oid);
+            if (childEntity != null) {
+              return childEntity;
+            } 
           }
         }
       }
@@ -173,7 +174,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     return null;
   }
 
-  Entities childDownWhereOid(Oid oid) {
+  Entities internalChild(Oid oid) {
       if (isEmpty) {
         return null;
       }
@@ -184,10 +185,12 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       if (!_concept.children.isEmpty) {
         for (ConceptEntity entity in _entityList) {
           for (Child child in _concept.children) {
-            Entities childEntities = entity.getChild(child.code);
-            ConceptEntity childEntity = childEntities.singleDownWhereOid(oid);
-            if (childEntity != null) {
-              return childEntities;
+            if (child.internal) {
+              Entities childEntities = entity.getChild(child.code);
+              ConceptEntity childEntity = childEntities.internalSingle(oid);
+              if (childEntity != null) {
+                return childEntities;
+              }             
             }
           }
         }
@@ -381,7 +384,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   /**
    * Loads entities without validations to this, which must be empty.
    * It does not handle neighbors.
-   * See ModelEntries for the JSON transfer at the level of a model.
+   * See ModelEntries for the JSON transfer at the level of a model entry.
    */
   fromJson(List<Map<String, Object>> entitiesList) {
     if (concept == null) {
@@ -684,6 +687,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       if (add(afterEntity)) {
         return true;
       } else {
+        print('entities.update: ${errors.toList()}');
         if (add(beforeEntity)) {
           var error = new ValidationError('update');
           error.message =
@@ -717,8 +721,8 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   /**
   * Displays (prints) a title, then entities.
   */
-  display({String title:'Entities', String prefix:'',
-      bool withOid:true, bool withChildren:true}) {
+  display({String title:'Entities', String prefix:'', bool withOid:true, 
+    bool withChildren:true, bool withInternalChildren:true}) {
     var s = prefix;
     if (!_concept.entry || (_concept.entry && _concept.parents.length > 0)) {
       s = '$prefix  ';
@@ -731,7 +735,8 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       //print('');
     }
     for (E e in _entityList) {
-      e.display(prefix:s, withOid:withOid, withChildren:withChildren);
+      e.display(prefix:s, withOid:withOid, 
+        withChildren:withChildren, withInternalChildren:withInternalChildren);
     }
   }
 

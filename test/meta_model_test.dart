@@ -158,9 +158,11 @@ testModelData(Model model) {
       dartCategory.getChild('webLinks').errors.display(title:'WebLink Error');
     });
     test('From Link Model to JSON', () {
-      var json = entries.toJson();
+      var entryConceptCode = 'Category';
+      var categories = entries.getEntry(entryConceptCode);
+      var json = entries.toJson(entryConceptCode);
       expect(json, isNotNull);
-      entries.displayJson();
+      entries.displayJson(entryConceptCode);
     });
 
   });

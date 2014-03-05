@@ -3,7 +3,8 @@ part of dartling;
 String genInitDomainModel(Model model, String library) {
   Domain domain = model.domain;
 
-  var sc = 'part of ${library}; \n';
+  var sc = '';
+  sc = '${sc}part of ${library}; \n';
   sc = '${sc} \n';
   sc = '${sc}// lib/${domain.codeLowerUnderscore}/'
        '${model.codeLowerUnderscore}/init.dart \n';

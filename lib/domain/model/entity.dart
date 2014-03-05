@@ -35,6 +35,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   // cannot use T since a parent is of a different type
   Map<String, ConceptEntity> _parentMap;
   Map<String, Entities> _childMap;
+  Map<String, Entities> _internalChildMap;
 
   bool pre = true;
   bool post = true;
@@ -53,6 +54,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     _attributeMap = new Map<String, Object>();
     _parentMap = new Map<String, ConceptEntity>();
     _childMap = new Map<String, Entities>();
+    _internalChildMap = new Map<String, Entities>();
 
     for (Attribute a in _concept.attributes) {
       if (a.init == null) {
@@ -105,7 +107,11 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
 
     for (Child child in _concept.children) {
-      _childMap[child.code] = new Entities.of(child.destinationConcept);
+      var childEntities = new Entities.of(child.destinationConcept);
+      _childMap[child.code] = childEntities;
+      if (child.internal) {
+        _internalChildMap[child.code] = childEntities;
+      }
     }
   }
 
@@ -441,6 +447,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
   }
 
+  Entities getInternalChild(String name) => _internalChildMap[name];
   Entities getChild(String name) => _childMap[name];
   bool setChild(String name, Entities entities) {
     if (_concept == null) {
@@ -453,6 +460,9 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
     if (child.update) {
       _childMap[name] = entities;
+      if (child.internal) {
+        _internalChildMap[name] = entities;
+      }
       return true;
     } else {
       String msg = '${_concept.code}.${child.code} is not updateable.';
@@ -660,7 +670,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   /**
    * Displays (prints) an entity with its attributes, parents and children.
    */
-  display({String prefix:'', bool withOid:true, bool withChildren:true}) {
+  display({String prefix:'', bool withOid:true, 
+    bool withChildren:true, bool withInternalChildren:true}) {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
     }
@@ -699,15 +710,27 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     });
 
     if (withChildren) {
-      _childMap.forEach((k,v) {
-        print('${s}$k:');
-        if (_concept.isChildSensitive(k)) {
-          print('**********');
-        } else {
-          v.display(title:'${s}$k', prefix:'${s}  ',
-              withOid:withOid, withChildren:withChildren);
-        }
-      });
+      if (withInternalChildren) {
+        _internalChildMap.forEach((k,v) {
+          print('${s}$k:');
+          if (_concept.isChildSensitive(k)) {
+            print('**********');
+          } else {
+            v.display(title:'${s}$k', prefix:'${s}  ', withOid:withOid, 
+              withChildren:withChildren, withInternalChildren:withInternalChildren);
+          }
+        });
+      } else {
+        _childMap.forEach((k,v) {
+          print('${s}$k:');
+          if (_concept.isChildSensitive(k)) {
+            print('**********');
+          } else {
+            v.display(title:'${s}$k', prefix:'${s}  ', withOid:withOid, 
+              withChildren:withChildren, withInternalChildren:withInternalChildren);
+          }
+        });
+      }
     }
 
     print('');
@@ -727,14 +750,15 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     entityMap['code'] = _code;
     _attributeMap.keys.forEach((k) =>
         entityMap[k] = getStringFromAttribute(k));
-    _childMap.keys.forEach((k) => entityMap[k] = getChild(k).toJson());
+    _internalChildMap.keys.forEach(
+        (k) => entityMap[k] = getInternalChild(k).toJson());
     return entityMap;
   }
 
   /**
    * Loads attribute values without validations to this.
    * It does not handle neighbors.
-   * See ModelEntries for the JSON transfer at the level of a model.
+   * See ModelEntries for the JSON transfer at the level of a model entry.
    */
   fromJson(Map<String, Object> entityMap) {
     int timeStamp;

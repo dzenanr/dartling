@@ -5,13 +5,13 @@ abstract class ModelEntriesApi {
   Model get model;
   Concept getConcept(String conceptCode);
   EntitiesApi getEntry(String entryConceptCode);
-  EntityApi find(Oid oid);
-  EntityApi findEntityInChildTree(Concept entryConcept, Oid oid);
-  EntitiesApi findEntitiesInChildTree(Concept entryConcept, Oid oid);
-
+  EntityApi single(Oid oid);
+  EntityApi internalSingle(String entryConceptCode, Oid oid);
+  EntitiesApi internalChild(String entryConceptCode, Oid oid);
+  
   bool get isEmpty;  void clear();
 
-  String toJson();
+  String toJson(String entryConceptCode);
   fromJson(String json);
 
 }
@@ -22,11 +22,8 @@ class ModelEntries implements ModelEntriesApi {
 
   Map<String, Entities> _entryEntitiesMap;
 
-  List _nullParents;
-
   ModelEntries(this._model) {
     _entryEntitiesMap = newEntries();
-    _nullParents = new List();
   }
 
   Map<String, Entities> newEntries() {
@@ -39,7 +36,7 @@ class ModelEntries implements ModelEntriesApi {
   }
 
   EntitiesApi newEntities(String conceptCode) {
-    var concept = _model.concepts.singleWhereCode(conceptCode);
+    var concept = getConcept(conceptCode);
     if (concept == null) {
       throw new ConceptError('${concept.code} concept does not exist.');
     }
@@ -50,7 +47,7 @@ class ModelEntries implements ModelEntriesApi {
   }
 
   EntityApi newEntity(String conceptCode) {
-    var concept = _model.concepts.singleWhereCode(conceptCode);
+    var concept = getConcept(conceptCode);
     if (concept == null) {
       throw new ConceptError('${concept.code} concept does not exist.');
     }
@@ -66,23 +63,23 @@ class ModelEntries implements ModelEntriesApi {
   Entities getEntry(String entryConceptCode) =>
       _entryEntitiesMap[entryConceptCode];
 
-  ConceptEntity find(Oid oid) {
+  ConceptEntity single(Oid oid) {
     ConceptEntity entity;
     for (Concept entryConcept in _model.entryConcepts) {
-      var entity = findEntityInChildTree(entryConcept, oid);
+      var entity = internalSingle(entryConcept.code, oid);
       if (entity != null) return entity;
     }
     return null;
   }
 
-  ConceptEntity findEntityInChildTree(Concept entryConcept, Oid oid) {
-    Entities entryEntities = getEntry(entryConcept.code);
-    return entryEntities.singleDownWhereOid(oid);
+  ConceptEntity internalSingle(String entryConceptCode, Oid oid) {
+    Entities entryEntities = getEntry(entryConceptCode);
+    return entryEntities.internalSingle(oid);
   }
 
-  Entities findEntitiesInChildTree(Concept entryConcept, Oid oid) {
-    Entities entryEntities = getEntry(entryConcept.code);
-    return entryEntities.childDownWhereOid(oid);
+  Entities internalChild(String entryConceptCode, Oid oid) {
+    Entities entryEntities = getEntry(entryConceptCode);
+    return entryEntities.internalChild(oid);
   }
 
   bool get isEmpty {
@@ -101,114 +98,62 @@ class ModelEntries implements ModelEntriesApi {
       entryEntities.clear();
     });
   }
-
-  String toJson() {
-    Map<String, Object> modelMap = new Map<String, Object>();
-    modelMap['domain'] = _model.domain.code;
-    modelMap['model'] = _model.code;
-    modelMap['entries'] = _entriesToJson();
-    return JSON.encode(modelMap);
+  
+  String toJson(String entryConceptCode) {
+    Map<String, Object> entryMap = new Map<String, Object>();
+    entryMap['domain'] = _model.domain.code;
+    entryMap['model'] = _model.code;  
+    entryMap['entry'] = entryConceptCode;   
+    Entities entryEntities = getEntry(entryConceptCode);  
+    entryMap['entities'] = entryEntities.toJson();
+    return JSON.encode(entryMap);
   }
-
-  List<Map<String, Object>> _entriesToJson() {
-    List<Map<String, Object>> entriesList = new List<Map<String, Object>>();
-    for (Concept entryConcept in _model.entryConcepts) {
-      Entities entryEntities = getEntry(entryConcept.code);
-      Map<String, Object> entriesMap = new Map<String, Object>();
-      entriesMap["concept"] = entryConcept.code;
-      entriesMap["entities"] = entryEntities.toJson();
-      entriesList.add(entriesMap);
-    }
-    return entriesList;
-  }
-
+  
   fromJson(String json) {
-    Map<String, Object> modelMap = JSON.decode(json);
-    var domain = modelMap['domain'];
-    var model = modelMap['model'];
-    if (_model.domain.code != domain) {
+    Map<String, Object> entryMap = JSON.decode(json);
+    var domainCode = entryMap['domain'];
+    var modelCode = entryMap['model'];
+    var entryConceptCode = entryMap['entry'];
+    if (_model.domain.code != domainCode) {
       throw new CodeError(
-          'The $domain domain does not exist.');
+          'The $domainCode domain does not exist.');
     }
-    if (_model.code != model) {
+    if (_model.code != modelCode) {
       throw new CodeError(
-          'The $model model does not exist.');
+          'The $modelCode model does not exist.');
     }
-    _modelFromJson(modelMap);
-  }
-
-  _modelFromJson(Map<String, Object> modelMap) {
-    List<Map<String, Object>> entriesList = modelMap['entries'];
-    _entriesFromJson(entriesList);
-    _updateNullParents();
-  }
-
-  _updateNullParents() {
-    for (List nullParent in _nullParents) {
-      Oid parentOid = nullParent[0];
-      ConceptEntity entity = nullParent[1];
-      Parent parent = nullParent[2];
-      Concept parentConcept = parent.destinationConcept;
-      ConceptEntity parentEntity =
-          findEntityInChildTree(parentConcept.entryConcept, parentOid);
-      if (parentEntity == null) {
-        var msg =
-        '${entity.concept.code}.${parent.code} ${parent.destinationConcept.code}'
-         ' parent entity is not found for the ${parentOid} parent oid.';
-        throw new ParentError(msg);
-      }
-      Entities parentEntities =
-          findEntitiesInChildTree(parentConcept.entryConcept, parentOid);
-      if (parent.identifier) {
-        var beforUpdate = parent.update;
-        parent.update = true;
-        var beforeEntity = entity;
-        entity.setParent(parent.code, parentEntity);
-        parentEntities.update(beforeEntity, entity);
-        parent.update = beforUpdate;
-      } else {
-        entity.setParent(parent.code, parentEntity);
-      }
+    var entryConcept = getConcept(entryConceptCode);
+    if (entryConcept == null) {
+      throw new ConceptError('${entryConceptCode} concept does not exist.');
     }
-  }
-
-  List<Entities> _entriesFromJson(List<Map<String, Object>> entriesList) {
-    var entries = new List<Entities>();
-    for (Map<String, Object> entriesMap in entriesList) {
-      String entryConceptCode = entriesMap['concept'];
-      var concept = model.concepts.singleWhereCode(entryConceptCode);
-      if (concept == null) {
-        throw new ConceptError('${entryConceptCode} concept does not exist.');
-      }
-      Entities entryEntities = getEntry(entryConceptCode);
-      if (entryEntities.length > 0) {
-        throw new JsonError(
-            '$entryConceptCode entry receiving entities are not empty');
-      }
-      List<Map<String, Object>> entitiesList = entriesMap['entities'];
-      entryEntities.addFrom(_entitiesFromJson(entitiesList, concept, true));
-      entries.add(entryEntities);
+    Entities entryEntities = getEntry(entryConceptCode);
+    if (entryEntities.length > 0) {
+      throw new JsonError(
+          '$entryConceptCode entry receiving entities are not empty');
     }
-    return entries;
+    List<Map<String, Object>> entitiesList = entryMap['entities'];
+    entryEntities.addFrom(_entitiesFromJson(entitiesList, null, entryConcept));
   }
-
+  
   Entities _entitiesFromJson(List<Map<String, Object>> entitiesList,
-                            Concept concept, bool internal) {
+                             ConceptEntity internalParent,
+                             Concept concept) {
     Entities entities = newEntities(concept.code);
     for (Map<String, Object> entityMap in entitiesList) {
-      ConceptEntity entity = _entityFromJson(entityMap, concept, internal);
+      ConceptEntity entity = 
+          _entityFromJson(entityMap, internalParent, concept);
       entities.pre = false;
       entities.post = false;
       entities.add(entity);
       entities.pre = true;
       entities.post = true;
-      //entities.errors.display('_entitiesFromJson errors:
-      //    ${concept.code} ${entity}');
     }
-    return entities;
+    return entities;  
   }
-
-  ConceptEntity _entityFromJson(Map<String, Object> entityMap, Concept concept, bool internal) {
+  
+  ConceptEntity _entityFromJson(Map<String, Object> entityMap,
+                                ConceptEntity internalParent,
+                                Concept concept) {
     ConceptEntity entity;
     int timeStamp;
     try {
@@ -218,104 +163,88 @@ class ModelEntries implements ModelEntriesApi {
     }
 
     var oid = new Oid.ts(timeStamp);
-    entity = find(oid);
-    if (entity == null) {
-      entity = newEntity(concept.code);
-      var beforeUpdateOid = entity.concept.updateOid;
-      entity.concept.updateOid = true;
-      entity.oid = oid;
-      entity.concept.updateOid = beforeUpdateOid;
+    entity = newEntity(concept.code);
+    var beforeUpdateOid = concept.updateOid;
+    concept.updateOid = true;
+    entity.oid = oid;
+    concept.updateOid = beforeUpdateOid;
 
-      var beforeUpdateCode = entity.concept.updateCode;
-      entity.concept.updateCode = true;
-      entity.code = entityMap['code'];
-      entity.concept.updateCode = beforeUpdateCode;
+    var beforeUpdateCode = concept.updateCode;
+    concept.updateCode = true;
+    entity.code = entityMap['code'];
+    concept.updateCode = beforeUpdateCode;
 
-      for (Attribute attribute in concept.attributes) {
-        if (attribute.identifier) {
-          var beforUpdate = attribute.update;
-          attribute.update = true;
-          entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
-          attribute.update = beforUpdate;
-        } else {
-          entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
-        }
+    for (Attribute attribute in concept.attributes) {
+      if (attribute.identifier) {
+        var beforUpdate = attribute.update;
+        attribute.update = true;
+        entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
+        attribute.update = beforUpdate;
+      } else {
+        entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
       }
+    }
 
-      for (Child child in concept.children) {
+    for (Child child in concept.children) {
+      if (child.internal) {
         List<Map<String, Object>> entitiesList = entityMap[child.code];
         if (entitiesList != null) {
           var childConcept = child.destinationConcept;
-          var entities = _entitiesFromJson(entitiesList, childConcept, child.internal);
+          var entities = _entitiesFromJson(entitiesList, entity, childConcept);
           assert(entities != null);
           entity.setChild(child.code, entities);
         }
       }
+    }
 
-      for (Parent parent in concept.parents) {
-        String parentOidString = entityMap[parent.code];
-        if (parentOidString == 'null') {
-          if (parent.minc != '0') {
-            throw new ParentError('${parent.code} parent cannot be null.');
-          }
-        } else {
-          try {
-            int parentTimeStamp = int.parse(parentOidString);
-            Oid parentOid = new Oid.ts(parentTimeStamp);
-            List nullParent = new List(3);
-            nullParent[0] = parentOid;
-            nullParent[1] = entity;
-            nullParent[2] = parent;
-            _nullParents.add(nullParent);
-          } on FormatException catch (e) {
-            throw new TypeError(
-                '${parent.code} parent oid value is not int: $e');
-          }
+    for (Parent parent in concept.parents) {
+      String parentOidString = entityMap[parent.code];
+      if (parentOidString == 'null') {
+        if (parent.minc != '0') {
+          throw new ParentError('${parent.code} parent cannot be null.');
+        }
+      } else {
+        var parentTimeStamp;
+        try {
+          parentTimeStamp = int.parse(parentOidString);   
+        } on FormatException catch (e) {
+          throw new TypeError('${parent.code} parent oid is not int: $e');
+        }
+        var parentOid = new Oid.ts(parentTimeStamp);       
+        if (parent.internal) {        
+          if (parentOid == internalParent.oid) {
+            entity.setParent(parent.code, internalParent);
+          } else {
+            throw new ParentError(
+              '${parent.code} internal parent oid is wrong.');
+          }       
+        } else { // parent is external
+          ConceptEntity externalParent = single(parentOid);
+          if (externalParent != null) {
+            entity.setParent(parent.code, externalParent);
+            Concept externalParentConcept = externalParent.concept;
+            var childNeighbor;
+            for (var child in externalParentConcept.children) {
+              if (child.opposite == parent) {
+                childNeighbor = child;
+                break;
+              }
+            }
+            if (childNeighbor != null) {
+              var childEntities = externalParent.getChild(childNeighbor.code);
+              childEntities.add(entity);
+            } else {
+              throw new ParentError(
+                '${parent.code} external parent child entities not found.');
+            }
+          } else {
+            throw new ParentError(
+              '${parent.code} external parent not found, from json it first.');
+          } 
         }
       }
     }
     return entity;
-  }
-
-  ConceptEntity _findParentEntity(Concept parentConcept, Oid oid) {
-    if (parentConcept.entry) {
-      var entities = getEntry(parentConcept.code);
-      return entities.singleWhereOid(oid);
-    } else {
-      _model.entryConcepts.forEach((entryConcept) {
-        var entryEntities = getEntry(entryConcept.code);
-        var parentEntity = _findEntityFromEntities(entryEntities, oid);
-        if (parentEntity != null) {
-          return parentEntity;
-        }
-      });
-    }
-    return null;
-  }
-
-  ConceptEntity _findEntityFromEntities(Entities entities, oid) {
-    ConceptEntity foundEntity = entities.singleWhereOid(oid);
-    if (foundEntity != null) {
-      return foundEntity;
-    }
-    for (ConceptEntity entity in entities) {
-      foundEntity = _findEntityFromEntity(entity, oid);
-      if (foundEntity != null) {
-        return foundEntity;
-      }
-    }
-    return null;
-  }
-
-  ConceptEntity _findEntityFromEntity(ConceptEntity entity, oid) {
-    for (Child child in entity.concept.children) {
-      Entities childEntities = entity.getChild(child.code);
-      var foundEntity = _findEntityFromEntities(childEntities, oid);
-      if (foundEntity != null) {
-        return foundEntity;
-      }
-    }
-    return null;
   }
 
   display() {
@@ -325,15 +254,14 @@ class ModelEntries implements ModelEntriesApi {
     }
   }
 
-  displayJson() {
+  displayJson(String entryConceptCode) {
     print('==============================================================');
     print('${_model.domain.code} ${_model.code} Data in JSON');
     print('==============================================================');
-    print(toJson());
+    print(toJson(entryConceptCode));
     print('--------------------------------------------------------------');
     print('');
   }
-
 }
 
 

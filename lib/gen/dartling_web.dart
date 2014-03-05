@@ -10,7 +10,6 @@ String genDartlingWeb(Model model) {
 
   sc = '${sc}import "dart:html"; \n';
   sc = '${sc} \n';
-  sc = '${sc}import "package:dartling/dartling.dart"; \n';
   sc = '${sc}import "package:dartling_default_app/dartling_default_app.dart"; \n';
   sc = '${sc} \n';
   sc = '${sc}import "package:${domain.codeLowerUnderscore}_'
@@ -32,8 +31,6 @@ String genDartlingWeb(Model model) {
   sc = '${sc}   init${domain.code}${model.code}('
        '${domain.codeFirstLetterLower}${model.code}Entries); \n';
   sc = '${sc}   ${domain.codeFirstLetterLower}${model.code}Entries.display(); \n';
-  sc = '${sc}   ${domain.codeFirstLetterLower}${model.code}'
-       'Entries.displayJson(); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
