@@ -79,8 +79,6 @@ String genModel(Model model, String library) {
       sc = '${sc}add(${entryConcept.codeFirstLetterLower}); \n';
       sc = '${sc} \n';
     }
-    sc = '${sc}  } \n';
-    sc = '${sc} \n';
   }  
   sc = '${sc}} \n';
   sc = '${sc} \n';
