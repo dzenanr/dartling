@@ -16,11 +16,9 @@ String genDartlingWeb(Model model) {
        '${model.codeLowerUnderscore}.dart"; \n';
   sc = '${sc} \n';
 
-  sc = '${sc}init${domain.code}Data(${domain.code}Repo '
-       '${domain.codeFirstLetterLower}Repo) { \n';
+  sc = '${sc}initData(Repository repository) { \n';
   sc = '${sc}   var ${domain.codeFirstLetterLower}Domain = '
-       '${domain.codeFirstLetterLower}Repo.'
-       'getDomainModels(${domain.code}); \n';
+       'repository.getDomainModels(${domain.code}); \n';
   sc = '${sc}   var ${model.codeFirstLetterLower}Model = '
        '${domain.codeFirstLetterLower}Domain.'
        'getModelEntries(${model.code}); \n';
@@ -29,19 +27,17 @@ String genDartlingWeb(Model model) {
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
-  sc = '${sc}show${domain.code}Data(${domain.code}Repo '
-       '${domain.codeFirstLetterLower}Repo) { \n';
+  sc = '${sc}showData(Repository repository) { \n';
   sc = '${sc}   var mainView = new View(document, "main"); \n';
-  sc = '${sc}   mainView.repo = ${domain.codeFirstLetterLower}Repo; \n';
+  sc = '${sc}   mainView.repo = repository; \n';
   sc = '${sc}   new RepoMainSection(mainView); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
   sc = '${sc}void main() { \n';
-  sc = '${sc}  var ${domain.codeFirstLetterLower}Repo = '
-       'new ${domain.code}Repo(); \n';
-  sc = '${sc}  init${domain.code}Data(${domain.codeFirstLetterLower}Repo); \n';
-  sc = '${sc}  show${domain.code}Data(${domain.codeFirstLetterLower}Repo); \n';
+  sc = '${sc}  var repository = new Repository(); \n';
+  sc = '${sc}  initData(repository); \n';
+  sc = '${sc}  showData(repository); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 

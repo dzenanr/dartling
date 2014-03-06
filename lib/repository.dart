@@ -41,61 +41,59 @@ class Repo implements RepoApi {
 
   DomainModels getDomainModels(String domainCode) =>
       _domainModelsMap[domainCode];
-
+  
   gen(String library, [bool specific=true]) {
+    title('lib folder');
+    subTitle('repository');
+    print(genRepository(this, library));
+    
+    for (Domain domain in domains) {
+      subTitle('libraries');
+      for (Model model in domain.models) {
+        subTitle('${domain.code}.${model.code} model library');
+        print(genDartlingLibrary(model));
+        subTitle('${domain.code}.${model.code} model app library');
+        print(genDartlingLibraryApp(model));
+      }
+    }
+    
     title('You should not change the generated code in the lib/gen folder.');
     for (Domain domain in domains) {
-      subTitle('The ${domain.code} domain repository.');
-      print(genRepository(domain, library));
-      subTitle('The ${domain.code} domain models.');
+      subTitle('${domain.code} domain models');
       print(genModels(domain, library));
       for (Model model in domain.models) {
-        subTitle('The ${domain.code}.${model.code} model entries.');
+        subTitle('${domain.code}.${model.code} model entries');
         print(genEntries(model, library));
         for (Concept concept in model.concepts) {
-          subTitle('The ${domain.code}.${model.code}.${concept.code} concept.');
+          subTitle('${domain.code}.${model.code}.${concept.code} concept');
           print(genConceptGen(concept, library));
         }
       }
     }
-    if (specific) {
+    
+    if (specific) {    
       for (Domain domain in domains) {
         title('You may change the generated code in the '
               'lib/${domain.codeFirstLetterLower} folder.');
-        subTitle('The ${domain.code} domain repo.');
-        print(genRepo(domain, library));
-        subTitle('The ${domain.code} domain.');
+        subTitle('${domain.code} domain');
         print(genDomain(domain, library));
         for (Model model in domain.models) {
-          subTitle('The ${domain.code}.${model.code} model.');
+          subTitle('${domain.code}.${model.code} model');
           print(genModel(model, library));
           for (Concept concept in model.concepts) {
-            subTitle('The ${domain.code}.${model.code}.${concept.code} concept.');
+            subTitle('${domain.code}.${model.code}.${concept.code} concept');
             print(genConcept(concept, library));
           }
         }
       }
 
       for (Domain domain in domains) {
-        title('Library code in the lib folder.');
-        for (Model model in domain.models) {
-          subTitle('Code template for the ${domain.code}.${model.code} '
-          'model library.');
-          print(genDartlingLibrary(model));
-          subTitle('Code template for the ${domain.code}.${model.code} '
-          'model app library.');
-          print(genDartlingLibraryApp(model));
-        }
-      }
-
-      for (Domain domain in domains) {
         title('Specific gen and test code in the test folder.');
         for (Model model in domain.models) {
-          subTitle('Code template for the code generation of the '
-              '${domain.code}.${model.code} model.');
+          subTitle('Code generation of the '
+                   '${domain.code}.${model.code} model');
           print(genDartlingGen(model));
-          subTitle('Code template for the ${domain.code}.${model.code} '
-                   'model tests.');
+          subTitle('${domain.code}.${model.code} model tests');
           print(genDartlingTest(this, model));
         }
       }
@@ -103,8 +101,7 @@ class Repo implements RepoApi {
       for (Domain domain in domains) {
         title('Specific code in the web folder.');
         for (Model model in domain.models) {
-          subTitle('Code template for the '
-              '${domain.code}.${model.code} model web page.');
+          subTitle('${domain.code}.${model.code} model web page');
           print(genDartlingWeb(model));
         }
       }

@@ -35,6 +35,8 @@ library dartling;
 import 'dart:convert';
 import 'dart:math';
 
+part 'repository.dart';
+
 part 'domain/model/event/actions.dart';
 part 'domain/model/event/past.dart';
 part 'domain/model/event/reactions.dart';
@@ -55,6 +57,7 @@ part 'gen/dartling_model_generic.dart';
 part 'gen/dartling_model_specific.dart';
 part 'gen/dartling_domain_generic.dart';
 part 'gen/dartling_domain_specific.dart';
+part 'gen/dartling_repository.dart';
 part 'gen/dartling_test.dart';
 part 'gen/dartling_web.dart';
 
@@ -68,5 +71,5 @@ part 'meta/parents.dart';
 part 'meta/property.dart';
 part 'meta/types.dart';
 
-part 'repository.dart';
+
 

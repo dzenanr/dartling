@@ -13,17 +13,15 @@ String genDartlingGen(Model model) {
        '${model.codeLowerUnderscore}.dart"; \n';
   sc = '${sc} \n';
 
-  sc = '${sc}genCode(${domain.code}Repo ${domain.codeFirstLetterLower}Repo) { \n';
-  sc = '${sc}  ${domain.codeFirstLetterLower}Repo.gen("${domain.codeLowerUnderscore}_'
+  sc = '${sc}genCode(Repository repository) { \n';
+  sc = '${sc}  repository.gen("${domain.codeLowerUnderscore}_'
        '${model.codeLowerUnderscore}"); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
-  sc = '${sc}init${domain.code}Data(${domain.code}Repo '
-       '${domain.codeFirstLetterLower}Repo) { \n';
+  sc = '${sc}initData(Repository repository) { \n';
   sc = '${sc}   var ${domain.codeFirstLetterLower}Domain = '
-       '${domain.codeFirstLetterLower}Repo.'
-       'getDomainModels(${domain.code}); \n';
+       'repository.getDomainModels(${domain.code}); \n';
   sc = '${sc}   var ${model.codeFirstLetterLower}Model = '
        '${domain.codeFirstLetterLower}Domain.'
        'getModelEntries(${model.code}); \n';
@@ -33,10 +31,9 @@ String genDartlingGen(Model model) {
   sc = '${sc} \n';
   
   sc = '${sc}void main() { \n';
-  sc = '${sc}  var ${domain.codeFirstLetterLower}Repo = '
-       'new ${domain.code}Repo(); \n';
-  sc = '${sc}  genCode(${domain.codeFirstLetterLower}Repo); \n';
-  sc = '${sc}  //init${domain.code}Data(${domain.codeFirstLetterLower}Repo); \n';
+  sc = '${sc}  var repository = new Repository(); \n';
+  sc = '${sc}  genCode(repository); \n';
+  sc = '${sc}  //initData(repository); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
@@ -60,13 +57,13 @@ String genDartlingTest(Repo repo, Model model) {
   sc = '${sc} \n';
 
   sc = '${sc}test${domain.code}${model.code}('
-       '${domain.code}Repo repo, String domainCode, String modelCode) { \n';
+       'Repository repository, String domainCode, String modelCode) { \n';
   sc = '${sc}  var domain; \n';
   sc = '${sc}  var session; \n';
   sc = '${sc}  var model; \n';
   sc = '${sc}  group("Testing \${domainCode}.\${modelCode}", () { \n';
   sc = '${sc}    setUp(() { \n';
-  sc = '${sc}      domain = repo.getDomainModels(domainCode); \n';
+  sc = '${sc}      domain = repository.getDomainModels(domainCode); \n';
   sc = '${sc}      session = domain.newSession(); \n';
   sc = '${sc}      model = domain.getModelEntries(modelCode); \n';
   sc = '${sc}      expect(model, isNotNull); \n';
@@ -85,11 +82,8 @@ String genDartlingTest(Repo repo, Model model) {
   sc = '${sc} \n';
 
   sc = '${sc}void main() { \n';
-  sc = '${sc}  var ${domain.codeFirstLetterLower}Repo = '
-       'new ${domain.code}Repo(); \n';
   sc = '${sc}  test${domain.code}${model.code}('
-       '${domain.codeFirstLetterLower}Repo, '
-       '${domain.code}, ${model.code}); \n';
+       'new Repository(), ${domain.code}, ${model.code}); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 

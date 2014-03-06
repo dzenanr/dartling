@@ -1,28 +1,5 @@
 part of dartling;
 
-String genRepository(Domain domain, String library) {
-  var sc = 'part of ${library}; \n';
-  sc = '${sc} \n';
-  sc = '${sc}// lib/gen/${domain.codeLowerUnderscore}/repository.dart \n';
-  sc = '${sc} \n';
-  sc = '${sc}class ${domain.code}Repository extends Repo { \n';
-  sc = '${sc} \n';
-  sc = '${sc}  static const REPOSITORY = "${domain.code}Repository"; \n';
-  sc = '${sc}  static const DOMAIN = "${domain.code}"; \n';
-  sc = '${sc} \n';
-  sc = '${sc}  ${domain.code}Repository([String code=REPOSITORY]) : '
-       'super(code) { \n';
-  sc = '${sc}    var domain = new Domain(DOMAIN); \n';
-  sc = '${sc}    domains.add(domain); \n';
-  sc = '${sc}    add(new ${domain.code}Domain(domain)); \n';
-  sc = '${sc}  } \n';
-  sc = '${sc} \n';
-  sc = '${sc}} \n';
-  sc = '${sc} \n';
-
-  return sc;
-}
-
 String genModels(Domain domain, String library) {
   var sc = 'part of ${library}; \n';
   sc = '${sc} \n';

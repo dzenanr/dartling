@@ -55,8 +55,9 @@ String genDartlingLibrary(Model model) {
 
   sc = '${sc}import "package:dartling/dartling.dart"; \n';
   sc = '${sc} \n';
+  sc = '${sc}part "repository.dart" \n';
+  sc = '${sc} \n';
   
-  sc = '${sc}part "gen/${domain.codeLowerUnderscore}/repository.dart"; \n';
   sc = '${sc}part "gen/${domain.codeLowerUnderscore}/models.dart"; \n';
   sc = '${sc}part "gen/${domain.codeLowerUnderscore}/'
        '${model.codeLowerUnderscore}/entries.dart"; \n';
@@ -66,7 +67,6 @@ String genDartlingLibrary(Model model) {
   } 
   sc = '${sc} \n';
 
-  sc = '${sc}part "${domain.codeLowerUnderscore}/repo.dart"; \n';
   sc = '${sc}part "${domain.codeLowerUnderscore}/domain.dart"; \n';
   sc = '${sc}part "${domain.codeLowerUnderscore}/'
        '${model.codeLowerUnderscore}/model.dart"; \n';
