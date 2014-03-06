@@ -43,8 +43,7 @@ class Repo implements RepoApi {
       _domainModelsMap[domainCode];
 
   gen(String library, [bool specific=true]) {
-    title('Generated code, which you must not change, ',
-          'in the lib/gen folder of the ${code} repository.');
+    title('You should not change the generated code in the lib/gen folder.');
     for (Domain domain in domains) {
       subTitle('The ${domain.code} domain repository.');
       print(genRepository(domain, library));
@@ -60,23 +59,25 @@ class Repo implements RepoApi {
       }
     }
     if (specific) {
-      title('Specific code, which you may change, ',
-            'in the lib folder of the ${code} repository.');
       for (Domain domain in domains) {
+        title('You may change the generated code in the '
+              'lib/${domain.codeFirstLetterLower} folder.');
+        subTitle('The ${domain.code} domain repo.');
+        print(genRepo(domain, library));
+        subTitle('The ${domain.code} domain.');
+        print(genDomain(domain, library));
         for (Model model in domain.models) {
-          subTitle('The initial ${domain.code}.${model.code} model data.');
-          print(genInitDomainModel(model, library));
+          subTitle('The ${domain.code}.${model.code} model.');
+          print(genModel(model, library));
           for (Concept concept in model.concepts) {
-            subTitle('Specific code base, for the '
-                     '${domain.code}.${model.code}.${concept.code} concept.');
+            subTitle('The ${domain.code}.${model.code}.${concept.code} concept.');
             print(genConcept(concept, library));
           }
         }
       }
 
       for (Domain domain in domains) {
-        title('Specific library code ',
-              'in the lib folder of the ${code} repository.');
+        title('Library code in the lib folder.');
         for (Model model in domain.models) {
           subTitle('Code template for the ${domain.code}.${model.code} '
           'model library.');
@@ -88,8 +89,7 @@ class Repo implements RepoApi {
       }
 
       for (Domain domain in domains) {
-        title('Specific gen and test code ',
-              'in the test folder of the ${code} repository.');
+        title('Specific gen and test code in the test folder.');
         for (Model model in domain.models) {
           subTitle('Code template for the code generation of the '
               '${domain.code}.${model.code} model.');
@@ -101,8 +101,7 @@ class Repo implements RepoApi {
       }
 
       for (Domain domain in domains) {
-        title('Specific web code ',
-            'in the web folder of the ${code} repository.');
+        title('Specific code in the web folder.');
         for (Model model in domain.models) {
           subTitle('Code template for the '
               '${domain.code}.${model.code} model web page.');

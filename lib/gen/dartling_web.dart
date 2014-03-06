@@ -11,7 +11,6 @@ String genDartlingWeb(Model model) {
   sc = '${sc}import "dart:html"; \n';
   sc = '${sc} \n';
   sc = '${sc}import "package:dartling_default_app/dartling_default_app.dart"; \n';
-  sc = '${sc} \n';
   sc = '${sc}import "package:${domain.codeLowerUnderscore}_'
        '${model.codeLowerUnderscore}/${domain.codeLowerUnderscore}_'
        '${model.codeLowerUnderscore}.dart"; \n';
@@ -19,18 +18,14 @@ String genDartlingWeb(Model model) {
 
   sc = '${sc}init${domain.code}Data(${domain.code}Repo '
        '${domain.codeFirstLetterLower}Repo) { \n';
-  sc = '${sc}   var ${domain.codeFirstLetterLower}Models = \n';
-  sc = '${sc}       ${domain.codeFirstLetterLower}Repo.'
-       'getDomainModels(${domain.code}Repo.'
-       '${domain.codeFirstLetterLower}DomainCode); \n';
-  sc = '${sc} \n';
-  sc = '${sc}   var ${domain.codeFirstLetterLower}${model.code}Entries = \n';
-  sc = '${sc}       ${domain.codeFirstLetterLower}Models.'
-       'getModelEntries(${domain.code}Repo.${domain.codeFirstLetterLower}'
-       '${model.code}ModelCode); \n';
-  sc = '${sc}   init${domain.code}${model.code}('
-       '${domain.codeFirstLetterLower}${model.code}Entries); \n';
-  sc = '${sc}   ${domain.codeFirstLetterLower}${model.code}Entries.display(); \n';
+  sc = '${sc}   var ${domain.codeFirstLetterLower}Domain = '
+       '${domain.codeFirstLetterLower}Repo.'
+       'getDomainModels(${domain.code}); \n';
+  sc = '${sc}   var ${model.codeFirstLetterLower}Model = '
+       '${domain.codeFirstLetterLower}Domain.'
+       'getModelEntries(${model.code}); \n';
+  sc = '${sc}   ${model.codeFirstLetterLower}Model.init(); \n';
+  sc = '${sc}   //${model.codeFirstLetterLower}Model.display(); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 

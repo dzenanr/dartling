@@ -49,11 +49,12 @@ part 'domain/model/oid.dart';
 part 'domain/models.dart';
 part 'domain/session.dart';
 
-part 'gen/dartling_gen.dart';
 part 'gen/dartling_library.dart';
 part 'gen/dartling_library_app.dart';
 part 'gen/dartling_model_generic.dart';
 part 'gen/dartling_model_specific.dart';
+part 'gen/dartling_domain_generic.dart';
+part 'gen/dartling_domain_specific.dart';
 part 'gen/dartling_test.dart';
 part 'gen/dartling_web.dart';
 

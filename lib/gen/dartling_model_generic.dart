@@ -1,72 +1,5 @@
 part of dartling;
 
-String genRepository(Domain domain, String library) {
-  var sc = 'part of ${library}; \n';
-  sc = '${sc} \n';
-  sc = '${sc}// lib/gen/${domain.codeLowerUnderscore}/repository.dart \n';
-  sc = '${sc} \n';
-  sc = '${sc}class ${domain.code}Repo extends Repo { \n';
-  sc = '${sc} \n';
-  sc = '${sc}  static final ${domain.codeFirstLetterLower}DomainCode = '
-       '"${domain.code}"; \n';
-  for (Model model in domain.models) {
-    sc = '${sc}  static final ${domain.codeFirstLetterLower}'
-         '${model.code}ModelCode = "${model.code}"; \n';
-  }
-  sc = '${sc} \n';
-  sc = '${sc}  ${domain.code}Repo([String code="${domain.code}Repo"]) : '
-       'super(code) { \n';
-  sc = '${sc}    _init${domain.code}Domain(); \n';
-  sc = '${sc}  } \n';
-  sc = '${sc} \n';
-
-  sc = '${sc}  _init${domain.code}Domain() { \n';
-  sc = '${sc}    var ${domain.codeFirstLetterLower}Domain = '
-       'new Domain(${domain.codeFirstLetterLower}DomainCode); \n';
-  sc = '${sc}    domains.add(${domain.codeFirstLetterLower}Domain); \n';
-  sc = '${sc}    add(new ${domain.code}Models('
-       '${domain.codeFirstLetterLower}Domain)); \n';
-  sc = '${sc}  } \n';
-
-  sc = '${sc} \n';
-  sc = '${sc}} \n';
-  sc = '${sc} \n';
-
-  return sc;
-}
-
-String genModels(Domain domain, String library) {
-  var sc = 'part of ${library}; \n';
-  sc = '${sc} \n';
-  sc = '${sc}// lib/gen/${domain.codeLowerUnderscore}/models.dart \n';
-  sc = '${sc} \n';
-  sc = '${sc}class ${domain.code}Models extends DomainModels { \n';
-  sc = '${sc} \n';
-  sc = '${sc}  ${domain.code}Models(Domain domain) : super(domain) { \n';
-  for (Model model in domain.models) {
-    sc = '${sc}    add(fromJsonTo${model.code}Entries()); \n';
-  }
-  sc = '${sc}  } \n';
-  sc = '${sc} \n';
-
-  for (Model model in domain.models) {
-    sc = '${sc}  ${model.code}Entries fromJsonTo${model.code}Entries() { \n';
-    sc = '${sc}    return new ${model.code}Entries(fromJsonToModel( \n';
-    sc = '${sc}      ${domain.codeFirstLetterLower}${model.code}ModelJson, \n';
-    sc = '${sc}      domain, \n';
-    sc = '${sc}      ${domain.code}Repo.${domain.codeFirstLetterLower}'
-         '${model.code}ModelCode)); \n';
-    sc = '${sc}  } \n';
-    sc = '${sc} \n';
-  }
-
-  sc = '${sc}} \n';
-  sc = '${sc} \n';
-
-  return sc;
-}
-
-
 String genEntries(Model model, String library) {
   Domain domain = model.domain;
 
@@ -81,10 +14,8 @@ String genEntries(Model model, String library) {
   sc = '${sc} \n';
   sc = '${sc}  Map<String, Entities> newEntries() { \n';
   sc = '${sc}    var entries = new Map<String, Entities>(); \n';
-  sc = '${sc}    var concept; \n';
   for (Concept entryConcept in model.entryConcepts) {
-    var concept = model.concepts.singleWhereCode('Project');
-    sc = '${sc}    concept = model.concepts.singleWhereCode('
+    sc = '${sc}    var concept = model.concepts.singleWhereCode('
          '"${entryConcept.code}"); \n';
     sc = '${sc}    entries["${entryConcept.code}"] = '
          'new ${entryConcept.codes}(concept); \n';
@@ -104,7 +35,7 @@ String genEntries(Model model, String library) {
     sc = '${sc}      return new ${concept.codes}(concept); \n';
     sc = '${sc}    } \n';
   }
-  sc = '${sc}  return null; \n';
+  sc = '${sc}    return null; \n';
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 
@@ -119,12 +50,7 @@ String genEntries(Model model, String library) {
     sc = '${sc}      return new ${concept.code}(concept); \n';
     sc = '${sc}    } \n';
   }
-  sc = '${sc}  return null; \n';
-  sc = '${sc}  } \n';
-  sc = '${sc} \n';
-
-  sc = '${sc}  fromJsonToData() { \n';
-  sc = '${sc}    fromJson(${domain.codeFirstLetterLower}${model.code}DataJson); \n';
+  sc = '${sc}    return null; \n';
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 

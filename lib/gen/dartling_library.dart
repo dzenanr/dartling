@@ -56,14 +56,16 @@ String genDartlingLibrary(Model model) {
   sc = '${sc}import "package:dartling/dartling.dart"; \n';
   sc = '${sc} \n';
 
+  sc = '${sc}part "${domain.codeLowerUnderscore}/repository.dart"; \n';
+  sc = '${sc}part "${domain.codeLowerUnderscore}/domain.dart"; \n';
+  sc = '${sc}part "${domain.codeLowerUnderscore}/'
+       '${model.codeLowerUnderscore}/model.dart"; \n';
+  sc = '${sc} \n';
+  
   sc = '${sc}part "${domain.codeLowerUnderscore}/'
        '${model.codeLowerUnderscore}/json/data.dart"; \n';
   sc = '${sc}part "${domain.codeLowerUnderscore}/'
        '${model.codeLowerUnderscore}/json/model.dart"; \n';
-  sc = '${sc} \n';
-
-  sc = '${sc}part "${domain.codeLowerUnderscore}/'
-       '${model.codeLowerUnderscore}/init.dart"; \n';
   sc = '${sc} \n';
 
   for (Concept concept in model.concepts) {
@@ -83,7 +85,7 @@ String genDartlingLibrary(Model model) {
   sc = '${sc}part "gen/${domain.codeLowerUnderscore}/'
        'models.dart"; \n';
   sc = '${sc}part "gen/${domain.codeLowerUnderscore}/'
-       'repository.dart"; \n';
+       'repo.dart"; \n';
   sc = '${sc} \n';
 
   return sc;

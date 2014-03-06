@@ -1,62 +1,89 @@
 part of dartling;
 
-String genInitDomainModel(Model model, String library) {
+String genModel(Model model, String library) {
   Domain domain = model.domain;
 
-  var sc = '';
+  var sc = ' \n';
   sc = '${sc}part of ${library}; \n';
   sc = '${sc} \n';
   sc = '${sc}// lib/${domain.codeLowerUnderscore}/'
-       '${model.codeLowerUnderscore}/init.dart \n';
+       '${model.codeLowerUnderscore}/model.dart \n';
   sc = '${sc} \n';
-  sc = '${sc}init${domain.code}${model.code}(var entries) { \n';
+  sc = '${sc}class ${model.code}Model extends ${model.code}Entries { \n';
+  sc = '${sc} \n';
+  sc = '${sc}  ${model.code}Model(Model model) : super(model); \n';
+  sc = '${sc} \n';
   for (Concept entryConcept in model.entryConcepts) {
-    sc = '${sc}  _init${entryConcept.codes}(entries); \n';
+    sc = '${sc}  fromJsonTo${entryConcept.code}Entry() { \n';
+    sc = '${sc}    fromJson(${domain.codeFirstLetterLower}${model.code}'
+         '${entryConcept.code}Entry) { \n';
+    sc = '${sc}  } \n';
+    sc = '${sc} \n';
   }
-  sc = '${sc}} \n';
+  
+  sc = '${sc}  Map<String, String> fromModelToJson() { \n';
+  sc = '${sc}    var jsonEntries = new Map<String, String>(); \n';  
+  for (Concept entryConcept in model.entryConcepts) {
+    sc = '${sc}    jsonEntries["${entryConcept.code}"] = '
+         'toJson("${entryConcept.code}"); \n';
+  }
+  sc = '${sc}    return jsonEntries; \n';
+  sc = '${sc}  } \n';
   sc = '${sc} \n';
 
+  sc = '${sc}  fromJsonToModel(Map<String, String> jsonEntries) { \n';
+  sc = '${sc}    var jsonEntries = new Map<String, String>(); \n';  
   for (Concept entryConcept in model.entryConcepts) {
-    sc = '${sc}_init${entryConcept.codes}(var entries) { \n';
+    sc = '${sc}    String ${entryConcept.codeFirstLetterLower}Entry = '
+         'jsonEntries["${entryConcept.code}"]; \n';
+    sc = '${sc}    fromJson(${entryConcept.codeFirstLetterLower}Entry); \n';
+  }
+  sc = '${sc}  } \n';
+  sc = '${sc} \n';
+  
+  sc = '${sc}  init() { \n';
+  for (Concept entryConcept in model.entryConcepts) {
     for (var i = 0; i < 10; i++) {
       if (i == 0) {
-        sc = '${sc}  ${entryConcept.code} ${entryConcept.codeFirstLetterLower} = ';
+        sc = '${sc}    ${entryConcept.code} ${entryConcept.codeFirstLetterLower} = ';
       } else {
-        sc = '${sc}  ${entryConcept.codeFirstLetterLower} = ';
+        sc = '${sc}    ${entryConcept.codeFirstLetterLower} = ';
       }
       sc = '${sc}new ${entryConcept.code}';
-      sc = '${sc}(entries.${entryConcept.codesFirstLetterLower}.concept); \n';
+      sc = '${sc}(${entryConcept.codesFirstLetterLower}.concept); \n';
       for (Attribute attribute in entryConcept.attributes) {
         if (attribute.type.code == 'String') {
-          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
           sc = '${sc}"value${i}"; \n';
         } else if (attribute.type.code == 'num') {
-          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
           sc = '${sc}${randomNum(1000)}; \n';
         } else if (attribute.type.code == 'int') {
-          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
           sc = '${sc}${randomInt(10000)}; \n';
         } else if (attribute.type.code == 'double') {
-          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
           sc = '${sc}${randomDouble(100)}; \n';
         } else if (attribute.type.code == 'bool') {
-          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
           sc = '${sc}${randomBool()}; \n';
         } else if (attribute.type.code == 'DateTime') {
-          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
           sc = '${sc}new DateTime.now(); \n';
         } else if (attribute.type.code == 'Uri') {
-          sc = '  ${sc}  ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
+          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
           sc = '${sc}Uri.parse("${randomUriString()}"); \n';
         }
       }
-      sc = '${sc}  entries.${entryConcept.codesFirstLetterLower}.';
+      sc = '${sc}    ${entryConcept.codesFirstLetterLower}.';
       sc = '${sc}add(${entryConcept.codeFirstLetterLower}); \n';
       sc = '${sc} \n';
     }
-    sc = '${sc}} \n';
+    sc = '${sc}  } \n';
     sc = '${sc} \n';
-  }
+  }  
+  sc = '${sc}} \n';
+  sc = '${sc} \n';
 
   return sc;
 }
