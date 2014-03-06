@@ -4,6 +4,7 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.0* 2014-03-05
 
++ update code gen (specific repo, domain and model; model entry json)
 + remove displayJson() in generated code
 + in addition to String, num and DateTime attribute ids,
   you can order on Uri and bool attribute ids
