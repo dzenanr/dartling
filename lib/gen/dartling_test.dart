@@ -212,11 +212,11 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}      expect(copied${Entities}.length, '
        'equals(${entities}.length)); \n';
   sc = '${sc}      expect(copied${Entities}, isNot(same(${entities}))); \n';
-  sc = '${sc}      copied${Entities}.forEach((e) => expect(e, '
-       'equals(${entities}.singleWhereOid(e.oid)))); \n';
+  sc = '${sc}      copied${Entities}.forEach((e) => \n';
+  sc = '${sc}        expect(e, equals(${entities}.singleWhereOid(e.oid)))); \n';
   if (entryConcept.identifier) {
-    sc = '${sc}      copied${Entities}.forEach((e) => expect(e, '
-         'isNot(same(${entities}.singleWhereId(e.id))))); \n';    
+    sc = '${sc}      copied${Entities}.forEach((e) => \n';
+    sc = '${sc}        expect(e, isNot(same(${entities}.singleWhereId(e.id))))); \n';    
   }
   sc = '${sc} \n';
   sc = '${sc}      copied${Entities}.display(title: "Copy ${entities}"); \n';
@@ -228,6 +228,16 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   } else {
     sc = '${sc}      // no required attribute that is not an id \n';
   }
+  sc = '${sc}    }); \n';
+  
+  sc = '${sc}    test("Random ${entity}", () { \n';
+  sc = '${sc}      var ${entity}1 = ${entities}.random(); \n';
+  sc = '${sc}      expect(${entity}1, isNotNull); \n';
+  sc = '${sc}      var ${entity}2 = ${entities}.random(); \n';
+  sc = '${sc}      expect(${entity}2, isNotNull); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      ${entity}1.display(prefix: "1"); \n';
+  sc = '${sc}      ${entity}2.display(prefix: "2"); \n';
   sc = '${sc}    }); \n';
   
   sc = '${sc} \n';

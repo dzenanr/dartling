@@ -31,8 +31,7 @@ String genModel(Model model, String library) {
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 
-  sc = '${sc}  fromJsonToModel(Map<String, String> jsonEntries) { \n';
-  sc = '${sc}    var jsonEntries = new Map<String, String>(); \n';  
+  sc = '${sc}  fromJsonToModel(Map<String, String> jsonEntries) { \n';  
   for (Concept entryConcept in model.entryConcepts) {
     sc = '${sc}    String ${entryConcept.codeFirstLetterLower}Entry = '
          'jsonEntries["${entryConcept.code}"]; \n';
@@ -41,9 +40,16 @@ String genModel(Model model, String library) {
   sc = '${sc}  } \n';
   sc = '${sc} \n';
   var init = _init(model);
-  sc = '${sc} ${init} \n'; 
+  sc = '${sc} ${init} \n';
+
+  sc = '${sc}  // added after code gen - begin \n';
+  sc = '${sc} \n';
+  sc = '${sc}  // added after code gen - end \n';  
+  sc = '${sc} \n';
+  
   sc = '${sc}} \n';
   sc = '${sc} \n';
+  
   return sc;
 }
 

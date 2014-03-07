@@ -9,6 +9,12 @@ String genDomain(Domain domain, String library) {
   sc = '${sc} \n';
   sc = '${sc}  ${domain.code}Domain(Domain domain) : super(domain); \n';
   sc = '${sc} \n';
+  
+  sc = '${sc}  // added after code gen - begin \n';
+  sc = '${sc} \n';
+  sc = '${sc}  // added after code gen - end \n';  
+  sc = '${sc} \n';
+  
   sc = '${sc}} \n';
   sc = '${sc} \n';
 

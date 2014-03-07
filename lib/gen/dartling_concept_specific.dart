@@ -52,6 +52,11 @@ String genConcept(Concept concept, String library) {
     sc = '${sc} \n';
   }
 
+  sc = '${sc}  // added after code gen - begin \n';
+  sc = '${sc} \n';
+  sc = '${sc}  // added after code gen - end \n';  
+  sc = '${sc} \n';
+  
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
@@ -59,6 +64,12 @@ String genConcept(Concept concept, String library) {
   sc = '${sc} \n';
   sc = '${sc}  ${concept.codes}(Concept concept) : super(concept); \n';
   sc = '${sc} \n';
+  
+  sc = '${sc}  // added after code gen - begin \n';
+  sc = '${sc} \n';
+  sc = '${sc}  // added after code gen - end \n';  
+  sc = '${sc} \n';
+  
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
