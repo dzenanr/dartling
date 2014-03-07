@@ -18,10 +18,10 @@ String genDartlingWeb(Model model) {
 
   sc = '${sc}initData(Repository repository) { \n';
   sc = '${sc}   var ${domain.codeFirstLetterLower}Domain = '
-       'repository.getDomainModels(${domain.code}); \n';
+       'repository.getDomainModels("${domain.code}"); \n';
   sc = '${sc}   var ${model.codeFirstLetterLower}Model = '
        '${domain.codeFirstLetterLower}Domain.'
-       'getModelEntries(${model.code}); \n';
+       'getModelEntries("${model.code}"); \n';
   sc = '${sc}   ${model.codeFirstLetterLower}Model.init(); \n';
   sc = '${sc}   //${model.codeFirstLetterLower}Model.display(); \n';
   sc = '${sc}} \n';

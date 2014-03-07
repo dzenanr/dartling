@@ -11,7 +11,7 @@ String genRepository(Repo repo, String library) {
   sc = '${sc} \n';
   sc = '${sc}  Repository([String code=REPOSITORY]) : super(code) { \n';
   for (Domain domain in repo.domains) {
-    sc = '${sc}    var domain = new Domain(${domain.code}); \n';
+    sc = '${sc}    var domain = new Domain("${domain.code}"); \n';
     sc = '${sc}    domains.add(domain); \n';
     sc = '${sc}    add(new ${domain.code}Domain(domain)); \n';
     sc = '${sc} \n';

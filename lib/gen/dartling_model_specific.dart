@@ -16,7 +16,7 @@ String genModel(Model model, String library) {
   for (Concept entryConcept in model.entryConcepts) {
     sc = '${sc}  fromJsonTo${entryConcept.code}Entry() { \n';
     sc = '${sc}    fromJson(${domain.codeFirstLetterLower}${model.code}'
-         '${entryConcept.code}Entry) { \n';
+         '${entryConcept.code}Entry); \n';
     sc = '${sc}  } \n';
     sc = '${sc} \n';
   }
@@ -72,7 +72,8 @@ String createEntitiesRandomly(Concept concept, int count, [String parent='']) {
     String entities = '${concept.codesFirstLetterLower}';
     sc = '${sc}    var ${entity} = new ${concept.code}('   
          '${concept.codeFirstLetterLower}Concept); \n';
-    var attributesSet = setAttributesRandomly(concept, entity, i.toString());
+    //var attributesSet = setAttributesRandomly(concept, entity, i.toString());
+    var attributesSet = setAttributesRandomly(concept, entity);
     sc = '${sc}${attributesSet}';
     if (parent == '') {
       sc = '${sc}    ${entities}.add(${entity}); \n';     
@@ -96,11 +97,15 @@ String createEntitiesRandomly(Concept concept, int count, [String parent='']) {
   return sc;
 }
 
-String setAttributesRandomly(Concept concept, String entity, String end) {
+String setAttributesRandomly(Concept concept, String entity, [String end='']) {
   var sc = '';
   for (Attribute attribute in concept.attributes) {
     if (attribute.type.code == 'String') {
-      sc = '${sc}    ${entity}.${attribute.code} = "value${end}"; \n';
+      if (end == '') {
+        sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
+      } else {
+        sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}${end}"; \n';
+      }
     } else if (attribute.type.code == 'num') {
       sc = '${sc}    ${entity}.${attribute.code} = ${randomNum(1000)}; \n';
     } else if (attribute.type.code == 'int') {
@@ -144,9 +149,46 @@ randomSign() {
   return result;
 }
 
+randomWord() => randomListElement(wordList);
+
 randomUriString() => randomListElement(uriList);
 
 randomListElement(List list) => list[randomInt(list.length - 1)];
+
+var wordList = [
+  'home', 'train', 'holiday', 'cup', 'coffee', 'cream', 'architecture', 'judge',
+  'wife', 'ship', 'ocean', 'fish', 'drink', 'beer', 'software', 'pattern',
+  'children', 'plate', 'room', 'milk', 'lunch', 'dinner', 'web', 'service',
+  'body', 'money', 'smog', 'guest', 'cinema', 'series', 'wave', 'river',
+  'nothingness', 'hot', 'small', 'instruction', 'cloud', 'consulting', 'beach',
+  'place', 'big', 'tall', 'teaching', 'ball', 'circle', 'explanation', 'music',
+  'kids', 'month', 'time', 'line', 'horse', 'abstract', 'revolution', 'college',
+  'concern', 'house', 'tent', 'paper', 'letter', 'hospital', 'debt', 'undo',
+  'family', 'car', 'auto', 'restaurant', 'present', 'parfem', 'bank', 'redo',
+  'fascination', 'truck', 'blue', 'accident', 'policeman', 'advisor', 'interest',
+  'authority', 'park', 'city', 'craving', 'accomodation', 'account', 'do',
+  'school', 'country', 'call', 'cabinet', 'element', 'call', 'center', 'selfdo',
+  'teacher', 'message', 'text', 'job', 'table', 'tape', 'price', 'discount',
+  'marriage', 'word', 'tag', 'saving', 'cable', 'sand', 'darts', 'autobus',
+  'feeling', 'tree', 'flower', 'employer', 'understanding', 'camping', 'pub',
+  'heaven', 'beans', 'rice', 'effort', 'umbrella', 'distance', 'mile', 'selfie',
+  'hell', 'brad', 'water', 'taxi', 'season', 'seed', 'brave', 'meter', 'done',
+  'void', 'yellow', 'lake', 'energy', 'tax', 'heating', 'crisis', 'measuremewnt',
+  'point', 'deep', 'corner', 'hunting', 'dog', 'sailing', 'beginning', 'agile',
+  'slate', 'wheat', 'pencil', 'enquiry', 'salad', 'salary', 'vacation', '',
+  'baby', 'computer', 'algorithm', 'edition', 'television', 'highway', 'winter',
+  'life', 'performance', 'productivity', 'economy', 'tension', 'health', 'top',
+  'knowledge', 'picture', 'photo', 'entertainment', 'team', 'capacity', 'notch',
+  'walking', 'phone', 'bird', 'oil', 'organization', 'election', 'grading',
+  'mind', 'boat', 'question', 'electronic', 'entrance', 'head', 'privacy',
+  'finger', 'answer', 'sentence', 'candy', 'output', 'hat', 'security', 'ticket',
+  'vessel', 'book', 'message', 'navigation', 'cash', 'office', 'east', 'unit',
+  'consciousness', 'video', 'email', 'observation', 'objective', 'chemist', 'up',
+  'girl', 'agreement', 'training', 'test', 'opinion', 'offence', 'down', 'test',
+  'time', 'course', 'school', 'hall', 'celebration', 'thing', 'left', 'future',
+  'universe', 'university', 'professor', 'cardboard', 'dvd', 'theme', 'right',
+  'lifespan', 'sun', 'sin', 'chairman', 'executive', 'secretary', 'end', 'now'
+];
 
 var uriList = [
 'http://www.useit.com/alertbox/articles-not-blogs.html',

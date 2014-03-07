@@ -21,10 +21,10 @@ String genDartlingGen(Model model) {
 
   sc = '${sc}initData(Repository repository) { \n';
   sc = '${sc}   var ${domain.codeFirstLetterLower}Domain = '
-       'repository.getDomainModels(${domain.code}); \n';
+       'repository.getDomainModels("${domain.code}"); \n';
   sc = '${sc}   var ${model.codeFirstLetterLower}Model = '
        '${domain.codeFirstLetterLower}Domain.'
-       'getModelEntries(${model.code}); \n';
+       'getModelEntries("${model.code}"); \n';
   sc = '${sc}   ${model.codeFirstLetterLower}Model.init(); \n';
   sc = '${sc}   //${model.codeFirstLetterLower}Model.display(); \n';
   sc = '${sc}} \n';
@@ -51,14 +51,14 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc} \n';
 
   sc = '${sc}import "package:unittest/unittest.dart"; \n';
-  sc = '${sc}import "package:dartling/dartling.dart"; \n';
+  sc = '${sc}//import "package:dartling/dartling.dart"; \n';
   sc = '${sc}import "package:${domain.codeLowerUnderscore}_'
        '${model.codeLowerUnderscore}/${domain.codeLowerUnderscore}_'
        '${model.codeLowerUnderscore}.dart"; \n';
   sc = '${sc} \n';
 
-  sc = '${sc}test${domain.code}${model.code}('
-       'Repository repository, String domainCode, String modelCode) { \n';
+  sc = '${sc}test${domain.code}${model.code}${entryConcept.code}( \n';
+  sc = '${sc}    Repository repository, String domainCode, String modelCode) { \n';
   sc = '${sc}  var domain; \n';
   sc = '${sc}  var session; \n';
   sc = '${sc}  var model; \n';
@@ -237,7 +237,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
 
   sc = '${sc}void main() { \n';
   sc = '${sc}  test${domain.code}${model.code}${entryConcept.code}('
-       'new Repository(), ${domain.code}, ${model.code}); \n';
+       'new Repository(), "${domain.code}", "${model.code}"); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
   return sc;
