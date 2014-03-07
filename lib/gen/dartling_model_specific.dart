@@ -71,19 +71,21 @@ String _init(Model model) {
   return sc;
 }
 
-String createEntitiesRandomly(Concept concept, int count, [String parent='']) {
+String createEntitiesRandomly(Concept concept, int count, [Concept parentConcept, String parent='']) {
   var sc = '';
   for (var i = 1; i < count + 1; i++) {
     String entity = '${parent}${concept.codeFirstLetterLower}${i}';
     String entities = '${concept.codesFirstLetterLower}';
     sc = '${sc}    var ${entity} = new ${concept.code}('   
          '${concept.codeFirstLetterLower}Concept); \n';
-    //var attributesSet = setAttributesRandomly(concept, entity, i.toString());
     var attributesSet = setAttributesRandomly(concept, entity);
     sc = '${sc}${attributesSet}';
+    
     if (parent == '') {
       sc = '${sc}    ${entities}.add(${entity}); \n';     
     } else {
+      sc = '${sc}    ${entity}.${parentConcept.codeFirstLetterLower} = '
+           '${parent}; \n'; 
       sc = '${sc}    ${parent}.${entities}.add(${entity}); \n';    
     }
     sc = '${sc} \n';
@@ -95,7 +97,8 @@ String createEntitiesRandomly(Concept concept, int count, [String parent='']) {
                '${entity}.${child.code}.concept; \n';
           sc = '${sc} \n';            
         }
-        var entitiesCreated = createEntitiesRandomly(childConcept, 2, entity);
+        var entitiesCreated = 
+            createEntitiesRandomly(childConcept, 2, concept, entity);
         sc = '${sc}${entitiesCreated}';
       }
     } // for child
