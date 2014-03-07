@@ -40,114 +40,82 @@ String genModel(Model model, String library) {
   }
   sc = '${sc}  } \n';
   sc = '${sc} \n';
-  
-  sc = '${sc}  init() { \n';
-  for (Concept entryConcept in model.entryConcepts) {
-    for (var i = 0; i < 10; i++) {
-      if (i == 0) {
-        sc = '${sc}    ${entryConcept.code} ${entryConcept.codeFirstLetterLower} = ';
-      } else {
-        sc = '${sc}    ${entryConcept.codeFirstLetterLower} = ';
-      }
-      sc = '${sc}new ${entryConcept.code}';
-      sc = '${sc}(${entryConcept.codesFirstLetterLower}.concept); \n';
-      for (Attribute attribute in entryConcept.attributes) {
-        if (attribute.type.code == 'String') {
-          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
-          sc = '${sc}"value${i}"; \n';
-        } else if (attribute.type.code == 'num') {
-          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
-          sc = '${sc}${randomNum(1000)}; \n';
-        } else if (attribute.type.code == 'int') {
-          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
-          sc = '${sc}${randomInt(10000)}; \n';
-        } else if (attribute.type.code == 'double') {
-          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
-          sc = '${sc}${randomDouble(100)}; \n';
-        } else if (attribute.type.code == 'bool') {
-          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
-          sc = '${sc}${randomBool()}; \n';
-        } else if (attribute.type.code == 'DateTime') {
-          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
-          sc = '${sc}new DateTime.now(); \n';
-        } else if (attribute.type.code == 'Uri') {
-          sc = '${sc}    ${entryConcept.codeFirstLetterLower}.${attribute.code} = ';
-          sc = '${sc}Uri.parse("${randomUriString()}"); \n';
-        }
-      }
-      sc = '${sc}    ${entryConcept.codesFirstLetterLower}.';
-      sc = '${sc}add(${entryConcept.codeFirstLetterLower}); \n';
-      sc = '${sc} \n';
-    }
-  }  
+  var init = _init(model);
+  sc = '${sc} ${init} \n'; 
   sc = '${sc}} \n';
   sc = '${sc} \n';
-
   return sc;
 }
 
-String genConcept(Concept concept, String library) {
-  Model model = concept.model;
-  Domain domain = model.domain;
-
-  var sc = 'part of ${library}; \n';
-  sc = '${sc} \n';
-  sc = '${sc}// lib/${domain.codeLowerUnderscore}/'
-       '${model.codeLowerUnderscore}/${concept.codesLowerUnderscore}.dart \n';
-  sc = '${sc} \n';
-  sc = '${sc}class ${concept.code} extends ${concept.code}Gen { \n';
-  sc = '${sc} \n';
-  sc = '${sc}  ${concept.code}(Concept concept) : super(concept); \n';
-  sc = '${sc} \n';
-
-  Id id = concept.id;
-  if (id.length > 0) {
-    sc = '${sc}  ${concept.code}.withId(Concept concept';
-    if (id.parentLength > 0) {
-      for (Parent parent in concept.parents) {
-        if (parent.identifier) {
-          Concept destinationConcept = parent.destinationConcept;
-          sc = '${sc}, ${destinationConcept.code} ${parent.code}';
-        }
-      }
-    }
-    if (id.attributeLength > 0) {
-      for (Attribute attribute in concept.attributes) {
-        if (attribute.identifier) {
-          sc = '${sc}, ${attribute.type.base} ${attribute.code}';
-        }
-      }
-    }
-    sc = '${sc}) : \n';
-    sc = '${sc}    super.withId(concept';
-    if (id.parentLength > 0) {
-      for (Parent parent in concept.parents) {
-        if (parent.identifier) {
-          sc = '${sc}, ${parent.code}';
-        }
-      }
-    }
-    if (id.attributeLength > 0) {
-      for (Attribute attribute in concept.attributes) {
-        if (attribute.identifier) {
-          sc = '${sc}, ${attribute.code}';
-        }
-      }
-    }
-    sc = '${sc}); \n';
+String _init(Model model) {
+  var sc = ' \n';
+  sc = '${sc}  init() { \n';
+  for (Concept entryConcept in model.entryConcepts) {
+    sc = '${sc}    // =============================== \n';
+    sc = '${sc}    // ${entryConcept.code} entry      \n';
+    sc = '${sc}    // =============================== \n';
+    sc = '${sc}    var ${entryConcept.codeFirstLetterLower}Concept = '
+         '${entryConcept.codesFirstLetterLower}.concept; \n';
     sc = '${sc} \n';
+    var entitiesCreated = createEntitiesRandomly(entryConcept, 3);
+    sc = '${sc}${entitiesCreated}';
   }
+  sc = '${sc}  } \n';
+  sc = '${sc} \n';   
+  return sc;
+}
 
-  sc = '${sc}} \n';
-  sc = '${sc} \n';
+String createEntitiesRandomly(Concept concept, int count, [String parent='']) {
+  var sc = '';
+  for (var i = 1; i < count + 1; i++) {
+    String entity = '${parent}${concept.codeFirstLetterLower}${i}';
+    String entities = '${concept.codesFirstLetterLower}';
+    sc = '${sc}    var ${entity} = new ${concept.code}('   
+         '${concept.codeFirstLetterLower}Concept); \n';
+    var attributesSet = setAttributesRandomly(concept, entity, i.toString());
+    sc = '${sc}${attributesSet}';
+    if (parent == '') {
+      sc = '${sc}    ${entities}.add(${entity}); \n';     
+    } else {
+      sc = '${sc}    ${parent}.${entities}.add(${entity}); \n';    
+    }
+    sc = '${sc} \n';
+    for (Child child in concept.children) {
+      if (child.internal) {
+        Concept childConcept = child.destinationConcept;
+        if (i == 1) {
+          sc = '${sc}    var ${childConcept.codeFirstLetterLower}Concept = '
+               '${entity}.${child.code}.concept; \n';
+          sc = '${sc} \n';            
+        }
+        var entitiesCreated = createEntitiesRandomly(childConcept, 2, entity);
+        sc = '${sc}${entitiesCreated}';
+      }
+    } // for child
+  } // for var  
+  return sc;
+}
 
-  sc = '${sc}class ${concept.codes} extends ${concept.codes}Gen { \n';
-  sc = '${sc} \n';
-  sc = '${sc}  ${concept.codes}(Concept concept) : super(concept); \n';
-  sc = '${sc} \n';
-  sc = '${sc}} \n';
-  sc = '${sc} \n';
-
+String setAttributesRandomly(Concept concept, String entity, String end) {
+  var sc = '';
+  for (Attribute attribute in concept.attributes) {
+    if (attribute.type.code == 'String') {
+      sc = '${sc}    ${entity}.${attribute.code} = "value${end}"; \n';
+    } else if (attribute.type.code == 'num') {
+      sc = '${sc}    ${entity}.${attribute.code} = ${randomNum(1000)}; \n';
+    } else if (attribute.type.code == 'int') {
+      sc = '${sc}    ${entity}.${attribute.code} = ${randomInt(10000)}; \n';
+    } else if (attribute.type.code == 'double') {
+      sc = '${sc}    ${entity}.${attribute.code} = ${randomDouble(100)}; \n';
+    } else if (attribute.type.code == 'bool') {
+      sc = '${sc}    ${entity}.${attribute.code} = ${randomBool()}; \n';
+    } else if (attribute.type.code == 'DateTime') {
+      sc = '${sc}    ${entity}.${attribute.code} = new DateTime.now(); \n';
+    } else if (attribute.type.code == 'Uri') {
+      sc = '${sc}    ${entity}.'
+           '${attribute.code} = Uri.parse("${randomUriString()}"); \n';
+    }
+  }
   return sc;
 }
 

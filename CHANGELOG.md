@@ -2,8 +2,11 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-03-05
+*2.0.0* 2014-03-07
 
++ generate mutiple tests per entry concept
++ generate a test file per entry concept
++ generate model init with internal children
 + update code gen (specific repo, domain and model; model entry json)
 + remove displayJson() in generated code
 + in addition to String, num and DateTime attribute ids,

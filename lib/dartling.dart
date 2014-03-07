@@ -37,6 +37,18 @@ import 'dart:math';
 
 part 'repository.dart';
 
+part 'gen/dartling_repository.dart';
+part 'gen/dartling_library.dart';
+part 'gen/dartling_library_app.dart';
+part 'gen/dartling_domain_generic.dart';
+part 'gen/dartling_domain_specific.dart';
+part 'gen/dartling_model_generic.dart';
+part 'gen/dartling_model_specific.dart';
+part 'gen/dartling_concept_generic.dart';
+part 'gen/dartling_concept_specific.dart';
+part 'gen/dartling_test.dart';
+part 'gen/dartling_web.dart';
+
 part 'domain/model/event/actions.dart';
 part 'domain/model/event/past.dart';
 part 'domain/model/event/reactions.dart';
@@ -50,16 +62,6 @@ part 'domain/model/id.dart';
 part 'domain/model/oid.dart';
 part 'domain/models.dart';
 part 'domain/session.dart';
-
-part 'gen/dartling_library.dart';
-part 'gen/dartling_library_app.dart';
-part 'gen/dartling_model_generic.dart';
-part 'gen/dartling_model_specific.dart';
-part 'gen/dartling_domain_generic.dart';
-part 'gen/dartling_domain_specific.dart';
-part 'gen/dartling_repository.dart';
-part 'gen/dartling_test.dart';
-part 'gen/dartling_web.dart';
 
 part 'meta/attributes.dart';
 part 'meta/children.dart';

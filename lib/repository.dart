@@ -84,6 +84,10 @@ class Repo implements RepoApi {
             subTitle('${domain.code}.${model.code}.${concept.code} concept');
             print(genConcept(concept, library));
           }
+          for (Concept entryConcept in model.entryConcepts) {
+            subTitle('${domain.code}.${model.code}.${entryConcept.code} model tests');
+            print(genDartlingTest(this, model, entryConcept));
+          }
         }
       }
 
@@ -93,8 +97,6 @@ class Repo implements RepoApi {
           subTitle('Code generation of the '
                    '${domain.code}.${model.code} model');
           print(genDartlingGen(model));
-          subTitle('${domain.code}.${model.code} model tests');
-          print(genDartlingTest(this, model));
         }
       }
 
