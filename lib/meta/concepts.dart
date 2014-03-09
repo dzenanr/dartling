@@ -216,14 +216,14 @@ class Concept extends ConceptEntity<Concept> {
     }
   }
 
-  String get fromEntryConceptToThisConceptInternalPath {
+  String get entryConceptThisConceptInternalPath {
     if (entry) {
       return code;
     } else {
       for (Parent parent in parents) {
         if (parent.internal) {
           return
-            '${parent.destinationConcept.fromEntryConceptToThisConceptInternalPath}'
+            '${parent.destinationConcept.entryConceptThisConceptInternalPath}'
             '${code}';
         }
       }
@@ -236,7 +236,7 @@ class Concept extends ConceptEntity<Concept> {
     for (Child child in children) {
       Concept sourceConcept = child.sourceConcept;
       String entryConceptSourceConceptInternalPath =
-          sourceConcept.fromEntryConceptToThisConceptInternalPath;
+          sourceConcept.entryConceptThisConceptInternalPath;
       Concept destinationConcept = child.destinationConcept;
       String childCodeInternalPath =
           '${entryConceptSourceConceptInternalPath}'
@@ -250,3 +250,6 @@ class Concept extends ConceptEntity<Concept> {
   }
 
 }
+
+  
+
