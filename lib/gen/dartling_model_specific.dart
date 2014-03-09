@@ -31,8 +31,11 @@ String genModel(Model model, String library) {
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 
+  // ordered by external parent count (from 0 to ...)
+  var orderedEntryConcepts = model.orderedEntryConcepts;
+  
   sc = '${sc}  fromJsonToModel(Map<String, String> jsonEntries) { \n';  
-  for (Concept entryConcept in model.entryConcepts) {
+  for (Concept entryConcept in orderedEntryConcepts) {
     sc = '${sc}    String ${entryConcept.codeFirstLetterLower}Entry = '
          'jsonEntries["${entryConcept.code}"]; \n';
     sc = '${sc}    fromJson(${entryConcept.codeFirstLetterLower}Entry); \n';
@@ -42,10 +45,7 @@ String genModel(Model model, String library) {
 
   
   sc = '${sc}  init() { \n';
-  List<Concept> entryConceptList = model.entryConcepts;
-  List<Concept> orderedEntryConceptList = 
-      orderByExternalParentCount(entryConceptList);
-  for (Concept entryConcept in orderedEntryConceptList) {
+  for (Concept entryConcept in orderedEntryConcepts) {
     var Entities = '${entryConcept.codePluralFirstLetterUpper}';
     sc = '${sc}    init${Entities}(); \n';
   }
@@ -75,37 +75,24 @@ String genModel(Model model, String library) {
   return sc;
 }
 
-List<Concept> orderByExternalParentCount(List<Concept> conceptList) {
-    var orderedConceptsCount = 0;
-    List<Concept> orderedConcepts = new List<Concept>();
-    for (var c = 0; c < 10; c++) {
-      for (Concept concept in conceptList) {
-        var count = concept.parents.externalCount;
-        if (count == c) {
-          orderedConcepts.add(concept);
-          if (++orderedConceptsCount > conceptList.length) {
-            return orderedConcepts;
-          }
-        }
-      }
-    }
-    return orderedConcepts;
-  }
-
 String createEntitiesRandomly(
     Concept concept, int count, [Concept parentConcept, String parent='']) {
   var sc = '';
   for (var i = 1; i < count + 1; i++) {
-    String entity = '${parent}${concept.codeFirstLetterLower}${i}';
-    String entities = '${concept.codesFirstLetterLower}';
+    var entity = '${parent}${concept.codeFirstLetterLower}${i}';
+    var entities = '${concept.codesFirstLetterLower}';
     sc = '${sc}    var ${entity} = new ${concept.code}('   
          '${concept.codeFirstLetterLower}Concept); \n';
     var attributesSet = setAttributesRandomly(concept, entity);
     sc = '${sc}${attributesSet}';
     
-    // for each external parent add: 
-    //   var blog1User = users.random();
-    //   blog1.user = blog1User;
+    for (Parent externalRequiredParent in concept.externalRequiredParents) {
+      var parent = '${externalRequiredParent.code}';
+      var Parent = '${externalRequiredParent.codeFirstLetterUpper}';
+      var parents = '${externalRequiredParent.destinationConcept.codePluralFirstLetterLower}';
+      sc = '${sc}    var ${entity}${Parent} = ${parents}.random(); \n';
+      sc = '${sc}    ${entity}.${parent} = ${entity}${Parent}; \n';
+    }
     
     if (parent == '') {
       sc = '${sc}    ${entities}.add(${entity}); \n';     

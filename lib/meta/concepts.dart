@@ -2,23 +2,6 @@ part of dartling;
 
 class Concepts extends Entities<Concept> {
 
-  // try to use sort if meta info is not used for sort
-  Concepts orderByExternalParentCount() {
-    var orderedConceptsCount = 0;
-    Concepts orderedConcepts = new Concepts();
-    for (var c = 0; c < 10; c++) {
-      for (Concept concept in this) {
-        var count = concept.parents.externalCount;
-        if (count == c) {
-          orderedConcepts.add(concept);
-          if (++orderedConceptsCount > length) {
-            return orderedConcepts;
-          }
-        }
-      }
-    }
-    return orderedConcepts;
-  }
 }
 
 class Concept extends ConceptEntity<Concept> {
@@ -157,6 +140,26 @@ class Concept extends ConceptEntity<Concept> {
       }
     }
     return essentialList;
+  }
+  
+  List<Parent> get externalParents {
+    List<Parent> externalList = new List<Parent>();
+    for (Parent parent in parents) {
+      if (parent.external) {
+        externalList.add(parent);
+      }
+    }
+    return externalList;
+  }
+  
+  List<Parent> get externalRequiredParents {
+    List<Parent> externalRequiredList = new List<Parent>();
+    for (Parent parent in parents) {
+      if (parent.external && parent.required) {
+        externalRequiredList.add(parent);
+      }
+    }
+    return externalRequiredList;
   }
 
   List<Property> get singleValueProperties {

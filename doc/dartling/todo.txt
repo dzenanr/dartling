@@ -1,7 +1,5 @@
 dartling To Do
 
-generate doc/pubspec.txt
-
 uuid
   http://www.ietf.org/rfc/rfc4122.txt
   https://github.com/Daegalus/dart-uuid
