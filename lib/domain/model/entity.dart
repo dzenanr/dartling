@@ -59,27 +59,27 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     for (Attribute a in _concept.attributes) {
       if (a.init == null) {
         _attributeMap[a.code] = null;
-      } else if (a.type.base == 'DateTime' && a.init == 'now') {
+      } else if (a.type.code == 'DateTime' && a.init == 'now') {
           _attributeMap[a.code] = new DateTime.now();
-      } else if (a.type.base == 'bool' && a.init == 'true') {
+      } else if (a.type.code == 'bool' && a.init == 'true') {
           _attributeMap[a.code] = true;
-      } else if (a.type.base == 'bool' && a.init == 'false') {
+      } else if (a.type.code == 'bool' && a.init == 'false') {
           _attributeMap[a.code] = false;
-      } else if (a.type.base == 'int') {
+      } else if (a.type.code == 'int') {
         try {
           _attributeMap[a.code] = int.parse(a.init);
         } on FormatException catch (e) {
           throw new TypeError(
               '${a.code} attribute init (default) value is not int: $e');
         }
-      } else if (a.type.base == 'double') {
+      } else if (a.type.code == 'double') {
         try {
           _attributeMap[a.code] = double.parse(a.init);
         } on FormatException catch (e) {
           throw new TypeError(
               '${a.code} attribute init (default) value is not double: $e');
         }
-      } else if (a.type.base == 'num') {
+      } else if (a.type.code == 'num') {
         try {
           _attributeMap[a.code] = int.parse(a.init);
         } on FormatException catch (e1) {
@@ -90,7 +90,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
                 '${a.code} attribute init (default) value is not num: $e1; $e2');
           }
         }
-      } else if (a.type.base == 'Uri') {
+      } else if (a.type.code == 'Uri') {
         try {
           _attributeMap[a.code] = Uri.parse(a.init);
         } on ArgumentError catch (e) {
@@ -370,7 +370,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     if (string == null  || string == 'null') {
       return setAttribute(name, null);
     }
-    if (attribute.type.base == 'DateTime') {
+    if (attribute.type.code == 'DateTime') {
       try {
         assert(string != null);
         return setAttribute(name, DateTime.parse(string));
@@ -378,7 +378,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
         throw new TypeError('${_concept.code}.${attribute.code} '
                                 'attribute value is not DateTime: $e');
       }
-    } else if (attribute.type.base == 'bool') {
+    } else if (attribute.type.code == 'bool') {
       if (string == 'true') {
         return setAttribute(name, true);
       } else if (string == 'false') {
@@ -387,21 +387,21 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
         throw new TypeError('${attribute.code} '
                                 'attribute value is not bool.');
       }
-    } else if (attribute.type.base == 'int') {
+    } else if (attribute.type.code == 'int') {
       try {
         return setAttribute(name, int.parse(string));
       } on FormatException catch (e) {
         throw new TypeError('${attribute.code} '
                                 'attribute value is not int: $e');
       }
-    } else if (attribute.type.base == 'double') {
+    } else if (attribute.type.code == 'double') {
       try {
         return setAttribute(name, double.parse(string));
       } on FormatException catch (e) {
         throw new TypeError('${attribute.code} '
                                 'attribute value is not double: $e');
       }
-    } else if (attribute.type.base == 'num') {
+    } else if (attribute.type.code == 'num') {
       try {
         return setAttribute(name, int.parse(string));
       } on FormatException catch (e1) {
@@ -412,7 +412,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
             '${attribute.code} attribute value is not num: $e1; $e2');
         }
       }
-    } else if (attribute.type.base == 'Uri') {
+    } else if (attribute.type.code == 'Uri') {
       try {
         return setAttribute(name, Uri.parse(string));
       } on ArgumentError catch (e) {

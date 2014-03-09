@@ -47,7 +47,7 @@ String genConceptGen(Concept concept, String library) {
     if (id.attributeLength > 0) {
       for (Attribute attribute in concept.attributes) {
         if (attribute.identifier) {
-          sc = '${sc}, ${attribute.type.base} ${attribute.code}';
+          sc = '${sc}, ${attribute.type.code} ${attribute.code}';
         }
       }
     }
@@ -92,9 +92,9 @@ String genConceptGen(Concept concept, String library) {
     sc = '${sc} \n';
   }
   for (Attribute attribute in concept.attributes) {
-    sc = '${sc}  ${attribute.type.base} get ${attribute.code} => '
+    sc = '${sc}  ${attribute.type.code} get ${attribute.code} => '
          'getAttribute("${attribute.code}"); \n ';
-    sc = '${sc} set ${attribute.code}(${attribute.type.base} a) => '
+    sc = '${sc} set ${attribute.code}(${attribute.type.code} a) => '
          'setAttribute("${attribute.code}", a); \n ';
     sc = '${sc} \n';
   }

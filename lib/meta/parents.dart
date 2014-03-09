@@ -1,7 +1,15 @@
 part of dartling;
 
 class Parents extends Entities<Property> {
-
+  
+  int get externalCount {
+    int externalCount = 0;
+    for (var parent in this) {
+      if (parent.external) externalCount++;
+    }
+    return externalCount; 
+  }
+  
 }
 
 class Parent extends Neighbor {

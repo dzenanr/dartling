@@ -274,7 +274,11 @@ Attribute findIdAttribute(Concept concept) {
 String setAttributeRandomly(Attribute attribute, String entity) {
   var sc = '';
   if (attribute.type.code == 'String') {
-    sc = '${sc}  ${entity}.${attribute.code} = "value"; \n';
+    if (attribute.type.origin == 'Email') {
+      sc = '${sc}  ${entity}.${attribute.code} = ${randomEmail()}; \n';      
+    } else {
+      sc = '${sc}  ${entity}.${attribute.code} = ${randomWord()}; \n';
+    }
   } else if (attribute.type.code == 'num') {
     sc = '${sc}  ${entity}.${attribute.code} = ${randomNum(1000)}; \n';
   } else if (attribute.type.code == 'int') {
@@ -287,7 +291,9 @@ String setAttributeRandomly(Attribute attribute, String entity) {
     sc = '${sc}  ${entity}.${attribute.code} = new DateTime.now(); \n';
   } else if (attribute.type.code == 'Uri') {
     sc = '${sc}  ${entity}.'
-         '${attribute.code} = Uri.parse("${randomUriString()}"); \n';
+         '${attribute.code} = Uri.parse("${randomUri()}"); \n';
+  } else {
+    sc = '${sc}  ${entity}.${attribute.code} = ${randomWord()}; \n';
   }
   return sc;
 }

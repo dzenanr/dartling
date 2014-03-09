@@ -2,6 +2,23 @@ part of dartling;
 
 class Concepts extends Entities<Concept> {
 
+  // try to use sort if meta info is not used for sort
+  Concepts orderByExternalParentCount() {
+    var orderedConceptsCount = 0;
+    Concepts orderedConcepts = new Concepts();
+    for (var c = 0; c < 10; c++) {
+      for (Concept concept in this) {
+        var count = concept.parents.externalCount;
+        if (count == c) {
+          orderedConcepts.add(concept);
+          if (++orderedConceptsCount > length) {
+            return orderedConcepts;
+          }
+        }
+      }
+    }
+    return orderedConcepts;
+  }
 }
 
 class Concept extends ConceptEntity<Concept> {
@@ -196,15 +213,15 @@ class Concept extends ConceptEntity<Concept> {
     }
   }
 
-  String get entryConceptThisConceptInternalPath {
+  String get fromEntryConceptToThisConceptInternalPath {
     if (entry) {
       return code;
     } else {
       for (Parent parent in parents) {
         if (parent.internal) {
           return
-              '${parent.destinationConcept.entryConceptThisConceptInternalPath}'
-              '${code}';
+            '${parent.destinationConcept.fromEntryConceptToThisConceptInternalPath}'
+            '${code}';
         }
       }
       throw new ParentError('No internal parent for the ${code} concept');
@@ -216,7 +233,7 @@ class Concept extends ConceptEntity<Concept> {
     for (Child child in children) {
       Concept sourceConcept = child.sourceConcept;
       String entryConceptSourceConceptInternalPath =
-          sourceConcept.entryConceptThisConceptInternalPath;
+          sourceConcept.fromEntryConceptToThisConceptInternalPath;
       Concept destinationConcept = child.destinationConcept;
       String childCodeInternalPath =
           '${entryConceptSourceConceptInternalPath}'

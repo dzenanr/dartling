@@ -475,7 +475,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       if (a.increment != null) {
         if (length == 0) {
           entity.setAttribute(a.code, a.increment);
-        } else if (a.type.base == 'int') {
+        } else if (a.type.code == 'int') {
           var lastEntity = last;
           int incrementAttribute = lastEntity.getAttribute(a.code);
           entity.setAttribute(a.code, incrementAttribute + a.increment);

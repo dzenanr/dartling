@@ -192,21 +192,21 @@ class Id implements IdApi {
        var compare = 0;
        for (Attribute a in concept.attributes) {
          if (a.identifier) {
-           if (a.type.base == 'String') {
+           if (a.type.code == 'String') {
              String attribute = _attributeMap[a.code];
              compare = attribute.compareTo(id.getAttribute(a.code));
-           } else if (a.type.base == 'num' ||
+           } else if (a.type.code == 'num' ||
              a.type.code == 'int' || a.type.code == 'double') {
              num attribute = _attributeMap[a.code];
              compare = attribute.compareTo(id.getAttribute(a.code));
-           } else if (a.type.base == 'DateTime') {
+           } else if (a.type.code == 'DateTime') {
              DateTime attribute = _attributeMap[a.code];
              compare = attribute.compareTo(id.getAttribute(a.code));
-           } else if (a.type.base == 'Uri') {
+           } else if (a.type.code == 'Uri') {
              Uri attribute = _attributeMap[a.code];
              compare = attribute.toString().compareTo(
                  id.getAttribute(a.code).toString());
-           } else if (a.type.base == 'bool') {
+           } else if (a.type.code == 'bool') {
              bool attribute = _attributeMap[a.code];
              compare = attribute.toString().compareTo(
                  id.getAttribute(a.code).toString());

@@ -39,8 +39,30 @@ String genModel(Model model, String library) {
   }
   sc = '${sc}  } \n';
   sc = '${sc} \n';
-  var init = _init(model);
-  sc = '${sc} ${init} \n';
+
+  
+  sc = '${sc}  init() { \n';
+  List<Concept> entryConceptList = model.entryConcepts;
+  List<Concept> orderedEntryConceptList = 
+      orderByExternalParentCount(entryConceptList);
+  for (Concept entryConcept in orderedEntryConceptList) {
+    var Entities = '${entryConcept.codePluralFirstLetterUpper}';
+    sc = '${sc}    init${Entities}(); \n';
+  }
+  sc = '${sc}  } \n';
+  sc = '${sc} \n';
+
+  for (Concept entryConcept in model.entryConcepts) {
+    var Entities = '${entryConcept.codePluralFirstLetterUpper}';
+    sc = '${sc}  init${Entities}() { \n';
+    sc = '${sc}    var ${entryConcept.codeFirstLetterLower}Concept = '
+         '${entryConcept.codesFirstLetterLower}.concept; \n';
+    sc = '${sc} \n';
+    var entitiesCreated = createEntitiesRandomly(entryConcept, 3);
+    sc = '${sc}${entitiesCreated}';
+    sc = '${sc}  } \n';
+    sc = '${sc} \n'; 
+  }  
 
   sc = '${sc}  // added after code gen - begin \n';
   sc = '${sc} \n';
@@ -53,25 +75,25 @@ String genModel(Model model, String library) {
   return sc;
 }
 
-String _init(Model model) {
-  var sc = ' \n';
-  sc = '${sc}  init() { \n';
-  for (Concept entryConcept in model.entryConcepts) {
-    sc = '${sc}    // =============================== \n';
-    sc = '${sc}    // ${entryConcept.code} entry      \n';
-    sc = '${sc}    // =============================== \n';
-    sc = '${sc}    var ${entryConcept.codeFirstLetterLower}Concept = '
-         '${entryConcept.codesFirstLetterLower}.concept; \n';
-    sc = '${sc} \n';
-    var entitiesCreated = createEntitiesRandomly(entryConcept, 3);
-    sc = '${sc}${entitiesCreated}';
+List<Concept> orderByExternalParentCount(List<Concept> conceptList) {
+    var orderedConceptsCount = 0;
+    List<Concept> orderedConcepts = new List<Concept>();
+    for (var c = 0; c < 10; c++) {
+      for (Concept concept in conceptList) {
+        var count = concept.parents.externalCount;
+        if (count == c) {
+          orderedConcepts.add(concept);
+          if (++orderedConceptsCount > conceptList.length) {
+            return orderedConcepts;
+          }
+        }
+      }
+    }
+    return orderedConcepts;
   }
-  sc = '${sc}  } \n';
-  sc = '${sc} \n';   
-  return sc;
-}
 
-String createEntitiesRandomly(Concept concept, int count, [Concept parentConcept, String parent='']) {
+String createEntitiesRandomly(
+    Concept concept, int count, [Concept parentConcept, String parent='']) {
   var sc = '';
   for (var i = 1; i < count + 1; i++) {
     String entity = '${parent}${concept.codeFirstLetterLower}${i}';
@@ -80,6 +102,10 @@ String createEntitiesRandomly(Concept concept, int count, [Concept parentConcept
          '${concept.codeFirstLetterLower}Concept); \n';
     var attributesSet = setAttributesRandomly(concept, entity);
     sc = '${sc}${attributesSet}';
+    
+    // for each external parent add: 
+    //   var blog1User = users.random();
+    //   blog1.user = blog1User;
     
     if (parent == '') {
       sc = '${sc}    ${entities}.add(${entity}); \n';     
@@ -110,10 +136,18 @@ String setAttributesRandomly(Concept concept, String entity, [String end='']) {
   var sc = '';
   for (Attribute attribute in concept.attributes) {
     if (attribute.type.code == 'String') {
-      if (end == '') {
-        sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
+      if (attribute.type.origin == 'Email') {
+        if (end == '') {
+          sc = '${sc}    ${entity}.${attribute.code} = "${randomEmail()}"; \n';
+        } else {
+          sc = '${sc}    ${entity}.${attribute.code} = "${randomEmail()}${end}"; \n';
+        }         
       } else {
-        sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}${end}"; \n';
+        if (end == '') {
+          sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
+        } else {
+          sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}${end}"; \n';
+        }        
       }
     } else if (attribute.type.code == 'num') {
       sc = '${sc}    ${entity}.${attribute.code} = ${randomNum(1000)}; \n';
@@ -127,7 +161,9 @@ String setAttributesRandomly(Concept concept, String entity, [String end='']) {
       sc = '${sc}    ${entity}.${attribute.code} = new DateTime.now(); \n';
     } else if (attribute.type.code == 'Uri') {
       sc = '${sc}    ${entity}.'
-           '${attribute.code} = Uri.parse("${randomUriString()}"); \n';
+           '${attribute.code} = Uri.parse("${randomUri()}"); \n';
+    } else {
+      sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
     }
   }
   return sc;
@@ -160,7 +196,9 @@ randomSign() {
 
 randomWord() => randomListElement(wordList);
 
-randomUriString() => randomListElement(uriList);
+randomUri() => randomListElement(uriList);
+
+randomEmail() => randomListElement(emailList);
 
 randomListElement(List list) => list[randomInt(list.length - 1)];
 
@@ -245,4 +283,50 @@ var uriList = [
 'http://www.dartlang.org/slides/2012/06/io12/Bullseye-Your-first-Dart-app-Codelab-GoogleIO2012.pdf',
 'http://www.mendeley.com/',
 'http://www.google.com/+/learnmore/hangouts/?hl=en'
+];
+
+var emailList = [
+'stephanie@martinez.com',
+'antonio@flores.com',
+'brian@lewis.com',
+'christine@chen.com',
+'anna@ruiz.com',
+'matthew@martinez.com',
+'chris@rodriguez.com',
+'brian@white.com',
+'martin@stewart.com',
+'jessica@tan.com',
+'jason@kelly.com',
+'brian@sharma.com',
+'sharon@silva.com',
+'tom@walker.com',
+'michelle@taylor.com',
+'rachel@wilson.com',
+'claudia@mitchell.com',
+'andrea@ramirez.com',
+'michael@clark.com',
+'richard@jones.com',
+'susan@mitchell.com',
+'lisa@morales.com',
+'debbie@hughes.com',
+'jennifer@collins.com',
+'peter@tan.com',
+'patricia@rodriguez.com',
+'heather@morris.com',
+'tony@king.com',
+'eric@nelson.com',
+'julie@gonzalez.com',
+'jonathan@ruiz.com',
+'susan@hill.com',
+'eric@hall.com',
+'sandra@mohamed.com',
+'sam@adams.com',
+'heather@williams.com',
+'julie@li.com',
+'andrea@wong.com',
+'david@macdonald.com',
+'ashley@cruz.com',
+'tony@ramirez.com',
+'james@rossi.com',
+'stephen@torres.com',
 ];

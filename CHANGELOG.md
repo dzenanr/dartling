@@ -2,8 +2,11 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-03-07
+*2.0.0* 2014-03-09
 
++ generate model init with initChildren ordered by external parent count
++ external parent count for concept parents
++ rename base type to origin type
 + generate mutiple tests per entry concept
 + generate a test file per entry concept
 + generate model init with internal children

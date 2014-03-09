@@ -1,26 +1,14 @@
 dartling To Do
 
+generate doc/pubspec.txt
+
 uuid
   http://www.ietf.org/rfc/rfc4122.txt
   https://github.com/Daegalus/dart-uuid
- 
-Done, to be tested: 
-Improve performance of loading data from a json document to a model by
-using internal and external relationships.
-Now, the algorithm is slow because, before creating an entity, I check in the
-whole model, based on the oid from the json document, if the entity has been
-already created.
-To improve the performance,
-traverse internal relationships and create entities,
-then traverse external relationships and find already created entities.
-Add fromJson(entry, listOfEntriesForExternal) method to ModelEntries API.
 
 copy on entities produces entities that are not equal (is this correct?)
 
 fromJson for entity and entities is now without neighbors
-
-http://api.dartlang.org/docs/continuous/dart_math/Random.html
-get random value for different types (for test data)
 
 essentail for neighbors (true by default)
 min (minimal properties only are shown in a web componet) for properties
@@ -36,9 +24,6 @@ default neighbor names in Magic Boxes
 add essential for items in Magic Boxes
 add abstract for boxes in Magic Boxes
 add all from Dartling to Magic Boxes
-
-generate some basic tests
-test dartling package (error in windows)
 
 action.doit when called directly by a user avoids a session doit
   ok when session is null for undoing the action
