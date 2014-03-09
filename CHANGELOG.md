@@ -4,7 +4,7 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.0* 2014-03-09
 
-+ concept external parents and external requitred parents
++ concept external parents and external required parents
 + model ordered (by external parent count) entry concepts
 + generate model init with initChildren ordered by external parent count
 + external parent count for concept parents
