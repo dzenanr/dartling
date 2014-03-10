@@ -48,6 +48,7 @@ part 'gen/dartling_concept_generic.dart';
 part 'gen/dartling_concept_specific.dart';
 part 'gen/dartling_test.dart';
 part 'gen/dartling_web.dart';
+part 'gen/random_data.dart';
 
 part 'domain/model/event/actions.dart';
 part 'domain/model/event/past.dart';
