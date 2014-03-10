@@ -206,6 +206,9 @@ class Id implements IdApi {
              Uri attribute = _attributeMap[a.code];
              compare = attribute.toString().compareTo(
                  id.getAttribute(a.code).toString());
+           } else if (a.type.code == 'Email') {
+             String attribute = _attributeMap[a.code];
+             compare = attribute.compareTo(id.getAttribute(a.code));
            } else if (a.type.code == 'bool') {
              bool attribute = _attributeMap[a.code];
              compare = attribute.toString().compareTo(

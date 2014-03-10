@@ -6,20 +6,20 @@ class AttributeTypes extends Entities<AttributeType> {
 
 class AttributeType extends ConceptEntity<AttributeType> {
 
-  String origin; 
+  String base; 
   int length;
 
   Domain domain;
 
   AttributeType(this.domain, String typeCode) {
     if (typeCode == 'Email') {
-      code = 'String';
+      base = 'String';
     } else if (typeCode == 'Other') {
-      code = 'dynamic';
+      base = 'dynamic';
     } else {
-      code = typeCode;
+      base = typeCode;
     }
-    origin = typeCode;
+    code = typeCode;
     domain.types.add(this);
   }
 

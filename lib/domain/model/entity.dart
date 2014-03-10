@@ -416,8 +416,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       try {
         return setAttribute(name, Uri.parse(string));
       } on ArgumentError catch (e) {
-        throw new TypeError('${attribute.code} '
-                                'attribute value is not Uri: $e');
+        throw new TypeError('${attribute.code} attribute value is not Uri: $e');
       }
     } else { // other
       return setAttribute(name, string);

@@ -92,6 +92,7 @@ String createEntitiesRandomly(
       var parents = '${externalRequiredParent.destinationConcept.codePluralFirstLetterLower}';
       sc = '${sc}    var ${entity}${Parent} = ${parents}.random(); \n';
       sc = '${sc}    ${entity}.${parent} = ${entity}${Parent}; \n';
+      sc = '${sc}    ${entity}${Parent}.${entities}.add(${entity}); \n';
     }
     
     if (parent == '') {
@@ -122,20 +123,12 @@ String createEntitiesRandomly(
 String setAttributesRandomly(Concept concept, String entity, [String end='']) {
   var sc = '';
   for (Attribute attribute in concept.attributes) {
-    if (attribute.type.code == 'String') {
-      if (attribute.type.origin == 'Email') {
-        if (end == '') {
-          sc = '${sc}    ${entity}.${attribute.code} = "${randomEmail()}"; \n';
-        } else {
-          sc = '${sc}    ${entity}.${attribute.code} = "${randomEmail()}${end}"; \n';
-        }         
+    if (attribute.type.code == 'String') {     
+      if (end == '') {
+        sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
       } else {
-        if (end == '') {
-          sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
-        } else {
-          sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}${end}"; \n';
-        }        
-      }
+        sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}${end}"; \n';
+      }        
     } else if (attribute.type.code == 'num') {
       sc = '${sc}    ${entity}.${attribute.code} = ${randomNum(1000)}; \n';
     } else if (attribute.type.code == 'int') {
@@ -147,8 +140,10 @@ String setAttributesRandomly(Concept concept, String entity, [String end='']) {
     } else if (attribute.type.code == 'DateTime') {
       sc = '${sc}    ${entity}.${attribute.code} = new DateTime.now(); \n';
     } else if (attribute.type.code == 'Uri') {
-      sc = '${sc}    ${entity}.'
-           '${attribute.code} = Uri.parse("${randomUri()}"); \n';
+      sc = '${sc}    ${entity}.${attribute.code} = '
+           'Uri.parse("${randomUri()}"); \n';
+    } else if (attribute.type.code == 'Email') {
+      sc = '${sc}    ${entity}.${attribute.code} = "${randomEmail()}"; \n';
     } else {
       sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
     }

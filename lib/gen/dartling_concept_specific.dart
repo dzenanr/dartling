@@ -28,7 +28,7 @@ String genConcept(Concept concept, String library) {
     if (id.attributeLength > 0) {
       for (Attribute attribute in concept.attributes) {
         if (attribute.identifier) {
-          sc = '${sc}, ${attribute.type.code} ${attribute.code}';
+          sc = '${sc}, ${attribute.type.base} ${attribute.code}';
         }
       }
     }

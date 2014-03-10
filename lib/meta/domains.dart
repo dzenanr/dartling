@@ -31,9 +31,9 @@ class Domain extends ConceptEntity<Domain> {
     new AttributeType(this, 'double');
     new AttributeType(this, 'bool');
     new AttributeType(this, 'DateTime');
-    new AttributeType(this, 'dynamic');
     new AttributeType(this, 'Uri');
     new AttributeType(this, 'Email');
+    new AttributeType(this, 'dynamic');
     new AttributeType(this, 'Other');
     assert(types.length == 10);
   }
