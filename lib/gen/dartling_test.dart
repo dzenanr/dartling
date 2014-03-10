@@ -201,23 +201,33 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc} \n';
   
   sc = '${sc}    test("Sort ${entities}", () { \n';
-  sc = '${sc}      ${entities}.sort(); \n';
-  sc = '${sc} \n';
-  sc = '${sc}      ${entities}.display(title: "Sort ${entities}"); \n';
+  if (idAttribute != null) {
+    sc = '${sc}      ${entities}.sort(); \n';
+    sc = '${sc} \n';
+    sc = '${sc}      ${entities}.display(title: "Sort ${entities}"); \n';    
+  } else {
+    sc = '${sc}      // no id attribute \n';
+    sc = '${sc}      // add compareTo method in the specific ${Entity} class \n';
+  }
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   
   sc = '${sc}    test("Order ${entities}", () { \n';
-  sc = '${sc}      var ordered${Entities} = ${entities}.order(); \n';
-  sc = '${sc}      expect(ordered${Entities}.isEmpty, isFalse); \n';
-  sc = '${sc}      expect(ordered${Entities}.length, '
-       'equals(${entities}.length)); \n';
-  sc = '${sc}      expect(ordered${Entities}.source.isEmpty, isFalse); \n';
-  sc = '${sc}      expect(ordered${Entities}.source.length, '
-       'equals(${entities}.length)); \n';
-  sc = '${sc}      expect(ordered${Entities}, isNot(same(${entities}))); \n';
-  sc = '${sc} \n';
-  sc = '${sc}      ordered${Entities}.display(title: "Order ${entities}"); \n';
+  if (idAttribute != null) {
+    sc = '${sc}      var ordered${Entities} = ${entities}.order(); \n';
+    sc = '${sc}      expect(ordered${Entities}.isEmpty, isFalse); \n';
+    sc = '${sc}      expect(ordered${Entities}.length, '
+         'equals(${entities}.length)); \n';
+    sc = '${sc}      expect(ordered${Entities}.source.isEmpty, isFalse); \n';
+    sc = '${sc}      expect(ordered${Entities}.source.length, '
+         'equals(${entities}.length)); \n';
+    sc = '${sc}      expect(ordered${Entities}, isNot(same(${entities}))); \n';
+    sc = '${sc} \n';
+    sc = '${sc}      ordered${Entities}.display(title: "Order ${entities}"); \n';    
+  } else {
+    sc = '${sc}      // no id attribute \n';
+    sc = '${sc}      // add compareTo method in the specific ${Entity} class \n';
+  }
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   

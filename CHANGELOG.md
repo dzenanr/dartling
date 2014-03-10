@@ -4,6 +4,7 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.0* 2014-03-10
  
++ add conditions in code gen of tests
 + add more raw data for random gen  
 + for Email type generate random init values in model
 + support type code vs. type base (Email vs. String)
