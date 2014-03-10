@@ -2,8 +2,8 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-03-09
-
+*2.0.0* 2014-03-10
+   
 + for Email type generate random init values in model
 + support type code vs. type base (Email vs. String)
 + decomment Email and Other types in domain
@@ -26,7 +26,9 @@ based on [Semantic Versioning](http://semver.org/)
   EntityApi single(Oid oid);
   EntityApi internalSingle(String entryConceptCode, Oid oid);
   EntitiesApi internalChild(String entryConceptCode, Oid oid);
-  String toJson(String entryConceptCode);
+  String fromEntryToJson(String entryConceptCode);
+  fromJsonToEntry(String entryJson); 
+  String toJson();
   fromJson(String json);
 + change API in lib/domain/model/entities.dart:
   EntityApi internalSingle(Oid oid);

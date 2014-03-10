@@ -160,9 +160,9 @@ testModelData(Model model) {
     test('From Link Model to JSON', () {
       var entryConceptCode = 'Category';
       var categories = entries.getEntry(entryConceptCode);
-      var json = entries.toJson(entryConceptCode);
+      var json = entries.fromEntryToJson(entryConceptCode);
       expect(json, isNotNull);
-      entries.displayJson(entryConceptCode);
+      entries.displayEntryJson(entryConceptCode);
     });
 
   });

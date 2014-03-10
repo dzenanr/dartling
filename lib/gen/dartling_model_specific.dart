@@ -15,35 +15,30 @@ String genModel(Model model, String library) {
   sc = '${sc} \n';
   for (Concept entryConcept in model.entryConcepts) {
     sc = '${sc}  fromJsonTo${entryConcept.code}Entry() { \n';
-    sc = '${sc}    fromJson(${domain.codeFirstLetterLower}${model.code}'
+    sc = '${sc}    fromJsonToEntry(${domain.codeFirstLetterLower}${model.code}'
          '${entryConcept.code}Entry); \n';
     sc = '${sc}  } \n';
     sc = '${sc} \n';
   }
   
-  sc = '${sc}  Map<String, String> fromModelToJson() { \n';
-  sc = '${sc}    var jsonEntries = new Map<String, String>(); \n';  
-  for (Concept entryConcept in model.entryConcepts) {
-    sc = '${sc}    jsonEntries["${entryConcept.code}"] = '
-         'toJson("${entryConcept.code}"); \n';
-  }
-  sc = '${sc}    return jsonEntries; \n';
+  sc = '${sc}  fromJsonToModel() { \n';
+  sc = '${sc}    fromJson(${domain.codeFirstLetterLower}${model.code}Model); \n';
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 
   // ordered by external parent count (from 0 to ...)
   var orderedEntryConcepts = model.orderedEntryConcepts;
   
-  sc = '${sc}  fromJsonToModel(Map<String, String> jsonEntries) { \n';  
+  sc = '${sc}  fromMap(Map<String, Object> entriesMap) { \n';  
   for (Concept entryConcept in orderedEntryConcepts) {
-    sc = '${sc}    String ${entryConcept.codeFirstLetterLower}Entry = '
-         'jsonEntries["${entryConcept.code}"]; \n';
-    sc = '${sc}    fromJson(${entryConcept.codeFirstLetterLower}Entry); \n';
+    var entryMap = '${entryConcept.codeFirstLetterLower}EntryMap';
+    sc = '${sc}    Map<String, Object> ${entryMap} = '
+         'entriesMap["${entryConcept.code}"]; \n';
+    sc = '${sc}    fromMapToEntry(${entryMap}); \n';
   }
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 
-  
   sc = '${sc}  init() { \n';
   for (Concept entryConcept in orderedEntryConcepts) {
     var Entities = '${entryConcept.codePluralFirstLetterUpper}';
@@ -55,9 +50,6 @@ String genModel(Model model, String library) {
   for (Concept entryConcept in model.entryConcepts) {
     var Entities = '${entryConcept.codePluralFirstLetterUpper}';
     sc = '${sc}  init${Entities}() { \n';
-    sc = '${sc}    var ${entryConcept.codeFirstLetterLower}Concept = '
-         '${entryConcept.codesFirstLetterLower}.concept; \n';
-    sc = '${sc} \n';
     var entitiesCreated = createEntitiesRandomly(entryConcept, 3);
     sc = '${sc}${entitiesCreated}';
     sc = '${sc}  } \n';
@@ -79,10 +71,19 @@ String createEntitiesRandomly(
     Concept concept, int count, [Concept parentConcept, String parent='']) {
   var sc = '';
   for (var i = 1; i < count + 1; i++) {
-    var entity = '${parent}${concept.codeFirstLetterLower}${i}';
-    var entities = '${concept.codesFirstLetterLower}';
-    sc = '${sc}    var ${entity} = new ${concept.code}('   
-         '${concept.codeFirstLetterLower}Concept); \n';
+    var entity;
+    var entities;
+    if (parent == '') {
+      entity = '${concept.codeFirstLetterLower}${i}';
+      entities = '${concept.codesFirstLetterLower}';
+      sc = '${sc}    var ${entity} = new ${concept.code}('   
+           '${concept.codesFirstLetterLower}.concept); \n';
+    } else {
+      entity = '${parent}${concept.code}${i}';
+      entities = '${concept.codesFirstLetterLower}';
+      sc = '${sc}    var ${entity} = new ${concept.code}('   
+           '${parent}.${concept.codesFirstLetterLower}.concept); \n';
+    }
     var attributesSet = setAttributesRandomly(concept, entity);
     sc = '${sc}${attributesSet}';
     
@@ -92,7 +93,7 @@ String createEntitiesRandomly(
       var parents = '${externalRequiredParent.destinationConcept.codePluralFirstLetterLower}';
       sc = '${sc}    var ${entity}${Parent} = ${parents}.random(); \n';
       sc = '${sc}    ${entity}.${parent} = ${entity}${Parent}; \n';
-      sc = '${sc}    ${entity}${Parent}.${entities}.add(${entity}); \n';
+      //sc = '${sc}    ${entity}${Parent}.${entities}.add(${entity}); \n';
     }
     
     if (parent == '') {
@@ -102,15 +103,20 @@ String createEntitiesRandomly(
            '${parent}; \n'; 
       sc = '${sc}    ${parent}.${entities}.add(${entity}); \n';    
     }
+    
+    for (Parent externalRequiredParent in concept.externalRequiredParents) {
+      var parent = '${externalRequiredParent.code}';
+      var Parent = '${externalRequiredParent.codeFirstLetterUpper}';
+      var parents = '${externalRequiredParent.destinationConcept.codePluralFirstLetterLower}';
+      //sc = '${sc}    var ${entity}${Parent} = ${parents}.random(); \n';
+      //sc = '${sc}    ${entity}.${parent} = ${entity}${Parent}; \n';
+      sc = '${sc}    ${entity}${Parent}.${entities}.add(${entity}); \n';
+    }
+    
     sc = '${sc} \n';
     for (Child child in concept.children) {
       if (child.internal) {
         Concept childConcept = child.destinationConcept;
-        if (i == 1) {
-          sc = '${sc}    var ${childConcept.codeFirstLetterLower}Concept = '
-               '${entity}.${child.code}.concept; \n';
-          sc = '${sc} \n';            
-        }
         var entitiesCreated = 
             createEntitiesRandomly(childConcept, 2, concept, entity);
         sc = '${sc}${entitiesCreated}';
@@ -119,6 +125,8 @@ String createEntitiesRandomly(
   } // for var  
   return sc;
 }
+
+// tod do: check if random value should be unique
 
 String setAttributesRandomly(Concept concept, String entity, [String end='']) {
   var sc = '';
@@ -204,7 +212,7 @@ var wordList = [
   'hell', 'brad', 'water', 'taxi', 'season', 'seed', 'brave', 'meter', 'done',
   'void', 'yellow', 'lake', 'energy', 'tax', 'heating', 'crisis', 'measuremewnt',
   'point', 'deep', 'corner', 'hunting', 'dog', 'sailing', 'beginning', 'agile',
-  'slate', 'wheat', 'pencil', 'enquiry', 'salad', 'salary', 'vacation', '',
+  'slate', 'wheat', 'pencil', 'enquiry', 'salad', 'salary', 'vacation', 'plaho',
   'baby', 'computer', 'algorithm', 'edition', 'television', 'highway', 'winter',
   'life', 'performance', 'productivity', 'economy', 'tension', 'health', 'top',
   'knowledge', 'picture', 'photo', 'entertainment', 'team', 'capacity', 'notch',
@@ -310,5 +318,5 @@ var emailList = [
 'ashley@cruz.com',
 'tony@ramirez.com',
 'james@rossi.com',
-'stephen@torres.com',
+'stephen@torres.com'
 ];

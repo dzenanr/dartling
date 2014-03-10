@@ -81,44 +81,51 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}    tearDown(() { \n';
   sc = '${sc}      model.clear(); \n';
   sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
   sc = '${sc}    test("Not empty model", () { \n';
   sc = '${sc}      expect(model.isEmpty, isFalse); \n';
   sc = '${sc}      expect(${entities}.isEmpty, isFalse); \n';
   sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
   sc = '${sc}    test("Empty model", () { \n';
   sc = '${sc}      model.clear(); \n';
   sc = '${sc}      expect(model.isEmpty, isTrue); \n';
   sc = '${sc}      expect(${entities}.isEmpty, isTrue); \n';
   sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
   sc = '${sc}    test("From model entry to JSON", () { \n';
-  sc = '${sc}      var json = model.toJson("${Entity}"); \n';
+  sc = '${sc}      var json = model.fromEntryToJson("${Entity}"); \n';
   sc = '${sc}      expect(json, isNotNull); \n';
   sc = '${sc} \n';
   sc = '${sc}      print(json); \n';
-  sc = '${sc}      model.display(); \n';
+  sc = '${sc}      //model.displayEntryJson("${Entity}"); \n';
+  sc = '${sc}      //model.displayJson(); \n';
+  sc = '${sc}      //model.display(); \n';
   sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
   sc = '${sc}    test("From JSON to model entry", () { \n';
-  sc = '${sc}      var json = model.toJson("${Entity}"); \n';
+  sc = '${sc}      var json = model.fromEntryToJson("${Entity}"); \n';
   sc = '${sc}      ${entities}.clear(); \n';
   sc = '${sc}      expect(${entities}.isEmpty, isTrue); \n';
-  sc = '${sc}      model.fromJson(json); \n';
+  sc = '${sc}      model.fromJsonToEntry(json); \n';
   sc = '${sc}      expect(${entities}.isEmpty, isFalse); \n';
   sc = '${sc} \n';
   sc = '${sc}      ${entities}.display(title: "From JSON to model entry"); \n';
   sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
   sc = '${sc}    test("Add ${entity} required error", () { \n';
-  sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
-  sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
-  sc = '${sc}      var ${entity} = new ${Entity}(${entity}Concept); \n';
   var requiredAttribute = findRequiredAttribute(entryConcept);
   if (requiredAttribute != null) {
     //var requiredAttributeSet = setAttributeRandomly(requiredAttribute, entity);
     //sc = '${sc}    ${requiredAttributeSet}';
+    sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
+    sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
+    sc = '${sc}      var ${entity} = new ${Entity}(${entity}Concept); \n';
     sc = '${sc}      var added = ${entities}.add(${entity}); \n';
     sc = '${sc}      expect(added, isFalse); \n';
     sc = '${sc}      expect(${entities}.length, equals(${entity}Count)); \n';
@@ -132,15 +139,16 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
     sc = '${sc}      // no required attribute that is not an id \n';
   }
   sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
   sc = '${sc}    test("Add ${entity} unique error", () { \n';
-  sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
-  sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
-  sc = '${sc}      var ${entity} = new ${Entity}(${entity}Concept); \n';
   var idAttribute = findIdAttribute(entryConcept);
   if (idAttribute != null) {
     //var idAttributeSet = setAttributeRandomly(idAttribute, entity);
     //sc = '${sc}    ${idAttributeSet}';
+    sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
+    sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
+    sc = '${sc}      var ${entity} = new ${Entity}(${entity}Concept); \n';
     sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
     sc = '${sc}      ${entity}.${idAttribute.code} = '
          'random${Entity}.${idAttribute.code}; \n';
@@ -155,24 +163,27 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
     sc = '${sc}      // no id attribute \n';
   }
   sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
-  sc = '${sc}    test("Find ${entity} by ${requiredAttribute.code}", () { \n';
-  sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
   if (requiredAttribute != null) {
+    sc = '${sc}    test("Find ${entity} by ${requiredAttribute.code}", () { \n';
+    sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
     sc = '${sc}      var ${entity}${requiredAttribute.codeFirstLetterUpper} = '
          'random${Entity}.${requiredAttribute.code}; \n';
     sc = '${sc}      ${Entity} ${entity} = ${entities}.firstWhereAttribute('
          '"${requiredAttribute.code}", '
          '${entity}${requiredAttribute.codeFirstLetterUpper}); \n';
     sc = '${sc}      expect(${entity}, isNotNull); \n';
+    sc = '${sc}    }); \n';
   } else {
+    sc = '${sc}      // Find ${entity} by required attribute: \n';
     sc = '${sc}      // no required attribute that is not an id \n';
   }
-  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
-  sc = '${sc}    test("Select ${entities} by ${requiredAttribute.code}", () { \n';
-  sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
   if (requiredAttribute != null) {
+    sc = '${sc}    test("Select ${entities} by ${requiredAttribute.code}", () { \n';
+    sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
     sc = '${sc}      var ${entity}${requiredAttribute.codeFirstLetterUpper} = '
          'random${Entity}.${requiredAttribute.code}; \n';
     sc = '${sc}      var selected${Entities} = ${entities}.selectWhereAttribute('
@@ -182,16 +193,19 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
     sc = '${sc} \n';
     sc = '${sc}      selected${Entities}.display(title: "Select ${entities} by '
          '${requiredAttribute.code}"); \n'; 
+    sc = '${sc}    }); \n';
   } else {
+    sc = '${sc}      // Select ${entities} by required attribute: \n';
     sc = '${sc}      // no required attribute that is not an id \n';
   }
-  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
   sc = '${sc}    test("Sort ${entities}", () { \n';
   sc = '${sc}      ${entities}.sort(); \n';
   sc = '${sc} \n';
   sc = '${sc}      ${entities}.display(title: "Sort ${entities}"); \n';
   sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
   sc = '${sc}    test("Order ${entities}", () { \n';
   sc = '${sc}      var ordered${Entities} = ${entities}.order(); \n';
@@ -205,6 +219,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc} \n';
   sc = '${sc}      ordered${Entities}.display(title: "Order ${entities}"); \n';
   sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
   sc = '${sc}    test("Copy ${entities}", () { \n';
   sc = '${sc}      var copied${Entities} = ${entities}.copy(); \n';
@@ -221,6 +236,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc} \n';
   sc = '${sc}      copied${Entities}.display(title: "Copy ${entities}"); \n';
   sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
   sc = '${sc}    test("True for every ${entity}", () { \n';
   if (requiredAttribute != null) {
@@ -229,6 +245,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
     sc = '${sc}      // no required attribute that is not an id \n';
   }
   sc = '${sc}    }); \n';
+  sc = '${sc} \n';
   
   sc = '${sc}    test("Random ${entity}", () { \n';
   sc = '${sc}      var ${entity}1 = ${entities}.random(); \n';
@@ -239,8 +256,8 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}      ${entity}1.display(prefix: "1"); \n';
   sc = '${sc}      ${entity}2.display(prefix: "2"); \n';
   sc = '${sc}    }); \n';
-  
   sc = '${sc} \n';
+  
   sc = '${sc}  }); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';

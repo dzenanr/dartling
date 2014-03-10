@@ -46,6 +46,7 @@ class ValidationErrors implements ValidationErrorsApi {
   }
 
   int get length => _errorList.length;
+  bool get isEmpty => length == 0;
   Iterator<ValidationError> get iterator => _errorList.iterator;
 
   add(ValidationError error) {

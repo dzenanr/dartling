@@ -11,7 +11,10 @@ abstract class ModelEntriesApi {
   
   bool get isEmpty;  void clear();
 
-  String toJson(String entryConceptCode);
+  String fromEntryToJson(String entryConceptCode);
+  fromJsonToEntry(String entryJson);
+  
+  String toJson();
   fromJson(String json);
 
 }
@@ -99,18 +102,20 @@ class ModelEntries implements ModelEntriesApi {
     });
   }
   
-  String toJson(String entryConceptCode) {
+  Map<String, Object> fromEntryToMap(String entryConceptCode) {
     Map<String, Object> entryMap = new Map<String, Object>();
     entryMap['domain'] = _model.domain.code;
     entryMap['model'] = _model.code;  
     entryMap['entry'] = entryConceptCode;   
     Entities entryEntities = getEntry(entryConceptCode);  
     entryMap['entities'] = entryEntities.toJson();
-    return JSON.encode(entryMap);
+    return entryMap;
   }
   
-  fromJson(String json) {
-    Map<String, Object> entryMap = JSON.decode(json);
+  String fromEntryToJson(String entryConceptCode) => 
+      JSON.encode(fromEntryToMap(entryConceptCode));
+  
+  fromMapToEntry(Map<String, Object> entryMap) {
     var domainCode = entryMap['domain'];
     var modelCode = entryMap['model'];
     var entryConceptCode = entryMap['entry'];
@@ -134,6 +139,33 @@ class ModelEntries implements ModelEntriesApi {
     List<Map<String, Object>> entitiesList = entryMap['entities'];
     entryEntities.addFrom(_entitiesFromJson(entitiesList, null, entryConcept));
   }
+  
+  fromJsonToEntry(String entryJson) {
+    Map<String, Object> entryMap = JSON.decode(entryJson);
+    fromMapToEntry(entryMap);
+  }
+  
+  Map<String, Object> toMap() { 
+    var entriesMap = new Map<String, Object>(); 
+    _model.entryConcepts.forEach((entryConcept) {
+      entriesMap[entryConcept.code] = fromEntryToMap(entryConcept.code); 
+    });
+    return entriesMap; 
+  }
+  
+  String toJson() => JSON.encode(toMap());
+  
+  fromMap(Map<String, Object> entriesMap) { 
+    _model.entryConcepts.forEach((entryConcept) {
+      Map<String, Object> entryMap = entriesMap[entryConcept.code];
+      fromMapToEntry(entryMap);
+    }); 
+  } 
+  
+  fromJson(String entriesJson) {
+    Map<String, Object> entriesMap = JSON.decode(entriesJson);
+    fromMap(entriesMap);
+  } 
   
   Entities _entitiesFromJson(List<Map<String, Object>> entitiesList,
                              ConceptEntity internalParent,
@@ -263,11 +295,20 @@ class ModelEntries implements ModelEntriesApi {
     }
   }
 
-  displayJson(String entryConceptCode) {
+  displayEntryJson(String entryConceptCode) {
+    print('==============================================================');
+    print('${_model.domain.code} ${_model.code} ${entryConceptCode} Data in JSON');
+    print('==============================================================');
+    print(fromEntryToJson(entryConceptCode));
+    print('--------------------------------------------------------------');
+    print('');
+  }
+  
+  displayJson() {
     print('==============================================================');
     print('${_model.domain.code} ${_model.code} Data in JSON');
     print('==============================================================');
-    print(toJson(entryConceptCode));
+    print(toJson());
     print('--------------------------------------------------------------');
     print('');
   }
