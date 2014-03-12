@@ -2,8 +2,12 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-03-10
- 
+*2.0.0* 2014-03-12
+
++ break a loop on creating reflexive child entities in the model's init
++ use Reference to set up first references from model json in each entry tree, 
+  then populate external parents based on references 
++ treat special case of reflexive and twin neighbors in model init 
 + add conditions in code gen of tests
 + add more raw data for random gen  
 + for Email type generate random init values in model

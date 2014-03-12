@@ -35,6 +35,9 @@ abstract class EntitiesApi<E extends EntityApi<E>> implements Iterable<E> {
   bool preRemove(E entity);
   bool remove(E entity);
   bool postRemove(E entity);
+  
+  String toJson();
+  fromJson(String entitiesJson);
 
 }
 
@@ -372,36 +375,44 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     selectedEntities._source = this;
     return selectedEntities;
   }
+  
+  String toJson() => JSON.encode(toJsonList());
 
-  List<Map<String, Object>> toJson() {
+  List<Map<String, Object>> toJsonList() {
     List<Map<String, Object>> entityList = new List<Map<String, Object>>();
     for (E entity in _entityList) {
-      entityList.add(entity.toJson());
+      entityList.add(entity.toJsonMap());
     }
     return entityList;
+  }
+  
+  fromJson(String entitiesJson) {
+    List<Map<String, Object>> entitiesList = JSON.decode(entitiesJson);
+    fromJsonList(entitiesList);
   }
 
   /**
    * Loads entities without validations to this, which must be empty.
-   * It does not handle neighbors.
-   * See ModelEntries for the JSON transfer at the level of a model entry.
    */
-  fromJson(List<Map<String, Object>> entitiesList) {
+  fromJsonList(List<Map<String, Object>> entitiesList, 
+               [ConceptEntity internalParent]) {
     if (concept == null) {
       throw new ConceptError('entities concept does not exist.');
     }
     if (length > 0) {
       throw new JsonError('entities are not empty');
-    }
+    }    
+    var beforePre = pre;
+    var beforePost = post;
     pre = false;
     post = false;
     for (Map<String, Object> entityMap in entitiesList) {
       E entity = newEntity();
-      entity.fromJson(entityMap);
+      entity.fromJsonMap(entityMap, internalParent);
       add(entity);
     }
-    pre = true;
-    post = true;
+    pre = beforePre;
+    post = beforePost;
   }
 
   /**

@@ -13,6 +13,7 @@ abstract class ModelEntriesApi {
 
   String fromEntryToJson(String entryConceptCode);
   fromJsonToEntry(String entryJson);
+  populateEntryReferences(String entryJson);
   
   String toJson();
   fromJson(String json);
@@ -102,18 +103,23 @@ class ModelEntries implements ModelEntriesApi {
     });
   }
   
+  String fromEntryToJson(String entryConceptCode) => 
+      JSON.encode(fromEntryToMap(entryConceptCode));
+  
   Map<String, Object> fromEntryToMap(String entryConceptCode) {
     Map<String, Object> entryMap = new Map<String, Object>();
     entryMap['domain'] = _model.domain.code;
     entryMap['model'] = _model.code;  
     entryMap['entry'] = entryConceptCode;   
     Entities entryEntities = getEntry(entryConceptCode);  
-    entryMap['entities'] = entryEntities.toJson();
+    entryMap['entities'] = entryEntities.toJsonList();
     return entryMap;
   }
   
-  String fromEntryToJson(String entryConceptCode) => 
-      JSON.encode(fromEntryToMap(entryConceptCode));
+  fromJsonToEntry(String entryJson) {
+    Map<String, Object> entryMap = JSON.decode(entryJson);
+    fromMapToEntry(entryMap);
+  }
   
   fromMapToEntry(Map<String, Object> entryMap) {
     var domainCode = entryMap['domain'];
@@ -137,15 +143,46 @@ class ModelEntries implements ModelEntriesApi {
           '$entryConceptCode entry receiving entities are not empty');
     }
     List<Map<String, Object>> entitiesList = entryMap['entities'];
-    entryEntities.addFrom(_entitiesFromJson(entitiesList, null, entryConcept));
+    entryEntities.fromJsonList(entitiesList);
   }
   
-  fromJsonToEntry(String entryJson) {
+  populateEntryReferencesFromJsonMap(Map<String, Object> entryMap) {
+    var domainCode = entryMap['domain'];
+    var modelCode = entryMap['model'];
+    var entryConceptCode = entryMap['entry'];
+    var entryEntities = getEntry(entryConceptCode);
+    for (var entity in entryEntities) {
+      for (Parent parent in entity.concept.externalParents) {
+        Reference reference = entity.getReference(parent.code);
+        String parentOidString = reference.parentOidString;
+        String parentConceptCode = reference.parentConceptCode;
+        String entryConceptCode = reference.entryConceptCode;
+        var parentEntity = 
+            internalSingle(reference.entryConceptCode, reference.oid);
+        if (parentEntity == null) {
+          throw new ParentError('Parent not found for the reference: '
+                                '${reference.toString()}');
+        }
+        if (entity.getParent(parent.code) == null) {
+          entity.setParent(parent.code, parentEntity);
+          print('parent.opposite.code: ${parent.opposite.code}');
+          var parentChildEntities = parentEntity.getChild(parent.opposite.code);
+          print('parentChildEntities.length before add: ${parentChildEntities.length}');
+          parentChildEntities.add(entity);
+          print('parentChildEntities.length after add: ${parentChildEntities.length}');
+        }
+      }
+    }
+  }
+  
+  populateEntryReferences(String entryJson) {
     Map<String, Object> entryMap = JSON.decode(entryJson);
-    fromMapToEntry(entryMap);
+    populateEntryReferencesFromJsonMap(entryMap);
   }
   
-  Map<String, Object> toMap() { 
+  String toJson() => JSON.encode(toJsonMap());
+  
+  Map<String, Object> toJsonMap() { 
     var entriesMap = new Map<String, Object>(); 
     _model.entryConcepts.forEach((entryConcept) {
       entriesMap[entryConcept.code] = fromEntryToMap(entryConcept.code); 
@@ -153,139 +190,24 @@ class ModelEntries implements ModelEntriesApi {
     return entriesMap; 
   }
   
-  String toJson() => JSON.encode(toMap());
+  fromJson(String entriesJson) {
+    Map<String, Object> entriesMap = JSON.decode(entriesJson);
+    fromJsonMap(entriesMap);
+  }
   
-  fromMap(Map<String, Object> entriesMap) { 
+  fromJsonMap(Map<String, Object> entriesMap) { 
     _model.entryConcepts.forEach((entryConcept) {
       Map<String, Object> entryMap = entriesMap[entryConcept.code];
       fromMapToEntry(entryMap);
     }); 
-  } 
+    populateReferences(entriesMap);
+  }  
   
-  fromJson(String entriesJson) {
-    Map<String, Object> entriesMap = JSON.decode(entriesJson);
-    fromMap(entriesMap);
-  } 
-  
-  Entities _entitiesFromJson(List<Map<String, Object>> entitiesList,
-                             ConceptEntity internalParent,
-                             Concept concept) {
-    Entities entities = newEntities(concept.code);
-    for (Map<String, Object> entityMap in entitiesList) {
-      ConceptEntity entity = 
-          _entityFromJson(entityMap, internalParent, concept);
-      entities.pre = false;
-      entities.post = false;
-      entities.add(entity);
-      entities.pre = true;
-      entities.post = true;
-    }
-    return entities;  
-  }
-  
-  ConceptEntity _entityFromJson(Map<String, Object> entityMap,
-                                ConceptEntity internalParent,
-                                Concept concept) {
-    ConceptEntity entity;
-    int timeStamp;
-    try {
-      timeStamp = int.parse(entityMap['oid']);
-    } on FormatException catch (e) {
-      throw new TypeError('${entityMap['oid']} oid is not int: $e');
-    }
-
-    var oid = new Oid.ts(timeStamp);
-    entity = newEntity(concept.code);
-    var beforeUpdateOid = concept.updateOid;
-    concept.updateOid = true;
-    entity.oid = oid;
-    concept.updateOid = beforeUpdateOid;
-
-    var beforeUpdateCode = concept.updateCode;
-    concept.updateCode = true;
-    entity.code = entityMap['code'];
-    concept.updateCode = beforeUpdateCode;
-
-    for (Attribute attribute in concept.attributes) {
-      if (attribute.identifier) {
-        var beforUpdate = attribute.update;
-        attribute.update = true;
-        entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
-        attribute.update = beforUpdate;
-      } else {
-        entity.setStringToAttribute(attribute.code, entityMap[attribute.code]);
-      }
-    }
-
-    for (Child child in concept.children) {
-      if (child.internal) {
-        List<Map<String, Object>> entitiesList = entityMap[child.code];
-        if (entitiesList != null) {
-          var childConcept = child.destinationConcept;
-          var entities = _entitiesFromJson(entitiesList, entity, childConcept);
-          assert(entities != null);
-          entity.setChild(child.code, entities);
-        }
-      }
-    }
-
-    for (Parent parent in concept.parents) {
-      Map<String, String> reference = entityMap[parent.code];
-      if (reference == 'null') {
-        if (parent.minc != '0') {
-          throw new ParentError('${parent.code} parent cannot be null.');
-        }
-      } else {
-        String parentOidString = reference['oid'];
-        String parentConceptCode = reference['parent'];
-        String entryConceptCode = reference['entry'];
-        var parentTimeStamp;
-        try {
-          parentTimeStamp = int.parse(parentOidString);   
-        } on FormatException catch (e) {
-          throw new TypeError('${parent.code} parent oid is not int: $e');
-        }
-        var parentOid = new Oid.ts(parentTimeStamp); 
-        if (parent.internal) {        
-          if (parentOid == internalParent.oid) {
-            entity.setParent(parent.code, internalParent);
-          } else {
-            throw new ParentError(
-                '${parent.code} internal parent oid is wrong.');
-          }       
-        } else { // parent is external
-          ConceptEntity externalParent = 
-              internalSingle(entryConceptCode, parentOid);
-          if (externalParent == null) {
-            throw new ParentError(
-              '${parent.code} external parent not found, from json it first.');
-          } else {
-            Concept externalParentConcept = externalParent.concept;
-            if (parentConceptCode != externalParentConcept.code) {
-              throw new ParentError(
-                '${parentConceptCode} parent concept is wrong, '
-                'should be ${externalParentConcept.code}.');
-            }
-            entity.setParent(parent.code, externalParent);
-            var childNeighbor;
-            for (var child in externalParentConcept.children) {
-              if (child.opposite == parent) {
-                childNeighbor = child;
-                break;
-              }
-            }
-            if (childNeighbor != null) {
-              var childEntities = externalParent.getChild(childNeighbor.code);
-              childEntities.add(entity);
-            } else {
-              throw new ParentError(
-                '${parent.code} external parent child entities not found.');
-            }            
-          }
-        }
-      }
-    }
-    return entity;
+  populateReferences(Map<String, Object> entriesMap) {
+    _model.entryConcepts.forEach((entryConcept) {
+      Map<String, Object> entryMap = entriesMap[entryConcept.code];
+      populateEntryReferencesFromJsonMap(entryMap);
+    });
   }
 
   display() {

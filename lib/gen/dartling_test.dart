@@ -191,7 +191,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
          '${entity}${requiredAttribute.codeFirstLetterUpper}); \n';
     sc = '${sc}      expect(selected${Entities}.isEmpty, isFalse); \n';
     sc = '${sc} \n';
-    sc = '${sc}      selected${Entities}.display(title: "Select ${entities} by '
+    sc = '${sc}      //selected${Entities}.display(title: "Select ${entities} by '
          '${requiredAttribute.code}"); \n'; 
     sc = '${sc}    }); \n';
   } else {
@@ -204,14 +204,14 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   if (idAttribute != null) {
     sc = '${sc}      ${entities}.sort(); \n';
     sc = '${sc} \n';
-    sc = '${sc}      ${entities}.display(title: "Sort ${entities}"); \n';    
+    sc = '${sc}      //${entities}.display(title: "Sort ${entities}"); \n';    
   } else {
     sc = '${sc}      // no id attribute \n';
     sc = '${sc}      // add compareTo method in the specific ${Entity} class \n';
     sc = '${sc}      /* \n';
     sc = '${sc}      ${entities}.sort(); \n';
     sc = '${sc} \n';
-    sc = '${sc}      ${entities}.display(title: "Sort ${entities}"); \n';
+    sc = '${sc}      //${entities}.display(title: "Sort ${entities}"); \n';
     sc = '${sc}      */ \n';
   }
   sc = '${sc}    }); \n';
@@ -228,7 +228,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
          'equals(${entities}.length)); \n';
     sc = '${sc}      expect(ordered${Entities}, isNot(same(${entities}))); \n';
     sc = '${sc} \n';
-    sc = '${sc}      ordered${Entities}.display(title: "Order ${entities}"); \n';    
+    sc = '${sc}      //ordered${Entities}.display(title: "Order ${entities}"); \n';    
   } else {
     sc = '${sc}      // no id attribute \n';
     sc = '${sc}      // add compareTo method in the specific ${Entity} class \n';
@@ -242,7 +242,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
          'equals(${entities}.length)); \n';
     sc = '${sc}      expect(ordered${Entities}, isNot(same(${entities}))); \n';
     sc = '${sc} \n';
-    sc = '${sc}      ordered${Entities}.display(title: "Order ${entities}"); \n';    
+    sc = '${sc}      //ordered${Entities}.display(title: "Order ${entities}"); \n';    
     sc = '${sc}      */ \n';
   }
   sc = '${sc}    }); \n';
@@ -256,12 +256,12 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}      expect(copied${Entities}, isNot(same(${entities}))); \n';
   sc = '${sc}      copied${Entities}.forEach((e) => \n';
   sc = '${sc}        expect(e, equals(${entities}.singleWhereOid(e.oid)))); \n';
-  if (entryConcept.identifier) {
+  if (entryConcept.hasId) {
     sc = '${sc}      copied${Entities}.forEach((e) => \n';
     sc = '${sc}        expect(e, isNot(same(${entities}.singleWhereId(e.id))))); \n';    
   }
   sc = '${sc} \n';
-  sc = '${sc}      copied${Entities}.display(title: "Copy ${entities}"); \n';
+  sc = '${sc}      //copied${Entities}.display(title: "Copy ${entities}"); \n';
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   
@@ -280,8 +280,8 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}      var ${entity}2 = ${entities}.random(); \n';
   sc = '${sc}      expect(${entity}2, isNotNull); \n';
   sc = '${sc} \n';
-  sc = '${sc}      ${entity}1.display(prefix: "1"); \n';
-  sc = '${sc}      ${entity}2.display(prefix: "2"); \n';
+  sc = '${sc}      //${entity}1.display(prefix: "random1"); \n';
+  sc = '${sc}      //${entity}2.display(prefix: "random2"); \n';
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   
@@ -315,6 +315,7 @@ Attribute findIdAttribute(Concept concept) {
   return null;
 }
 
+/*
 String setAttributeRandomly(Attribute attribute, String entity) {
   var sc = '';
   if (attribute.type.code == 'String') {     
@@ -338,5 +339,6 @@ String setAttributeRandomly(Attribute attribute, String entity) {
   }
   return sc;
 }
+*/
 
 

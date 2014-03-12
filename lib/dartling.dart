@@ -61,6 +61,7 @@ part 'domain/model/entity.dart';
 part 'domain/model/entries.dart';
 part 'domain/model/id.dart';
 part 'domain/model/oid.dart';
+part 'domain/model/reference.dart';
 part 'domain/models.dart';
 part 'domain/session.dart';
 

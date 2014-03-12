@@ -17,7 +17,7 @@ String genConcept(Concept concept, String library) {
   Id id = concept.id;
   if (id.length > 0) {
     sc = '${sc}  ${concept.code}.withId(Concept concept';
-    if (id.parentLength > 0) {
+    if (id.referenceLength > 0) {
       for (Parent parent in concept.parents) {
         if (parent.identifier) {
           Concept destinationConcept = parent.destinationConcept;
@@ -34,7 +34,7 @@ String genConcept(Concept concept, String library) {
     }
     sc = '${sc}) : \n';
     sc = '${sc}    super.withId(concept';
-    if (id.parentLength > 0) {
+    if (id.referenceLength > 0) {
       for (Parent parent in concept.parents) {
         if (parent.identifier) {
           sc = '${sc}, ${parent.code}';

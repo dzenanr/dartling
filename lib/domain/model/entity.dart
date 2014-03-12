@@ -20,7 +20,8 @@ abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
   bool setChild(String name, EntitiesApi entities);
 
   E copy();
-  Map<String, Object> toJson();
+  String toJson();
+  fromJson(String entityJson);
 
 }
 
@@ -33,6 +34,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
 
   Map<String, Object> _attributeMap;
   // cannot use T since a parent is of a different type
+  Map<String, Reference> _referenceMap;
   Map<String, ConceptEntity> _parentMap;
   Map<String, Entities> _childMap;
   Map<String, Entities> _internalChildMap;
@@ -52,6 +54,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     _errors = new ValidationErrors();
     _oid = new Oid();
     _attributeMap = new Map<String, Object>();
+    _referenceMap = new Map<String, Reference>();
     _parentMap = new Map<String, ConceptEntity>();
     _childMap = new Map<String, Entities>();
     _internalChildMap = new Map<String, Entities>();
@@ -103,6 +106,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     } // for
 
     for (Parent parent in _concept.parents) {
+      _referenceMap[parent.code] = null;
       _parentMap[parent.code] = null;
     }
 
@@ -146,7 +150,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     Id id = new Id(_concept);
     for (Parent p in _concept.parents) {
       if (p.identifier) {
-        id.setParent(p.code, _parentMap[p.code]);
+        id.setReference(p.code, _referenceMap[p.code]);
       }
     }
     for (Attribute a in _concept.attributes) {
@@ -422,6 +426,13 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       return setAttribute(name, string);
     }
   }
+  
+  Reference getReference(String name) => _referenceMap[name];
+  setReference(String name, Reference reference) {
+    if (getParent(name) == null) {
+      _referenceMap[name] = reference;
+    }
+  }
 
   ConceptEntity getParent(String name) => _parentMap[name];
   bool setParent(String name, ConceptEntity entity) {
@@ -435,10 +446,16 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
 
     if (getParent(name) == null) {
-      _parentMap[name] = entity;
+      _parentMap[name] = entity;  
+      var reference = new Reference(entity.oid.toString(), entity.concept.code, 
+                                    entity.concept.entryConcept.code);
+      _referenceMap[name] = reference;
       return true;
     } else if (parent.update) {
       _parentMap[name] = entity;
+      var reference = new Reference(entity.oid.toString(), entity.concept.code, 
+                                    entity.concept.entryConcept.code);
+      _referenceMap[name] = reference;
       return true;
     } else {
       String msg = '${_concept.code}.${parent.code} is not updateable.';
@@ -734,8 +751,10 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
 
     print('');
   }
+  
+  String toJson() => JSON.encode(toJsonMap());
 
-  Map<String, Object> toJson() {
+  Map<String, Object> toJsonMap() {
     Map<String, Object> entityMap = new Map<String, Object>();
     for (Parent parent in _concept.parents) {
       ConceptEntity parentEntity = getParent(parent.code);
@@ -754,16 +773,19 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     _attributeMap.keys.forEach((k) =>
         entityMap[k] = getStringFromAttribute(k));
     _internalChildMap.keys.forEach(
-        (k) => entityMap[k] = getInternalChild(k).toJson());
+        (k) => entityMap[k] = getInternalChild(k).toJsonList());
     return entityMap;
+  }
+  
+  fromJson(String entityJson) {
+    Map<String, Object> entityMap = JSON.decode(entityJson);
+    fromJsonMap(entityMap);
   }
 
   /**
-   * Loads attribute values without validations to this.
-   * It does not handle neighbors.
-   * See ModelEntries for the JSON transfer at the level of a model entry.
+   * Loads data from a json map.
    */
-  fromJson(Map<String, Object> entityMap) {
+  fromJsonMap(Map<String, Object> entityMap, [ConceptEntity internalParent]) {
     int timeStamp;
     try {
       timeStamp = int.parse(entityMap['oid']);
@@ -781,6 +803,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     code = entityMap['code'];
     concept.updateCode = beforeUpdateCode;
 
+    var beforePre = pre;
     pre = false;
     for (Attribute attribute in concept.attributes) {
       if (attribute.identifier) {
@@ -792,7 +815,66 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
         setStringToAttribute(attribute.code, entityMap[attribute.code]);
       }
     }
-    pre = true;
+    _neighborsFromJsonMap(entityMap, internalParent);
+    pre = beforePre;
   }
+  
+  /**
+   * Loads neighbors from a json map.
+   */
+  _neighborsFromJsonMap(Map<String, Object> entityMap, 
+                        [ConceptEntity internalParent]) {
+    for (Child child in concept.children) {
+      if (child.internal) {
+        List<Map<String, Object>> entitiesList = entityMap[child.code];
+        if (entitiesList != null) {
+          var childEntities = getChild(child.code);
+          childEntities.fromJsonList(entitiesList, this);
+          setChild(child.code, childEntities);
+        }
+      }
+    } 
+    
+    for (Parent parent in concept.parents) {
+      Map<String, String> parentReference = entityMap[parent.code];
+      if (parentReference == 'null') {
+        if (parent.minc != '0') {
+          throw new ParentError('${parent.code} parent cannot be null.');
+        }
+      } else {
+        String parentOidString = parentReference['oid'];
+        String parentConceptCode = parentReference['parent'];
+        String entryConceptCode = parentReference['entry'];
+        Reference reference = 
+            new Reference(parentOidString, parentConceptCode, entryConceptCode);
+        Oid parentOid = reference.oid; 
+        setReference(parent.code, reference);
+        
+        if (internalParent != null && parent.internal) {        
+          if (parentOid == internalParent.oid) {
+            setParent(parent.code, internalParent);
+          } else {
+            var msg = """
+
+              =============================================
+              Internal parent oid is wrong, inform Dzenan                            
+              ---------------------------------------------                            
+              entries.dart: entity.setParent(parent.code, internalParent); 
+              internal parent oid: ${internalParent.oid}                  
+              entity concept: ${concept.code}                   
+              entity oid: ${oid}                                
+              parent oid: ${parentOidString}                           
+              parent code: ${parent.code}                              
+              parent concept: ${parentConceptCode}                     
+              entry concept for parent: ${entryConceptCode}            
+              ---------------------------------------------
+            """;
+            print(msg);
+            //throw new ParentError(msg);            
+          } // else
+        } // if
+      } // else
+    } // for
+  } // neighborsFromMap
 
 }

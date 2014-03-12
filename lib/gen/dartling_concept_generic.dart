@@ -36,7 +36,7 @@ String genConceptGen(Concept concept, String library) {
   Id id = concept.id;
   if (id.length > 0) {
     sc = '${sc}  ${concept.code}Gen.withId(Concept concept';
-    if (id.parentLength > 0) {
+    if (id.referenceLength > 0) {
       for (Parent parent in concept.parents) {
         if (parent.identifier) {
           Concept destinationConcept = parent.destinationConcept;
@@ -52,7 +52,7 @@ String genConceptGen(Concept concept, String library) {
       }
     }
     sc = '${sc}) : super.of(concept) { \n';
-    if (id.parentLength > 0) {
+    if (id.referenceLength > 0) {
       for (Parent parent in concept.parents) {
         if (parent.identifier) {
           sc = '${sc}    setParent("${parent.code}", ${parent.code}); \n';
@@ -85,6 +85,11 @@ String genConceptGen(Concept concept, String library) {
 
   for (Parent parent in concept.parents) {
     Concept destinationConcept = parent.destinationConcept;
+    sc = '${sc}  Reference get ${parent.code}Reference => '
+         'getReference("${parent.code}"); \n ';
+    sc = '${sc} set ${parent.code}Reference(Reference reference) => '
+         'setReference("${parent.code}", reference); \n ';
+    sc = '${sc} \n';
     sc = '${sc}  ${destinationConcept.code} get ${parent.code} => '
          'getParent("${parent.code}"); \n ';
     sc = '${sc} set ${parent.code}(${destinationConcept.code} p) => '

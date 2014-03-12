@@ -132,6 +132,16 @@ class Concept extends ConceptEntity<Concept> {
   Child getSourceChild(String childCode) =>
       sourceChildren.singleWhereCode(childCode);
 
+  List<Attribute> get requiredAttributes {
+    List<Attribute> requiredList= new List<Attribute>();
+    for (Attribute attribute in attributes) {
+      if (attribute.required) {
+        requiredList.add(attribute);
+      }
+    }
+    return requiredList;
+  }
+  
   List<Attribute> get essentialAttributes {
     List<Attribute> essentialList= new List<Attribute>();
     for (Attribute attribute in attributes) {
@@ -168,10 +178,64 @@ class Concept extends ConceptEntity<Concept> {
     propertyList.addAll(parents.toList());
     return propertyList;
   }
+  
+  bool get hasTwinParent {
+    for (Parent parent in parents) {
+      if (parent.twin) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  bool get hasReflexiveParent {
+    for (Parent parent in parents) {
+      if (parent.reflexive) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  bool get hasTwinChild {
+    for (Child child in children) {
+      if (child.twin) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  bool get hasReflexiveChild {
+    for (Child child in children) {
+      if (child.reflexive) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-  bool get identifier {
-  for (Property property in singleValueProperties) {
+  bool get hasId {
+    for (Property property in singleValueProperties) {
       if (property.identifier) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  bool get hasAttributeId {
+    for (Attribute attribute in attributes) {
+      if (attribute.identifier) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  bool get hasParentId {
+    for (Parent parent in parents) {
+      if (parent.identifier) {
         return true;
       }
     }

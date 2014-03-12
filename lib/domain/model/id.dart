@@ -3,10 +3,10 @@ part of dartling;
 abstract class IdApi implements Comparable {
 
   Concept get concept;
-  int get parentLength;  int get attributeLength;
+  int get referenceLength;  int get attributeLength;
   int get length;
-  EntityApi getParent(String code);
-  setParent(String code, EntityApi parent);
+  Reference getReference(String code);
+  setReference(String code, Reference reference);
 
   Object getAttribute(String code);
   setAttribute(String code, Object attribute);
@@ -17,15 +17,15 @@ class Id implements IdApi {
 
   Concept _concept;
 
-  Map<String, ConceptEntity> _parentMap;
+  Map<String, Reference> _referenceMap;
   Map<String, Object> _attributeMap;
 
   Id(this._concept) {
-    _parentMap = new Map<String, ConceptEntity>();
+    _referenceMap = new Map<String, Reference>();
     _attributeMap = new Map<String, Object>();
     for (Parent p in _concept.parents) {
       if (p.identifier) {
-        _parentMap[p.code] = null;
+        _referenceMap[p.code] = null;
       }
     }
     for (Attribute a in concept.attributes) {
@@ -37,17 +37,25 @@ class Id implements IdApi {
 
   Concept get concept => _concept;
 
-  int get parentLength => _parentMap.length;
+  int get referenceLength => _referenceMap.length;
   int get attributeLength => _attributeMap.length;
-  int get length => parentLength + attributeLength;
+  int get length => referenceLength + attributeLength;
 
-  ConceptEntity getParent(String code) => _parentMap[code];
-  setParent(String code, ConceptEntity parent) => _parentMap[code] = parent;
+  Reference getReference(String code) => _referenceMap[code];
+  setReference(String code, Reference reference) => 
+      _referenceMap[code] = reference;
+  
+  setParent(String code, ConceptEntity entity) {
+      Reference reference = new Reference(entity.oid.toString(), 
+          entity.concept.code, entity.concept.entryConcept.code);
+      setReference(code, reference);
+  }  
 
   Object getAttribute(String code) => _attributeMap[code];
   setAttribute(String code, Object attribute) => _attributeMap[code] = attribute;
 
-  int get hashCode => (_concept.hashCode + _parentMap.hashCode + _attributeMap.hashCode).hashCode;
+  int get hashCode => 
+    (_concept.hashCode + _referenceMap.hashCode + _attributeMap.hashCode).hashCode;
 
   /**
    * Two ids are equal if their parents are equal.
@@ -55,7 +63,7 @@ class Id implements IdApi {
    bool equalParents(Id id) {
      for (Parent p in _concept.parents) {
        if (p.identifier) {
-         if (_parentMap[p.code] != id.getParent(p.code)) {
+         if (_referenceMap[p.code] != id.getReference(p.code)) {
            return false;
          }
        }
@@ -166,11 +174,12 @@ class Id implements IdApi {
     * if the result is greater than 0 then the first is greater than the second.
     */
    int compareParents(Id id) {
-     if (id.parentLength > 0) {
+     if (id.referenceLength > 0) {
        var compare = 0;
        for (Parent p in _concept.parents) {
          if (p.identifier) {
-           compare = _parentMap[p.code].id.compareTo(id.getParent(p.code).id);
+           compare = 
+               _referenceMap[p.code].oid.compareTo(id.getReference(p.code).oid);
            if (compare != 0) {
              break;
            }
@@ -241,7 +250,7 @@ class Id implements IdApi {
   int compareTo(Id id) {
     if (id.length > 0) {
       var compare = 0;
-      if (id.parentLength > 0) {
+      if (id.referenceLength > 0) {
         compare = compareParents(id);
       }
       if (compare == 0) {
@@ -267,8 +276,8 @@ class Id implements IdApi {
    */
   String toString() {
      String result = '' ;
-     if (parentLength > 0) {
-       _parentMap.forEach((k,v) => result = '$result ${v},');
+     if (referenceLength > 0) {
+       _referenceMap.forEach((k,v) => result = '$result ${v},');
      }
      if (attributeLength > 0) {
        _attributeMap.forEach((k,v) => result = '$result ${v},');
