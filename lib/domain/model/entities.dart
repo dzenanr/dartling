@@ -471,6 +471,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
         if (length == maxInt) {
           var error = new ValidationError('max');
           error.message = '${_concept.codes}.max is $maxc.';
+          error.category = 'max cardinality';
 
           _errors.add(error);
           result = false;

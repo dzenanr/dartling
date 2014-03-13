@@ -154,22 +154,24 @@ class ModelEntries implements ModelEntriesApi {
     for (var entity in entryEntities) {
       for (Parent parent in entity.concept.externalParents) {
         Reference reference = entity.getReference(parent.code);
-        String parentOidString = reference.parentOidString;
-        String parentConceptCode = reference.parentConceptCode;
-        String entryConceptCode = reference.entryConceptCode;
-        var parentEntity = 
-            internalSingle(reference.entryConceptCode, reference.oid);
-        if (parentEntity == null) {
-          throw new ParentError('Parent not found for the reference: '
-                                '${reference.toString()}');
-        }
-        if (entity.getParent(parent.code) == null) {
-          entity.setParent(parent.code, parentEntity);
-          print('parent.opposite.code: ${parent.opposite.code}');
-          var parentChildEntities = parentEntity.getChild(parent.opposite.code);
-          print('parentChildEntities.length before add: ${parentChildEntities.length}');
-          parentChildEntities.add(entity);
-          print('parentChildEntities.length after add: ${parentChildEntities.length}');
+        if (reference != null) {
+          String parentOidString = reference.parentOidString;
+          String parentConceptCode = reference.parentConceptCode;
+          String entryConceptCode = reference.entryConceptCode;
+          var parentEntity = 
+              internalSingle(reference.entryConceptCode, reference.oid);
+          if (parentEntity == null) {
+            throw new ParentError('Parent not found for the reference: '
+                                  '${reference.toString()}');
+          }
+          if (entity.getParent(parent.code) == null) {
+            entity.setParent(parent.code, parentEntity);
+            print('parent.opposite.code: ${parent.opposite.code}');
+            var parentChildEntities = parentEntity.getChild(parent.opposite.code);
+            print('parentChildEntities.length before add: ${parentChildEntities.length}');
+            parentChildEntities.add(entity);
+            print('parentChildEntities.length after add: ${parentChildEntities.length}');
+          }
         }
       }
     }

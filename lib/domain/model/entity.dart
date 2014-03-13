@@ -444,23 +444,26 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       String msg = '${_concept.code}.$name is not correct parent entity name.';
       throw new UpdateError(msg);
     }
-
-    if (getParent(name) == null) {
-      _parentMap[name] = entity;  
-      var reference = new Reference(entity.oid.toString(), entity.concept.code, 
-                                    entity.concept.entryConcept.code);
-      _referenceMap[name] = reference;
-      return true;
-    } else if (parent.update) {
-      _parentMap[name] = entity;
-      var reference = new Reference(entity.oid.toString(), entity.concept.code, 
-                                    entity.concept.entryConcept.code);
-      _referenceMap[name] = reference;
-      return true;
-    } else {
-      String msg = '${_concept.code}.${parent.code} is not updateable.';
-      throw new UpdateError(msg);
-    }
+    
+    if (entity != null) {
+      if (getParent(name) == null) {
+        _parentMap[name] = entity;  
+        var reference = new Reference(entity.oid.toString(), entity.concept.code, 
+                                      entity.concept.entryConcept.code);
+        _referenceMap[name] = reference;
+        return true;
+      } else if (parent.update) {
+        _parentMap[name] = entity;
+        var reference = new Reference(entity.oid.toString(), entity.concept.code, 
+                                      entity.concept.entryConcept.code);
+        _referenceMap[name] = reference;
+        return true;
+      } else {
+        String msg = '${_concept.code}.${parent.code} is not updateable.';
+        throw new UpdateError(msg);
+      }
+    } 
+    return false;
   }
 
   Entities getInternalChild(String name) => _internalChildMap[name];
@@ -836,7 +839,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     } 
     
     for (Parent parent in concept.parents) {
-      Map<String, String> parentReference = entityMap[parent.code];
+      var parentReference = entityMap[parent.code];
       if (parentReference == 'null') {
         if (parent.minc != '0') {
           throw new ParentError('${parent.code} parent cannot be null.');

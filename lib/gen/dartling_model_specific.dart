@@ -94,9 +94,8 @@ String createEntryEntitiesRandomly(Concept entryConcept) {
     for (Parent externalRequiredParent in entryConcept.externalRequiredParents) {
       var parent  = '${externalRequiredParent.code}';
       var Parent  = '${externalRequiredParent.codeFirstLetterUpper}';
-      var parents = 
-        '${externalRequiredParent.destinationConcept.codePluralFirstLetterLower}';
-      sc = '${sc}    ${entryEntity}${Parent}.${entryEntities}.add('
+      sc = '${sc}    ${entryEntity}${Parent}.'
+           '${externalRequiredParent.opposite.code}.add('
            '${entryEntity}); \n';
     }
     
@@ -143,10 +142,9 @@ String createChildEntitiesRandomly(String parentVar,
     
     for (Parent externalRequiredParent in childConcept.externalRequiredParents) {
       var parent  = '${externalRequiredParent.code}';
-      var Parent  = '${externalRequiredParent.codeFirstLetterUpper}';
-      var parents = 
-        '${externalRequiredParent.destinationConcept.codePluralFirstLetterLower}';
-      sc = '${sc}    ${childEntity}${Parent}.${childEntities}.add('
+      var Parent  = '${externalRequiredParent.codeFirstLetterUpper}';   
+      sc = '${sc}    ${childEntity}${Parent}.'
+           '${externalRequiredParent.opposite.code}.add('
            '${childEntity}); \n';
     }
     
