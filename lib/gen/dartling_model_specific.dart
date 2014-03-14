@@ -172,29 +172,31 @@ String setAttributesRandomly(Concept concept, String entity, [String end='']) {
   var sc = '';
   //for (Attribute attribute in concept.requiredAttributes) {
   for (Attribute attribute in concept.attributes) {
-    if (attribute.type.code == 'String') {     
-      if (end == '') {
-        sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
+    if (attribute.increment == null) {
+      if (attribute.type.code == 'String') {     
+        if (end == '') {
+          sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
+        } else {
+          sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}${end}"; \n';
+        }        
+      } else if (attribute.type.code == 'num') {
+        sc = '${sc}    ${entity}.${attribute.code} = ${randomNum(1000)}; \n';
+      } else if (attribute.type.code == 'int') {
+        sc = '${sc}    ${entity}.${attribute.code} = ${randomInt(10000)}; \n';
+      } else if (attribute.type.code == 'double') {
+        sc = '${sc}    ${entity}.${attribute.code} = ${randomDouble(100)}; \n';
+      } else if (attribute.type.code == 'bool') {
+        sc = '${sc}    ${entity}.${attribute.code} = ${randomBool()}; \n';
+      } else if (attribute.type.code == 'DateTime') {
+        sc = '${sc}    ${entity}.${attribute.code} = new DateTime.now(); \n';
+      } else if (attribute.type.code == 'Uri') {
+        sc = '${sc}    ${entity}.${attribute.code} = '
+             'Uri.parse("${randomUri()}"); \n';
+      } else if (attribute.type.code == 'Email') {
+        sc = '${sc}    ${entity}.${attribute.code} = "${randomEmail()}"; \n';
       } else {
-        sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}${end}"; \n';
-      }        
-    } else if (attribute.type.code == 'num') {
-      sc = '${sc}    ${entity}.${attribute.code} = ${randomNum(1000)}; \n';
-    } else if (attribute.type.code == 'int') {
-      sc = '${sc}    ${entity}.${attribute.code} = ${randomInt(10000)}; \n';
-    } else if (attribute.type.code == 'double') {
-      sc = '${sc}    ${entity}.${attribute.code} = ${randomDouble(100)}; \n';
-    } else if (attribute.type.code == 'bool') {
-      sc = '${sc}    ${entity}.${attribute.code} = ${randomBool()}; \n';
-    } else if (attribute.type.code == 'DateTime') {
-      sc = '${sc}    ${entity}.${attribute.code} = new DateTime.now(); \n';
-    } else if (attribute.type.code == 'Uri') {
-      sc = '${sc}    ${entity}.${attribute.code} = '
-           'Uri.parse("${randomUri()}"); \n';
-    } else if (attribute.type.code == 'Email') {
-      sc = '${sc}    ${entity}.${attribute.code} = "${randomEmail()}"; \n';
-    } else {
-      sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
+        sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
+      }      
     }
   }
   return sc;

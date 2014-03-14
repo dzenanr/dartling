@@ -144,21 +144,25 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}    test("Add ${entity} unique error", () { \n';
   var idAttribute = findIdAttribute(entryConcept);
   if (idAttribute != null) {
-    //var idAttributeSet = setAttributeRandomly(idAttribute, entity);
-    //sc = '${sc}    ${idAttributeSet}';
-    sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
-    sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
-    sc = '${sc}      var ${entity} = new ${Entity}(${entity}Concept); \n';
-    sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
-    sc = '${sc}      ${entity}.${idAttribute.code} = '
-         'random${Entity}.${idAttribute.code}; \n';
-    sc = '${sc}      var added = ${entities}.add(${entity}); \n';
-    sc = '${sc}      expect(added, isFalse); \n';
-    sc = '${sc}      expect(${entities}.length, equals(${entity}Count)); \n';
-    sc = '${sc}      expect(${entities}.errors.length, greaterThan(0)); \n';
-    sc = '${sc} \n';
-    sc = '${sc}      ${entities}.errors.display(title: "Add ${entity} unique '
-         'error"); \n'; 
+    if (idAttribute.increment == null) {
+      //var idAttributeSet = setAttributeRandomly(idAttribute, entity);
+      //sc = '${sc}    ${idAttributeSet}';
+      sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
+      sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
+      sc = '${sc}      var ${entity} = new ${Entity}(${entity}Concept); \n';
+      sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
+      sc = '${sc}      ${entity}.${idAttribute.code} = '
+           'random${Entity}.${idAttribute.code}; \n';
+      sc = '${sc}      var added = ${entities}.add(${entity}); \n';
+      sc = '${sc}      expect(added, isFalse); \n';
+      sc = '${sc}      expect(${entities}.length, equals(${entity}Count)); \n';
+      sc = '${sc}      expect(${entities}.errors.length, greaterThan(0)); \n';
+      sc = '${sc} \n';
+      sc = '${sc}      ${entities}.errors.display(title: "Add ${entity} unique '
+           'error"); \n'; 
+    } else {
+      sc = '${sc}      // id attribute defined as increment, cannot update it \n';
+    }
   } else {
     sc = '${sc}      // no id attribute \n';
   }

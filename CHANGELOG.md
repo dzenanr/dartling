@@ -4,6 +4,8 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.0* 2014-03-14
 
++ drop increment attribute in model init; 
+  drop increment attribute id unique error test
 + handle neighbor names different from standard names in model init code gen
 + handle optional parents in model init code gen
 + break a loop on creating reflexive child entities in the model's init
