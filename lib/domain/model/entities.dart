@@ -407,7 +407,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     pre = false;
     post = false;
     for (Map<String, Object> entityMap in entitiesList) {
-      E entity = newEntity();
+      var entity = newEntity();
       entity.fromJsonMap(entityMap, internalParent);
       add(entity);
     }

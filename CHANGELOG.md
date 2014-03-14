@@ -2,7 +2,7 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-03-13
+*2.0.0* 2014-03-14
 
 + handle neighbor names different from standard names in model init code gen
 + handle optional parents in model init code gen
