@@ -26,23 +26,37 @@ class Model extends ConceptEntity<Model> {
     return entryList;
   }
   
-  // ordered by external parent count (from 0 to ...)
+  // for model init, order by external parent count (from low to high)
   List<Concept> get orderedEntryConcepts {
-    List<Concept> entryConcepts = this.entryConcepts;
     var orderedEntryConceptsCount = 0;
-    List<Concept> orderedEntryConcepts = new List<Concept>();
-    for (var c = 0; c < 10; c++) {
-      for (Concept entryConcept in entryConcepts) {
-        var count = entryConcept.parents.externalCount;
-        if (count == c) {
-          orderedEntryConcepts.add(entryConcept);
-          if (++orderedEntryConceptsCount == entryConcepts.length) {
-            return orderedEntryConcepts;
+    var orderedEntryConcepts = new List<Concept>();
+    for (var c = 0; c < 9; c++) {
+      var sameExternalCountConcepts = new List<Concept>();
+      for (var concept in entryConcepts) {
+        if (concept.parents.externalCount == c) {
+          sameExternalCountConcepts.add(concept);
+        }
+      }
+      // order by external child count (from high to low)
+      var orderedSameExternalCountConcepts = new List<Concept>();
+      for (var s = 8; s >= 0; s--) {
+        for (var concept in sameExternalCountConcepts) {
+          if (concept.children.externalCount == s) {
+            orderedSameExternalCountConcepts.add(concept);
           }
         }
       }
-    }
-    return orderedEntryConcepts;
+      assert(sameExternalCountConcepts.length == 
+          orderedSameExternalCountConcepts.length);
+      for (var concept in orderedSameExternalCountConcepts) {
+        orderedEntryConcepts.add(concept);
+        orderedEntryConceptsCount++;
+      }
+      if (orderedEntryConceptsCount == entryConcepts.length) {
+        return orderedEntryConcepts;
+      }
+    } 
+    throw new ConceptError('Not all entry concepts ordered.');
   }
 
   int get entryConceptCount => entryConcepts.length;
@@ -51,7 +65,7 @@ class Model extends ConceptEntity<Model> {
   Concept getEntryConcept(String entryConceptCode) {
     Concept concept = concepts.singleWhereCode(entryConceptCode);
     if (!concept.entry) {
-      throw new Exception('$entryConceptCode concept is not entry.');
+      throw new ConceptError('$entryConceptCode concept is not entry.');
     }
     return concept;
   }

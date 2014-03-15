@@ -2,8 +2,9 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-03-14
+*2.0.0* 2014-03-15
 
++ order entry concepts for model init 
 + drop increment attribute in model init; 
   drop increment attribute id unique error test
 + handle neighbor names different from standard names in model init code gen

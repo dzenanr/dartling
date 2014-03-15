@@ -1,6 +1,14 @@
 part of dartling;
 
 class Children extends Entities<Property> {
+  
+  int get externalCount {
+    int externalCount = 0;
+    for (var child in this) {
+      if (child.external) externalCount++;
+    }
+    return externalCount; 
+  }
 
 }
 
