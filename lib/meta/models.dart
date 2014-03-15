@@ -56,7 +56,12 @@ class Model extends ConceptEntity<Model> {
         return orderedEntryConcepts;
       }
     } 
-    throw new ConceptError('Not all entry concepts ordered.');
+    var msg = """
+      Not all entry concepts are ordered by external parent count (from low to high). 
+      There is an entry concept in your model that has more than 9 external neighbors.
+      Inform the dartling authors to increase this restriction.
+    """;
+    throw new ConceptError(msg);
   }
 
   int get entryConceptCount => entryConcepts.length;
