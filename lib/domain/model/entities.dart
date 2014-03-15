@@ -490,7 +490,10 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
         } else if (a.type.code == 'int') {
           var lastEntity = last;
           int incrementAttribute = lastEntity.getAttribute(a.code);
+          var attributeUpdate = a.update;
+          a.update = true;
           entity.setAttribute(a.code, incrementAttribute + a.increment);
+          a.update = attributeUpdate;
         } else {
           throw new TypeError(
               '${a.code} attribute value cannot be incremented.');

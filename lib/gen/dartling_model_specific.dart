@@ -31,17 +31,6 @@ String genModel(Model model, String library) {
 
   // ordered by external parent count (from 0 to ...)
   var orderedEntryConcepts = model.orderedEntryConcepts;
-  /*
-  sc = '${sc}  fromMap(Map<String, Object> entriesMap) { \n';  
-  for (Concept entryConcept in orderedEntryConcepts) {
-    var entryMap = '${entryConcept.codeFirstLetterLower}EntryMap';
-    sc = '${sc}    Map<String, Object> ${entryMap} = '
-         'entriesMap["${entryConcept.code}"]; \n';
-    sc = '${sc}    fromMapToEntry(${entryMap}); \n';
-  }
-  sc = '${sc}  } \n';
-  sc = '${sc} \n';
-  */
 
   sc = '${sc}  init() { \n';
   for (Concept entryConcept in orderedEntryConcepts) {
@@ -167,36 +156,38 @@ String createChildEntitiesRandomly(String parentVar,
   return sc;
 }
 
-// tod do: check if random value should be unique
-String setAttributesRandomly(Concept concept, String entity, [String end='']) {
+// to do: check if random value should be unique
+String setAttributesRandomly(Concept concept, String entity) {
   var sc = '';
   //for (Attribute attribute in concept.requiredAttributes) {
   for (Attribute attribute in concept.attributes) {
-    if (attribute.increment == null) {
-      if (attribute.type.code == 'String') {     
-        if (end == '') {
-          sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
-        } else {
-          sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}${end}"; \n';
-        }        
-      } else if (attribute.type.code == 'num') {
-        sc = '${sc}    ${entity}.${attribute.code} = ${randomNum(1000)}; \n';
-      } else if (attribute.type.code == 'int') {
-        sc = '${sc}    ${entity}.${attribute.code} = ${randomInt(10000)}; \n';
-      } else if (attribute.type.code == 'double') {
-        sc = '${sc}    ${entity}.${attribute.code} = ${randomDouble(100)}; \n';
-      } else if (attribute.type.code == 'bool') {
-        sc = '${sc}    ${entity}.${attribute.code} = ${randomBool()}; \n';
-      } else if (attribute.type.code == 'DateTime') {
-        sc = '${sc}    ${entity}.${attribute.code} = new DateTime.now(); \n';
-      } else if (attribute.type.code == 'Uri') {
-        sc = '${sc}    ${entity}.${attribute.code} = '
-             'Uri.parse("${randomUri()}"); \n';
-      } else if (attribute.type.code == 'Email') {
-        sc = '${sc}    ${entity}.${attribute.code} = "${randomEmail()}"; \n';
-      } else {
-        sc = '${sc}    ${entity}.${attribute.code} = "${randomWord()}"; \n';
-      }      
+    var attributeSet = setAttributeRandomly(attribute, entity);
+    sc = '${sc}${attributeSet}';
+  }
+  return sc;
+}
+
+String setAttributeRandomly(Attribute attribute, String entity) {
+  var sc = '';
+  if (attribute.increment == null) {
+    if (attribute.type.code == 'String') {     
+      sc = '${sc}      ${entity}.${attribute.code} = "${randomWord()}"; \n';      
+    }  else if (attribute.type.code == 'num') {
+      sc = '${sc}      ${entity}.${attribute.code} = ${randomNum(1000)}; \n';
+    } else if (attribute.type.code == 'int') {
+      sc = '${sc}      ${entity}.${attribute.code} = ${randomInt(10000)}; \n';
+    } else if (attribute.type.code == 'double') {
+      sc = '${sc}      ${entity}.${attribute.code} = ${randomDouble(100)}; \n';
+    } else if (attribute.type.code == 'bool') {
+      sc = '${sc}      ${entity}.${attribute.code} = ${randomBool()}; \n';
+    } else if (attribute.type.code == 'DateTime') {
+      sc = '${sc}      ${entity}.${attribute.code} = new DateTime.now(); \n';
+    } else if (attribute.type.code == 'Uri') {
+      sc = '${sc}      ${entity}.${attribute.code} = Uri.parse("${randomUri()}"); \n';
+    } else if (attribute.type.code == 'Email') {
+      sc = '${sc}      ${entity}.${attribute.code} = "${randomEmail()}"; \n';
+    } else {
+      sc = '${sc}      ${entity}.${attribute.code} = "${randomWord()}"; \n';
     }
   }
   return sc;
