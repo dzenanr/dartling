@@ -170,27 +170,34 @@ String setAttributesRandomly(Concept concept, String entity) {
 String setAttributeRandomly(Attribute attribute, String entity) {
   var sc = '';
   if (attribute.increment == null) {
-    if (attribute.type.code == 'String') {     
-      sc = '${sc}      ${entity}.${attribute.code} = "${randomWord()}"; \n';      
-    }  else if (attribute.type.code == 'num') {
-      sc = '${sc}      ${entity}.${attribute.code} = ${randomNum(1000)}; \n';
-    } else if (attribute.type.code == 'int') {
-      sc = '${sc}      ${entity}.${attribute.code} = ${randomInt(10000)}; \n';
-    } else if (attribute.type.code == 'double') {
-      sc = '${sc}      ${entity}.${attribute.code} = ${randomDouble(100)}; \n';
-    } else if (attribute.type.code == 'bool') {
-      sc = '${sc}      ${entity}.${attribute.code} = ${randomBool()}; \n';
-    } else if (attribute.type.code == 'DateTime') {
-      sc = '${sc}      ${entity}.${attribute.code} = new DateTime.now(); \n';
-    } else if (attribute.type.code == 'Uri') {
-      sc = '${sc}      ${entity}.${attribute.code} = Uri.parse("${randomUri()}"); \n';
-    } else if (attribute.type.code == 'Email') {
-      sc = '${sc}      ${entity}.${attribute.code} = "${randomEmail()}"; \n';
-    } else {
-      sc = '${sc}      ${entity}.${attribute.code} = "${randomWord()}"; \n';
-    }
+    var value = genAttributeTextRandomly(attribute);
+    sc = '${sc}      ${entity}.${attribute.code} = ${value}; \n';
   }
   return sc;
+}
+
+String genAttributeTextRandomly(Attribute attribute) {
+  var value = '';
+  if (attribute.type.code == 'String') {     
+    value = "'${randomWord()}'";    
+  }  else if (attribute.type.code == 'num') {
+    value = "${randomNum(1000)}";
+  } else if (attribute.type.code == 'int') {
+    value = "${randomInt(10000)}";
+  } else if (attribute.type.code == 'double') {
+    value = "${randomDouble(100)}";
+  } else if (attribute.type.code == 'bool') {
+    value = "${randomBool()}";
+  } else if (attribute.type.code == 'DateTime') {
+    value = "new DateTime.now()";
+  } else if (attribute.type.code == 'Uri') {
+    value = "Uri.parse('${randomUri()}')";
+  } else if (attribute.type.code == 'Email') {
+    value = "'${randomEmail()}'";
+  } else {
+    value = "'${randomWord()}'";
+  }
+  return value;
 }
 
 

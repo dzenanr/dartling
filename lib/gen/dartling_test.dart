@@ -426,6 +426,133 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   
+  sc = '${sc}    test("Update ${entity} id with try", () { \n';
+  if (idAttribute != null) {
+    if (idAttribute.increment == null) {
+      sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
+      sc = '${sc}      var beforeUpdate = random${Entity}.${idAttribute.code}; \n';
+      sc = '${sc}      try { \n';
+      var attributeSet = setAttributeRandomly(idAttribute, 'random${Entity}');
+      sc = '${sc}  ${attributeSet}';
+      sc = '${sc}      } on UpdateError catch (e) { \n';
+      sc = '${sc}        expect(random${Entity}.${idAttribute.code}, '
+           'equals(beforeUpdate)); \n';   
+      sc = '${sc}      } \n';      
+    } else {
+      sc = '${sc}      // id attribute defined as increment, cannot update it \n';       
+    }
+  } else {
+    sc = '${sc}      // no id attribute \n';
+  }
+  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
+  
+  sc = '${sc}    test("Update ${entity} id without try", () { \n';
+  if (idAttribute != null) {
+    if (idAttribute.increment == null) {
+      sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
+      sc = '${sc}      var beforeUpdateValue = random${Entity}.${idAttribute.code}; \n';
+      var value = genAttributeTextRandomly(idAttribute); 
+      sc = '${sc}      expect(() => random${Entity}.${idAttribute.code} = '
+           '${value}, throws); \n';
+      sc = '${sc}      expect(random${Entity}.${idAttribute.code}, '
+           'equals(beforeUpdateValue)); \n';       
+    } else {
+      sc = '${sc}      // id attribute defined as increment, cannot update it \n';        
+    } 
+  } else {
+    sc = '${sc}      // no id attribute \n';
+  }
+  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
+  
+  sc = '${sc}    test("Update ${entity} id with success", () { \n';
+  if (idAttribute != null) {
+    if (idAttribute.increment == null) {
+      sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
+      sc = '${sc}      var afterUpdateEntity = random${Entity}.copy(); \n';
+      sc = '${sc}      var attribute = random${Entity}.concept.attributes.'
+           'singleWhereCode("${idAttribute.code}"); \n';
+      sc = '${sc}      expect(attribute.update, isFalse); \n';
+      sc = '${sc}      attribute.update = true; \n';
+      var value = genAttributeTextRandomly(idAttribute); 
+      sc = '${sc}      afterUpdateEntity.${idAttribute.code} = ${value}; \n';
+      sc = '${sc}      expect(afterUpdateEntity.${idAttribute.code}, '
+           'equals(${value})); \n'; 
+      sc = '${sc}      attribute.update = false; \n';
+      sc = '${sc}      var updated = ${entities}.update(random${Entity}, '
+           'afterUpdateEntity); \n';
+      sc = '${sc}      expect(updated, isTrue); \n';
+      sc = '${sc} \n';
+      sc = '${sc}      var entity = ${entities}.singleWhereAttributeId('
+           '"${idAttribute.code}", ${value}); \n';
+      sc = '${sc}      expect(entity, isNotNull); \n';
+      sc = '${sc}      expect(entity.${idAttribute.code}, equals(${value})); \n';
+      sc = '${sc} \n';
+      sc = '${sc}      //${entities}.display("After update ${entity} id"); \n';      
+    } else {
+      sc = '${sc}      // id attribute defined as increment, cannot update it \n';     
+    }
+  } else {
+    sc = '${sc}      // no id attribute \n';
+  }
+  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
+  
+  sc = '${sc}    test("Update ${entity} non id attribute with failure", () { \n';
+  if (nonIdAttribute != null) {
+    sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
+    sc = '${sc}      var beforeUpdateValue = '
+         'random${Entity}.${nonIdAttribute.code}; \n';
+    sc = '${sc}      var afterUpdateEntity = random${Entity}.copy(); \n';
+    var value = genAttributeTextRandomly(nonIdAttribute); 
+    sc = '${sc}      afterUpdateEntity.${nonIdAttribute.code} = ${value}; \n';
+    sc = '${sc}      expect(afterUpdateEntity.${nonIdAttribute.code}, '
+         'equals(${value})); \n'; 
+    sc = '${sc}      // ${entities}.update can only be used if oid, code or '
+         'id is set. \n';
+    sc = '${sc}      expect(() => ${entities}.update(random${Entity}, '
+         'afterUpdateEntity), throws); \n';
+  } else {
+    sc = '${sc}      // no attribute that is not id \n';
+  }
+  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
+  
+  sc = '${sc}    test("Copy Equality", () { \n';
+  sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
+  sc = '${sc}      random${Entity}.display(prefix:"before copy: "); \n';
+  sc = '${sc}      var random${Entity}Copy = random${Entity}.copy(); \n';
+  sc = '${sc}      random${Entity}Copy.display(prefix:"after copy: "); \n';
+  sc = '${sc}      expect(random${Entity}, equals(random${Entity}Copy)); \n';
+  sc = '${sc}      expect(random${Entity}.oid, equals(random${Entity}Copy.oid)); \n';
+  sc = '${sc}      expect(random${Entity}.code, equals(random${Entity}Copy.code)); \n';
+  for (Attribute attribute in entryConcept.attributes) {
+    sc = '${sc}      expect(random${Entity}.${attribute.code}, '
+         'equals(random${Entity}Copy.${attribute.code})); \n';
+  }
+  sc = '${sc} \n';
+  
+  if (idAttribute != null) {
+    sc = '${sc}      expect(random${Entity}.id, isNotNull); \n';
+    sc = '${sc}      expect(random${Entity}Copy.id, isNotNull); \n';
+    sc = '${sc}      expect(random${Entity}.id, equals(random${Entity}Copy.id)); \n';
+    sc = '${sc} \n';    
+    sc = '${sc}      var idsEqual = false; \n';
+    sc = '${sc}      if (random${Entity}.id == random${Entity}Copy.id) { \n';
+    sc = '${sc}        idsEqual = true; \n';
+    sc = '${sc}      } \n';
+    sc = '${sc}      expect(idsEqual, isTrue); \n';
+    sc = '${sc} \n';  
+    sc = '${sc}      idsEqual = false; \n';
+    sc = '${sc}      if (random${Entity}.id.equals(random${Entity}Copy.id)) { \n';
+    sc = '${sc}        idsEqual = true; \n';
+    sc = '${sc}      } \n';
+    sc = '${sc}      expect(idsEqual, isTrue); \n';
+  }
+  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
+  
   sc = '${sc}  }); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
