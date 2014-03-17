@@ -65,71 +65,79 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
 
   sc = '${sc}test${domain.code}${model.code}'
        '${entryConcept.codePluralFirstLetterUpper}( \n';
-  sc = '${sc}    ${domain.code}Domain domain, '
-       '${model.code}Model model, ${Entities} ${entities}) { \n';
+  sc = '${sc}    ${domain.code}Domain ${domain.codeFirstLetterLower}Domain, '
+       '${model.code}Model ${model.codeFirstLetterLower}Model, '
+       '${Entities} ${entities}) { \n';
   sc = '${sc}  DomainSession session; \n';
   sc = '${sc}  group("Testing ${domain.code}.${model.code}.${Entity}", () { \n';
-  sc = '${sc}    session = domain.newSession();  \n';
-  sc = '${sc}    expect(model.isEmpty, isTrue); \n';
+  sc = '${sc}    session = ${domain.codeFirstLetterLower}Domain.newSession();  \n';
+  sc = '${sc}    expect(${model.codeFirstLetterLower}Model.isEmpty, isTrue); \n';
   sc = '${sc}    setUp(() { \n';
-  sc = '${sc}      model.init(); \n';
+  sc = '${sc}      ${model.codeFirstLetterLower}Model.init(); \n';
   sc = '${sc}    }); \n';
   sc = '${sc}    tearDown(() { \n';
-  sc = '${sc}      model.clear(); \n';
+  sc = '${sc}      ${model.codeFirstLetterLower}Model.clear(); \n';
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   
   sc = '${sc}    test("Not empty model", () { \n';
-  sc = '${sc}      expect(model.isEmpty, isFalse); \n';
+  sc = '${sc}      expect(${model.codeFirstLetterLower}Model.isEmpty, '
+       'isFalse); \n';
   sc = '${sc}      expect(${entities}.isEmpty, isFalse); \n';
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   
   sc = '${sc}    test("Empty model", () { \n';
-  sc = '${sc}      model.clear(); \n';
-  sc = '${sc}      expect(model.isEmpty, isTrue); \n';
+  sc = '${sc}      ${model.codeFirstLetterLower}Model.clear(); \n';
+  sc = '${sc}      expect(${model.codeFirstLetterLower}Model.isEmpty, '
+       'isTrue); \n';
   sc = '${sc}      expect(${entities}.isEmpty, isTrue); \n';
   sc = '${sc}      expect(${entities}.errors.isEmpty, isTrue); \n';
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   
   sc = '${sc}    test("From model to JSON", () { \n';
-  sc = '${sc}      var json = model.toJson(); \n';
+  sc = '${sc}      var json = ${model.codeFirstLetterLower}Model.toJson(); \n';
   sc = '${sc}      expect(json, isNotNull); \n';
   sc = '${sc} \n';
   sc = '${sc}      print(json); \n';
-  sc = '${sc}      //model.displayJson(); \n';
-  sc = '${sc}      //model.display(); \n';
+  sc = '${sc}      //${model.codeFirstLetterLower}Model.displayJson(); \n';
+  sc = '${sc}      //${model.codeFirstLetterLower}Model.display(); \n';
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   
   sc = '${sc}    test("From JSON to model", () { \n';
-  sc = '${sc}      var json = model.toJson(); \n';
-  sc = '${sc}      model.clear(); \n';
-  sc = '${sc}      expect(model.isEmpty, isTrue); \n';
-  sc = '${sc}      model.fromJson(json); \n';
-  sc = '${sc}      expect(model.isEmpty, isFalse); \n';
+  sc = '${sc}      var json = ${model.codeFirstLetterLower}Model.toJson(); \n';
+  sc = '${sc}      ${model.codeFirstLetterLower}Model.clear(); \n';
+  sc = '${sc}      expect(${model.codeFirstLetterLower}Model.isEmpty, '
+       'isTrue); \n';
+  sc = '${sc}      ${model.codeFirstLetterLower}Model.fromJson(json); \n';
+  sc = '${sc}      expect(${model.codeFirstLetterLower}Model.isEmpty, '
+       'isFalse); \n';
   sc = '${sc} \n';
-  sc = '${sc}      model.display(); \n';
+  sc = '${sc}      ${model.codeFirstLetterLower}Model.display(); \n';
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   
   sc = '${sc}    test("From model entry to JSON", () { \n';
-  sc = '${sc}      var json = model.fromEntryToJson("${Entity}"); \n';
+  sc = '${sc}      var json = ${model.codeFirstLetterLower}Model.'
+       'fromEntryToJson("${Entity}"); \n';
   sc = '${sc}      expect(json, isNotNull); \n';
   sc = '${sc} \n';
   sc = '${sc}      print(json); \n';
-  sc = '${sc}      //model.displayEntryJson("${Entity}"); \n';
-  sc = '${sc}      //model.displayJson(); \n';
-  sc = '${sc}      //model.display(); \n';
+  sc = '${sc}      //${model.codeFirstLetterLower}Model.'
+       'displayEntryJson("${Entity}"); \n';
+  sc = '${sc}      //${model.codeFirstLetterLower}Model.displayJson(); \n';
+  sc = '${sc}      //${model.codeFirstLetterLower}Model.display(); \n';
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   
   sc = '${sc}    test("From JSON to model entry", () { \n';
-  sc = '${sc}      var json = model.fromEntryToJson("${Entity}"); \n';
+  sc = '${sc}      var json = ${model.codeFirstLetterLower}Model.'
+       'fromEntryToJson("${Entity}"); \n';
   sc = '${sc}      ${entities}.clear(); \n';
   sc = '${sc}      expect(${entities}.isEmpty, isTrue); \n';
-  sc = '${sc}      model.fromJsonToEntry(json); \n';
+  sc = '${sc}      ${model.codeFirstLetterLower}Model.fromJsonToEntry(json); \n';
   sc = '${sc}      expect(${entities}.isEmpty, isFalse); \n';
   sc = '${sc} \n';
   sc = '${sc}      ${entities}.display(title: "From JSON to model entry"); \n';
@@ -272,7 +280,8 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
     sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
     sc = '${sc}      var selected${Entities} = \n';
     sc = '${sc}          ${entities}.selectWhereAttribute('
-         '"${requiredNonIdAttribute.code}", random${Entity}.${requiredNonIdAttribute.code}); \n';
+         '"${requiredNonIdAttribute.code}", '
+         'random${Entity}.${requiredNonIdAttribute.code}); \n';
     sc = '${sc}      expect(selected${Entities}.isEmpty, isFalse); \n';
     sc = '${sc}      selected${Entities}.forEach((se) => \n';
     sc = '${sc}          expect(se.${requiredNonIdAttribute.code}, '
@@ -404,7 +413,8 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   
   sc = '${sc}    test("True for every ${entity}", () { \n';
   if (requiredNonIdAttribute != null) {
-    sc = '${sc}      expect(${entities}.every((e) => e.${requiredNonIdAttribute.code} != null), isTrue); \n';
+    sc = '${sc}      expect(${entities}.every((e) => '
+         'e.${requiredNonIdAttribute.code} != null), isTrue); \n';
   } else {
     sc = '${sc}      // no required attribute that is not id \n';
   }
@@ -447,7 +457,8 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   if (idAttribute != null) {
     if (idAttribute.increment == null) {
       sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
-      sc = '${sc}      var beforeUpdateValue = random${Entity}.${idAttribute.code}; \n';
+      sc = '${sc}      var beforeUpdateValue = '
+           'random${Entity}.${idAttribute.code}; \n';
       var value = genAttributeTextRandomly(idAttribute); 
       sc = '${sc}      expect(() => random${Entity}.${idAttribute.code} = '
            '${value}, throws); \n';
@@ -522,7 +533,8 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}      random${Entity}Copy.display(prefix:"after copy: "); \n';
   sc = '${sc}      expect(random${Entity}, equals(random${Entity}Copy)); \n';
   sc = '${sc}      expect(random${Entity}.oid, equals(random${Entity}Copy.oid)); \n';
-  sc = '${sc}      expect(random${Entity}.code, equals(random${Entity}Copy.code)); \n';
+  sc = '${sc}      expect(random${Entity}.code, '
+       'equals(random${Entity}Copy.code)); \n';
   for (Attribute attribute in entryConcept.attributes) {
     sc = '${sc}      expect(random${Entity}.${attribute.code}, '
          'equals(random${Entity}Copy.${attribute.code})); \n';
@@ -598,10 +610,12 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
     sc = '${sc}      action.doit(); \n';
     sc = '${sc} \n';
     sc = '${sc}      session.past.undo(); \n';
-    sc = '${sc}      expect(${entity}.${nonIdAttribute.code}, equals(action.before)); \n';
+    sc = '${sc}      expect(${entity}.${nonIdAttribute.code}, '
+         'equals(action.before)); \n';
     sc = '${sc} \n';
     sc = '${sc}      session.past.redo(); \n';
-    sc = '${sc}      expect(${entity}.${nonIdAttribute.code}, equals(action.after)); \n';
+    sc = '${sc}      expect(${entity}.${nonIdAttribute.code}, '
+         'equals(action.after)); \n';
   } else {
     sc = '${sc}      // no attribute that is not id \n';
   }
@@ -612,13 +626,15 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
   sc = '${sc}      var ${entity}1 = ${entities}.random(); \n';
   sc = '${sc} \n';  
-  sc = '${sc}      var action1 = new RemoveAction(session, ${entities}, ${entity}1); \n';
+  sc = '${sc}      var action1 = new RemoveAction(session, ${entities}, '
+       '${entity}1); \n';
   sc = '${sc}      action1.doit(); \n';
   sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';
   sc = '${sc} \n';
   sc = '${sc}      var ${entity}2 = ${entities}.random(); \n';
   sc = '${sc} \n';
-  sc = '${sc}      var action2 = new RemoveAction(session, ${entities}, ${entity}2); \n';
+  sc = '${sc}      var action2 = new RemoveAction(session, ${entities}, '
+       '${entity}2); \n';
   sc = '${sc}      action2.doit(); \n';
   sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';
   sc = '${sc} \n';
@@ -649,8 +665,10 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}      while (${entity}1 == ${entity}2) { \n'; 
   sc = '${sc}        ${entity}2 = ${entities}.random();  \n';
   sc = '${sc}      } \n';
-  sc = '${sc}      var action1 = new RemoveAction(session, ${entities}, ${entity}1); \n';
-  sc = '${sc}      var action2 = new RemoveAction(session, ${entities}, ${entity}2); \n';
+  sc = '${sc}      var action1 = new RemoveAction(session, ${entities}, '
+       '${entity}1); \n';
+  sc = '${sc}      var action2 = new RemoveAction(session, ${entities}, '
+       '${entity}2); \n';
   sc = '${sc} \n';
   sc = '${sc}      var transaction = '
        'new Transaction("two removes on ${entities}", session); \n';
@@ -680,11 +698,14 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
   sc = '${sc}      var ${entity}1 = ${entities}.random(); \n';
   sc = '${sc}      var ${entity}2 = ${entity}1; \n';
-  sc = '${sc}      var action1 = new RemoveAction(session, ${entities}, ${entity}1); \n';
-  sc = '${sc}      var action2 = new RemoveAction(session, ${entities}, ${entity}2); \n';
+  sc = '${sc}      var action1 = new RemoveAction(session, ${entities}, '
+       '${entity}1); \n';
+  sc = '${sc}      var action2 = new RemoveAction(session, ${entities}, '
+       '${entity}2); \n';
   sc = '${sc} \n';
-  sc = '${sc}      var transaction = new Transaction("two removes on ${entities}, '
-       'with an error on the second", session); \n';
+  sc = '${sc}      var transaction = new Transaction( \n';
+  sc = '${sc}        "two removes on ${entities}, with an error on the second", '
+       'session); \n';
   sc = '${sc}      transaction.add(action1); \n';
   sc = '${sc}      transaction.add(action2); \n';
   sc = '${sc}      var done = transaction.doit(); \n';
@@ -702,25 +723,26 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}      var reaction = new ${Entity}Reaction(); \n';
   sc = '${sc}      expect(reaction, isNotNull); \n';
   sc = '${sc} \n';
-  sc = '${sc}      domain.startActionReaction(reaction); \n'; 
+  sc = '${sc}      ${domain.codeFirstLetterLower}Domain.startActionReaction(reaction); \n'; 
   sc = '${sc}      ${createEntryEntityRandomly(entryConcept, withChildren:false)}';
   sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';  
   sc = '${sc}      ${entities}.remove(${entity}); \n';
   sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';   
   sc = '${sc} \n';  
-  sc = '${sc}      var session = domain.newSession(); \n';
-  sc = '${sc}      var addAction = new AddAction(session, ${entities}, ${entity}); \n';
+  sc = '${sc}      var session = ${domain.codeFirstLetterLower}Domain.newSession(); \n';
+  sc = '${sc}      var addAction = new AddAction(session, ${entities}, '
+       '${entity}); \n';
   sc = '${sc}      addAction.doit(); \n';
   sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';
   sc = '${sc}      expect(reaction.reactedOnAdd, isTrue); \n';
   sc = '${sc} \n';
   if (nonIdAttribute != null) {
     var value = genAttributeTextRandomly(nonIdAttribute); 
-    sc = '${sc}      var setAttributeAction = new SetAttributeAction(session, '
-         '${entity}, "${nonIdAttribute.code}", ${value}); \n';
+    sc = '${sc}      var setAttributeAction = new SetAttributeAction( \n';
+    sc = '${sc}        session, ${entity}, "${nonIdAttribute.code}", ${value}); \n';
     sc = '${sc}      setAttributeAction.doit(); \n';
     sc = '${sc}      expect(reaction.reactedOnUpdate, isTrue); \n';
-    sc = '${sc}      domain.cancelActionReaction(reaction); \n';   
+    sc = '${sc}      ${domain.codeFirstLetterLower}Domain.cancelActionReaction(reaction); \n';   
   } else {
     sc = '${sc}      // no attribute that is not id \n';
   }
@@ -749,13 +771,18 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
 
   sc = '${sc}void main() { \n';
   sc = '${sc}  var repository = new Repository(); \n';
-  sc = '${sc}  var domain = repository.getDomainModels("${domain.code}");   \n';
-  sc = '${sc}  assert(domain != null); \n';
-  sc = '${sc}  var model = domain.getModelEntries("${model.code}");  \n';
-  sc = '${sc}  assert(model != null); \n';
-  sc = '${sc}  var ${entities} = model.${entities}; \n';
+  sc = '${sc}  var ${domain.codeFirstLetterLower}Domain = '
+       'repository.getDomainModels("${domain.code}");   \n';
+  sc = '${sc}  assert(${domain.codeFirstLetterLower}Domain != null); \n';
+  sc = '${sc}  var ${model.codeFirstLetterLower}Model = '
+       '${domain.codeFirstLetterLower}Domain.getModelEntries("${model.code}");  \n';
+  sc = '${sc}  assert(${model.codeFirstLetterLower}Model != null); \n';
+  sc = '${sc}  var ${entities} = '
+       '${model.codeFirstLetterLower}Model.${entities}; \n';
   sc = '${sc}  test${domain.code}${model.code}'
-       '${entryConcept.codePluralFirstLetterUpper}(domain, model, ${entities}); \n';
+       '${entryConcept.codePluralFirstLetterUpper}('
+       '${domain.codeFirstLetterLower}Domain, '
+       '${model.codeFirstLetterLower}Model, ${entities}); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
   
