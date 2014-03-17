@@ -4,6 +4,7 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.0* 2014-03-16
 
++ correct a problem in remove, discovered in newly generated tests
 + add more gen tests
 + handle id attribute increment in add propagations
 + order entry concepts for model init 

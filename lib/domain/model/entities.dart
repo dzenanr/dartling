@@ -628,36 +628,32 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   bool remove(E entity) {
     bool removed = false;
     if (preRemove(entity)) {
-      for (E element in _entityList) {
-        if (element == entity) {
-          _entityList.remove(entity);
-          _oidEntityMap.remove(entity.oid.timeStamp);
-          if (entity.code != null) {
-            _codeEntityMap.remove(entity.code);
-          }
-          if (entity.concept != null && entity.id != null) {
-            _idEntityMap.remove(entity.id.toString());
-          }
-          break;
+      if (_entityList.remove(entity)) {
+        _oidEntityMap.remove(entity.oid.timeStamp);
+        if (entity.code != null) {
+          _codeEntityMap.remove(entity.code);
         }
-      }
-      if (_source != null && propagateToSource) {
-        _source.remove(entity);
-      }
-      if (postRemove(entity)) {
-        removed = true;
-      } else {
-        var beforePre = pre;
-        var beforePost = post;
-        pre = false;
-        post = false;
-        if (!add(entity)) {
-          var msg = '${entity.concept.code} entity (${entity.oid}) '
-            'was removed, post was not successful, add was not successful';
-          throw new AddError(msg);
+        if (entity.concept != null && entity.id != null) {
+          _idEntityMap.remove(entity.id.toString());
         }
-        pre = beforePre;
-        post = beforePost;
+        if (_source != null && propagateToSource) {
+          _source.remove(entity);
+        }
+        if (postRemove(entity)) {
+          removed = true;
+        } else {
+          var beforePre = pre;
+          var beforePost = post;
+          pre = false;
+          post = false;
+          if (!add(entity)) {
+            var msg = '${entity.concept.code} entity (${entity.oid}) '
+              'was removed, post was not successful, add was not successful';
+            throw new AddError(msg);
+          }
+          pre = beforePre;
+          post = beforePost;
+        }
       }
     }
     return removed;

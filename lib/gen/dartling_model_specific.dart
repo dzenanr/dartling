@@ -63,31 +63,46 @@ String genModel(Model model, String library) {
 String createEntryEntitiesRandomly(Concept entryConcept) {
   var sc = '';
   for (var i = 1; i < ENTRY_ENTITIES_COUNT + 1; i++) {
-    var entryEntity = '${entryConcept.codeFirstLetterLower}${i}';
-    var entryEntities = '${entryConcept.codesFirstLetterLower}';
-    sc = '${sc}    var ${entryEntity} = new ${entryConcept.code}('   
-         '${entryConcept.codesFirstLetterLower}.concept); \n';
-    var attributesSet = setAttributesRandomly(entryConcept, entryEntity);
-    sc = '${sc}${attributesSet}';
-    
-    for (Parent externalRequiredParent in entryConcept.externalRequiredParents) {
-      var parent = '${externalRequiredParent.code}';
-      var Parent = '${externalRequiredParent.codeFirstLetterUpper}';
-      var parents = '${externalRequiredParent.destinationConcept.codePluralFirstLetterLower}';
-      sc = '${sc}    var ${entryEntity}${Parent} = ${parents}.random(); \n';
-      sc = '${sc}    ${entryEntity}.${parent} = ${entryEntity}${Parent}; \n';
-    }
-    
-    sc = '${sc}    ${entryEntities}.add(${entryEntity}); \n';     
-    
-    for (Parent externalRequiredParent in entryConcept.externalRequiredParents) {
-      var parent  = '${externalRequiredParent.code}';
-      var Parent  = '${externalRequiredParent.codeFirstLetterUpper}';
-      sc = '${sc}    ${entryEntity}${Parent}.'
-           '${externalRequiredParent.opposite.code}.add('
-           '${entryEntity}); \n';
-    }
-    
+    var entitiesCreated = createEntryEntityRandomly(entryConcept, suffix:i);
+    sc = '${sc}${entitiesCreated}';
+  }   
+  return sc;
+}
+
+String createEntryEntityRandomly(Concept entryConcept, 
+                                 {int suffix, bool withChildren:true}) {
+  var sc = '';
+  var entryEntity;
+  if (suffix != null) {
+    entryEntity = '${entryConcept.codeFirstLetterLower}${suffix}';
+  } else {
+    entryEntity = '${entryConcept.codeFirstLetterLower}';
+  }
+  var entryEntities = '${entryConcept.codesFirstLetterLower}';
+  sc = '${sc}    var ${entryEntity} = new ${entryConcept.code}('   
+       '${entryConcept.codesFirstLetterLower}.concept); \n';
+  var attributesSet = setAttributesRandomly(entryConcept, entryEntity);
+  sc = '${sc}${attributesSet}';
+  
+  for (Parent externalRequiredParent in entryConcept.externalRequiredParents) {
+    var parent = '${externalRequiredParent.code}';
+    var Parent = '${externalRequiredParent.codeFirstLetterUpper}';
+    var parents = '${externalRequiredParent.destinationConcept.codePluralFirstLetterLower}';
+    sc = '${sc}    var ${entryEntity}${Parent} = ${parents}.random(); \n';
+    sc = '${sc}    ${entryEntity}.${parent} = ${entryEntity}${Parent}; \n';
+  }
+  
+  sc = '${sc}      ${entryEntities}.add(${entryEntity}); \n';     
+  
+  for (Parent externalRequiredParent in entryConcept.externalRequiredParents) {
+    var parent  = '${externalRequiredParent.code}';
+    var Parent  = '${externalRequiredParent.codeFirstLetterUpper}';
+    sc = '${sc}    ${entryEntity}${Parent}.'
+         '${externalRequiredParent.opposite.code}.add('
+         '${entryEntity}); \n';
+  } 
+  
+  if (withChildren) {
     sc = '${sc} \n';
     for (Child child in entryConcept.children) {
       if (child.internal) {
@@ -100,8 +115,8 @@ String createEntryEntitiesRandomly(Concept entryConcept) {
               parentCode, parentConcept, childCode, childConcept);
         sc = '${sc}${entitiesCreated}';
       }
-    } // for child
-  } // for var  
+    }     
+  }
   return sc;
 }
 

@@ -553,6 +553,186 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}    }); \n';
   sc = '${sc} \n';
   
+  sc = '${sc}    test("New ${entity} action undo and redo", () { \n';
+  sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
+  sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
+  sc = '${sc}      ${createEntryEntityRandomly(entryConcept, withChildren:false)}';
+  sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';
+  sc = '${sc}      ${entities}.remove(${entity}); \n';
+  sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';
+  sc = '${sc} \n';  
+  sc = '${sc}      var action = new AddAction(session, ${entities}, ${entity}); \n';
+  sc = '${sc}      action.doit(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      action.undo(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      action.redo(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';
+  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
+  
+  sc = '${sc}    test("New ${entity} session undo and redo", () { \n';
+  sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
+  sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
+  sc = '${sc}      ${createEntryEntityRandomly(entryConcept, withChildren:false)}';
+  sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';
+  sc = '${sc}      ${entities}.remove(${entity}); \n';
+  sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';
+  sc = '${sc} \n';  
+  sc = '${sc}      var action = new AddAction(session, ${entities}, ${entity}); \n';
+  sc = '${sc}      action.doit(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      session.past.undo(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      session.past.redo(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';
+  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
+  
+  sc = '${sc}    test("${Entity} update undo and redo", () { \n';
+  if (nonIdAttribute != null) {
+    sc = '${sc}      var ${entity} = ${entities}.random(); \n';
+    var value = genAttributeTextRandomly(nonIdAttribute); 
+    sc = '${sc}      var action = new SetAttributeAction(session, '
+         '${entity}, "${nonIdAttribute.code}", ${value}); \n';
+    sc = '${sc}      action.doit(); \n';
+    sc = '${sc} \n';
+    sc = '${sc}      session.past.undo(); \n';
+    sc = '${sc}      expect(${entity}.${nonIdAttribute.code}, equals(action.before)); \n';
+    sc = '${sc} \n';
+    sc = '${sc}      session.past.redo(); \n';
+    sc = '${sc}      expect(${entity}.${nonIdAttribute.code}, equals(action.after)); \n';
+  } else {
+    sc = '${sc}      // no attribute that is not id \n';
+  }
+  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
+ 
+  sc = '${sc}    test("${Entity} action with multiple undos and redos", () { \n';
+  sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
+  sc = '${sc}      var ${entity}1 = ${entities}.random(); \n';
+  sc = '${sc} \n';  
+  sc = '${sc}      var action1 = new RemoveAction(session, ${entities}, ${entity}1); \n';
+  sc = '${sc}      action1.doit(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      var ${entity}2 = ${entities}.random(); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      var action2 = new RemoveAction(session, ${entities}, ${entity}2); \n';
+  sc = '${sc}      action2.doit(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      //session.past.display(); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      session.past.undo(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      session.past.undo(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      //session.past.display(); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      session.past.redo(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      session.past.redo(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      //session.past.display(); \n';
+  sc = '${sc}    }); \n';
+  sc = '${sc} \n';  
+  
+  sc = '${sc}    test("Transaction undo and redo", () { \n';
+  sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
+  sc = '${sc}      var ${entity}1 = ${entities}.random(); \n';
+  sc = '${sc}      var ${entity}2 = ${entities}.random(); \n';
+  sc = '${sc}      while (${entity}1 == ${entity}2) { \n'; 
+  sc = '${sc}        ${entity}2 = ${entities}.random();  \n';
+  sc = '${sc}      } \n';
+  sc = '${sc}      var action1 = new RemoveAction(session, ${entities}, ${entity}1); \n';
+  sc = '${sc}      var action2 = new RemoveAction(session, ${entities}, ${entity}2); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      var transaction = '
+       'new Transaction("two removes on ${entities}", session); \n';
+  sc = '${sc}      transaction.add(action1); \n';
+  sc = '${sc}      transaction.add(action2); \n';
+  sc = '${sc}      transaction.doit(); \n';
+  sc = '${sc}      ${entity}Count = ${entity}Count - 2; \n';   
+  sc = '${sc}      expect(${entities}.length, equals(${entity}Count)); \n'; 
+  sc = '${sc} \n';
+  sc = '${sc}      ${entities}.display(title:"Transaction Done"); \n';
+  sc = '${sc} \n';  
+  sc = '${sc}      session.past.undo(); \n';
+  sc = '${sc}      ${entity}Count = ${entity}Count + 2; \n';
+  sc = '${sc}      expect(${entities}.length, equals(${entity}Count)); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      ${entities}.display(title:"Transaction Undone"); \n';
+  sc = '${sc} \n'; 
+  sc = '${sc}      session.past.redo(); \n';
+  sc = '${sc}      ${entity}Count = ${entity}Count - 2; \n';
+  sc = '${sc}      expect(${entities}.length, equals(${entity}Count)); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      ${entities}.display(title:"Transaction Redone"); \n';
+  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
+  
+  sc = '${sc}    test("Transaction with one action error", () { \n';
+  sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
+  sc = '${sc}      var ${entity}1 = ${entities}.random(); \n';
+  sc = '${sc}      var ${entity}2 = ${entity}1; \n';
+  sc = '${sc}      var action1 = new RemoveAction(session, ${entities}, ${entity}1); \n';
+  sc = '${sc}      var action2 = new RemoveAction(session, ${entities}, ${entity}2); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      var transaction = new Transaction("two removes on ${entities}, '
+       'with an error on the second", session); \n';
+  sc = '${sc}      transaction.add(action1); \n';
+  sc = '${sc}      transaction.add(action2); \n';
+  sc = '${sc}      var done = transaction.doit(); \n';
+  sc = '${sc}      expect(done, isFalse); \n';   
+  sc = '${sc}      expect(${entities}.length, equals(${entity}Count)); \n'; 
+  sc = '${sc} \n';
+  sc = '${sc}      //${entities}.display(title:"Transaction with an error"); \n';
+  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
+  
+  sc = '${sc}    test("Reactions to ${entity} actions", () { \n';
+  sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
+  sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
+  sc = '${sc} \n'; 
+  sc = '${sc}      var reaction = new ${Entity}Reaction(); \n';
+  sc = '${sc}      expect(reaction, isNotNull); \n';
+  sc = '${sc} \n';
+  sc = '${sc}      domain.startActionReaction(reaction); \n'; 
+  sc = '${sc}      ${createEntryEntityRandomly(entryConcept, withChildren:false)}';
+  sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';  
+  sc = '${sc}      ${entities}.remove(${entity}); \n';
+  sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';   
+  sc = '${sc} \n';  
+  sc = '${sc}      var session = domain.newSession(); \n';
+  sc = '${sc}      var addAction = new AddAction(session, ${entities}, ${entity}); \n';
+  sc = '${sc}      addAction.doit(); \n';
+  sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';
+  sc = '${sc}      expect(reaction.reactedOnAdd, isTrue); \n';
+  sc = '${sc} \n';
+  if (nonIdAttribute != null) {
+    var value = genAttributeTextRandomly(nonIdAttribute); 
+    sc = '${sc}      var setAttributeAction = new SetAttributeAction(session, '
+         '${entity}, "${nonIdAttribute.code}", ${value}); \n';
+    sc = '${sc}      setAttributeAction.doit(); \n';
+    sc = '${sc}      expect(reaction.reactedOnUpdate, isTrue); \n';
+    sc = '${sc}      domain.cancelActionReaction(reaction); \n';   
+  } else {
+    sc = '${sc}      // no attribute that is not id \n';
+  }
+  sc = '${sc}    }); \n';
+  sc = '${sc} \n';
+  
+  // after the last test
+  
   sc = '${sc}  }); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
@@ -560,6 +740,20 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}void main() { \n';
   sc = '${sc}  test${domain.code}${model.code}${entryConcept.code}('
        'new Repository(), "${domain.code}", "${model.code}"); \n';
+  sc = '${sc}} \n';
+  sc = '${sc} \n';
+  
+  sc = '${sc}class ${Entity}Reaction implements ActionReactionApi { \n';
+  sc = '${sc}  bool reactedOnAdd    = false; \n'; 
+  sc = '${sc}  bool reactedOnUpdate = false; \n';
+  sc = '${sc} \n';
+  sc = '${sc}  react(BasicAction action) { \n';
+  sc = '${sc}    if (action is EntitiesAction) { \n';  
+  sc = '${sc}      reactedOnAdd = true; \n';
+  sc = '${sc}    } else if (action is EntityAction) { \n';
+  sc = '${sc}      reactedOnUpdate = true; \n';
+  sc = '${sc}    } \n';
+  sc = '${sc}  } \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
   return sc;
