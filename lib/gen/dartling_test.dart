@@ -56,25 +56,21 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
        '${model.codeLowerUnderscore}/${domain.codeLowerUnderscore}_'
        '${model.codeLowerUnderscore}.dart"; \n';
   sc = '${sc} \n';
-
-  sc = '${sc}test${domain.code}${model.code}${entryConcept.code}( \n';
-  sc = '${sc}    Repository repository, String domainCode, String modelCode) { \n';
-  sc = '${sc}  var domain; \n';
-  sc = '${sc}  var session; \n';
-  sc = '${sc}  var model; \n';
+  
   var entities = '${entryConcept.codePluralFirstLetterLower}';
   var entity   = '${entryConcept.codeFirstLetterLower}';
   var Entity   = '${entryConcept.code}';
   var Entities = '${entryConcept.codePluralFirstLetterUpper}';
   var entityConcept = '${entities}.concept';
-  sc = '${sc}  var ${entities}; \n';
+
+  sc = '${sc}test${domain.code}${model.code}'
+       '${entryConcept.codePluralFirstLetterUpper}( \n';
+  sc = '${sc}    ${domain.code}Domain domain, '
+       '${model.code}Model model, ${Entities} ${entities}) { \n';
+  sc = '${sc}  DomainSession session; \n';
   sc = '${sc}  group("Testing ${domain.code}.${model.code}.${Entity}", () { \n';
-  sc = '${sc}    domain = repository.getDomainModels(domainCode); \n';
-  sc = '${sc}    session = domain.newSession(); \n';
-  sc = '${sc}    model = domain.getModelEntries(modelCode); \n';
-  sc = '${sc}    expect(model, isNotNull); \n';
-  sc = '${sc}    ${entities} = model.${entities}; \n';
-  sc = '${sc}    expect(${entities}.isEmpty, isTrue); \n';
+  sc = '${sc}    session = domain.newSession();  \n';
+  sc = '${sc}    expect(model.isEmpty, isTrue); \n';
   sc = '${sc}    setUp(() { \n';
   sc = '${sc}      model.init(); \n';
   sc = '${sc}    }); \n';
@@ -736,12 +732,6 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}  }); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
-
-  sc = '${sc}void main() { \n';
-  sc = '${sc}  test${domain.code}${model.code}${entryConcept.code}('
-       'new Repository(), "${domain.code}", "${model.code}"); \n';
-  sc = '${sc}} \n';
-  sc = '${sc} \n';
   
   sc = '${sc}class ${Entity}Reaction implements ActionReactionApi { \n';
   sc = '${sc}  bool reactedOnAdd    = false; \n'; 
@@ -756,6 +746,19 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}  } \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
+
+  sc = '${sc}void main() { \n';
+  sc = '${sc}  var repository = new Repository(); \n';
+  sc = '${sc}  var domain = repository.getDomainModels("${domain.code}");   \n';
+  sc = '${sc}  assert(domain != null); \n';
+  sc = '${sc}  var model = domain.getModelEntries("${model.code}");  \n';
+  sc = '${sc}  assert(model != null); \n';
+  sc = '${sc}  var ${entities} = model.${entities}; \n';
+  sc = '${sc}  test${domain.code}${model.code}'
+       '${entryConcept.codePluralFirstLetterUpper}(domain, model, ${entities}); \n';
+  sc = '${sc}} \n';
+  sc = '${sc} \n';
+  
   return sc;
 }
 

@@ -2,10 +2,11 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-03-16
+*2.0.0* 2014-03-17
 
++ prepare domain, model and entities in main of tests
 + propagate immediately after pre in add and remove
-+ correct a problem in remove (remove the same entity twice), 
++ correct a problem in remove (removed the same entity twice), 
   discovered in newly generated tests
 + add more gen tests
 + handle id attribute increment in add propagations
