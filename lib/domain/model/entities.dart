@@ -535,32 +535,34 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   bool add(E entity) {
     bool added = false;
     if (preAdd(entity)) {
-      _entityList.add(entity);
-      _oidEntityMap[entity.oid.timeStamp] = entity;
-      if (entity.code != null) {
-        _codeEntityMap[entity.code] = entity;
-      }
-      if (entity.concept != null && entity.id != null) {
-        _idEntityMap[entity.id.toString()] = entity;
-      }
-
+      var propagated = true;
       if (_source != null && propagateToSource) {
-        _source.add(entity);
+        propagated = _source.add(entity);
       }
-      if (postAdd(entity)) {
-        added = true;
-      } else {
-        var beforePre = pre;
-        var beforePost = post;
-        pre = false;
-        post = false;
-        if (!remove(entity)) {
-          var msg = '${entity.concept.code} entity (${entity.oid}) '
-            'was added, post was not successful, remove was not successful';
-          throw new RemoveError(msg);
+      if (propagated) {
+        _entityList.add(entity);
+        _oidEntityMap[entity.oid.timeStamp] = entity;
+        if (entity.code != null) {
+          _codeEntityMap[entity.code] = entity;
         }
-        pre = beforePre;
-        post = beforePost;
+        if (entity.concept != null && entity.id != null) {
+          _idEntityMap[entity.id.toString()] = entity;
+        }
+        if (postAdd(entity)) {
+          added = true;
+        } else {
+          var beforePre = pre;
+          var beforePost = post;
+          pre = false;
+          post = false;
+          if (!remove(entity)) {
+            var msg = '${entity.concept.code} entity (${entity.oid}) '
+              'was added, post was not successful, remove was not successful';
+            throw new RemoveError(msg);
+          }
+          pre = beforePre;
+          post = beforePost;
+        }  
       }
     }
     return added;
@@ -628,32 +630,35 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   bool remove(E entity) {
     bool removed = false;
     if (preRemove(entity)) {
-      if (_entityList.remove(entity)) {
-        _oidEntityMap.remove(entity.oid.timeStamp);
-        if (entity.code != null) {
-          _codeEntityMap.remove(entity.code);
-        }
-        if (entity.concept != null && entity.id != null) {
-          _idEntityMap.remove(entity.id.toString());
-        }
-        if (_source != null && propagateToSource) {
-          _source.remove(entity);
-        }
-        if (postRemove(entity)) {
-          removed = true;
-        } else {
-          var beforePre = pre;
-          var beforePost = post;
-          pre = false;
-          post = false;
-          if (!add(entity)) {
-            var msg = '${entity.concept.code} entity (${entity.oid}) '
-              'was removed, post was not successful, add was not successful';
-            throw new AddError(msg);
+      var propagated = true;
+      if (_source != null && propagateToSource) {
+        propagated = _source.remove(entity);
+      }
+      if (propagated) {
+        if (_entityList.remove(entity)) {
+          _oidEntityMap.remove(entity.oid.timeStamp);
+          if (entity.code != null) {
+            _codeEntityMap.remove(entity.code);
           }
-          pre = beforePre;
-          post = beforePost;
-        }
+          if (entity.concept != null && entity.id != null) {
+            _idEntityMap.remove(entity.id.toString());
+          }
+          if (postRemove(entity)) {
+            removed = true;
+          } else {
+            var beforePre = pre;
+            var beforePost = post;
+            pre = false;
+            post = false;
+            if (!add(entity)) {
+              var msg = '${entity.concept.code} entity (${entity.oid}) '
+                'was removed, post was not successful, add was not successful';
+              throw new AddError(msg);
+            }
+            pre = beforePre;
+            post = beforePost;
+          }
+        }        
       }
     }
     return removed;
