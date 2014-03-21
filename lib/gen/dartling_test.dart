@@ -232,7 +232,6 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
     sc = '${sc}      expect(${entity}, isNotNull); \n';
     sc = '${sc}      expect(${entity}.${requiredNonIdAttribute.code}, '
          'equals(random${Entity}.${requiredNonIdAttribute.code})); \n';
-    sc = '${sc}    }); \n';
   } else {
     sc = '${sc}      // no required attribute that is not id \n';
   }
@@ -290,7 +289,6 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
     sc = '${sc} \n';
     sc = '${sc}      //selected${Entities}.display(title: "Select ${entities} by '
          '${requiredNonIdAttribute.code}"); \n'; 
-    sc = '${sc}    }); \n';
   } else {
     sc = '${sc}      // no required attribute that is not id \n';
   }
