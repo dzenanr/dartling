@@ -2,8 +2,9 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-03-18
+*2.0.0* 2014-03-21
 
++ validate if code is empty in lower or upper transformations in entity
 + add error messages when add and remove propagations are not successful
 + prepare domain, model and entities in main of tests
 + propagate immediately after pre in add and remove

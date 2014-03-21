@@ -184,21 +184,22 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       }
       return withoutEnd;
     }
-
-    if (_code != null) {
+    var c = _code.trim();
+    if (c != null) {
+      if (c == '') {
+        return '';
+      }
       var result;
-      if (_code.length > 0) {
-        String lastLetter = _code.substring(_code.length - 1, _code.length);
-        if (lastLetter == 'x') {
-          result = '${_code}es';
-        } else if (lastLetter == 'z') {
-          result = '${_code}zes';
-        } else if (lastLetter == 'y') {
-          String withoutLast = dropEnd(lastLetter);
-          result = '${withoutLast}ies';
-        } else {
-          result = '${_code}s';
-        }
+      String lastLetter = c.substring(c.length - 1, c.length);
+      if (lastLetter == 'x') {
+        result = '${c}es';
+      } else if (lastLetter == 'z') {
+        result = '${c}zes';
+      } else if (lastLetter == 'y') {
+        String withoutLast = dropEnd(lastLetter);
+        result = '${withoutLast}ies';
+      } else {
+        result = '${c}s';
       }
       return result;
     }
@@ -206,11 +207,14 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   }
 
   String _firstLetterLowerCase({plural:false}) {
-    var c = _code;
+    var c = _code.trim();
     if (plural) {
       c = codePlural;
     }
     if (c != null) {
+      if (c == '') {
+        return '';
+      }
       List<String> letterList = c.split('');
       letterList[0] = letterList[0].toLowerCase();
       String result = '';
@@ -223,11 +227,14 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   }
 
   String _firstLetterUpperCase({plural:false}) {
-    var c = _code;
+    var c = _code.trim();
     if (plural) {
       c = codePlural;
     }
     if (c != null) {
+      if (c == '') {
+        return '';
+      }
       List<String> letterList = c.split('');
       letterList[0] = letterList[0].toUpperCase();
       String result = '';
@@ -240,11 +247,14 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   }
 
   String _camelCaseLowerCaseUnderscore({plural:false}) {
-    var c = _code;
+    var c = _code.trim();
     if (plural) {
       c = codePlural;
     }
     if (c != null) {
+      if (c == '') {
+        return '';
+      }
       RegExp exp = new RegExp(r"([A-Z])");
       Iterable<Match> matches = exp.allMatches(c);
       var indexes = new List<int>();
