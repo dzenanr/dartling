@@ -236,6 +236,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   } else {
     sc = '${sc}      // no required attribute that is not id \n';
   }
+  sc = '${sc}    }); \n';
   sc = '${sc} \n';
   
   sc = '${sc}    test("Find ${entity} by attribute", () { \n';
