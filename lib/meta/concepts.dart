@@ -142,6 +142,16 @@ class Concept extends ConceptEntity<Concept> {
     return requiredList;
   }
   
+  List<Attribute> get nonIdentifierAttributes {
+    List<Attribute> nonIdentifierList= new List<Attribute>();
+    for (Attribute attribute in attributes) {
+      if (!attribute.identifier) {
+        nonIdentifierList.add(attribute);
+      }
+    }
+    return nonIdentifierList;
+  }
+  
   List<Attribute> get essentialAttributes {
     List<Attribute> essentialList= new List<Attribute>();
     for (Attribute attribute in attributes) {

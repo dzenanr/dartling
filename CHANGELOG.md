@@ -2,8 +2,9 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-03-21
+*2.0.0* 2014-03-29
 
++ add a list of non identifier attributes in concept
 + add missing end of a generated test
 + validate if code is empty in lower or upper transformations in entity
 + add error messages when add and remove propagations are not successful
