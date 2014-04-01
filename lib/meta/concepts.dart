@@ -50,8 +50,12 @@ class Concept extends ConceptEntity<Concept> {
   
   set code(String code) {
     super.code = code;
-    label = code;
-    labels = codes;
+    if (label == null) {
+      label = code;
+    }
+    if (labels == null) {
+      labels = codes;
+    }
   }
   
   int get hashCode => _oid.hashCode;

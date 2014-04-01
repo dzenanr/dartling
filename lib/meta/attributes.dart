@@ -33,7 +33,7 @@ class Attribute extends Property {
   AttributeType get type => _type;
   set type(AttributeType attributeType) {
     _type = attributeType;
-    if (attributeType != null) {
+    if (attributeType != null && length == null) {
       length = attributeType.length;
     }
   }

@@ -18,7 +18,9 @@ abstract class Property extends ConceptEntity<Property> {
   
   set code(String code) {
     super.code = code;
-    label = code;
+    if (label == null) {
+      label = code;
+    }
   }
 
   bool get maxMany => maxc != '0' && maxc != '1' ? true : false;
