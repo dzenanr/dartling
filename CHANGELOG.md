@@ -4,7 +4,9 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.0* 2014-04-01
 
-+ meta: set length of Uri type
++ derive default labels from code and codes
++ derive default attribute length from type length
++ meta: set length of Uri type, Email type
 + meta: add label and labels in concept; label in property; length in attribute
 + add getStringOrNullFromAttribute to ConceptEntity API:
   return null, and not "null", if getStringFromAttribute is null

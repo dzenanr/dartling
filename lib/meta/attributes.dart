@@ -21,13 +21,21 @@ class Attribute extends Property {
   bool _derive = false;
   int length;
 
-  AttributeType type;
+  AttributeType _type;
 
   Attribute(Concept sourceConcept, String attributeCode) :
     super(sourceConcept, attributeCode) {
     sourceConcept.attributes.add(this);
     // default type is String
     type = sourceConcept.model.domain.getType('String');
+  }
+  
+  AttributeType get type => _type;
+  set type(AttributeType attributeType) {
+    _type = attributeType;
+    if (attributeType != null) {
+      length = attributeType.length;
+    }
   }
 
   bool get derive => _derive;

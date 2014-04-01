@@ -36,7 +36,7 @@ class Concept extends ConceptEntity<Concept> {
   Children sourceChildren;
 
   Concept(this.model, String conceptCode) {
-    super.code = conceptCode;
+    code = conceptCode;
     model.concepts.add(this);
 
     attributes = new Attributes();
@@ -46,6 +46,12 @@ class Concept extends ConceptEntity<Concept> {
 
     sourceParents = new Parents();
     sourceChildren = new Children();
+  }
+  
+  set code(String code) {
+    super.code = code;
+    label = code;
+    labels = codes;
   }
   
   int get hashCode => _oid.hashCode;
