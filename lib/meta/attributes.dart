@@ -19,6 +19,7 @@ class Attribute extends Property {
   int increment;
   int sequence;
   bool _derive = false;
+  int length;
 
   AttributeType type;
 

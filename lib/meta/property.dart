@@ -8,6 +8,7 @@ abstract class Property extends ConceptEntity<Property> {
   bool essential = false;
   bool update = true;
   bool sensitive = false;
+  String label;
 
   Concept sourceConcept;
 

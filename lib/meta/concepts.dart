@@ -16,13 +16,15 @@ class Concept extends ConceptEntity<Concept> {
   bool updateCode = false;
   bool add = true;
   bool remove = true;
-
+  String description;
+  
   // to allow for a specific plural name, different from
   // the plural name derivation in ConceptEntity
   String _codes; // code (in) plural
   String _codesFirstLetterLower;
   String _codesLowerUnderscore; // lower letters and undescore separator
-  String description;
+  String label;
+  String labels;
 
   Model model;
 
