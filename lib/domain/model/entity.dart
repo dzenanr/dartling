@@ -13,6 +13,7 @@ abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
   bool setAttribute(String name, Object value);
   bool postSetAttribute(String name, Object value);
   String getStringFromAttribute(String name);
+  String getStringOrNullFromAttribute(String name);
   bool setStringToAttribute(String name, String string);
   EntityApi getParent(String name);
   bool setParent(String name, EntityApi entity);
@@ -370,7 +371,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     return true;
   }
 
-  String getStringFromAttribute(String name) => 
+  String getStringFromAttribute(String name) => _attributeMap[name].toString();
+  String getStringOrNullFromAttribute(String name) => 
       _attributeMap[name] == null ? null : _attributeMap[name].toString(); 
   bool setStringToAttribute(String name, String string) {
     if (_concept == null) {
