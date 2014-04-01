@@ -4,6 +4,7 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.0* 2014-04-01
 
++ add Telephone, Name, Description and Money attribute types
 + derive default labels from code and codes
 + derive default attribute length from type length
 + meta: set length of Uri type, Email type
