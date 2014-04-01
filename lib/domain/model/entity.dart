@@ -370,7 +370,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     return true;
   }
 
-  String getStringFromAttribute(String name) => _attributeMap[name].toString();
+  String getStringFromAttribute(String name) => 
+      _attributeMap[name] == null ? null : _attributeMap[name].toString(); 
   bool setStringToAttribute(String name, String string) {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
@@ -386,7 +387,6 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
     if (attribute.type.code == 'DateTime') {
       try {
-        assert(string != null);
         return setAttribute(name, DateTime.parse(string));
       } on ArgumentError catch (e) {
         throw new TypeError('${_concept.code}.${attribute.code} '

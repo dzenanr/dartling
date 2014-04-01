@@ -2,8 +2,9 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-03-31
+*2.0.0* 2014-04-01
 
++ return null if getStringFromAttribute is null
 + add a list of not increment attributes in concept
 + add a list of identifier attributes in concept
 + add a list of not identifier attributes in concept
