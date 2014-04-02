@@ -174,6 +174,16 @@ class Concept extends ConceptEntity<Concept> {
     return nonIdentifierList;
   }
   
+  List<Attribute> get incrementAttributes {
+    List<Attribute> incrementList= new List<Attribute>();
+    for (Attribute attribute in attributes) {
+      if (attribute.increment != null) {
+        incrementList.add(attribute);
+      }
+    }
+    return incrementList;
+  }
+  
   List<Attribute> get nonIncrementAttributes {
     List<Attribute> nonIncrementList= new List<Attribute>();
     for (Attribute attribute in attributes) {
