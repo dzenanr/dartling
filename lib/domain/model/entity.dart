@@ -165,131 +165,18 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     return id;
   }
 
-  String get codeFirstLetterLower => _firstLetterLowerCase();
-  String get codeFirstLetterUpper => _firstLetterUpperCase();
-  String get codeLowerUnderscore => _camelCaseLowerCaseUnderscore();
+  String get codeFirstLetterLower => firstLetterLower(code);
+  String get codeFirstLetterUpper => firstLetterUpper(code);
+  String get codeLowerUnderscore => camelCaseLowerSeparator(code, '_');
+  String get codeLowerSpace => camelCaseLowerSeparator(code, ' ');
 
-  String get codePlural => _plural();
-  String get codePluralFirstLetterLower => _firstLetterLowerCase(plural:true);
-  String get codePluralFirstLetterUpper => _firstLetterUpperCase(plural:true);
-  String get codePluralLowerUnderscore =>
-      _camelCaseLowerCaseUnderscore(plural:true);
-
-  String _plural() {
-    String dropEnd(String end) {
-      String withoutEnd = _code;
-      int endPosition = _code.lastIndexOf(end);
-      if (endPosition > 0) {
-        // Drop the end.
-        withoutEnd = _code.substring(0, endPosition);
-      }
-      return withoutEnd;
-    }
-    var c = _code.trim();
-    if (c != null) {
-      if (c == '') {
-        return '';
-      }
-      var result;
-      String lastLetter = c.substring(c.length - 1, c.length);
-      if (lastLetter == 'x') {
-        result = '${c}es';
-      } else if (lastLetter == 'z') {
-        result = '${c}zes';
-      } else if (lastLetter == 'y') {
-        String withoutLast = dropEnd(lastLetter);
-        result = '${withoutLast}ies';
-      } else {
-        result = '${c}s';
-      }
-      return result;
-    }
-    return null;
-  }
-
-  String _firstLetterLowerCase({plural:false}) {
-    var c = _code.trim();
-    if (plural) {
-      c = codePlural;
-    }
-    if (c != null) {
-      if (c == '') {
-        return '';
-      }
-      List<String> letterList = c.split('');
-      letterList[0] = letterList[0].toLowerCase();
-      String result = '';
-      for (String letter in letterList) {
-        result = '${result}${letter}';
-      }
-      return result;
-    }
-    return null;
-  }
-
-  String _firstLetterUpperCase({plural:false}) {
-    var c = _code.trim();
-    if (plural) {
-      c = codePlural;
-    }
-    if (c != null) {
-      if (c == '') {
-        return '';
-      }
-      List<String> letterList = c.split('');
-      letterList[0] = letterList[0].toUpperCase();
-      String result = '';
-      for (String letter in letterList) {
-        result = '${result}${letter}';
-      }
-      return result;
-    }
-    return null;
-  }
-
-  String _camelCaseLowerCaseUnderscore({plural:false}) {
-    var c = _code.trim();
-    if (plural) {
-      c = codePlural;
-    }
-    if (c != null) {
-      if (c == '') {
-        return '';
-      }
-      RegExp exp = new RegExp(r"([A-Z])");
-      Iterable<Match> matches = exp.allMatches(c);
-      var indexes = new List<int>();
-      for (Match m in matches) {
-        indexes.add(m.end);
-      };
-      int previousIndex = 0;
-      var camelCaseWordList = new List<String>();
-      for (int index in indexes) {
-        String camelCaseWord = c.substring(previousIndex, index - 1);
-        camelCaseWordList.add(camelCaseWord);
-        previousIndex = index - 1;
-      }
-      String camelCaseWord = c.substring(previousIndex);
-      camelCaseWordList.add(camelCaseWord);
-
-      String previousCamelCaseWord;
-      String result = '';
-      for (String camelCaseWord in camelCaseWordList) {
-        if (camelCaseWord == '') {
-          previousCamelCaseWord = camelCaseWord;
-        } else {
-          if (previousCamelCaseWord == '') {
-            result = '${result}${camelCaseWord}';
-          } else {
-            result = '${result}_${camelCaseWord}';
-          }
-          previousCamelCaseWord = camelCaseWord;
-        }
-      }
-      return result.toLowerCase();
-    }
-    return null;
-  }
+  String get codePlural => plural(code);
+  String get codePluralFirstLetterLower => firstLetterLower(codePlural);
+  String get codePluralFirstLetterUpper => firstLetterUpper(codePlural);
+  String get codePluralLowerUnderscore => 
+      camelCaseLowerSeparator(codePlural, '_');
+  String get codePluralFirstLetterUpperSpace =>
+      camelCaseFirstLetterUpperSeparator(codePlural, ' ');
 
   bool preSetAttribute(String name, Object value) {
     if (!pre) {

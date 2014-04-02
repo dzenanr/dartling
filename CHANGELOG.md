@@ -2,8 +2,9 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-04-01
+*2.0.0* 2014-04-02
 
++ add util/text_transformers.dart and use it for codes and labels
 + add Telephone, Name, Description and Money attribute types
 + derive default labels, if null, from code and codes
 + derive default attribute length, if null, from type length

@@ -75,5 +75,5 @@ part 'meta/parents.dart';
 part 'meta/property.dart';
 part 'meta/types.dart';
 
-
+part 'util/text_transformers.dart';
 

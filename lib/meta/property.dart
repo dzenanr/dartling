@@ -19,7 +19,7 @@ abstract class Property extends ConceptEntity<Property> {
   set code(String code) {
     super.code = code;
     if (label == null) {
-      label = code;
+      label = camelCaseLowerSeparator(code, ' ');
     }
   }
 

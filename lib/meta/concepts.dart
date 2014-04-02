@@ -51,10 +51,10 @@ class Concept extends ConceptEntity<Concept> {
   set code(String code) {
     super.code = code;
     if (label == null) {
-      label = code;
+      label = camelCaseSeparator(code, ' ');
     }
     if (labels == null) {
-      labels = codes;
+      labels = camelCaseSeparator(codes, ' ');
     }
   }
   
@@ -103,7 +103,7 @@ class Concept extends ConceptEntity<Concept> {
 
   String get codes {
     if (_codes == null) {
-      _codes = codePlural;
+      _codes = plural(_codes);
     }
     return _codes;
   }
@@ -113,7 +113,7 @@ class Concept extends ConceptEntity<Concept> {
 
   String get codesFirstLetterLower {
     if (_codesFirstLetterLower == null) {
-      _codesFirstLetterLower = codePluralFirstLetterLower;
+      _codesFirstLetterLower = firstLetterLower(codes);
     }
     return _codesFirstLetterLower;
   }
@@ -123,7 +123,7 @@ class Concept extends ConceptEntity<Concept> {
 
   String get codesLowerUnderscore {
     if (_codesLowerUnderscore == null) {
-      _codesLowerUnderscore = codePluralLowerUnderscore;
+      _codesLowerUnderscore = camelCaseLowerSeparator(codes, '_');
     }
     return _codesLowerUnderscore;
   }
