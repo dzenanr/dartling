@@ -30,6 +30,9 @@ class AttributeType extends ConceptEntity<AttributeType> {
     } else if (typeCode == 'DateTime') {
       base = typeCode;
       length = 16;
+    } else if (typeCode == 'Duration') {
+      base = typeCode;
+      length = 16;
     } else if (typeCode == 'Uri') {
       base = typeCode;
       length = 80;
@@ -37,6 +40,12 @@ class AttributeType extends ConceptEntity<AttributeType> {
       base = 'String';
       length = 48;
     } else if (typeCode == 'Telephone') {
+      base = 'String';
+      length = 16;
+    } else if (typeCode == 'PostalCode') {
+      base = 'String';
+      length = 16;
+    } else if (typeCode == 'ZipCode') {
       base = 'String';
       length = 16;
     } else if (typeCode == 'Name') {
@@ -69,13 +78,7 @@ class AttributeType extends ConceptEntity<AttributeType> {
   }
   
   validate(String value) {
-    if (code == 'DateTime') {
-      try {
-        DateTime.parse(value);
-      } on FormatException catch (e) {
-        return false;
-      }
-    } else if (code == 'num') {
+    if (code == 'num') {
       try {
         num.parse(value);
       } on FormatException catch (e) {

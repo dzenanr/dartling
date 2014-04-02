@@ -6,22 +6,15 @@ uuid
 
 copy on entities produces entities that are not equal (is this correct?)
 
-fromJson for entity and entities is now without neighbors
-
 essentail for neighbors (true by default)
-min (minimal properties only are shown in a web componet) for properties
-
-add the Add button after the entities table
-create EntityForm to update the selected entity
+min (minimal properties only are shown in a web component) for properties ?
 
 util/text_handling
 
 unique model and concept names: DomainModel, DomainModelConcept ?
 
-default neighbor names in Magic Boxes
-add essential for items in Magic Boxes
-add abstract for boxes in Magic Boxes
-add all from Dartling to Magic Boxes
+add abstract for boxes in Model Concepts
+add all from Dartling to Model Concepts
 
 action.doit when called directly by a user avoids a session doit
   ok when session is null for undoing the action
@@ -38,15 +31,6 @@ Uri validation for well formed uri (not done in Uri)
   https://github.com/berkerpeksag/murl#readme
   ...whether the string used to construct the Uri is well-formed and is not required to be further escaped.
   http://msdn.microsoft.com/en-us/library/system.uri.iswellformedoriginalstring.aspx
-Dynamic type???
-Duration (time span) type
-email type?
-  http://davidcelis.com/blog/2012/09/06/stop-validating-email-addresses-with-regex/
-  https://www.google.com/search?q=email+regex
-money type
-telephone type
-postal code type
-zip code type
 encryption for sensitive data
   http://www.howstuffworks.com/encryption.htm
 marketing
