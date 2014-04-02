@@ -1,32 +1,35 @@
 part of dartling;
 
 String dropEnd(String text, String end) {
-  String withoutEnd = text;
-  int endPosition = text.lastIndexOf(end);
-  if (endPosition > 0) {
-    // drop the end
-    withoutEnd = text.substring(0, endPosition);
+  if (text != null && end != null) {
+    String withoutEnd = text;
+    int endPosition = text.lastIndexOf(end);
+    if (endPosition > 0) {
+      // drop the end
+      withoutEnd = text.substring(0, endPosition);
+    }
+    return withoutEnd;
   }
-  return withoutEnd;
+  return null;
 }
 
 String plural(String text) {
-  var c = text.trim();
-  if (c != null) {
-    if (c == '') {
+  if (text != null) {
+    var t = text.trim();
+    if (t == '') {
       return '';
     }
     var result;
-    String lastLetter = c.substring(c.length - 1, c.length);
+    String lastLetter = t.substring(t.length - 1, t.length);
     if (lastLetter == 'x') {
-      result = '${c}es';
+      result = '${t}es';
     } else if (lastLetter == 'z') {
-      result = '${c}zes';
+      result = '${t}zes';
     } else if (lastLetter == 'y') {
       String withoutLast = dropEnd(text, lastLetter);
       result = '${withoutLast}ies';
     } else {
-      result = '${c}s';
+      result = '${t}s';
     }
     return result;
   }
