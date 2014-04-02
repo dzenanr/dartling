@@ -68,7 +68,7 @@ class AttributeType extends ConceptEntity<AttributeType> {
     return regexp.hasMatch(email);
   }
   
-  validateValue(String value) {
+  validate(String value) {
     if (code == 'DateTime') {
       try {
         DateTime.parse(value);
