@@ -61,5 +61,57 @@ class AttributeType extends ConceptEntity<AttributeType> {
     code = typeCode;
     domain.types.add(this);
   }
+  
+  bool isEmail(String email) {
+    var regexp = new RegExp(
+        r'\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b');
+    return regexp.hasMatch(email);
+  }
+  
+  validateValue(String value) {
+    if (code == 'DateTime') {
+      try {
+        DateTime.parse(value);
+      } on FormatException catch (e) {
+        return false;
+      }
+    } else if (code == 'num') {
+      try {
+        num.parse(value);
+      } on FormatException catch (e) {
+        return false;
+      }
+    } else if (code == 'int') {
+      try {
+        int.parse(value);
+      } on FormatException catch (e) {
+        return false;
+      }
+    } else if (code == 'double') {
+      try {
+        double.parse(value);
+      } on FormatException catch (e) {
+        return false;
+      }
+    } else if (code == 'bool') {
+      if (value != 'true' && value != 'false') {
+        return false;
+      }
+    } else if (code == 'DateTime') {
+      try {
+        DateTime.parse(value);
+      } on FormatException catch (e) {
+        return false;
+      }
+    } else if (code == 'Uri') {
+      var uri = Uri.parse(value);
+      if (uri.host == '') {
+        return false;
+      }
+    } else if (code == 'Email') {
+      return isEmail(value);
+    }
+    return true;
+  }
 
 }

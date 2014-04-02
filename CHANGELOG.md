@@ -4,6 +4,7 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.0* 2014-04-02
 
++ validate if a String value is of the attribute type 
 + add increment attributes in concept
 + add util/text_transformers.dart and use it for codes and labels
 + add Telephone, Name, Description and Money attribute types
