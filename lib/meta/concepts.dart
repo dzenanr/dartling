@@ -103,7 +103,7 @@ class Concept extends ConceptEntity<Concept> {
 
   String get codes {
     if (_codes == null) {
-      _codes = plural(_codes);
+      _codes = plural(_code);
     }
     return _codes;
   }
