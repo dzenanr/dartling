@@ -2,8 +2,10 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-04-02
+*2.0.0* 2014-04-09
 
++ add child navigate with init of true
++ init parent absorb to true
 + add Duration, PostalCode, ZipCode types
 + validate if a String value is of the attribute type 
 + add increment attributes in concept

@@ -13,6 +13,8 @@ class Children extends Entities<Property> {
 }
 
 class Child extends Neighbor {
+  
+  bool navigate = true;
 
   Child(Concept sourceConcept, Concept destinationConcept, String childCode) :
     super(sourceConcept, destinationConcept, childCode) {

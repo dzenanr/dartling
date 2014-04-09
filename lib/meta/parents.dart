@@ -14,7 +14,7 @@ class Parents extends Entities<Property> {
 
 class Parent extends Neighbor {
 
-  bool absorb = false;
+  bool absorb = true;
 
   Parent(Concept sourceConcept, Concept destinationConcept, String parentCode) :
     super(sourceConcept, destinationConcept, parentCode) {
