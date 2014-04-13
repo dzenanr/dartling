@@ -32,7 +32,7 @@ class Attribute extends Property {
   
   set required(bool req) {
     super.required = req;
-    if (req && !concept.hasId) {
+    if (req && !sourceConcept.hasId) {
       essential = true;
     }
   }
