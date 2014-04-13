@@ -201,25 +201,25 @@ class Id implements IdApi {
        var compare = 0;
        for (Attribute a in concept.attributes) {
          if (a.identifier) {
-           if (a.type.code == 'String') {
+           if (a.type.base == 'String') {
              String attribute = _attributeMap[a.code];
              compare = attribute.compareTo(id.getAttribute(a.code));
-           } else if (a.type.code == 'num' ||
-             a.type.code == 'int' || a.type.code == 'double') {
+           } else if (a.type.base == 'num' ||
+             a.type.base == 'int' || a.type.base == 'double') {
              num attribute = _attributeMap[a.code];
              compare = attribute.compareTo(id.getAttribute(a.code));
-           } else if (a.type.code == 'DateTime') {
-             DateTime attribute = _attributeMap[a.code];
-             compare = attribute.compareTo(id.getAttribute(a.code));
-           } else if (a.type.code == 'Uri') {
-             Uri attribute = _attributeMap[a.code];
+           } else if (a.type.base == 'bool') {
+             bool attribute = _attributeMap[a.code];
              compare = attribute.toString().compareTo(
                  id.getAttribute(a.code).toString());
-           } else if (a.type.code == 'Email') {
-             String attribute = _attributeMap[a.code];
+           } else if (a.type.base == 'DateTime') {
+             DateTime attribute = _attributeMap[a.code];
              compare = attribute.compareTo(id.getAttribute(a.code));
-           } else if (a.type.code == 'bool') {
-             bool attribute = _attributeMap[a.code];
+           } else if (a.type.base == 'Duration') {
+             Duration attribute = _attributeMap[a.code];
+             compare = attribute.compareTo(id.getAttribute(a.code));
+           } else if (a.type.base == 'Uri') {
+             Uri attribute = _attributeMap[a.code];
              compare = attribute.toString().compareTo(
                  id.getAttribute(a.code).toString());
            } else {

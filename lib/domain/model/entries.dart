@@ -87,7 +87,7 @@ class ModelEntries implements ModelEntriesApi {
   }
 
   bool get isEmpty {
-  for (Concept entryConcept in _model.entryConcepts) {
+    for (Concept entryConcept in _model.entryConcepts) {
       Entities entryEntities = getEntry(entryConcept.code);
       if (!entryEntities.isEmpty) {
         return false;
