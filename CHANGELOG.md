@@ -4,6 +4,7 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.0* 2014-04-13
 
++ if a concept does not have an id, a required attribute becomes essential
 + compare 2 entities based on their attributes
 + use type base when validating a type value
 + use type base when comparing id attributes

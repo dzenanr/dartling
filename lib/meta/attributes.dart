@@ -30,6 +30,13 @@ class Attribute extends Property {
     type = sourceConcept.model.domain.getType('String');
   }
   
+  set required(bool req) {
+    super.required = req;
+    if (req && !concept.hasId) {
+      essential = true;
+    }
+  }
+  
   AttributeType get type => _type;
   set type(AttributeType attributeType) {
     _type = attributeType;
