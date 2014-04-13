@@ -52,5 +52,5 @@ class Attribute extends Property {
       update = false;
     }
   }
-
+  
 }

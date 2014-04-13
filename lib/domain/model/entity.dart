@@ -573,40 +573,9 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   int compareAttributes(E entity) {
     var compare = 0;
     for (Attribute a in concept.attributes) {
-      if (a.type.base == 'String') {
-        String attribute1 = _attributeMap[a.code];
-        String attribute2 = entity.getAttribute(a.code);
-        compare = attribute1.compareTo(attribute2);
-      } else if (a.type.base == 'num' ||
-        a.type.base == 'int' || a.type.base == 'double') {
-        num attribute1 = _attributeMap[a.code];
-        num attribute2 = entity.getAttribute(a.code);
-        compare = attribute1.compareTo(attribute2);
-      } else if (a.type.base == 'bool') {
-        bool attribute1 = _attributeMap[a.code];
-        bool attribute2 = entity.getAttribute(a.code);
-        compare = attribute1.toString().compareTo(attribute2.toString());
-      } else if (a.type.base == 'DateTime') {
-        DateTime attribute1 = _attributeMap[a.code];
-        DateTime attribute2 = entity.getAttribute(a.code);
-        compare = attribute1.compareTo(attribute2);
-      } else if (a.type.base == 'Duration') {
-        Duration attribute1 = _attributeMap[a.code];
-        Duration attribute2 = entity.getAttribute(a.code);
-        compare = attribute1.compareTo(attribute2);
-      } else if (a.type.base == 'Uri') {
-        Uri attribute1 = _attributeMap[a.code];
-        Uri attribute2 = entity.getAttribute(a.code);
-        compare = attribute1.toString().compareTo(attribute2.toString());
-      } else {
-        String msg = 'cannot compare then order on this type';
-        if (a.concept != null) {
-          msg = '${a.concept.code}.${a.code} is of ${a.type.code} type: cannot order.';
-        } else {
-          msg = '${a.code} is of ${a.type.code} type: cannot order.';
-        }
-        throw new OrderError(msg);
-      }
+      var value1 = _attributeMap[a.code];
+      var value2 = entity.getAttribute(a.code);
+      compare = a.type.compare(value1, value2);
       if (compare != 0) {
         break;
       }

@@ -200,44 +200,15 @@ class Id implements IdApi {
      if (id.attributeLength > 0) {
        var compare = 0;
        for (Attribute a in concept.attributes) {
-         if (a.identifier) {
-           if (a.type.base == 'String') {
-             String attribute = _attributeMap[a.code];
-             compare = attribute.compareTo(id.getAttribute(a.code));
-           } else if (a.type.base == 'num' ||
-             a.type.base == 'int' || a.type.base == 'double') {
-             num attribute = _attributeMap[a.code];
-             compare = attribute.compareTo(id.getAttribute(a.code));
-           } else if (a.type.base == 'bool') {
-             bool attribute = _attributeMap[a.code];
-             compare = attribute.toString().compareTo(
-                 id.getAttribute(a.code).toString());
-           } else if (a.type.base == 'DateTime') {
-             DateTime attribute = _attributeMap[a.code];
-             compare = attribute.compareTo(id.getAttribute(a.code));
-           } else if (a.type.base == 'Duration') {
-             Duration attribute = _attributeMap[a.code];
-             compare = attribute.compareTo(id.getAttribute(a.code));
-           } else if (a.type.base == 'Uri') {
-             Uri attribute = _attributeMap[a.code];
-             compare = attribute.toString().compareTo(
-                 id.getAttribute(a.code).toString());
-           } else {
-             String msg = 'cannot compare then order on this type';
-             if (a.concept != null) {
-               msg = '${a.concept.code}.${a.code} is of ${a.type.code} type: cannot order.';
-             } else {
-               msg = '${a.code} is of ${a.type.code} type: cannot order.';
-             }
-             throw new OrderError(msg);
-           }
-           if (compare != 0) {
-             break;
-           }
-         } // if (a.id)
+         var value1 = _attributeMap[a.code];
+         var value2 = id.getAttribute(a.code);
+         compare = a.type.compare(value1, value2);
+         if (compare != 0) {
+           break;
+         }
        } // for
-       return compare;
-     }
+       return compare;       
+     }  
      throw new IdError('${_concept.code}.id does not have attributes.');
    }
 

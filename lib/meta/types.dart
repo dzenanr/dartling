@@ -118,5 +118,33 @@ class AttributeType extends ConceptEntity<AttributeType> {
     }
     return true;
   }
+  
+  /**
+   * Compares two values based on their type.
+   * If the result is less than 0 then the first id is less than the second,
+   * if it is equal to 0 they are equal and
+   * if the result is greater than 0 then the first is greater than the second.
+   */
+  int compare(var value1, var value2) {
+    var compare = 0;
+    if (base == 'String') {
+      compare = value1.compareTo(value2);
+    } else if (base == 'num' ||
+      base == 'int' || base == 'double') {
+      compare = value1.compareTo(value2);
+    } else if (base == 'bool') {
+      compare = value1.toString().compareTo(value2.toString());
+    } else if (base == 'DateTime') {
+      compare = value1.compareTo(value2);
+    } else if (base == 'Duration') {
+      compare = value1.compareTo(value2);
+    } else if (base == 'Uri') {
+      compare = value1.toString().compareTo(value2.toString());
+    } else {
+      String msg = 'cannot compare then order on this type: ${code} type.';
+      throw new OrderError(msg);
+    }
+    return compare;
+  }
 
 }
