@@ -78,35 +78,37 @@ class AttributeType extends ConceptEntity<AttributeType> {
   }
   
   validate(String value) {
-    if (code == 'num') {
+    if (base == 'num') {
       try {
         num.parse(value);
       } on FormatException catch (e) {
         return false;
       }
-    } else if (code == 'int') {
+    } else if (base == 'int') {
       try {
         int.parse(value);
       } on FormatException catch (e) {
         return false;
       }
-    } else if (code == 'double') {
+    } else if (base == 'double') {
       try {
         double.parse(value);
       } on FormatException catch (e) {
         return false;
       }
-    } else if (code == 'bool') {
+    } else if (base == 'bool') {
       if (value != 'true' && value != 'false') {
         return false;
       }
-    } else if (code == 'DateTime') {
+    } else if (base == 'DateTime') {
       try {
         DateTime.parse(value);
       } on FormatException catch (e) {
         return false;
       }
-    } else if (code == 'Uri') {
+    } else if (base == 'Duration') {
+      // validation?
+    } else if (base == 'Uri') {
       var uri = Uri.parse(value);
       if (uri.host == '') {
         return false;

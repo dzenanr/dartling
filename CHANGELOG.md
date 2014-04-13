@@ -4,6 +4,7 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.0* 2014-04-13
 
++ use type base when validating a type value
 + use type base when comparing id attributes
 + add child navigate with init of true
 + init parent absorb to true
