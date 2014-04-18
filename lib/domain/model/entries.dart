@@ -162,11 +162,11 @@ class ModelEntries implements ModelEntriesApi {
           }
           if (entity.getParent(parent.code) == null) {
             entity.setParent(parent.code, parentEntity);
-            print('parent.opposite.code: ${parent.opposite.code}');
+            //print('parent.opposite.code: ${parent.opposite.code}');
             var parentChildEntities = parentEntity.getChild(parent.opposite.code);
-            print('parentChildEntities.length before add: ${parentChildEntities.length}');
+            //print('parentChildEntities.length before add: ${parentChildEntities.length}');
             parentChildEntities.add(entity);
-            print('parentChildEntities.length after add: ${parentChildEntities.length}');
+            //print('parentChildEntities.length after add: ${parentChildEntities.length}');
           }
         }
       } 
