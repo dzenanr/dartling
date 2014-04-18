@@ -182,7 +182,7 @@ class ModelEntries implements ModelEntriesApi {
     var modelCode = entryMap['model'];
     var entryConceptCode = entryMap['entry'];
     var entryEntities = getEntry(entryConceptCode);
-    populateReferences(entryEntities);
+    populateEntityReferences(entryEntities);
   }
   
   populateEntryReferences(String entryJson) {
