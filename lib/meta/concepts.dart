@@ -145,7 +145,7 @@ class Concept extends ConceptEntity<Concept> {
       sourceChildren.singleWhereCode(childCode);
 
   List<Attribute> get requiredAttributes {
-    List<Attribute> requiredList= new List<Attribute>();
+    var requiredList= new List<Attribute>();
     for (Attribute attribute in attributes) {
       if (attribute.required) {
         requiredList.add(attribute);
@@ -155,7 +155,7 @@ class Concept extends ConceptEntity<Concept> {
   }
   
   List<Attribute> get identifierAttributes {
-    List<Attribute> identifierList= new List<Attribute>();
+    var identifierList= new List<Attribute>();
     for (Attribute attribute in attributes) {
       if (attribute.identifier) {
         identifierList.add(attribute);
@@ -165,7 +165,7 @@ class Concept extends ConceptEntity<Concept> {
   }
   
   List<Attribute> get nonIdentifierAttributes {
-    List<Attribute> nonIdentifierList= new List<Attribute>();
+    var nonIdentifierList= new List<Attribute>();
     for (Attribute attribute in attributes) {
       if (!attribute.identifier) {
         nonIdentifierList.add(attribute);
@@ -175,7 +175,7 @@ class Concept extends ConceptEntity<Concept> {
   }
   
   List<Attribute> get incrementAttributes {
-    List<Attribute> incrementList= new List<Attribute>();
+    var incrementList= new List<Attribute>();
     for (Attribute attribute in attributes) {
       if (attribute.increment != null) {
         incrementList.add(attribute);
@@ -185,7 +185,7 @@ class Concept extends ConceptEntity<Concept> {
   }
   
   List<Attribute> get nonIncrementAttributes {
-    List<Attribute> nonIncrementList= new List<Attribute>();
+    var nonIncrementList= new List<Attribute>();
     for (Attribute attribute in attributes) {
       if (attribute.increment == null) {
         nonIncrementList.add(attribute);
@@ -195,7 +195,7 @@ class Concept extends ConceptEntity<Concept> {
   }
   
   List<Attribute> get essentialAttributes {
-    List<Attribute> essentialList= new List<Attribute>();
+    var essentialList= new List<Attribute>();
     for (Attribute attribute in attributes) {
       if (attribute.essential) {
         essentialList.add(attribute);
@@ -205,7 +205,7 @@ class Concept extends ConceptEntity<Concept> {
   }
   
   List<Parent> get externalParents {
-    List<Parent> externalList = new List<Parent>();
+    var externalList = new List<Parent>();
     for (Parent parent in parents) {
       if (parent.external) {
         externalList.add(parent);
@@ -215,7 +215,7 @@ class Concept extends ConceptEntity<Concept> {
   }
   
   List<Parent> get externalRequiredParents {
-    List<Parent> externalRequiredList = new List<Parent>();
+    var externalRequiredList = new List<Parent>();
     for (Parent parent in parents) {
       if (parent.external && parent.required) {
         externalRequiredList.add(parent);
@@ -223,9 +223,19 @@ class Concept extends ConceptEntity<Concept> {
     }
     return externalRequiredList;
   }
+  
+  List<Child> get internalChildren {
+    var internalList = new List<Child>();
+    for (Child child in children) {
+      if (child.internal) {
+        internalList.add(child);
+      }
+    }
+    return internalList;
+  }
 
   List<Property> get singleValueProperties {
-  List<Property> propertyList = new List<Property>();
+    var propertyList = new List<Property>();
     propertyList.addAll(attributes.toList());
     propertyList.addAll(parents.toList());
     return propertyList;
@@ -348,7 +358,7 @@ class Concept extends ConceptEntity<Concept> {
   }
 
   List<String> get childCodeInternalPaths {
-    List<String> childList = new List<String>();
+    var childList = new List<String>();
     for (Child child in children) {
       Concept sourceConcept = child.sourceConcept;
       String entryConceptSourceConceptInternalPath =

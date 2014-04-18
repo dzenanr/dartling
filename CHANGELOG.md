@@ -2,8 +2,9 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-04-13
+*2.0.0* 2014-04-18
 
++ populate references down the internal tree of each entry concept
 + compare 2 values of the same type in the type
 + if a concept does not have an id, a required attribute becomes essential
 + compare 2 entities based on their attributes

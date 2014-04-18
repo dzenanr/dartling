@@ -1,5 +1,7 @@
 dartling To Do
 
+add Latitude and Longitude data types, base: double
+
 uuid
   http://www.ietf.org/rfc/rfc4122.txt
   https://github.com/Daegalus/dart-uuid

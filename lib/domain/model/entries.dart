@@ -146,12 +146,8 @@ class ModelEntries implements ModelEntriesApi {
     entryEntities.fromJsonList(entitiesList);
   }
   
-  populateEntryReferencesFromJsonMap(Map<String, Object> entryMap) {
-    var domainCode = entryMap['domain'];
-    var modelCode = entryMap['model'];
-    var entryConceptCode = entryMap['entry'];
-    var entryEntities = getEntry(entryConceptCode);
-    for (var entity in entryEntities) {
+  populateEntityReferences(Entities entities) {
+    for (var entity in entities) {
       for (Parent parent in entity.concept.externalParents) {
         Reference reference = entity.getReference(parent.code);
         if (reference != null) {
@@ -173,8 +169,20 @@ class ModelEntries implements ModelEntriesApi {
             print('parentChildEntities.length after add: ${parentChildEntities.length}');
           }
         }
+      } 
+      for (Child internalChild in entity.concept.internalChildren) {
+        var childEntities = entity.getChild(internalChild.code);
+        populateEntityReferences(childEntities);
       }
-    }
+    } 
+  }
+  
+  populateEntryReferencesFromJsonMap(Map<String, Object> entryMap) {
+    var domainCode = entryMap['domain'];
+    var modelCode = entryMap['model'];
+    var entryConceptCode = entryMap['entry'];
+    var entryEntities = getEntry(entryConceptCode);
+    populateReferences(entryEntities);
   }
   
   populateEntryReferences(String entryJson) {
