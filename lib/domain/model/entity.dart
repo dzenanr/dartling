@@ -7,6 +7,9 @@ abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
   Oid get oid;
   IdApi get id;
   String code;
+  DateTime whenAdded;
+  DateTime whenSet;
+  DateTime whenRemoved;
 
   Object getAttribute(String name);
   bool preSetAttribute(String name, Object value);
@@ -32,6 +35,9 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   ValidationErrors _errors;
   Oid _oid;
   String _code;
+  DateTime _whenAdded;
+  DateTime _whenSet;
+  DateTime _whenRemoved;
 
   Map<String, Object> _attributeMap;
   // cannot use T since a parent is of a different type
@@ -143,6 +149,13 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       throw new CodeError('Entity code cannot be updated.');
     }
   }
+  
+  DateTime get whenAdded => _whenAdded;
+  void set whenAdded(DateTime dateTime) {}
+  DateTime get whenSet => _whenSet;
+  void set whenSet(DateTime dateTime) {}
+  DateTime get whenRemoved => _whenRemoved;
+  void set whenRemoved(DateTime dateTime) {}
 
   Id get id {
     if (_concept == null) {
@@ -213,10 +226,12 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       if (getAttribute(name) == null) {
         _attributeMap[name] = value;
         updated = true;
+        _whenSet = new DateTime.now();
       //} else if (!attribute.derive && attribute.update) {
       } else if (attribute.update) {
         _attributeMap[name] = value;
         updated = true;
+        _whenSet = new DateTime.now();
       } else {
         String msg = '${_concept.code}.${attribute.code} is not updateable.';
         throw new UpdateError(msg);
@@ -238,6 +253,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
             'was set to a new value, post was not successful, '
             'set to the before value was not successful';
           throw new RemoveError(msg);
+        } else {
+          _whenSet = null;
         }
         pre = beforePre;
         post = beforePost;

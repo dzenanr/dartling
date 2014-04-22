@@ -550,6 +550,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
         }
         if (postAdd(entity)) {
           added = true;
+          entity._whenAdded = new DateTime.now();
         } else {
           var beforePre = pre;
           var beforePost = post;
@@ -559,6 +560,8 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
             var msg = '${entity.concept.code} entity (${entity.oid}) '
               'was added, post was not successful, remove was not successful';
             throw new RemoveError(msg);
+          } else {
+            entity._whenAdded = null;
           }
           pre = beforePre;
           post = beforePost;
@@ -650,6 +653,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
           }
           if (postRemove(entity)) {
             removed = true;
+            entity._whenRemoved = new DateTime.now();
           } else {
             var beforePre = pre;
             var beforePost = post;
@@ -659,6 +663,8 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
               var msg = '${entity.concept.code} entity (${entity.oid}) '
                 'was removed, post was not successful, add was not successful';
               throw new AddError(msg);
+            } else {
+              entity._whenRemoved = null;
             }
             pre = beforePre;
             post = beforePost;
