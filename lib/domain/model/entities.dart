@@ -717,6 +717,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     }
     if (remove(beforeEntity)) {
       if (add(afterEntity)) {
+        afterEntity._whenUpdated = new DateTime.now();
         return true;
       } else {
         print('entities.update: ${errors.toList()}');

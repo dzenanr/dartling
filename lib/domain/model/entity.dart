@@ -9,6 +9,7 @@ abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
   String code;
   DateTime whenAdded;
   DateTime whenSet;
+  DateTime whenUpdated;
   DateTime whenRemoved;
 
   Object getAttribute(String name);
@@ -37,6 +38,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   String _code;
   DateTime _whenAdded;
   DateTime _whenSet;
+  DateTime _whenUpdated;
   DateTime _whenRemoved;
 
   Map<String, Object> _attributeMap;
@@ -154,6 +156,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   void set whenAdded(DateTime dateTime) {}
   DateTime get whenSet => _whenSet;
   void set whenSet(DateTime dateTime) {}
+  DateTime get whenUpdated => _whenUpdated;
+  void set whenUpdated(DateTime dateTime) {}
   DateTime get whenRemoved => _whenRemoved;
   void set whenRemoved(DateTime dateTime) {}
 
