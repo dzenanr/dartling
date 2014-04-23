@@ -4,7 +4,7 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.0* 2014-04-22
 
-+ add whenAdded, whenSet, whenUpdated and whenRemoved DateTime properties in Entity
++ add whenAdded, whenSet and whenRemoved DateTime properties in Entity
 + populate references down the internal tree of each entry concept
 + compare 2 values of the same type in the type
 + if a concept does not have an id, a required attribute becomes essential

@@ -5,12 +5,11 @@ abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
   Concept get concept;
   ValidationErrorsApi get errors;
   Oid get oid;
-  IdApi get id;
   String code;
-  DateTime whenAdded;
-  DateTime whenSet;
-  DateTime whenUpdated;
-  DateTime whenRemoved;
+  IdApi get id;
+  DateTime get whenAdded;
+  DateTime get whenSet;
+  DateTime get whenRemoved;
 
   Object getAttribute(String name);
   bool preSetAttribute(String name, Object value);
@@ -38,7 +37,6 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   String _code;
   DateTime _whenAdded;
   DateTime _whenSet;
-  DateTime _whenUpdated;
   DateTime _whenRemoved;
 
   Map<String, Object> _attributeMap;
@@ -142,7 +140,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       throw new OidError('Entity oid cannot be updated.');
     }
   }
-
+  
   String get code => _code;
   void set code(String code) {
     if (_code == null || _concept.updateCode) {
@@ -152,15 +150,6 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
   }
   
-  DateTime get whenAdded => _whenAdded;
-  void set whenAdded(DateTime dateTime) {}
-  DateTime get whenSet => _whenSet;
-  void set whenSet(DateTime dateTime) {}
-  DateTime get whenUpdated => _whenUpdated;
-  void set whenUpdated(DateTime dateTime) {}
-  DateTime get whenRemoved => _whenRemoved;
-  void set whenRemoved(DateTime dateTime) {}
-
   Id get id {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
@@ -181,6 +170,10 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
     return id;
   }
+  
+  DateTime get whenAdded => _whenAdded;
+  DateTime get whenSet => _whenSet;
+  DateTime get whenRemoved => _whenRemoved;
 
   String get codeFirstLetterLower => firstLetterLower(code);
   String get codeFirstLetterUpper => firstLetterUpper(code);
