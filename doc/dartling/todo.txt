@@ -11,7 +11,7 @@ copy on entities produces entities that are not equal (is this correct?)
 essentail for neighbors (true by default)
 min (minimal properties only are shown in a web component) for properties ?
 
-util/text_handling
+update does not have a corresponding Action class (cannot undo update)
 
 unique model and concept names: DomainModel, DomainModelConcept ?
 
