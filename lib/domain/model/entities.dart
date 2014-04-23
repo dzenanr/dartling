@@ -749,6 +749,35 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     return allAdded;
   }
 
+  bool removeFrom(Entities<E> entities) {
+    bool allRemoved = true;
+    if (_concept == entities.concept) {
+      entities.forEach((entity) => remove(entity) ? true : allRemoved = false);
+    } else {
+      throw new ConceptError('The concept of the argument is different.');
+    }
+    return allRemoved;
+  }
+  
+  bool setAttributesFrom(Entities<E> entities) {
+    bool allSet = true;
+    if (_concept == entities.concept) {
+      for (var entity in entities) {
+        var baseEntity = singleWhereOid(entity.oid);
+        if (baseEntity != null) {
+          var baseEntitySet = baseEntity.setAttributesFrom(entity);
+          if (!baseEntitySet) {
+            allSet = false;
+          }
+        } else {
+          allSet = false;
+        }
+      }
+    } else {
+      throw new ConceptError('The concept of the argument is different.');
+    }
+    return allSet;
+  }
 
   /**
   * Displays (prints) a title, then entities.

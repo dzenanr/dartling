@@ -401,6 +401,22 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       throw new UpdateError(msg);
     }
   }
+  
+  bool setAttributesFrom(ConceptEntity entity) {
+    bool allSet = true;
+    if (whenSet.millisecondsSinceEpoch < entity.whenSet.millisecondsSinceEpoch) {
+      for (Attribute attribute in _concept.nonIdentifierAttributes) {
+        var newValue = entity.getAttribute(attribute.code);
+        var attributeSet = setAttribute(attribute.code, newValue);
+        if (!attributeSet) {
+          allSet = false;
+        }
+      }      
+    } else {
+      allSet = false;
+    }
+    return allSet;
+  }
 
   /**
    * Copies the entity (oid, code, attributes and neighbors).
