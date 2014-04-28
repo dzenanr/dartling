@@ -798,7 +798,10 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     concept.updateWhen = true;
     DateTime whenAddedTime;
     try {
-      whenAddedTime = DateTime.parse(entityMap['whenAdded']);
+      var when = entityMap['whenAdded'];
+      if (when != null) {
+        whenAddedTime = DateTime.parse(when);
+      }
     } on FormatException catch (e) {
       throw new TypeError(
           '${entityMap['whenAdded']} whenAdded is not DateTime: $e');
@@ -806,7 +809,10 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     whenAdded = whenAddedTime;
     DateTime whenSetTime;
     try {
-      whenSetTime = DateTime.parse(entityMap['whenSet']);
+      var when = entityMap['whenSet'];
+      if (when != null) {
+        whenSetTime = DateTime.parse(when);
+      }
     } on FormatException catch (e) {
       throw new TypeError(
           '${entityMap['whenSet']} whenSet is not DateTime: $e');
@@ -814,7 +820,10 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     whenSet = whenSetTime;
     DateTime whenRemovedTime;
     try {
-      whenRemovedTime = DateTime.parse(entityMap['whenRemoved']);
+      var when = entityMap['whenRemoved'];
+      if (when != null) {
+        whenRemovedTime = DateTime.parse(when);
+      }
     } on FormatException catch (e) {
       throw new TypeError(
           '${entityMap['whenRemoved']} whenRemoved is not DateTime: $e');
