@@ -760,9 +760,15 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
     entityMap['oid'] = _oid.toString();
     entityMap['code'] = _code;
-    entityMap['whenAdded'] = _whenAdded.toString();
-    entityMap['whenSet'] = _whenSet.toString();
-    entityMap['whenRemoved'] = _whenRemoved.toString();
+    if (_whenAdded != null) {
+      entityMap['whenAdded'] = _whenAdded.toString();
+    }
+    if (_whenSet != null) {
+      entityMap['whenSet'] = _whenSet.toString();
+    }
+    if (_whenRemoved != null) {
+      entityMap['whenRemoved'] = _whenRemoved.toString();
+    }
     _attributeMap.keys.forEach((k) => entityMap[k] = getStringFromAttribute(k));
     _internalChildMap.keys.forEach((k) => entityMap[k] = getInternalChild(k
         ).toJsonList());
