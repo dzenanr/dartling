@@ -5,11 +5,11 @@ abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
   Concept get concept;
   ValidationErrorsApi get errors;
   Oid get oid;
-  String code;
   IdApi get id;
-  DateTime get whenAdded;
-  DateTime get whenSet;
-  DateTime get whenRemoved;
+  String code;
+  DateTime whenAdded;
+  DateTime whenSet;
+  DateTime whenRemoved;
 
   Object getAttribute(String name);
   bool preSetAttribute(String name, Object value);
@@ -141,15 +141,6 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
   }
   
-  String get code => _code;
-  void set code(String code) {
-    if (_code == null || _concept.updateCode) {
-      _code = code;
-    } else {
-      throw new CodeError('Entity code cannot be updated.');
-    }
-  }
-  
   Id get id {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
@@ -170,10 +161,40 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
     return id;
   }
+
+  String get code => _code;
+  void set code(String code) {
+    if (_code == null || _concept.updateCode) {
+      _code = code;
+    } else {
+      throw new CodeError('Entity code cannot be updated.');
+    }
+  }
   
   DateTime get whenAdded => _whenAdded;
+  void set whenAdded(DateTime whenAdded) {
+    if (_whenAdded == null) {
+      _whenAdded = whenAdded;
+    } else {
+      throw new UpdateError('Entity whenAdded cannot be updated.');
+    }
+  }
   DateTime get whenSet => _whenSet;
+  void set whenSet(DateTime whenSetd) {
+    if (_whenSet == null) {
+      _whenSet = whenSet;
+    } else {
+      throw new UpdateError('Entity whenSet cannot be updated.');
+    }
+  }
   DateTime get whenRemoved => _whenRemoved;
+  void set whenRemoved(DateTime whenRemoved) {
+    if (_whenRemoved == null) {
+      _whenRemoved = whenRemoved;
+    } else {
+      throw new UpdateError('Entity whenRemoved cannot be updated.');
+    }
+  }
 
   String get codeFirstLetterLower => firstLetterLower(code);
   String get codeFirstLetterUpper => firstLetterUpper(code);
