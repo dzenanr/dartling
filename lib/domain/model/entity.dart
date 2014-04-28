@@ -70,11 +70,11 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       if (a.init == null) {
         _attributeMap[a.code] = null;
       } else if (a.type.code == 'DateTime' && a.init == 'now') {
-          _attributeMap[a.code] = new DateTime.now();
+        _attributeMap[a.code] = new DateTime.now();
       } else if (a.type.code == 'bool' && a.init == 'true') {
-          _attributeMap[a.code] = true;
+        _attributeMap[a.code] = true;
       } else if (a.type.code == 'bool' && a.init == 'false') {
-          _attributeMap[a.code] = false;
+        _attributeMap[a.code] = false;
       } else if (a.type.code == 'int') {
         try {
           _attributeMap[a.code] = int.parse(a.init);
@@ -108,7 +108,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
               '${a.code} attribute init (default) value is not Uri: $e');
         }
       } else {
-          _attributeMap[a.code] = a.init;
+        _attributeMap[a.code] = a.init;
       }
     } // for
 
@@ -140,7 +140,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       throw new OidError('Entity oid cannot be updated.');
     }
   }
-  
+
   Id get id {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
@@ -170,10 +170,10 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       throw new CodeError('Entity code cannot be updated.');
     }
   }
-  
+
   DateTime get whenAdded => _whenAdded;
   void set whenAdded(DateTime whenAdded) {
-    if (_whenAdded == null) {
+    if (_concept.updateWhen) {
       _whenAdded = whenAdded;
     } else {
       throw new UpdateError('Entity whenAdded cannot be updated.');
@@ -181,7 +181,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   }
   DateTime get whenSet => _whenSet;
   void set whenSet(DateTime whenSetd) {
-    if (_whenSet == null) {
+    if (_concept.updateWhen) {
       _whenSet = whenSet;
     } else {
       throw new UpdateError('Entity whenSet cannot be updated.');
@@ -189,7 +189,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   }
   DateTime get whenRemoved => _whenRemoved;
   void set whenRemoved(DateTime whenRemoved) {
-    if (_whenRemoved == null) {
+    if (_concept.updateWhen) {
       _whenRemoved = whenRemoved;
     } else {
       throw new UpdateError('Entity whenRemoved cannot be updated.');
@@ -204,8 +204,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   String get codePlural => plural(code);
   String get codePluralFirstLetterLower => firstLetterLower(codePlural);
   String get codePluralFirstLetterUpper => firstLetterUpper(codePlural);
-  String get codePluralLowerUnderscore => 
-      camelCaseLowerSeparator(codePlural, '_');
+  String get codePluralLowerUnderscore => camelCaseLowerSeparator(codePlural,
+      '_');
   String get codePluralFirstLetterUpperSpace =>
       camelCaseFirstLetterUpperSeparator(codePlural, ' ');
 
@@ -215,8 +215,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
 
     if (_concept == null) {
-      throw new ConceptError(
-        'Entity(oid: ${oid}) concept is not defined.');
+      throw new ConceptError('Entity(oid: ${oid}) concept is not defined.');
     }
     return true;
   }
@@ -245,7 +244,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
         _attributeMap[name] = value;
         updated = true;
         _whenSet = new DateTime.now();
-      //} else if (!attribute.derive && attribute.update) {
+        //} else if (!attribute.derive && attribute.update) {
       } else if (attribute.update) {
         _attributeMap[name] = value;
         updated = true;
@@ -268,8 +267,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
         post = false;
         if (!setAttribute(name, beforeValue)) {
           var msg = '${_concept.code}.${attribute.code} '
-            'was set to a new value, post was not successful, '
-            'set to the before value was not successful';
+              'was set to a new value, post was not successful, '
+              'set to the before value was not successful';
           throw new RemoveError(msg);
         } else {
           _whenSet = null;
@@ -287,15 +286,14 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
 
     if (_concept == null) {
-      throw new ConceptError(
-        'Entity(oid: ${oid}) concept is not defined.');
+      throw new ConceptError('Entity(oid: ${oid}) concept is not defined.');
     }
     return true;
   }
 
   String getStringFromAttribute(String name) => _attributeMap[name].toString();
-  String getStringOrNullFromAttribute(String name) => 
-      _attributeMap[name] == null ? null : _attributeMap[name].toString(); 
+  String getStringOrNullFromAttribute(String name) => _attributeMap[name] ==
+      null ? null : _attributeMap[name].toString();
   bool setStringToAttribute(String name, String string) {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
@@ -306,7 +304,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       throw new UpdateError(msg);
     }
 
-    if (string == null  || string == 'null') {
+    if (string == null || string == 'null') {
       return setAttribute(name, null);
     }
     if (attribute.type.code == 'DateTime') {
@@ -314,7 +312,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
         return setAttribute(name, DateTime.parse(string));
       } on ArgumentError catch (e) {
         throw new TypeError('${_concept.code}.${attribute.code} '
-                                'attribute value is not DateTime: $e');
+            'attribute value is not DateTime: $e');
       }
     } else if (attribute.type.code == 'bool') {
       if (string == 'true') {
@@ -322,22 +320,22 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       } else if (string == 'false') {
         return setAttribute(name, false);
       } else {
-        throw new TypeError('${attribute.code} '
-                                'attribute value is not bool.');
+        throw new TypeError('${attribute.code} ' 'attribute value is not bool.'
+            );
       }
     } else if (attribute.type.code == 'int') {
       try {
         return setAttribute(name, int.parse(string));
       } on FormatException catch (e) {
         throw new TypeError('${attribute.code} '
-                                'attribute value is not int: $e');
+            'attribute value is not int: $e');
       }
     } else if (attribute.type.code == 'double') {
       try {
         return setAttribute(name, double.parse(string));
       } on FormatException catch (e) {
         throw new TypeError('${attribute.code} '
-                                'attribute value is not double: $e');
+            'attribute value is not double: $e');
       }
     } else if (attribute.type.code == 'num') {
       try {
@@ -347,7 +345,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
           return setAttribute(name, double.parse(string));
         } on FormatException catch (e2) {
           throw new TypeError(
-            '${attribute.code} attribute value is not num: $e1; $e2');
+              '${attribute.code} attribute value is not num: $e1; $e2');
         }
       }
     } else if (attribute.type.code == 'Uri') {
@@ -360,7 +358,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       return setAttribute(name, string);
     }
   }
-  
+
   Reference getReference(String name) => _referenceMap[name];
   setReference(String name, Reference reference) {
     if (getParent(name) == null) {
@@ -378,25 +376,25 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       String msg = '${_concept.code}.$name is not correct parent entity name.';
       throw new UpdateError(msg);
     }
-    
+
     if (entity != null) {
       if (getParent(name) == null) {
-        _parentMap[name] = entity;  
-        var reference = new Reference(entity.oid.toString(), entity.concept.code, 
-                                      entity.concept.entryConcept.code);
+        _parentMap[name] = entity;
+        var reference = new Reference(entity.oid.toString(),
+            entity.concept.code, entity.concept.entryConcept.code);
         _referenceMap[name] = reference;
         return true;
       } else if (parent.update) {
         _parentMap[name] = entity;
-        var reference = new Reference(entity.oid.toString(), entity.concept.code, 
-                                      entity.concept.entryConcept.code);
+        var reference = new Reference(entity.oid.toString(),
+            entity.concept.code, entity.concept.entryConcept.code);
         _referenceMap[name] = reference;
         return true;
       } else {
         String msg = '${_concept.code}.${parent.code} is not updateable.';
         throw new UpdateError(msg);
       }
-    } 
+    }
     return false;
   }
 
@@ -422,17 +420,18 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       throw new UpdateError(msg);
     }
   }
-  
+
   bool setAttributesFrom(ConceptEntity entity) {
     bool allSet = true;
-    if (whenSet.millisecondsSinceEpoch < entity.whenSet.millisecondsSinceEpoch) {
+    if (whenSet.millisecondsSinceEpoch < entity.whenSet.millisecondsSinceEpoch)
+        {
       for (Attribute attribute in _concept.nonIdentifierAttributes) {
         var newValue = entity.getAttribute(attribute.code);
         var attributeSet = setAttribute(attribute.code, newValue);
         if (!attributeSet) {
           allSet = false;
         }
-      }      
+      }
     } else {
       allSet = false;
     }
@@ -461,6 +460,19 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       entity.code = _code;
       entity.concept.updateCode = beforeUpdateCode;
     }
+
+    var beforeUpdateWhen = concept.updateWhen;
+    concept.updateWhen = true;
+    if (_whenAdded != null) {
+      entity.whenAdded = _whenAdded;
+    }
+    if (_whenSet != null) {
+      entity.whenSet = _whenSet;
+    }
+    if (_whenRemoved != null) {
+      entity.whenRemoved = _whenRemoved;
+    }
+    concept.updateWhen = beforeUpdateWhen;
 
     for (Attribute attribute in _concept.attributes) {
       if (attribute.identifier) {
@@ -502,7 +514,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
     return false;
   }
-  
+
   /**
    * == see:
    * https://www.dartlang.org/docs/dart-up-and-running/contents/ch02.html#op-equality
@@ -569,35 +581,35 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
 
   /**
    * Checks if the entity is equal in content to the given entity.
-   * Two entities are equal if they have the same content, ignoring oid.
+   * Two entities are equal if they have the same content, ignoring oid and when.
    */
-   bool equalContent(E entity) {
-     if (_concept == null) {
-       throw new ConceptError('Entity concept is not defined.');
-     }
-     if (_code != entity.code) {
-       return false;
-     }
-     for (Attribute a in _concept.attributes) {
-       if (_attributeMap[a.code] != entity.getAttribute(a.code)) {
-         return false;
-       }
-     }
-     for (Parent parent in _concept.parents) {
-       if (_parentMap[parent.code] != entity.getParent(parent.code)) {
-         return false;
-       }
-     }
-     for (Child child in _concept.children) {
-       if (_childMap[child.code] != entity.getChild(child.code)) {
-         return false;
-       }
-     }
-     return true;
-   }
+  bool equalContent(E entity) {
+    if (_concept == null) {
+      throw new ConceptError('Entity concept is not defined.');
+    }
+    if (_code != entity.code) {
+      return false;
+    }
+    for (Attribute a in _concept.attributes) {
+      if (_attributeMap[a.code] != entity.getAttribute(a.code)) {
+        return false;
+      }
+    }
+    for (Parent parent in _concept.parents) {
+      if (_parentMap[parent.code] != entity.getParent(parent.code)) {
+        return false;
+      }
+    }
+    for (Child child in _concept.children) {
+      if (_childMap[child.code] != entity.getChild(child.code)) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   /**
-   * Compares two entities based on codes or ids.
+   * Compares two entities based on codes, ids or attributes.
    * If the result is less than 0 then the first entity is less than the second,
    * if it is equal to 0 they are equal and
    * if the result is greater than 0 then the first is greater than the second.
@@ -614,7 +626,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       throw new IdError(msg);
     }
   }
-  
+
   /**
    * Compares two entities based on their attributes.
    * If the result is less than 0 then the first id is less than the second,
@@ -655,8 +667,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   /**
    * Displays (prints) an entity with its attributes, parents and children.
    */
-  display({String prefix:'', bool withOid:true, 
-    bool withChildren:true, bool withInternalChildren:true}) {
+  display({String prefix: '', bool withOid: true, bool withChildren: true, bool
+      withInternalChildren: true}) {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
     }
@@ -677,8 +689,17 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     if (id != null) {
       print('${s}id: $id');
     }
+    if (_whenAdded != null) {
+      print('${s}whenAdded: $_whenAdded');
+    }
+    if (_whenSet != null) {
+      print('${s}whenSet: $_whenSet');
+    }
+    if (_whenRemoved != null) {
+      print('${s}whenRemoved: $_whenRemoved');
+    }
 
-    _attributeMap.forEach((k,v) {
+    _attributeMap.forEach((k, v) {
       if (_concept.isAttributeSensitive(k)) {
         print('${s}$k: **********');
       } else {
@@ -686,7 +707,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       }
     });
 
-    _parentMap.forEach((k,v) {
+    _parentMap.forEach((k, v) {
       if (_concept.isParentSensitive(k)) {
         print('${s}$k: **********');
       } else {
@@ -696,23 +717,23 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
 
     if (withChildren) {
       if (withInternalChildren) {
-        _internalChildMap.forEach((k,v) {
+        _internalChildMap.forEach((k, v) {
           print('${s}$k:');
           if (_concept.isChildSensitive(k)) {
             print('**********');
           } else {
-            v.display(title:'${s}$k', prefix:'${s}  ', withOid:withOid, 
-              withChildren:withChildren, withInternalChildren:withInternalChildren);
+            v.display(title: '${s}$k', prefix: '${s}  ', withOid: withOid,
+                withChildren: withChildren, withInternalChildren: withInternalChildren);
           }
         });
       } else {
-        _childMap.forEach((k,v) {
+        _childMap.forEach((k, v) {
           print('${s}$k:');
           if (_concept.isChildSensitive(k)) {
             print('**********');
           } else {
-            v.display(title:'${s}$k', prefix:'${s}  ', withOid:withOid, 
-              withChildren:withChildren, withInternalChildren:withInternalChildren);
+            v.display(title: '${s}$k', prefix: '${s}  ', withOid: withOid,
+                withChildren: withChildren, withInternalChildren: withInternalChildren);
           }
         });
       }
@@ -720,7 +741,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
 
     print('');
   }
-  
+
   String toJson() => JSON.encode(toJsonMap());
 
   Map<String, Object> toJsonMap() {
@@ -739,13 +760,15 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
     entityMap['oid'] = _oid.toString();
     entityMap['code'] = _code;
-    _attributeMap.keys.forEach((k) =>
-        entityMap[k] = getStringFromAttribute(k));
-    _internalChildMap.keys.forEach(
-        (k) => entityMap[k] = getInternalChild(k).toJsonList());
+    entityMap['whenAdded'] = _whenAdded.toString();
+    entityMap['whenSet'] = _whenSet.toString();
+    entityMap['whenRemoved'] = _whenRemoved.toString();
+    _attributeMap.keys.forEach((k) => entityMap[k] = getStringFromAttribute(k));
+    _internalChildMap.keys.forEach((k) => entityMap[k] = getInternalChild(k
+        ).toJsonList());
     return entityMap;
   }
-  
+
   fromJson(String entityJson) {
     Map<String, Object> entityMap = JSON.decode(entityJson);
     fromJsonMap(entityMap);
@@ -761,7 +784,6 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     } on FormatException catch (e) {
       throw new TypeError('${entityMap['oid']} oid is not int: $e');
     }
-
     var beforeUpdateOid = concept.updateOid;
     concept.updateOid = true;
     oid = new Oid.ts(timeStamp);
@@ -771,6 +793,34 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     concept.updateCode = true;
     code = entityMap['code'];
     concept.updateCode = beforeUpdateCode;
+
+    var beforeUpdateWhen = concept.updateWhen;
+    concept.updateWhen = true;
+    DateTime whenAddedTime;
+    try {
+      whenAddedTime = DateTime.parse(entityMap['whenAdded']);
+    } on FormatException catch (e) {
+      throw new TypeError(
+          '${entityMap['whenAdded']} whenAdded is not DateTime: $e');
+    }
+    whenAdded = whenAddedTime;
+    DateTime whenSetTime;
+    try {
+      whenSetTime = DateTime.parse(entityMap['whenSet']);
+    } on FormatException catch (e) {
+      throw new TypeError(
+          '${entityMap['whenSet']} whenSet is not DateTime: $e');
+    }
+    whenSet = whenSetTime;
+    DateTime whenRemovedTime;
+    try {
+      whenRemovedTime = DateTime.parse(entityMap['whenRemoved']);
+    } on FormatException catch (e) {
+      throw new TypeError(
+          '${entityMap['whenRemoved']} whenRemoved is not DateTime: $e');
+    }
+    whenRemoved = whenRemovedTime;
+    concept.updateWhen = beforeUpdateWhen;
 
     var beforePre = pre;
     pre = false;
@@ -787,12 +837,12 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     _neighborsFromJsonMap(entityMap, internalParent);
     pre = beforePre;
   }
-  
+
   /**
    * Loads neighbors from a json map.
    */
-  _neighborsFromJsonMap(Map<String, Object> entityMap, 
-                        [ConceptEntity internalParent]) {
+  _neighborsFromJsonMap(Map<String, Object> entityMap, [ConceptEntity
+      internalParent]) {
     for (Child child in concept.children) {
       if (child.internal) {
         List<Map<String, Object>> entitiesList = entityMap[child.code];
@@ -802,8 +852,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
           setChild(child.code, childEntities);
         }
       }
-    } 
-    
+    }
+
     for (Parent parent in concept.parents) {
       var parentReference = entityMap[parent.code];
       if (parentReference == 'null') {
@@ -814,16 +864,17 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
         String parentOidString = parentReference['oid'];
         String parentConceptCode = parentReference['parent'];
         String entryConceptCode = parentReference['entry'];
-        Reference reference = 
-            new Reference(parentOidString, parentConceptCode, entryConceptCode);
-        Oid parentOid = reference.oid; 
+        Reference reference = new Reference(parentOidString, parentConceptCode,
+            entryConceptCode);
+        Oid parentOid = reference.oid;
         setReference(parent.code, reference);
-        
-        if (internalParent != null && parent.internal) {        
+
+        if (internalParent != null && parent.internal) {
           if (parentOid == internalParent.oid) {
             setParent(parent.code, internalParent);
           } else {
-            var msg = """
+            var msg =
+                """
 
               =============================================
               Internal parent oid is wrong, inform Dzenan                            
@@ -839,7 +890,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
               ---------------------------------------------
             """;
             print(msg);
-            //throw new ParentError(msg);            
+            //throw new ParentError(msg);
           } // else
         } // if
       } // else

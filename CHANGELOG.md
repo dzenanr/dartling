@@ -4,6 +4,7 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.0* 2014-04-28
 
++ whenAdded, whenSet and whenRemoved can be set if concept.updateWhen is true
 + whenAdded, whenSet and whenRemoved can be updated but only if null
 + add removeFrom and setAttributesFrom in Entities
 + add setAttributesFrom in ConceptEntity

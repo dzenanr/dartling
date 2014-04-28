@@ -14,6 +14,7 @@ class Concept extends ConceptEntity<Concept> {
 
   bool updateOid = false;
   bool updateCode = false;
+  bool updateWhen = false;
   bool add = true;
   bool remove = true;
   String description;
