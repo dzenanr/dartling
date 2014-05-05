@@ -180,7 +180,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
   }
   DateTime get whenSet => _whenSet;
-  void set whenSet(DateTime whenSetd) {
+  void set whenSet(DateTime whenSet) {
     if (_whenSet == null || _concept.updateWhen) {
       _whenSet = whenSet;
     } else {
