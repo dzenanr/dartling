@@ -137,7 +137,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     if (_concept.updateOid) {
       _oid = oid;
     } else {
-      throw new OidError('Entity oid cannot be updated.');
+      throw new OidError('Entity.oid cannot be updated.');
     }
   }
 
@@ -167,32 +167,32 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     if (_code == null || _concept.updateCode) {
       _code = code;
     } else {
-      throw new CodeError('Entity code cannot be updated.');
+      throw new CodeError('Entity.code cannot be updated.');
     }
   }
 
   DateTime get whenAdded => _whenAdded;
   void set whenAdded(DateTime whenAdded) {
-    if (_whenAdded == null || _concept.updateWhen) {
+    if (_concept.updateWhen) {
       _whenAdded = whenAdded;
     } else {
-      throw new UpdateError('Entity whenAdded cannot be updated.');
+      throw new UpdateError('Entity.whenAdded cannot be updated.');
     }
   }
   DateTime get whenSet => _whenSet;
   void set whenSet(DateTime whenSet) {
-    if (_whenSet == null || _concept.updateWhen) {
+    if (_concept.updateWhen) {
       _whenSet = whenSet;
     } else {
-      throw new UpdateError('Entity whenSet cannot be updated.');
+      throw new UpdateError('Entity.whenSet cannot be updated.');
     }
   }
   DateTime get whenRemoved => _whenRemoved;
   void set whenRemoved(DateTime whenRemoved) {
-    if (_whenRemoved == null || _concept.updateWhen) {
+    if (_concept.updateWhen) {
       _whenRemoved = whenRemoved;
     } else {
-      throw new UpdateError('Entity whenRemoved cannot be updated.');
+      throw new UpdateError('Entity.whenRemoved cannot be updated.');
     }
   }
 
@@ -243,7 +243,6 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       if (getAttribute(name) == null) {
         _attributeMap[name] = value;
         updated = true;
-        _whenSet = new DateTime.now();
         //} else if (!attribute.derive && attribute.update) {
       } else if (attribute.update) {
         _attributeMap[name] = value;
