@@ -5,8 +5,7 @@ based on [Semantic Versioning](http://semver.org/)
 *2.0.0* 2014-05-05
 
 + integrate entities, addEntities, setEntities, removeEntities
-+ whenAdded, whenSet and whenRemoved can be set if concept.updateWhen is true
-+ whenAdded, whenSet and whenRemoved can be updated but only if null
++ whenAdded, whenSet and whenRemoved can be set only if concept.updateWhen is true
 + add removeFrom and setAttributesFrom in Entities
 + add setAttributesFrom in ConceptEntity
 + add whenAdded, whenSet and whenRemoved DateTime properties in ConceptEntity
