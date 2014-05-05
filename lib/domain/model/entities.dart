@@ -818,7 +818,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       var entity = singleWhereOid(setEntity.oid);
       if (entity != null) {
         if (entity.whenSet.millisecondsSinceEpoch <
-            fromEntity.whenSet.millisecondsSinceEpoch) {
+            setEntity.whenSet.millisecondsSinceEpoch) {
           entity.setAttributesFrom(setEntity);
         }
       } 
