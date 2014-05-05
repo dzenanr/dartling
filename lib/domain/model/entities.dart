@@ -38,7 +38,12 @@ abstract class EntitiesApi<E extends EntityApi<E>> implements Iterable<E> {
   
   String toJson();
   fromJson(String entitiesJson);
-
+  
+  integrate(EntitiesApi<E> fromEntities);
+  integrateAdd(EntitiesApi<E> addEntities);
+  integrateSet(EntitiesApi<E> setEntities);
+  integrateRemove(EntitiesApi<E> removeEntities);
+  
 }
 
 class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
@@ -777,6 +782,56 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       throw new ConceptError('The concept of the argument is different.');
     }
     return allSet;
+  }
+  
+  integrate(Entities<E> fromEntities) {
+    for (var entity in toList()) {
+      var fromEntity = fromEntities.singleWhereOid(entity.oid);
+      if (fromEntity == null) {
+        remove(entity);
+      }
+    }
+    for (var fromEntity in fromEntities) {
+      var entity = singleWhereOid(fromEntity.oid);
+      if (entity != null) {
+        if (entity.whenSet.millisecondsSinceEpoch <
+            fromEntity.whenSet.millisecondsSinceEpoch) {
+          entity.setAttributesFrom(fromEntity);
+        }
+      } else {
+        add(fromEntity);
+      }
+    } 
+  }
+  
+  integrateAdd(Entities<E> addEntities) {
+    for (var addEntity in addEntities) {
+      var entity = singleWhereOid(addEntity.oid);
+      if (entity == null) {
+        add(addEntity);
+      } 
+    } 
+  }
+  
+  integrateSet(Entities<E> setEntities) {
+    for (var setEntity in setEntities) {
+      var entity = singleWhereOid(setEntity.oid);
+      if (entity != null) {
+        if (entity.whenSet.millisecondsSinceEpoch <
+            fromEntity.whenSet.millisecondsSinceEpoch) {
+          entity.setAttributesFrom(setEntity);
+        }
+      } 
+    } 
+  }
+  
+  integrateRemove(Entities<E> removeEntities) {
+    for (var removeEntity in removeEntities) {
+      var entity = singleWhereOid(removeEntity.oid);
+      if (entity != null) {
+        remove(entity);
+      } 
+    } 
   }
 
   /**

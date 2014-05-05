@@ -161,7 +161,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
     return id;
   }
-
+  
   String get code => _code;
   void set code(String code) {
     if (_code == null || _concept.updateCode) {
@@ -173,7 +173,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
 
   DateTime get whenAdded => _whenAdded;
   void set whenAdded(DateTime whenAdded) {
-    if (_concept.updateWhen) {
+    if (_whenAdded == null || _concept.updateWhen) {
       _whenAdded = whenAdded;
     } else {
       throw new UpdateError('Entity whenAdded cannot be updated.');
@@ -181,7 +181,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   }
   DateTime get whenSet => _whenSet;
   void set whenSet(DateTime whenSetd) {
-    if (_concept.updateWhen) {
+    if (_whenSet == null || _concept.updateWhen) {
       _whenSet = whenSet;
     } else {
       throw new UpdateError('Entity whenSet cannot be updated.');
@@ -189,7 +189,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   }
   DateTime get whenRemoved => _whenRemoved;
   void set whenRemoved(DateTime whenRemoved) {
-    if (_concept.updateWhen) {
+    if (_whenRemoved == null || _concept.updateWhen) {
       _whenRemoved = whenRemoved;
     } else {
       throw new UpdateError('Entity whenRemoved cannot be updated.');
