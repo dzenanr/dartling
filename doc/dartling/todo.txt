@@ -1,5 +1,7 @@
 dartling To Do
 
+include children in the setEntities integration (parents?)
+
 add Latitude and Longitude data types, base: double
 
 uuid

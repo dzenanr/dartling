@@ -541,6 +541,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
    * The newer spec is:
    * a) if either x or y is null, do identical(x, y)
    * b) otherwise call operator ==
+   * 
+   * Read: http://work.j832.com/2014/05/equality-and-dart.html
    */
   bool operator ==(Object other) {
     if (other is ConceptEntity) {
