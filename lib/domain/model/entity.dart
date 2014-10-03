@@ -787,17 +787,20 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   fromJsonMap(Map<String, Object> entityMap, [ConceptEntity internalParent]) {
     int timeStamp;
     try {
-      timeStamp = int.parse(entityMap['oid']);
+      var key = entityMap['oid'];
+      if (key != null) {
+        timeStamp = int.parse(key);
+      }     
     } on FormatException catch (e) {
       throw new TypeError('${entityMap['oid']} oid is not int: $e');
-    } on Exception catch (e) {
-      throw new OidError('${entityMap['oid']} oid: $e');
-    }
-    var beforeUpdateOid = concept.updateOid;
-    concept.updateOid = true;
-    oid = new Oid.ts(timeStamp);
-    concept.updateOid = beforeUpdateOid;
-
+    } 
+    if (timeStamp != null) {
+      var beforeUpdateOid = concept.updateOid;
+      concept.updateOid = true;
+      oid = new Oid.ts(timeStamp);
+      concept.updateOid = beforeUpdateOid;
+    } 
+    
     var beforeUpdateCode = concept.updateCode;
     concept.updateCode = true;
     code = entityMap['code'];

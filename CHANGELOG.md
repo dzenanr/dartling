@@ -2,8 +2,9 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-05-05
+*2.0.0* 2014-10-03
 
++ from json to entity: test if there is oid in json
 + integrate entities, addEntities, setEntities, removeEntities
 + whenAdded, whenSet and whenRemoved can be set only if concept.updateWhen is true
 + add removeFrom and setAttributesFrom in Entities
