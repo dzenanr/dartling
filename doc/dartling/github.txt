@@ -150,6 +150,7 @@ git diff HEAD
 Branching
 
 http://nvie.com/posts/a-successful-git-branching-model/
+http://rypress.com/tutorials/git/
 
 ----------------------------------------------------------------------
 

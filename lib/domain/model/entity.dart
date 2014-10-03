@@ -790,6 +790,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       timeStamp = int.parse(entityMap['oid']);
     } on FormatException catch (e) {
       throw new TypeError('${entityMap['oid']} oid is not int: $e');
+    } on Exception catch (e) {
+      throw new OidError('${entityMap['oid']} oid: $e');
     }
     var beforeUpdateOid = concept.updateOid;
     concept.updateOid = true;
