@@ -1,4 +1,4 @@
-github.txt for dartling 
+github.txt for dartling
 
 GitHub, Git
 
@@ -7,13 +7,14 @@ http://training.github.com/
 http://www.codeschool.com/courses/try-git
 http://git-scm.com/videos
 http://git-scm.com/book
+https://github.com/agis-/git-style-guide
 
 http://rogerdudler.github.io/git-guide/
 http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf
 http://think-like-a-git.net/
 http://tomayko.com/writings/the-thing-about-git
 https://peepcode.com/products/git-internals-pdf
-http://marklodato.github.com/visual-git-guide/index-en.html 
+http://marklodato.github.com/visual-git-guide/index-en.html
 
 Education
 
@@ -36,9 +37,9 @@ http://help.github.com/create-a-repo/
 
 Create a New Repository at GitHub (without README, since cloning will not be used)
 Repository Name: dartling
-Description: 
+Description:
   Dartling is a Dart model framework.
-      
+
 Next steps:
   cd git/dart/dartling
   git init
@@ -46,7 +47,7 @@ Next steps:
   git add .
   git commit -m 'working version'
   git remote add origin https://github.com/dzenanr/dartling.git
-  git push -u origin master     
+  git push -u origin master
 
 ----------------------------------------------------------------------
 
@@ -132,7 +133,7 @@ Switching from spiral to master
 
 to exclude js:
 git checkout dartling.dart.js
-or 
+or
 (see http://scottr.org/presentations/git-in-5-minutes/)
 git stash
 
