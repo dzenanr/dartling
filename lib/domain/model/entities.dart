@@ -183,28 +183,28 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   }
 
   Entities internalChild(Oid oid) {
-      if (isEmpty) {
-        return null;
-      }
-      ConceptEntity foundEntity = singleWhereOid(oid);
-      if (foundEntity != null) {
-        return this;
-      }
-      if (!_concept.children.isEmpty) {
-        for (ConceptEntity entity in _entityList) {
-          for (Child child in _concept.children) {
-            if (child.internal) {
-              Entities childEntities = entity.getChild(child.code);
-              ConceptEntity childEntity = childEntities.internalSingle(oid);
-              if (childEntity != null) {
-                return childEntities;
-              }             
-            }
+    if (isEmpty) {
+      return null;
+    }
+    ConceptEntity foundEntity = singleWhereOid(oid);
+    if (foundEntity != null) {
+      return this;
+    }
+    if (!_concept.children.isEmpty) {
+      for (ConceptEntity entity in _entityList) {
+        for (Child child in _concept.children) {
+          if (child.internal) {
+            Entities childEntities = entity.getChild(child.code);
+            ConceptEntity childEntity = childEntities.internalSingle(oid);
+            if (childEntity != null) {
+              return childEntities;
+            }             
           }
         }
       }
-      return null;
     }
+    return null;
+  }
 
   E singleWhereCode(String code) {
     return _codeEntityMap[code];

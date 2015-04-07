@@ -319,8 +319,8 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       } else if (string == 'false') {
         return setAttribute(name, false);
       } else {
-        throw new TypeError('${attribute.code} ' 'attribute value is not bool.'
-            );
+        throw new TypeError('${attribute.code} ' 
+            'attribute value is not bool.');
       }
     } else if (attribute.type.code == 'int') {
       try {

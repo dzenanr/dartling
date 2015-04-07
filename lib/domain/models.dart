@@ -55,6 +55,7 @@ class DomainModels implements DomainModelsApi {
 
   startActionReaction(ActionReactionApi reaction) =>
       _actionReactions.add(reaction);
+  
   cancelActionReaction(ActionReactionApi reaction) {
     int index = _actionReactions.indexOf(reaction, 0);
     _actionReactions.removeRange(index, 1);

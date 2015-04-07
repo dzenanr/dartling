@@ -1,5 +1,9 @@
 dartling To Do
 
+update 2 apps of dartling: category_links and travel_impressions (both with web components)
+
+gen tests for composite ids where singleWhereId and not singleWhereAttributeId
+
 include children in the setEntities integration (parents?)
 
 add Latitude and Longitude data types, base: double
