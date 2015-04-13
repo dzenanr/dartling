@@ -1,6 +1,7 @@
 # ![Alt dartling](https://raw.github.com/dzenanr/dartling/master/resources/dartling.png)
 
-[dartling](http://pub.dartlang.org/packages/dartling) is a domain model framework.
+[dartling](http://pub.dartlang.org/packages/dartling) is a model-driven data framework 
+for design and code generation of Dart models.
 Its open source license is the 3-clause BSD license --
 ["New BSD License" or "Modified BSD License"](http://en.wikipedia.org/wiki/BSD_license).
 
@@ -68,7 +69,7 @@ are EntitiesApi (in lib/domain/model/entities.dart) and EntityApi
 dartling has several examples, all at [dzenanr](https://github.com/dzenanr),
 which show how different web applications may be developed quickly based on a
 domain model generated from the json representation of a graphical model. One
-of them is [art_pen](https://github.com/dzenanr/art_pen) (DArt.Pen), which is
+of them is [art_pen](https://github.com/dzenanr/art_pen)(DArt.Pen), which is
 a version of the Logo programming language for children.
 Other examples are:
 [dartling_examples](https://github.com/dzenanr/dartling_examples) (3 typical models),

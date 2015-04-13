@@ -161,7 +161,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
     return id;
   }
-  
+
   String get code => _code;
   void set code(String code) {
     if (_code == null || _concept.updateCode) {
@@ -319,7 +319,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       } else if (string == 'false') {
         return setAttribute(name, false);
       } else {
-        throw new TypeError('${attribute.code} ' 
+        throw new TypeError('${attribute.code} '
             'attribute value is not bool.');
       }
     } else if (attribute.type.code == 'int') {
@@ -541,8 +541,10 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
    * The newer spec is:
    * a) if either x or y is null, do identical(x, y)
    * b) otherwise call operator ==
-   * 
-   * Read: http://work.j832.com/2014/05/equality-and-dart.html
+   *
+   * Read:
+   * http://work.j832.com/2014/05/equality-and-dart.html
+   * http://stackoverflow.com/questions/29567322/how-does-a-set-determine-that-two-objects-are-equal-in-dart
    */
   bool operator ==(Object other) {
     if (other is ConceptEntity) {
@@ -790,17 +792,17 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       var key = entityMap['oid'];
       if (key != null) {
         timeStamp = int.parse(key);
-      }     
+      }
     } on FormatException catch (e) {
       throw new TypeError('${entityMap['oid']} oid is not int: $e');
-    } 
+    }
     if (timeStamp != null) {
       var beforeUpdateOid = concept.updateOid;
       concept.updateOid = true;
       oid = new Oid.ts(timeStamp);
       concept.updateOid = beforeUpdateOid;
-    } 
-    
+    }
+
     var beforeUpdateCode = concept.updateCode;
     concept.updateCode = true;
     code = entityMap['code'];

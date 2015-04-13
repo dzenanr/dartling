@@ -1,0 +1,20 @@
+Links
+
+DB
+
+https://www.sqlite.org/whentouse.html
+https://news.ycombinator.com/item?id=9353080
+
+Graphs
+
+http://jdh.hamkins.org/math-for-eight-year-olds/
+https://news.ycombinator.com/item?id=9354597
+
+Inverse Map
+
+http://stackoverflow.com/questions/29565067/inverse-mapping-in-dart
+
+Memory
+
+http://duartes.org/gustavo/blog/post/anatomy-of-a-program-in-memory/
+

@@ -1,0 +1,17 @@
+Databases
+
+Postgres
+
+http://www.aptuz.com/blog/is-postgres-nosql-database-better-than-mongodb/
+https://www.youtube.com/watch?v=e4dlo-4r-X4&feature=autoshare
+
+RethinkDB
+
+https://www.airpair.com/rethinkdb/posts/moving-from-sql-to-rethinkdb
+https://news.ycombinator.com/item?id=9334538
+
+Spreadsheet
+
+https://github.com/RamonGebben/data-drive
+
+
