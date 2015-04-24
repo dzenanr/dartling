@@ -69,7 +69,7 @@ are EntitiesApi (in lib/domain/model/entities.dart) and EntityApi
 dartling has several examples, all at [dzenanr](https://github.com/dzenanr),
 which show how different web applications may be developed quickly based on a
 domain model generated from the json representation of a graphical model. One
-of them is [art_pen](https://github.com/dzenanr/art_pen)(DArt.Pen), which is
+of them is [art_pen](https://github.com/dzenanr/art_pen) (DArt.Pen), which is
 a version of the Logo programming language for children.
 Other examples are:
 [dartling_examples](https://github.com/dzenanr/dartling_examples) (3 typical models),
@@ -80,10 +80,6 @@ Other examples are:
 [travel_impressions](https://github.com/dzenanr/travel_impressions) (with the focus on modeling),
 [todo_mysql](https://github.com/dzenanr/todo_mysql) (todo client - mysql server),
 [todo_mongodb](https://github.com/dzenanr/todo_mongodb) (todo client - mongodb server).
-
-**Warning**:
-I have run my projects only in the
-[Chrome](https://www.google.com/intl/en/chrome/browser/) browser.
 
 ### Models
 
@@ -119,8 +115,6 @@ The data.dart file in the json folder contains data of the model.
 
 [*Version History*](CHANGELOG.md)
 
-__________
 
-![Alt dartling](https://raw.github.com/dzenanr/dartling/master/resources/dartling5.png) image created by Rafik Benmoussa
 
 

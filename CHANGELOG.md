@@ -2,7 +2,7 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-10-03
+*2.0.0* 2014-10-03 (Pub)
 
 + from json to entity: test if there is oid in json
 + integrate entities, addEntities, setEntities, removeEntities
