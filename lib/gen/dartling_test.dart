@@ -61,7 +61,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   var entity   = '${entryConcept.codeFirstLetterLower}';
   var Entity   = '${entryConcept.code}';
   var Entities = '${entryConcept.codePluralFirstLetterUpper}';
-  var entityConcept = '${entities}.concept';
+  //var entityConcept = '${entities}.concept';
 
   sc = '${sc}test${domain.code}${model.code}'
        '${entryConcept.codePluralFirstLetterUpper}( \n';
@@ -71,7 +71,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}  DomainSession session; \n';
   sc = '${sc}  group("Testing ${domain.code}.${model.code}.${Entity}", () { \n';
   sc = '${sc}    session = ${domain.codeFirstLetterLower}Domain.newSession();  \n';
-  sc = '${sc}    expect(${model.codeFirstLetterLower}Model.isEmpty, isTrue); \n';
+  //sc = '${sc}    expect(${model.codeFirstLetterLower}Model.isEmpty, isTrue); \n';
   sc = '${sc}    setUp(() { \n';
   sc = '${sc}      ${model.codeFirstLetterLower}Model.init(); \n';
   sc = '${sc}    }); \n';
