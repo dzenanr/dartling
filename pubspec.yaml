@@ -1,5 +1,5 @@
 name: dartling
-version: 2.0.0
+version: 2.0.1
 author: Dzenan Ridjanovic <dzenanr@gmail.com>
 description: dartling is a model-driven data framework for design and code generation of Dart models
 homepage: https://github.com/dzenanr/dartling

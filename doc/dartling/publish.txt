@@ -1,0 +1,6 @@
+Publish on Pub
+
+publish after changing the version number in the pubspec.yaml file:
+cd .../dartling
+pub publish --dry-run
+pub publish
