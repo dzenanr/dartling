@@ -4,7 +4,9 @@ based on [Semantic Versioning](http://semver.org/)
 
 *2.0.1* 2015-04-24 
 
-+ update pubspec.yaml: from dev_dependencies to dependencies for unittest
++ use new test package
++ update pubspec.yaml: from dev_dependencies to dependencies for test
++ update import in the test folder
 
 *2.0.0* 2014-10-03 (Pub)
 

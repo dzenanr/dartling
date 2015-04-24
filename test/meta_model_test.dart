@@ -1,7 +1,5 @@
-
+import 'package:test/test.dart';
 import 'package:dartling/dartling.dart';
-
-import 'package:unittest/unittest.dart';
 
 Model createDomainModel() {
   Domain domain = new Domain('CategoryQuestion');
@@ -84,7 +82,7 @@ ModelEntries createModelData(Model model) {
 
 testModelData(Model model) {
   ModelEntries entries;
-  group('Testing Model Data', () {
+  group('Testing Model Data:', () {
     setUp(() {
       entries = createModelData(model);
       expect(entries, isNotNull);

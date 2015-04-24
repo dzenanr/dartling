@@ -5,5 +5,5 @@ description: dartling is a model-driven data framework for design and code gener
 homepage: https://github.com/dzenanr/dartling
 documentation: http://goo.gl/Fd08zZ
 dependencies:
-  unittest: '>=0.11.5 <0.12.0'
+  test: any
 
