@@ -7,6 +7,7 @@ based on [Semantic Versioning](http://semver.org/)
 + use new test package
 + update pubspec.yaml: from dev_dependencies to dependencies for test
 + update import in the test folder
++ update lib/gen/dartling_test.dart
 
 *2.0.0* 2014-10-03 (Pub)
 

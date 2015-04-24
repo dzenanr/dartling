@@ -50,7 +50,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
        'test.dart \n';
   sc = '${sc} \n';
 
-  sc = '${sc}import "package:unittest/unittest.dart"; \n';
+  sc = '${sc}import "package:test/test.dart"; \n';
   sc = '${sc}import "package:dartling/dartling.dart"; \n';
   sc = '${sc}import "package:${domain.codeLowerUnderscore}_'
        '${model.codeLowerUnderscore}/${domain.codeLowerUnderscore}_'
