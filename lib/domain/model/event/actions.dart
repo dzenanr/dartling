@@ -288,7 +288,7 @@ class Transaction extends BasicAction implements TransactionApi {
         session.past.add(this);
         session.domainModels.notifyActionReactions(this);
       } else {
-        var undone = _actions.undoAll();
+        _actions.undoAll();
       }
     }
     return done;

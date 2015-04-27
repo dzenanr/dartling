@@ -307,7 +307,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
     sc = '${sc}      var ${entities}Count = ${entities}.length; \n';
     sc = '${sc} \n';
     sc = '${sc}      var ${entity} = new ${Entity}(${entities}.concept); \n';
-    var attributesSet = setAttributesRandomly(entryConcept, entity);
+    var attributesSet = setTestAttributesRandomly(entryConcept, entity);
     sc = '${sc}${attributesSet}';
     sc = '${sc}      var added = selected${Entities}.add(${entity}); \n';
     sc = '${sc}      expect(added, isTrue); \n';
@@ -438,7 +438,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
       sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
       sc = '${sc}      var beforeUpdate = random${Entity}.${idAttribute.code}; \n';
       sc = '${sc}      try { \n';
-      var attributeSet = setAttributeRandomly(idAttribute, 'random${Entity}');
+      var attributeSet = setTestAttributeRandomly(idAttribute, 'random${Entity}');
       sc = '${sc}  ${attributeSet}';
       sc = '${sc}      } on UpdateError catch (e) { \n';
       sc = '${sc}        expect(random${Entity}.${idAttribute.code}, '
@@ -509,8 +509,8 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}    test("Update ${entity} non id attribute with failure", () { \n';
   if (nonIdAttribute != null) {
     sc = '${sc}      var random${Entity} = ${entities}.random(); \n';
-    sc = '${sc}      var beforeUpdateValue = '
-         'random${Entity}.${nonIdAttribute.code}; \n';
+    //sc = '${sc}      var beforeUpdateValue = '
+    //     'random${Entity}.${nonIdAttribute.code}; \n';
     sc = '${sc}      var afterUpdateEntity = random${Entity}.copy(); \n';
     var value = genAttributeTextRandomly(nonIdAttribute); 
     sc = '${sc}      afterUpdateEntity.${nonIdAttribute.code} = ${value}; \n';
@@ -562,9 +562,9 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc} \n';
   
   sc = '${sc}    test("New ${entity} action undo and redo", () { \n';
-  sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
+  //sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
   sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
-  sc = '${sc}      ${createEntryEntityRandomly(entryConcept, withChildren:false)}';
+  sc = '${sc}      ${createTestEntryEntityRandomly(entryConcept, withChildren: false)}';
   sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';
   sc = '${sc}      ${entities}.remove(${entity}); \n';
   sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';
@@ -582,9 +582,9 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc} \n';
   
   sc = '${sc}    test("New ${entity} session undo and redo", () { \n';
-  sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
+  //sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
   sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
-  sc = '${sc}      ${createEntryEntityRandomly(entryConcept, withChildren:false)}';
+  sc = '${sc}      ${createTestEntryEntityRandomly(entryConcept, withChildren: false)}';
   sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';
   sc = '${sc}      ${entities}.remove(${entity}); \n';
   sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';
@@ -717,14 +717,14 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc} \n';
   
   sc = '${sc}    test("Reactions to ${entity} actions", () { \n';
-  sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
+  //sc = '${sc}      var ${entity}Concept = ${entities}.concept; \n';
   sc = '${sc}      var ${entity}Count = ${entities}.length; \n';
   sc = '${sc} \n'; 
   sc = '${sc}      var reaction = new ${Entity}Reaction(); \n';
   sc = '${sc}      expect(reaction, isNotNull); \n';
   sc = '${sc} \n';
   sc = '${sc}      ${domain.codeFirstLetterLower}Domain.startActionReaction(reaction); \n'; 
-  sc = '${sc}      ${createEntryEntityRandomly(entryConcept, withChildren:false)}';
+  sc = '${sc}      ${createTestEntryEntityRandomly(entryConcept, withChildren:false)}';
   sc = '${sc}      expect(${entities}.length, equals(++${entity}Count)); \n';  
   sc = '${sc}      ${entities}.remove(${entity}); \n';
   sc = '${sc}      expect(${entities}.length, equals(--${entity}Count)); \n';   
@@ -789,41 +789,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   return sc;
 }
 
-Attribute findNonIdAttribute(Concept concept) {
-  for (Attribute attribute in concept.attributes) {
-    if (!attribute.identifier) {
-      return attribute;
-    }
-  }
-  return null;
-}
 
-Attribute findNonRequiredAttribute(Concept concept) {
-  for (Attribute attribute in concept.attributes) {
-    if (!attribute.required) {
-      return attribute;
-    }
-  }
-  return null;
-}
-
-Attribute findRequiredNonIdAttribute(Concept concept) {
-  for (Attribute attribute in concept.attributes) {
-    if (attribute.required && !attribute.identifier) {
-      return attribute;
-    }
-  }
-  return null;
-}
-
-Attribute findIdAttribute(Concept concept) {
-  for (Attribute attribute in concept.attributes) {
-    if (attribute.identifier) {
-      return attribute;
-    }
-  }
-  return null;
-}
 
 
 

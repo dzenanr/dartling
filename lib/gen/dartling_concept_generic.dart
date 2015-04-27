@@ -13,9 +13,12 @@ String genConceptGen(Concept concept, String library) {
        'ConceptEntity<${concept.code}> { \n';
   sc = '${sc} \n';
   if (concept.children.isEmpty) {
-    sc = '${sc}  ${concept.code}Gen(Concept concept) : super.of(concept); \n';
+    sc = '${sc}  ${concept.code}Gen(Concept concept) { \n';
+    sc = '${sc}    this.concept = concept; \n';
+    sc = '${sc}  } \n';
   } else {
-    sc = '${sc}  ${concept.code}Gen(Concept concept) : super.of(concept) { \n';
+    sc = '${sc}  ${concept.code}Gen(Concept concept) { \n';
+    sc = '${sc}    this.concept = concept; \n';
     var generatedConcepts = new List<Concept>();
     for (Child child in concept.children) {
       Concept destinationConcept = child.destinationConcept;
@@ -51,7 +54,9 @@ String genConceptGen(Concept concept, String library) {
         }
       }
     }
-    sc = '${sc}) : super.of(concept) { \n';
+    sc = '${sc}) { \n';
+    sc = '${sc}    this.concept = concept; \n';
+    
     if (id.referenceLength > 0) {
       for (Parent parent in concept.parents) {
         if (parent.identifier) {
@@ -139,7 +144,9 @@ String genConceptGen(Concept concept, String library) {
   sc = '${sc}abstract class ${concept.codes}Gen extends '
        'Entities<${concept.code}> { \n';
   sc = '${sc} \n';
-  sc = '${sc}  ${concept.codes}Gen(Concept concept) : super.of(concept); \n';
+  sc = '${sc}  ${concept.codes}Gen(Concept concept) { \n';
+  sc = '${sc}    this.concept = concept; \n'; 
+  sc = '${sc}  } \n';
   sc = '${sc} \n';
   sc = '${sc}  ${concept.codes} newEntities() => '
        'new ${concept.codes}(concept); \n';

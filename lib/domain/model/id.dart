@@ -106,6 +106,7 @@ class Id implements IdApi {
    /**
     * == see:
     * https://www.dartlang.org/docs/dart-up-and-running/contents/ch02.html#op-equality
+    * http://work.j832.com/2014/05/equality-and-dart.html
     *
     * To test whether two objects x and y represent the same thing,
     * use the == operator.
@@ -202,9 +203,11 @@ class Id implements IdApi {
        for (Attribute a in concept.attributes) {
          var value1 = _attributeMap[a.code];
          var value2 = id.getAttribute(a.code);
-         compare = a.type.compare(value1, value2);
-         if (compare != 0) {
-           break;
+         if (value1 != null && value2 != null) {
+           compare = a.type.compare(value1, value2);
+            if (compare != 0) {
+              break;
+            }
          }
        } // for
        return compare;       

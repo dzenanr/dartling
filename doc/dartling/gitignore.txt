@@ -8,20 +8,19 @@ in the .gitignore file use:
 
 in addition to (for Linux, Windows users)
 
+.pub
+build
 packages
 pubspec.lock
-*.js
-*.js.deps
-*.js.map
 *~
 
 Thus, the .gitignore file content should be:
 
 .DS_Store
+.pub
+build
 packages
 pubspec.lock
-*.js
-*.js.deps
-*.js.map
 *~
+
 

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Dzenan Ridjanovic"/>
+    <title>
+      art_pen, developed with dartling.
+    </title>
+    <link rel="stylesheet" href="css/layout.css"/>
+    <link rel="stylesheet" href="css/layout2c.css"/>
+    <link rel="stylesheet" href="css/link.css"/>
+    <link rel="stylesheet" href="css/list.css"/>
+    <link rel="stylesheet" href="css/marker.css"/>
+    <link rel="stylesheet" href="css/menu.css"/>
+    <link rel="stylesheet" href="css/page.css"/>
+    <link rel="stylesheet" href="css/table.css"/>
+  </head>
+  <body>
+    <header>
+      <h2>
+        DArt Pen: Start Art On Dart with dartling
+        <img src="img/ondart0.png"/>
+      </h2>
+    </header>
+
+    <section>
+      <header id='menu'/></header>
+
+      <section id='entities'/></section>
+
+      <section>
+        <label>Pen</label>
+        <select id="color">
+          <option>black</option>
+          <option>blue</option>
+          <option>brown</option>
+          <option>gray</option>
+          <option>green</option>
+          <option>orange</option>
+          <option>red</option>
+          <option>white</option>
+          <option>yellow</option>
+        </select>
+        <label for="width">size</label>
+        <select id="width">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+        </select>
+        <label for="down">down</label>
+        <input type="checkbox" id="down"/>
+        <label for="visible">visible</label>
+        <input type="checkbox" id="visible"/>
+        <label for="write">write</label>
+        <input type="text" id="write" size="8"/>
+        <input type="text" id="artCount" size="1"/>
+        <button id="art">Art</button>
+        <input type="text" id="onDartCount" size="2"/>
+        <button id="onDart">On Dart</button>
+        <button id="erase">Erase</button>
+        <button id="example">Example</button>
+        <select id="program">
+          <option selected>program</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+          <option>11</option>
+          <option>12</option>
+          <option>13</option>
+          <option>14</option>
+          <option>15</option>
+          <option>16</option>
+          <option>17</option>
+          <option>18</option>
+          <option>19</option>
+          <option>20</option>
+          <option>21</option>
+        </select>
+      </section>
+
+      <section>
+        <canvas id="canvas" width="980" height="660">
+          Canvas is not supported in your browser.
+        </canvas>
+      </section>
+
+      <section>
+        <label for="turn">turn</label>
+        <input type="text" id="turn" size="1"/>
+        <label for="advance">steps</label>
+        <input type="text" id="advance" size="1"/>
+        <label for="repeat">repeat</label>
+        <input type="text" id="repeat" size="1"/>
+        <button id="move">Move</button>
+        <button id="random">Random</button>
+        <button id="start">Start</button>
+        &nbsp;
+        <input type="text" id="leftTurn" size="1"/>
+        <button id="left">Left</button>
+        <input type="text" id="rightTurn" size="1"/>
+        <button id="right">Right</button>
+        &nbsp;
+        <input type="text" id="backwardAdvance" size="2"/>
+        <button id="backward">Backward</button>
+        <input type="text" id="forwardAdvance" size="1"/>
+        <button id="forward">Forward</button>
+      </section>
+
+      <section>
+	      <section>
+	        <h4>Commands
+	          <button id="show">Show</button>
+	          <button id="clear">Clear</button>
+	          <button id="draw">Draw</button>
+	        </h4>
+	        <textarea  class="left" name="commands" rows=48 cols=80 id="commands"></textarea>
+	      </section>
+
+	      <section class="right">
+	        <p>
+	          <span class="marker">Basic Commands</span> <br/><br/>
+	          color, black; <br/>
+	          // blue, brown, gray, green, orange, red, white, yellow <br/>
+              width, 1; <br/>
+              down, true; <br/>
+              write, hello; <br/>
+              moveTo, 0, 0;  <br/>
+              move, 45, 80, 0; <br/>
+              art, 1; <br/>
+            </p>
+            <p>
+	          <span class="marker">Shortcut Commands</span> <br/><br/>
+              left, 45; <br/>
+              right, 90; <br/>
+              backward, 60; <br/>
+              forward, 80; <br/>
+              moveToStart; <br/>
+            </p>
+            <p>
+	          <span class="marker">Random Commands</span> <br/><br/>
+              colorRandom; <br/>
+              widthRandom; <br/>
+              downRandom; <br/>
+              moveToRandom; <br/>
+              moveRandom; <br/>
+              leftRandom; <br/>
+              rightRandom; <br/>
+              backwardRandom; <br/>
+              forwardRandom; <br/>
+              artRandom; <br/>
+            </p>
+	      </section>
+      </section>
+
+      <section class="main">
+        <p>
+	      <a class="button"
+	        href="http://programmers.stackexchange.com/questions/163185/torvalds-quote-about-good-programmer">
+	        "Good programmers worry about data structures and their relationships."
+	      </a>
+	    </p>
+        <p>
+          <span class="drop">The</span> Art.Pen app in
+          <a  href="http://www.dartlang.org/" class="link">
+            Dart.
+          </a>
+        </p>
+        <p>
+          <a href="#"><img src="img/art_pen.png"/></a>
+          The model example is designed with
+          <a  href="https://github.com/dzenanr/model_concepts" class="link">
+            Model Concepts.
+          </a>
+          The model code is generated by
+          <a  href="https://github.com/dzenanr/dartling_gen" class="link">
+            dartling_gen.
+          </a>
+          The model is dependent on
+          <a  href="http://pub.dartlang.org/packages/dartling" class="link">
+            dartling.
+          </a>
+          This app is one of dartling examples, which are all maintained at
+          <a  href="https://github.com/" class="link">
+            GitHub.
+          </a>
+        </p>
+      </section>
+
+      <footer class="main">
+        <a class="button" href="http://ondart.me/">
+	      On Dart
+	    </a>
+	    &nbsp
+        <a class="button" href="http://dzenanr.github.io/">
+	      On Dart Blog
+	    </a>
+      </footer>
+    </section>
+
+    <script type="application/dart" src="index.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+/* 
+  Initial version created with http://www.csstablegenerator.com/, 
+  then adapted manually
+*/
+
+table {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+  background-color: #f2f8ff;
+  font-size: 16px;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+table caption {
+  padding-top: 6px;
+  padding-bottom: 4px;
+  font-size: 18px;
+  color: #0d5b83;
+}
+
+.entities-table th {
+  font-weight: bold;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 6px;
+  padding-left: 6px;
+  background: #9ccdff;
+  border-top: 2px solid #6daded;
+  border-bottom: 1px solid #ffffff;
+  color: #0d5b83;
+}
+
+.entities-table td {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-right: 6px;
+  padding-left: 6px;
+  background: #e0f0ff;
+  border-top: 1px solid transparent; 
+  border-bottom: 1px solid #ffffff;
+  color: #669669;
+}
+
+.entity-table th {
+  font-weight: bold;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 2px;
+  padding-left: 2px;
+  background: #9ccdff;
+  border-bottom: 1px solid #ffffff;
+  border-left: 2px solid #6daded;
+  color: #0d5b83;
+}
+
+.entity-table td {
+  border-style: dotted;
+  border-width: 1px;
+  border-color: #bbbbbb; 
+  padding-right: 2px;
+  padding-left: 2px;
+  background: #e0f0ff; 
+  color: #669669;
+  border-bottom: 1px solid #ffffff;
+}
+
+.entity-table :required {
+  border-style: solid;
+  border-width: 2px;
+  border-color: #647a84;
+}
+
+.entity-table .area {
+  height: 64px;
+  width: 512px;
+}
+
+
+

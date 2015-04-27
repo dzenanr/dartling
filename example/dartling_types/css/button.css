@@ -1,0 +1,53 @@
+/* 
+  Initial version created with http://www.csstablegenerator.com/, 
+  then adapted manually
+*/
+
+.button {
+  -moz-box-shadow: 0px 1px 0px 0px #cae3fc;
+  -webkit-box-shadow: 0px 1px 0px 0px #cae3fc;
+  box-shadow: 0px 1px 0px 0px #cae3fc;
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #4197ee) );
+  background:-moz-linear-gradient( center top, #79bbff 5%, #4197ee 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#4197ee');
+  background-color:#79bbff;
+  -webkit-border-top-left-radius:5px;
+  -moz-border-radius-topleft:5px;
+  border-top-left-radius:5px;
+  -webkit-border-top-right-radius:5px;
+  -moz-border-radius-topright:5px;
+  border-top-right-radius:5px;
+  -webkit-border-bottom-right-radius:5px;
+  -moz-border-radius-bottomright:5px;
+  border-bottom-right-radius:5px;
+  -webkit-border-bottom-left-radius:5px;
+  -moz-border-radius-bottomleft:5px;
+  border-bottom-left-radius:5px;
+  text-indent:0;
+  border:1px solid #469df5;
+  display:inline-block;
+  color:#ffffff;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+  font-size:12px;
+  font-weight:normal;
+  font-style:normal;
+  height:25px;
+  line-height:15px;
+  width:117px;
+  text-decoration:none;
+  text-align:center;
+}
+
+.button:hover {
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #4197ee), color-stop(1, #79bbff) );
+  background:-moz-linear-gradient( center top, #4197ee 5%, #79bbff 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#4197ee', endColorstr='#79bbff');
+  background-color:#4197ee;
+}
+
+.button:active {
+  position:relative;
+  top:1px; 
+}
+
+

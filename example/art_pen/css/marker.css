@@ -1,0 +1,24 @@
+/* marker.css */
+
+/* ===[ begin ]=== */
+
+/*
+    Title:                   Marker Design Style
+    Author:                  Dzenan Ridjanovic
+    Created:                 2006-09-03
+    Updated:                 2007-10-30
+*/
+
+	.marker {
+		font-family: arial, sans-serif;
+		font-size: 14px;
+		font-weight: bold;
+		color: #003366;
+		background: #ffe4b5;
+		padding-left: 1px;
+		padding-right: 1px;
+		margin-left: 1px;
+		margin-right: 1px;
+	}
+			
+/* ===[ end ]=== */

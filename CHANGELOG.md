@@ -2,6 +2,23 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
+*2.0.1* 2015-04-26
+
++ add random.dart and search.dart in lib/gen
++ improve formatting of generated tests
++ add several examples from projects at GitHub
+
+*2.0.1* 2015-04-25 
+
++ add null check in the Id.compareAttributes method in lib/model/id.dart
++ prepare dartling to use one day mixins in ConceptGen classes, e.g.,
+  abstract class ProjectGen extends Object with ConceptEntity<Project> {
+  abstract class ProjectsGen extends Object with Entities<Project> {
++ update ConceptEntity and Entities in lib/domain/model/entity.dart and entities.dart: 
+  no constructors, add void set concept(Concept concept)
++ update the newEntity and newEntities methods in ModelEntries in lib/domain/model/entries.dart
++ update the example and test folders
+
 *2.0.1* 2015-04-24 
 
 + use new test package

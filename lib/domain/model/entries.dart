@@ -33,29 +33,34 @@ class ModelEntries implements ModelEntriesApi {
   Map<String, Entities> newEntries() {
     var entries = new Map<String, Entities>();
     _model.entryConcepts.forEach((entryConcept) {
-      var entryEntities = new Entities.of(entryConcept);
+      var entryEntities = new Entities();
+      entryEntities.concept = entryConcept;
       entries[entryConcept.code] = entryEntities;
     });
     return entries;
   }
 
-  EntitiesApi newEntities(String conceptCode) {
+  Entities newEntities(String conceptCode) {
     var concept = getConcept(conceptCode);
     if (concept == null) {
       throw new ConceptError('${concept.code} concept does not exist.');
     }
     if (!concept.entry) {
-      return new Entities.of(concept);
+      var entities = new Entities();
+      entities.concept = concept;
+      return entities;
     }
     return null;
   }
 
-  EntityApi newEntity(String conceptCode) {
+  ConceptEntity newEntity(String conceptCode) {
     var concept = getConcept(conceptCode);
     if (concept == null) {
       throw new ConceptError('${concept.code} concept does not exist.');
     }
-    return new ConceptEntity.of(concept);
+    var conceptEntity = new ConceptEntity();
+    conceptEntity.concept = concept;
+    return conceptEntity;
   }
 
   Model get model => _model;
@@ -68,7 +73,6 @@ class ModelEntries implements ModelEntriesApi {
       _entryEntitiesMap[entryConceptCode];
 
   ConceptEntity single(Oid oid) {
-    ConceptEntity entity;
     for (Concept entryConcept in _model.entryConcepts) {
       var entity = internalSingle(entryConcept.code, oid);
       if (entity != null) return entity;
@@ -151,9 +155,9 @@ class ModelEntries implements ModelEntriesApi {
       for (Parent parent in entity.concept.externalParents) {
         Reference reference = entity.getReference(parent.code);
         if (reference != null) {
-          String parentOidString = reference.parentOidString;
-          String parentConceptCode = reference.parentConceptCode;
-          String entryConceptCode = reference.entryConceptCode;
+          //String parentOidString = reference.parentOidString;
+          //String parentConceptCode = reference.parentConceptCode;
+          //String entryConceptCode = reference.entryConceptCode;
           var parentEntity = 
               internalSingle(reference.entryConceptCode, reference.oid);
           if (parentEntity == null) {
@@ -178,8 +182,8 @@ class ModelEntries implements ModelEntriesApi {
   }
   
   populateEntryReferencesFromJsonMap(Map<String, Object> entryMap) {
-    var domainCode = entryMap['domain'];
-    var modelCode = entryMap['model'];
+    //var domainCode = entryMap['domain'];
+    //var modelCode = entryMap['model'];
     var entryConceptCode = entryMap['entry'];
     var entryEntities = getEntry(entryConceptCode);
     populateEntityReferences(entryEntities);

@@ -1,0 +1,48 @@
+/* table.css */
+
+/* ===[ begin ]=== */
+
+/*
+    Title:                   Table Design Style
+    Author:                  Dzenan Ridjanovic
+    Influenced By:           http://www.simplebits.com/
+    Created:                 2006-09-03
+    Updated:                 2012-08-29
+*/
+
+	table {
+		border-top: 1px solid #999;
+		border-left: 1px solid #999;
+		border-collapse: collapse;
+		margin-left: auto; 
+		margin-right: auto;
+	}
+	
+	caption {
+		font-family: arial, sans-serif;
+		font-size: 14px;
+		font-weight: bold;
+		color: #003366;
+		padding: 6px;
+		margin-left: auto; 
+		margin-right: auto;
+	}
+	
+	th, td {
+		padding: 4px;
+		border-right: 1px solid #999;
+		border-bottom: 1px solid #999;
+	}	
+	
+	th {
+		font-family: Verdana, sans-serif;
+		font-weight: bold;
+		color: #ffffff;
+        background: #663117;
+	}
+	
+	td {
+		background: #ffe4b5;
+	}
+			
+/* ===[ end ]=== */

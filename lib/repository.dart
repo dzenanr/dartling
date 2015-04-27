@@ -9,8 +9,9 @@ abstract class RepoApi {
 
 }
 
-class Repo implements RepoApi {
-
+//class Repo implements RepoApi {
+class Repo {
+  
   String code;
 
   Domains _domains;
