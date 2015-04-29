@@ -75,11 +75,14 @@ Other examples are:
 [dartling_examples](https://github.com/dzenanr/dartling_examples) (3 typical models),
 [dartling_tasks](https://github.com/dzenanr/dartling_tasks) (a many-to-many relationship),
 [game_parking](https://github.com/dzenanr/game_parking) (a game based on Rush Hour),
+[travel_impressions](with the focus on data modeling or model design),
+[concept_attribute](with different categories of test data that can be used in the generation of tests),
 [dartling_todos](https://github.com/dzenanr/dartling_todos) (with action undos),
 [dartling_dwt_todo_mvc_spirals](https://github.com/dzenanr/dartling_dwt_todo_mvc_spirals) (with Dart Web Toolkit),
 [travel_impressions](https://github.com/dzenanr/travel_impressions) (with the focus on modeling),
 [todo_mysql](https://github.com/dzenanr/todo_mysql) (todo client - mysql server),
-[todo_mongodb](https://github.com/dzenanr/todo_mongodb) (todo client - mongodb server).
+[todo_mongodb](https://github.com/dzenanr/todo_mongodb) (todo client - mongodb server),
+[dartling_types](a generic web component done by meta-programming in dartling).
 
 ### Models
 
