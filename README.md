@@ -82,7 +82,7 @@ Other examples are:
 [travel_impressions](https://github.com/dzenanr/travel_impressions) (with the focus on modeling),
 [todo_mysql](https://github.com/dzenanr/todo_mysql) (todo client - mysql server),
 [todo_mongodb](https://github.com/dzenanr/todo_mongodb) (todo client - mongodb server),
-[dartling_types](a generic web component done by meta-programming in dartling).
+[dartling_types](https://github.com/dzenanr/dartling_types) (a generic web component done by meta-programming in dartling).
 
 ### Models
 
