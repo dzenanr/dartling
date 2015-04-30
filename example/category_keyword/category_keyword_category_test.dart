@@ -1,7 +1,7 @@
 import "package:test/test.dart";
 import 'category_keyword.dart';
 
-testCategoryKeywordCategory( 
+void testCategoryKeywordCategory( 
     Repository repository, String domainCode, String modelCode) { 
   var domain; 
   var model; 

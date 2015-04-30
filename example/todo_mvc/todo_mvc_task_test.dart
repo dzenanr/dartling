@@ -2,7 +2,7 @@ import "package:test/test.dart";
 import "package:dartling/dartling.dart"; 
 import 'todo_mvc.dart';
  
-testTodoMvcTasks( 
+void testTodoMvcTasks( 
     TodoDomain todoDomain, MvcModel mvcModel, Tasks tasks) { 
   DomainSession session; 
   group("Testing Todo.Mvc.Task", () { 
@@ -468,7 +468,7 @@ class TaskReaction implements ActionReactionApi {
   bool reactedOnAdd    = false; 
   bool reactedOnUpdate = false; 
  
-  react(BasicAction action) { 
+  void react(BasicAction action) { 
     if (action is EntitiesAction) { 
       reactedOnAdd = true; 
     } else if (action is EntityAction) { 

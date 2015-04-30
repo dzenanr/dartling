@@ -58,7 +58,7 @@ class ParkingEntries extends ModelEntries {
     return null;
   } 
  
-  fromJsonToData() { 
+  void fromJsonToData() { 
     fromJson(gameParkingDataJson); 
   } 
  

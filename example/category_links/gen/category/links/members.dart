@@ -18,31 +18,31 @@ abstract class MemberGen extends ConceptEntity<Member> {
   } 
  
   String get email => getAttribute("email"); 
-  set email(String a) => setAttribute("email", a); 
+  void set email(String a) { setAttribute("email", a); }
   
   String get firstName => getAttribute("firstName"); 
-  set firstName(String a) => setAttribute("firstName", a); 
+  void set firstName(String a) { setAttribute("firstName", a); }
   
   String get lastName => getAttribute("lastName"); 
-  set lastName(String a) => setAttribute("lastName", a); 
+  void set lastName(String a) { setAttribute("lastName", a); }
   
   DateTime get startedOn => getAttribute("startedOn"); 
-  set startedOn(DateTime a) => setAttribute("startedOn", a); 
+  void set startedOn(DateTime a) { setAttribute("startedOn", a); }
   
   bool get receiveEmail => getAttribute("receiveEmail"); 
-  set receiveEmail(bool a) => setAttribute("receiveEmail", a); 
+  set receiveEmail(bool a) { setAttribute("receiveEmail", a); }
   
   String get password => getAttribute("password"); 
-  set password(String a) => setAttribute("password", a); 
+  void set password(String a) { setAttribute("password", a); }
   
   String get role => getAttribute("role"); 
-  set role(String a) => setAttribute("role", a); 
+  void set role(String a) { setAttribute("role", a); }
   
   num get karma => getAttribute("karma"); 
-  set karma(num a) => setAttribute("karma", a); 
+  void set karma(num a) { setAttribute("karma", a); }
   
   String get about => getAttribute("about"); 
-  set about(String a) => setAttribute("about", a); 
+  void set about(String a) { setAttribute("about", a); }
   
   Interests get interests => getChild("interests"); 
   

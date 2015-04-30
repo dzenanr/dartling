@@ -82,16 +82,16 @@ class TodoApp implements ActionReactionApi, PastReactionApi {
     });
   }
 
-  _save() {
+  void _save() {
     window.localStorage['todos'] = tasks.toJson();
   }
 
-  _possibleErrors() {
+  void _possibleErrors() {
     _errors.innerHtml = '<p>${tasks.errors.toString()}</p>';
     tasks.errors.clear();
   }
 
-  _updateFooter() {
+  void _updateFooter() {
     var display = tasks.length == 0 ? 'none' : 'block';
     _completeAll.style.display = display;
     _main.style.display = display;
@@ -113,7 +113,7 @@ class TodoApp implements ActionReactionApi, PastReactionApi {
     _possibleErrors();
   }
 
-  react(ActionApi action) {
+  void react(ActionApi action) {
     updateTodo(SetAttributeAction action) {
       if (action.property == 'completed') {
         _todos.complete(action.entity);
@@ -154,19 +154,19 @@ class TodoApp implements ActionReactionApi, PastReactionApi {
     _save();
   }
 
-  reactCannotUndo() {
+  void reactCannotUndo() {
     _undo.style.display = 'none';
   }
 
-  reactCanUndo() {
+  void reactCanUndo() {
     _undo.style.display = 'block';
   }
 
-  reactCanRedo() {
+  void reactCanRedo() {
     _redo.style.display = 'block';
   }
 
-  reactCannotRedo() {
+  void reactCannotRedo() {
     _redo.style.display = 'none';
   }
 

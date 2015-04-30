@@ -26,7 +26,7 @@ class EntitiesTable {
     addEventHandlers();
   }
   
-  addEventHandlers() {
+  void addEventHandlers() {
     var identifierAttributes = entities.concept.identifierAttributes;
     for (var attribute in identifierAttributes) {
       TableRowElement hRow = table.nodes[1];
@@ -45,7 +45,7 @@ class EntitiesTable {
     } 
   }
   
-  display({sort: true}) {
+  void display({sort: true}) {
     removeRows();
     addCaption();
     addHeaderRow();
@@ -57,17 +57,17 @@ class EntitiesTable {
     }  
   }
   
-  removeRows() {
+  void removeRows() {
     table.nodes.clear();
   }
   
-  addCaption() {
+  void addCaption() {
     var tableCaption = new TableCaptionElement();
     tableCaption.text = entities.concept.labels;
     table.nodes.add(tableCaption);
   }
   
-  addHeaderRow() {
+  void addHeaderRow() {
     TableRowElement hRow = new Element.tr();
     for (Attribute attribute in essentialAttributes) {
       TableCellElement thElement = new Element.th();
@@ -77,7 +77,7 @@ class EntitiesTable {
     table.nodes.add(hRow);
   }
   
-  addDataRow(ConceptEntity entity) {
+  void addDataRow(ConceptEntity entity) {
     TableRowElement dRow = new Element.tr();
     
     for (Attribute attribute in essentialAttributes) {
@@ -94,14 +94,14 @@ class EntitiesTable {
     table.nodes.add(dRow);
   }
   
-  selectEntity(Event e) {
+  void selectEntity(Event e) {
     var dRow = (e.target as TableCellElement).parent;
     var idn = int.parse(dRow.id);
     var entity = entities.singleWhereOid(new Oid.ts(idn));
     context.entityTable.setEntity(entity);
   }
   
-  save() {
+  void save() {
     context.save();
   }
 }

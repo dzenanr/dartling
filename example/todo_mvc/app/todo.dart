@@ -56,7 +56,7 @@ class Todo {
     });
   }
 
-  complete(bool completed) {
+  void complete(bool completed) {
     _completed.checked = completed;
     if (completed) {
       element.classes.add('completed');
@@ -65,16 +65,16 @@ class Todo {
     }
   }
 
-  retitle(String title) {
+  void retitle(String title) {
     _title.text = title;
     element.classes.remove('editing');
   }
 
-  remove() {
+  void remove() {
     element.remove();
   }
 
-  set visible(bool visible) {
+  void set visible(bool visible) {
     element.style.display = visible ? 'block' : 'none';
   }
 }

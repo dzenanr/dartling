@@ -7,19 +7,19 @@ class ProjectModel extends ProjectEntries {
  
   ProjectModel(Model model) : super(model); 
  
-  fromJsonToProjectEntry() { 
+  void fromJsonToProjectEntry() { 
     fromJsonToEntry(defaultProjectProjectEntry); 
   } 
  
-  fromJsonToModel() { 
+  void fromJsonToModel() { 
     fromJson(defaultProjectModel); 
   } 
  
-  init() { 
+  void init() { 
     initProjects(); 
   } 
  
-  initProjects() { 
+  void initProjects() { 
     var project1 = new Project(projects.concept); 
     project1.name = "letter"; 
     project1.description = "discount"; 

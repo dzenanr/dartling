@@ -2,7 +2,12 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.1* 2015-04-26
+*2.0.2* 2015-04-30
+
++ gen void where missing
++ add void where missing
+
+*2.0.1* 2015-04-29 (Pub)
 
 + add random.dart and search.dart in lib/gen
 + improve formatting of generated tests

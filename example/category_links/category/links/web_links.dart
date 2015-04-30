@@ -11,7 +11,7 @@ class WebLink extends WebLinkGen {
  
   // added after code gen - begin 
  
-  set description(String a) {
+  void set description(String a) {
     var before = description;
     super.description = a;
     if (before != null) {
@@ -19,7 +19,7 @@ class WebLink extends WebLinkGen {
     }
   }
 
-  set approved(bool a) {
+  void set approved(bool a) {
     super.approved = a;
     if (approved) {
       updatedOn = new DateTime.now();

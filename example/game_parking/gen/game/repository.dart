@@ -11,7 +11,7 @@ class GameRepo extends Repo {
     _initGameDomain(); 
   } 
  
-  _initGameDomain() { 
+  void _initGameDomain() { 
     var gameDomain = new Domain(gameDomainCode); 
     domains.add(gameDomain); 
     add(new GameModels(gameDomain)); 

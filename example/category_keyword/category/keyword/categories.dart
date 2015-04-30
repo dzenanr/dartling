@@ -11,7 +11,7 @@ class Category extends CategoryGen {
  
   // added after code gen - begin 
  
-  set nameAndPath(String categoryName) {
+  void set nameAndPath(String categoryName) {
     name = categoryName;
     if (this.category == null) {
       namePath = name;

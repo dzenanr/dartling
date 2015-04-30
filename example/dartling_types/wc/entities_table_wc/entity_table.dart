@@ -20,27 +20,27 @@ class EntityTable {
     firstField().focus();
   } 
   
-  addEventHandlers() {
+  void addEventHandlers() {
     addButton.onClick.listen(addEntity);
     updateButton.onClick.listen(updateEntity);
     removeButton.onClick.listen(removeEntity);
     cancelButton.onClick.listen(cancelAction);
   }
   
-  display() {
+  void display() {
     addCaption();
     for (Attribute attribute in nonIncrementAttributes) {
       addRow(attribute);
     }
   }
   
-  addCaption() {
+  void addCaption() {
     var tableCaption = new TableCaptionElement();
     tableCaption.text = entities.concept.label;
     table.nodes.add(tableCaption);
   }
   
-  addRow(Attribute attribute) {
+  void addRow(Attribute attribute) {
     TableRowElement row = new Element.tr();
         
     TableCellElement thElement = new Element.th();
@@ -53,7 +53,7 @@ class EntityTable {
       element = new CheckboxInputElement();
     } else if (attribute.type.code == 'Description') {
       element = new TextAreaElement();
-      element.classes.add('entity-table area');
+      element.classes.add('entity-table');
     } else {
       element = new InputElement();
     }
@@ -91,7 +91,7 @@ class EntityTable {
     return null;
   }
   
-  setRow(var entity, Attribute attribute) {
+  void setRow(var entity, Attribute attribute) {
     var dRow = findRow(attribute);
     var field = rowField(dRow);
     var attributeValue = entity.getStringOrNullFromAttribute(attribute.code);
@@ -102,7 +102,7 @@ class EntityTable {
     }
   }
   
-  emptyData() {
+  void emptyData() {
     for (int i = 0; i < table.rows.length; i++) {
       TableRowElement row = table.rows[i];
       var field = rowField(row);
@@ -120,14 +120,14 @@ class EntityTable {
     return entities.concept.attributes.singleWhereOid(oid);
   }
   
-  setEntity(var entity) {
+  void setEntity(var entity) {
     for (Attribute attribute in nonIncrementAttributes) {
       setRow(entity, attribute);
     }
     currentEntity = entity;
   }
   
-  addEntity(Event e) {
+  void addEntity(Event e) {
     var newEntity = entities.newEntity();
     for (Attribute attribute in nonIncrementAttributes) {
       var row = findRow(attribute);
@@ -149,7 +149,7 @@ class EntityTable {
     firstField().focus();
   }
   
-  updateEntity(Event e) {
+  void updateEntity(Event e) {
     var nonIdentifierAttributes = currentEntity.concept.nonIdentifierAttributes;
     for (Attribute attribute in nonIdentifierAttributes) {
       if (attribute.increment == null) {
@@ -181,7 +181,7 @@ class EntityTable {
     firstField().focus();
   }
   
-  removeEntity(Event e) {
+  void removeEntity(Event e) {
     if (removeButton.text == 'Remove') {
       removeButton.text = 'Confirm';
     } else {
@@ -196,7 +196,7 @@ class EntityTable {
     }
   }
   
-  cancelAction(Event e) {
+  void cancelAction(Event e) {
     emptyData();
     firstField().focus();
     currentEntity = null;

@@ -7,19 +7,19 @@ class TypesModel extends TypesEntries {
  
   TypesModel(Model model) : super(model); 
  
-  fromJsonToTypeEntry() { 
+  void fromJsonToTypeEntry() { 
     fromJsonToEntry(dartlingTypesTypeEntry); 
   } 
  
-  fromJsonToModel() { 
+  void fromJsonToModel() { 
     fromJson(dartlingTypesModel); 
   } 
  
-  init() { 
+  void init() { 
     initTypes(); 
   } 
  
-  initTypes() { 
+  void initTypes() { 
     var type1 = new Type(types.concept); 
       type1.title = 'selfdo'; 
       type1.email = 'brian@walker.com'; 

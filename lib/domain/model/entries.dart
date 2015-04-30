@@ -12,11 +12,11 @@ abstract class ModelEntriesApi {
   bool get isEmpty;  void clear();
 
   String fromEntryToJson(String entryConceptCode);
-  fromJsonToEntry(String entryJson);
-  populateEntryReferences(String entryJson);
+  void fromJsonToEntry(String entryJson);
+  void populateEntryReferences(String entryJson);
   
   String toJson();
-  fromJson(String json);
+  void fromJson(String json);
 
 }
 
@@ -120,12 +120,12 @@ class ModelEntries implements ModelEntriesApi {
     return entryMap;
   }
   
-  fromJsonToEntry(String entryJson) {
+  void fromJsonToEntry(String entryJson) {
     Map<String, Object> entryMap = JSON.decode(entryJson);
     fromMapToEntry(entryMap);
   }
   
-  fromMapToEntry(Map<String, Object> entryMap) {
+  void fromMapToEntry(Map<String, Object> entryMap) {
     var domainCode = entryMap['domain'];
     var modelCode = entryMap['model'];
     var entryConceptCode = entryMap['entry'];
@@ -150,7 +150,7 @@ class ModelEntries implements ModelEntriesApi {
     entryEntities.fromJsonList(entitiesList);
   }
   
-  populateEntityReferences(Entities entities) {
+  void populateEntityReferences(Entities entities) {
     for (var entity in entities) {
       for (Parent parent in entity.concept.externalParents) {
         Reference reference = entity.getReference(parent.code);
@@ -181,7 +181,7 @@ class ModelEntries implements ModelEntriesApi {
     } 
   }
   
-  populateEntryReferencesFromJsonMap(Map<String, Object> entryMap) {
+  void populateEntryReferencesFromJsonMap(Map<String, Object> entryMap) {
     //var domainCode = entryMap['domain'];
     //var modelCode = entryMap['model'];
     var entryConceptCode = entryMap['entry'];
@@ -189,7 +189,7 @@ class ModelEntries implements ModelEntriesApi {
     populateEntityReferences(entryEntities);
   }
   
-  populateEntryReferences(String entryJson) {
+  void populateEntryReferences(String entryJson) {
     Map<String, Object> entryMap = JSON.decode(entryJson);
     populateEntryReferencesFromJsonMap(entryMap);
   }
@@ -204,12 +204,12 @@ class ModelEntries implements ModelEntriesApi {
     return entriesMap; 
   }
   
-  fromJson(String entriesJson) {
+  void fromJson(String entriesJson) {
     Map<String, Object> entriesMap = JSON.decode(entriesJson);
     fromJsonMap(entriesMap);
   }
   
-  fromJsonMap(Map<String, Object> entriesMap) { 
+  void fromJsonMap(Map<String, Object> entriesMap) { 
     _model.entryConcepts.forEach((entryConcept) {
       Map<String, Object> entryMap = entriesMap[entryConcept.code];
       fromMapToEntry(entryMap);
@@ -217,21 +217,21 @@ class ModelEntries implements ModelEntriesApi {
     populateReferences(entriesMap);
   }  
   
-  populateReferences(Map<String, Object> entriesMap) {
+  void populateReferences(Map<String, Object> entriesMap) {
     _model.entryConcepts.forEach((entryConcept) {
       Map<String, Object> entryMap = entriesMap[entryConcept.code];
       populateEntryReferencesFromJsonMap(entryMap);
     });
   }
 
-  display() {
+  void display() {
     for (Concept entryConcept in _model.entryConcepts) {
       Entities entryEntities = getEntry(entryConcept.code);
       entryEntities.display(title:entryConcept.code);
     }
   }
 
-  displayEntryJson(String entryConceptCode) {
+  void displayEntryJson(String entryConceptCode) {
     print('==============================================================');
     print('${_model.domain.code} ${_model.code} ${entryConceptCode} Data in JSON');
     print('==============================================================');
@@ -240,7 +240,7 @@ class ModelEntries implements ModelEntriesApi {
     print('');
   }
   
-  displayJson() {
+  void displayJson() {
     print('==============================================================');
     print('${_model.domain.code} ${_model.code} Data in JSON');
     print('==============================================================');

@@ -15,10 +15,10 @@ abstract class ProjectGen extends ConceptEntity<Project> {
   } 
   
   String get name => getAttribute("name"); 
-  set name(String a) => setAttribute("name", a); 
+  void set name(String a) { setAttribute("name", a); }
   
   String get description => getAttribute("description"); 
-  set description(String a) => setAttribute("description", a); 
+  void set description(String a) { setAttribute("description", a); }
   
   Project newEntity() => new Project(concept);
   Projects newEntities() => new Projects(concept);

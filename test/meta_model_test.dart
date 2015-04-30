@@ -83,7 +83,7 @@ ModelEntries createModelData(Model model) {
   return entries;
 }
 
-testModelData(Model model) {
+void testModelData(Model model) {
   ModelEntries entries;
   group('Testing Model Data:', () {
     setUp(() {

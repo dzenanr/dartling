@@ -9,14 +9,14 @@ class TypesApp {
     new EntitiesTableWc(this, model.types);
   }
   
-  _load(TypesEntries model) {
+  void _load(TypesEntries model) {
     String json = window.localStorage['dartling_types_data'];
     if (json != null && model.isEmpty) {
       model.fromJson(json);
     }
   }
   
-  save() {
+  void save() {
     window.localStorage['dartling_types_data'] = model.toJson();
   }
 }
@@ -32,7 +32,7 @@ class EntitiesTableWc {
     entityTable = new EntityTable(entitiesTable, entities);  
   }
   
-  save() {
+  void save() {
     app.save();
   }
 }

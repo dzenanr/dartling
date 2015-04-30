@@ -15,28 +15,28 @@ abstract class CarGen extends ConceptEntity<Car> {
   } 
  
   Brand get brand => getParent("brand"); 
-  set brand(Brand p) => setParent("brand", p); 
+  void set brand(Brand p) { setParent("brand", p); }
   
   Parking get parking => getParent("parking"); 
-  set parking(Parking p) => setParent("parking", p); 
+  void set parking(Parking p) { setParent("parking", p); }
   
   String get orientation => getAttribute("orientation"); 
-  set orientation(String a) => setAttribute("orientation", a); 
+  void set orientation(String a) { setAttribute("orientation", a); }
   
   int get startRow => getAttribute("startRow"); 
-  set startRow(int a) => setAttribute("startRow", a); 
+  void set startRow(int a) { setAttribute("startRow", a); }
   
   int get startColumn => getAttribute("startColumn"); 
-  set startColumn(int a) => setAttribute("startColumn", a); 
+  void set startColumn(int a) { setAttribute("startColumn", a); }
   
   int get currentRow => getAttribute("currentRow"); 
-  set currentRow(int a) => setAttribute("currentRow", a); 
+  void set currentRow(int a) { setAttribute("currentRow", a); }
   
   int get currentColumn => getAttribute("currentColumn"); 
-  set currentColumn(int a) => setAttribute("currentColumn", a); 
+  void set currentColumn(int a) { setAttribute("currentColumn", a); }
   
   bool get selected => getAttribute("selected"); 
-  set selected(bool a) => setAttribute("selected", a); 
+  void set selected(bool a) { setAttribute("selected", a); }
   
   Car newEntity() => new Car(concept); 
   Cars newEntities() => new Cars(concept); 

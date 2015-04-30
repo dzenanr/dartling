@@ -2,7 +2,7 @@ import "package:test/test.dart";
 import "package:dartling/dartling.dart"; 
 import 'category_links.dart';
  
-testCategoryLinksCategories( 
+void testCategoryLinksCategories( 
     CategoryDomain categoryDomain, LinksModel linksModel, Categories categories) { 
   DomainSession session; 
   group("Testing Category.Links.Category", () { 
@@ -483,7 +483,7 @@ class CategoryReaction implements ActionReactionApi {
   bool reactedOnAdd    = false; 
   bool reactedOnUpdate = false; 
  
-  react(BasicAction action) { 
+  void react(BasicAction action) { 
     if (action is EntitiesAction) { 
       reactedOnAdd = true; 
     } else if (action is EntityAction) { 

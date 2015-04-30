@@ -7,19 +7,19 @@ class MvcModel extends MvcEntries {
  
   MvcModel(Model model) : super(model); 
  
-  fromJsonToTaskEntry() { 
+  void fromJsonToTaskEntry() { 
     fromJsonToEntry(todoMvcTaskEntry); 
   } 
  
-  fromJsonToModel() { 
+  void fromJsonToModel() { 
     fromJson(todoMvcModel); 
   } 
  
-  init() { 
+  void init() { 
     initTasks(); 
   } 
  
-  initTasks() { 
+  void initTasks() { 
     var task1 = new Task(tasks.concept); 
       task1.title = 'distance'; 
       task1.completed = true;  

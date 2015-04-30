@@ -7,34 +7,34 @@ class LinksModel extends LinksEntries {
  
   LinksModel(Model model) : super(model); 
  
-  fromJsonToMemberEntry() { 
+  void fromJsonToMemberEntry() { 
     fromJsonToEntry(categoryLinksMemberEntry); 
   } 
  
-  fromJsonToCategoryEntry() { 
+  void fromJsonToCategoryEntry() { 
     fromJsonToEntry(categoryLinksCategoryEntry); 
   } 
  
-  fromJsonToCommentEntry() { 
+  void fromJsonToCommentEntry() { 
     fromJsonToEntry(categoryLinksCommentEntry); 
   } 
  
-  fromJsonToQuestionEntry() { 
+  void fromJsonToQuestionEntry() { 
     fromJsonToEntry(categoryLinksQuestionEntry); 
   } 
  
-  fromJsonToModel() { 
+  void fromJsonToModel() { 
     fromJson(categoryLinksModel); 
   } 
  
-  init() { 
+  void init() { 
     initCategories(); 
     initMembers(); 
     initComments(); 
     initQuestions(); 
   } 
  
-  initMembers() { 
+  void initMembers() { 
     var member1 = new Member(members.concept); 
     member1.email = "sara@rodriguez.com"; 
     member1.firstName = "tall"; 
@@ -121,7 +121,7 @@ class LinksModel extends LinksEntries {
  
   } 
  
-  initCategories() { 
+  void initCategories() { 
     var category1 = new Category(categories.concept); 
     category1.name = "web"; 
     category1.description = "email"; 
@@ -202,7 +202,7 @@ class LinksModel extends LinksEntries {
  
   } 
  
-  initComments() { 
+  void initComments() { 
     var comment1 = new Comment(comments.concept); 
     comment1.text = "hat"; 
     comment1.source = "east"; 
@@ -223,7 +223,7 @@ class LinksModel extends LinksEntries {
  
   } 
  
-  initQuestions() { 
+  void initQuestions() { 
     var question1 = new Question(questions.concept); 
     question1.type = "observation"; 
     question1.text = "video"; 

@@ -28,7 +28,7 @@ class Todos implements ActionReactionApi {
 
   Iterator<Todo> get iterator => _todoList.iterator;
 
-  add(Task task) {
+  void add(Task task) {
     var todo = new Todo(_todoApp, task);
     _todoList.add(todo);
     _todoElements.nodes.add(todo.element);
@@ -43,7 +43,7 @@ class Todos implements ActionReactionApi {
     return null;
   }
 
-  _complete(Task task) {
+  void _complete(Task task) {
     var todo = _find(task);
     if (todo != null) {
       todo.complete(task.completed);
@@ -51,14 +51,14 @@ class Todos implements ActionReactionApi {
     }
   }
 
-  _retitle(Task task) {
+  void _retitle(Task task) {
     var todo = _find(task);
     if (todo != null) {
       todo.retitle(task.title);
     }
   }
 
-  _remove(Task task) {
+  void _remove(Task task) {
     var todo = _find(task);
     if (todo != null) {
       _todoList.remove(todo);
@@ -66,7 +66,7 @@ class Todos implements ActionReactionApi {
     }
   }
 
-  react(ActionApi action) {
+  void react(ActionApi action) {
     updateTodo(SetAttributeAction action) {
       if (action.property == 'completed') {
         _complete(action.entity);

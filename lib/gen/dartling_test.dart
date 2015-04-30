@@ -13,13 +13,13 @@ String genDartlingGen(Model model) {
        '${model.codeLowerUnderscore}.dart"; \n';
   sc = '${sc} \n';
 
-  sc = '${sc}genCode(Repository repository) { \n';
+  sc = '${sc}void genCode(Repository repository) { \n';
   sc = '${sc}  repository.gen("${domain.codeLowerUnderscore}_'
        '${model.codeLowerUnderscore}"); \n';
   sc = '${sc}} \n';
   sc = '${sc} \n';
 
-  sc = '${sc}initData(Repository repository) { \n';
+  sc = '${sc}void initData(Repository repository) { \n';
   sc = '${sc}   var ${domain.codeFirstLetterLower}Domain = '
        'repository.getDomainModels("${domain.code}"); \n';
   sc = '${sc}   var ${model.codeFirstLetterLower}Model = '
@@ -63,7 +63,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   var Entities = '${entryConcept.codePluralFirstLetterUpper}';
   //var entityConcept = '${entities}.concept';
 
-  sc = '${sc}test${domain.code}${model.code}'
+  sc = '${sc}void test${domain.code}${model.code}'
        '${entryConcept.codePluralFirstLetterUpper}( \n';
   sc = '${sc}    ${domain.code}Domain ${domain.codeFirstLetterLower}Domain, '
        '${model.code}Model ${model.codeFirstLetterLower}Model, '
@@ -759,7 +759,7 @@ String genDartlingTest(Repo repo, Model model, Concept entryConcept) {
   sc = '${sc}  bool reactedOnAdd    = false; \n'; 
   sc = '${sc}  bool reactedOnUpdate = false; \n';
   sc = '${sc} \n';
-  sc = '${sc}  react(BasicAction action) { \n';
+  sc = '${sc}  void react(BasicAction action) { \n';
   sc = '${sc}    if (action is EntitiesAction) { \n';  
   sc = '${sc}      reactedOnAdd = true; \n';
   sc = '${sc}    } else if (action is EntityAction) { \n';

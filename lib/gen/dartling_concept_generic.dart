@@ -92,20 +92,20 @@ String genConceptGen(Concept concept, String library) {
     Concept destinationConcept = parent.destinationConcept;
     sc = '${sc}  Reference get ${parent.code}Reference => '
          'getReference("${parent.code}"); \n ';
-    sc = '${sc} set ${parent.code}Reference(Reference reference) => '
-         'setReference("${parent.code}", reference); \n ';
+    sc = '${sc} void set ${parent.code}Reference(Reference reference) { '
+         'setReference("${parent.code}", reference); } \n ';
     sc = '${sc} \n';
     sc = '${sc}  ${destinationConcept.code} get ${parent.code} => '
          'getParent("${parent.code}"); \n ';
-    sc = '${sc} set ${parent.code}(${destinationConcept.code} p) => '
-         'setParent("${parent.code}", p); \n ';
+    sc = '${sc} void set ${parent.code}(${destinationConcept.code} p) { '
+         'setParent("${parent.code}", p); } \n ';
     sc = '${sc} \n';
   }
   for (Attribute attribute in concept.attributes) {
     sc = '${sc}  ${attribute.type.base} get ${attribute.code} => '
          'getAttribute("${attribute.code}"); \n ';
-    sc = '${sc} set ${attribute.code}(${attribute.type.base} a) => '
-         'setAttribute("${attribute.code}", a); \n ';
+    sc = '${sc} void set ${attribute.code}(${attribute.type.base} a) { '
+         'setAttribute("${attribute.code}", a); } \n ';
     sc = '${sc} \n';
   }
   for (Child child in concept.children) {

@@ -14,10 +14,10 @@ abstract class TaskGen extends ConceptEntity<Task> {
   } 
  
   String get title => getAttribute("title"); 
-  set title(String a) => setAttribute("title", a); 
+  void set title(String a) { setAttribute("title", a); }
   
   bool get completed => getAttribute("completed"); 
-  set completed(bool a) => setAttribute("completed", a);  
+  void set completed(bool a) { setAttribute("completed", a); } 
   
   Task newEntity() => new Task(concept); 
   Tasks newEntities() => new Tasks(concept); 

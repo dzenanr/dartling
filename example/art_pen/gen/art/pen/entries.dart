@@ -42,7 +42,7 @@ class PenEntries extends ModelEntries {
     return null;
   }
 
-  fromJsonToData() {
+  void fromJsonToData() {
     fromJson(artPenDataJson);
   }
 

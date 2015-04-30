@@ -3,7 +3,7 @@ import 'dart:html';
 import 'game_parking.dart';
 import 'game_parking_app.dart';
 
-initGameData(GameRepo gameRepo) {
+void initGameData(GameRepo gameRepo) {
    var gameModels =
        gameRepo.getDomainModels(GameRepo.gameDomainCode);
 
@@ -12,7 +12,7 @@ initGameData(GameRepo gameRepo) {
    initGameParking(gameParkingEntries);
 }
 
-main() {
+void main() {
   var gameRepo = new GameRepo();
   initGameData(gameRepo);
 

@@ -18,7 +18,7 @@ abstract class KeywordGen extends ConceptEntity<Keyword> {
   } 
  
   String get word => getAttribute("word"); 
-  set word(String a) => setAttribute("word", a); 
+  void set word(String a) { setAttribute("word", a); }
   
   Tags get tags => getChild("tags"); 
   

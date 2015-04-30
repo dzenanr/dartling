@@ -93,7 +93,7 @@ class Board {
       try {
         randomProgram(pen,
             int.parse(artCountInput.value), int.parse(onDartCountInput.value));
-      } on FormatException catch(error) {
+      } on FormatException {
         randomProgram(pen, artCount, randomCommandGenList.length + 1);
       }
     });
@@ -117,7 +117,7 @@ class Board {
         } else {
           demo(pen, int.parse(programSelect.value));
         }
-      } on FormatException catch(error) {
+      } on FormatException {
         randomExample(pen);
       }
     });
@@ -204,12 +204,12 @@ class Board {
     window.animationFrame.then(gameLoop);
   }
 
-  gameLoop(num delta) {
+  void gameLoop(num delta) {
     draw();
     window.animationFrame.then(gameLoop);
   }
 
-  _init() {
+  void _init() {
     colorSelect.value = pen.color;
     widthSelect.value = pen.width.toString();
     downCheckbox.checked = pen.down;
@@ -229,7 +229,7 @@ class Board {
     forwardInput.value = forwardSteps.toString();
   }
 
-  clear() {
+  void clear() {
     context.beginPath();
     context.fillStyle = colors['white'];
     context.lineWidth = pen.width;
@@ -241,7 +241,7 @@ class Board {
     context.closePath();
   }
 
-  draw() {
+  void draw() {
     clear();
 
     for (Segment segment in pen.segments) {

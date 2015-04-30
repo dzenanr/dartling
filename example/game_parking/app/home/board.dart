@@ -49,7 +49,7 @@ class Board {
         (t) => redraw());
   }
 
-  set currentArea(Area area) {
+  void set currentArea(Area area) {
     _currentArea = area;
     currentParking = area.parkings.getParkingWithinArea(1);
     actionPanel.displayCurrentArea();
@@ -59,7 +59,7 @@ class Board {
     return _currentArea;
   }
 
-  set currentParking(Parking parking) {
+  void set currentParking(Parking parking) {
     _currentParking = parking;
     actionPanel.displayCurrentParking();
   }
@@ -68,12 +68,12 @@ class Board {
     return _currentParking;
   }
 
-  redraw() {
+  void redraw() {
     clear();
     displayCars();
   }
 
-  restart() {
+  void restart() {
     for (Car car in currentParking.cars) {
       car.currentRow = car.startRow;
       car.currentColumn = car.startColumn;
@@ -81,11 +81,11 @@ class Board {
     }
   }
 
-  clear() {
+  void clear() {
     context.clearRect(0, 0, width, height);
   }
 
-  border() {
+  void border() {
     context.beginPath();
     context.rect(0, 0, width, height);
     context.lineWidth = LINE_WIDTH;
@@ -94,13 +94,13 @@ class Board {
     context.closePath();
   }
 
-  displayCars() {
+  void displayCars() {
     for (Car car in currentParking.cars) {
       displayCar(car);
     }
   }
 
-  displayCar(Car car) {
+  void displayCar(Car car) {
     context.beginPath();
     int row = car.currentRow;
     int column = car.currentColumn;
@@ -146,7 +146,7 @@ class Board {
     return null;
   }
 
-  onMouseDown(MouseEvent e) {
+  void onMouseDown(MouseEvent e) {
     int row = e.offset.y ~/ cellHeight;
     int column = e.offset.x ~/ cellWidth;
     Car car = getCarInCell(row, column);

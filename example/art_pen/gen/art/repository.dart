@@ -11,7 +11,7 @@ class ArtRepo extends Repo {
     _initArtDomain();
   }
 
-  _initArtDomain() {
+  void _initArtDomain() {
     var artDomain = new Domain(artDomainCode);
     domains.add(artDomain);
     add(new ArtModels(artDomain));

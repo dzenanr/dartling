@@ -22,16 +22,16 @@ abstract class CategoryGen extends ConceptEntity<Category> {
   } 
  
   Reference get categoryReference => getReference("category"); 
-  set categoryReference(Reference reference) => setReference("category", reference); 
+  void set categoryReference(Reference reference) { setReference("category", reference); } 
   
   Category get category => getParent("category"); 
-  set category(Category p) => setParent("category", p); 
+  void set category(Category p) { setParent("category", p); }
   
   String get name => getAttribute("name"); 
-  set name(String a) => setAttribute("name", a); 
+  void set name(String a) { setAttribute("name", a); }
   
   String get namePath => getAttribute("namePath"); 
-  set namePath(String a) => setAttribute("namePath", a); 
+  void set namePath(String a) { setAttribute("namePath", a); } 
   
   Categories get categories => getChild("categories"); 
   

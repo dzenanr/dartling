@@ -37,12 +37,12 @@ abstract class EntitiesApi<E extends EntityApi<E>> implements Iterable<E> {
   bool postRemove(E entity);
   
   String toJson();
-  fromJson(String entitiesJson);
+  void fromJson(String entitiesJson);
   
-  integrate(EntitiesApi<E> fromEntities);
-  integrateAdd(EntitiesApi<E> addEntities);
-  integrateSet(EntitiesApi<E> setEntities);
-  integrateRemove(EntitiesApi<E> removeEntities);
+  void integrate(EntitiesApi<E> fromEntities);
+  void integrateAdd(EntitiesApi<E> addEntities);
+  void integrateSet(EntitiesApi<E> setEntities);
+  void integrateRemove(EntitiesApi<E> removeEntities);
   
 }
 
@@ -126,7 +126,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   List<E> get internalList => _entityList;
   // set for Polymer only:
   // entities.internalList = toObservable(entities.internalList);
-  set internalList(List<E> observableList) => _entityList = observableList;
+  void set internalList(List<E> observableList) { _entityList = observableList; }
 
 
   E firstWhereAttribute(String code, Object attribute) {
@@ -399,7 +399,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     return entityList;
   }
   
-  fromJson(String entitiesJson) {
+  void fromJson(String entitiesJson) {
     List<Map<String, Object>> entitiesList = JSON.decode(entitiesJson);
     fromJsonList(entitiesList);
   }
@@ -407,7 +407,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   /**
    * Loads entities without validations to this, which must be empty.
    */
-  fromJsonList(List<Map<String, Object>> entitiesList, 
+  void fromJsonList(List<Map<String, Object>> entitiesList, 
                [ConceptEntity internalParent]) {
     if (concept == null) {
       throw new ConceptError('entities concept does not exist.');
@@ -792,7 +792,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     return allSet;
   }
   
-  integrate(Entities<E> fromEntities) {
+  void integrate(Entities<E> fromEntities) {
     for (var entity in toList()) {
       var fromEntity = fromEntities.singleWhereOid(entity.oid);
       if (fromEntity == null) {
@@ -812,7 +812,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     } 
   }
   
-  integrateAdd(Entities<E> addEntities) {
+  void integrateAdd(Entities<E> addEntities) {
     for (var addEntity in addEntities) {
       var entity = singleWhereOid(addEntity.oid);
       if (entity == null) {
@@ -821,7 +821,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     } 
   }
   
-  integrateSet(Entities<E> setEntities) {
+  void integrateSet(Entities<E> setEntities) {
     for (var setEntity in setEntities) {
       var entity = singleWhereOid(setEntity.oid);
       if (entity != null) {
@@ -833,7 +833,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     } 
   }
   
-  integrateRemove(Entities<E> removeEntities) {
+  void integrateRemove(Entities<E> removeEntities) {
     for (var removeEntity in removeEntities) {
       var entity = singleWhereOid(removeEntity.oid);
       if (entity != null) {
@@ -845,7 +845,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   /**
   * Displays (prints) a title, then entities.
   */
-  display({String title:'Entities', String prefix:'', bool withOid:true, 
+  void display({String title:'Entities', String prefix:'', bool withOid:true, 
     bool withChildren:true, bool withInternalChildren:true}) {
     var s = prefix;
     if (!_concept.entry || (_concept.entry && _concept.parents.length > 0)) {
@@ -864,19 +864,19 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     }
   }
 
-  displayOidMap() {
+  void displayOidMap() {
     _oidEntityMap.forEach((k,v) {
       print('oid $k: $v');
     });
   }
 
-  displayCodeMap() {
+  void displayCodeMap() {
     _codeEntityMap.forEach((k,v) {
       print('code $k: $v');
     });
   }
 
-  displayIdMap() {
+  void displayIdMap() {
     _idEntityMap.forEach((k,v) {
       print('id $k: $v');
     });

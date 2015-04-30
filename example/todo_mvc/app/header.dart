@@ -39,26 +39,26 @@ class Header implements PastReactionApi {
     });
   }
 
-  updateDisplay() {
+  void updateDisplay() {
     var display = _tasks.length == 0 ? 'none' : 'block';
     _completeAll.style.display = display;
     var completedLength = _tasks.completed.length;
     _completeAll.checked = (completedLength == _tasks.length);
   }
 
-  reactCannotUndo() {
+  void reactCannotUndo() {
     _undo.style.display = 'none';
   }
 
-  reactCanUndo() {
+  void reactCanUndo() {
     _undo.style.display = 'block';
   }
 
-  reactCanRedo() {
+  void reactCanRedo() {
     _redo.style.display = 'block';
   }
 
-  reactCannotRedo() {
+  void reactCannotRedo() {
     _redo.style.display = 'none';
   }
 }

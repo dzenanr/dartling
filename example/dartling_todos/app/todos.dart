@@ -21,13 +21,13 @@ class Todos {
     return null;
   }
 
-  add(Task task) {
+  void add(Task task) {
     var todo = new Todo(_todoApp, task);
     _todoList.add(todo);
     _todoElements.nodes.add(todo.create());
   }
 
-  remove(Task task) {
+  void remove(Task task) {
     var todo = _find(task);
     if (todo != null) {
       _todoList.remove(todo);
@@ -35,21 +35,21 @@ class Todos {
     }
   }
 
-  complete(Task task) {
+  void complete(Task task) {
     var todo = _find(task);
     if (todo != null) {
       todo.complete(task.completed);
     }
   }
 
-  retitle(Task task) {
+  void retitle(Task task) {
     var todo = _find(task);
     if (todo != null) {
       todo.retitle(task.title);
     }
   }
 
-  updateFilter() {
+  void updateFilter() {
     switch(window.location.hash) {
       case '#/left':
         showLeft();
@@ -63,14 +63,14 @@ class Todos {
     }
   }
 
-  showAll() {
+  void showAll() {
     _setSelectedFilter(_allElements);
     for (Todo todo in _todoList) {
       todo.visible = true;
     }
   }
 
-  showLeft() {
+  void showLeft() {
     _setSelectedFilter(_leftElements);
     for (Todo todo in _todoList) {
       todo.visible = todo.task.left;
@@ -84,7 +84,7 @@ class Todos {
     }
   }
 
-  _setSelectedFilter(Element e) {
+  void _setSelectedFilter(Element e) {
     _allElements.classes.remove('selected');
     _leftElements.classes.remove('selected');
     _completedElements.classes.remove('selected');

@@ -1,7 +1,7 @@
 import "package:test/test.dart"; 
 import 'default_project.dart';
 
-testDefaultProjectProject( 
+void testDefaultProjectProject( 
     Repository repository, String domainCode, String modelCode) { 
   var domain; 
   var model; 

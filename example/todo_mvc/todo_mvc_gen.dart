@@ -1,10 +1,10 @@
 import 'todo_mvc.dart';
  
-genCode(Repository repository) { 
+void genCode(Repository repository) { 
   repository.gen("todo_mvc"); 
 } 
  
-initData(Repository repository) { 
+void initData(Repository repository) { 
    var todoDomain = repository.getDomainModels("Todo"); 
    var mvcModel = todoDomain.getModelEntries("Mvc"); 
    mvcModel.init(); 

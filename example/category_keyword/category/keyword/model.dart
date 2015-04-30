@@ -7,24 +7,24 @@ class KeywordModel extends KeywordEntries {
  
   KeywordModel(Model model) : super(model); 
  
-  fromJsonToCategoryEntry() { 
+  void fromJsonToCategoryEntry() { 
     fromJsonToEntry(categoryKeywordCategoryEntry); 
   } 
  
-  fromJsonToKeywordEntry() { 
+  void fromJsonToKeywordEntry() { 
     fromJsonToEntry(categoryKeywordKeywordEntry); 
   } 
  
-  fromJsonToModel() { 
+  void fromJsonToModel() { 
     fromJson(categoryKeywordModel); 
   } 
  
-  init() { 
+  void init() { 
     initCategories(); 
     initKeywords(); 
   } 
  
-  initCategories() { 
+  void initCategories() { 
     var category1 = new Category(categories.concept); 
     category1.name = "drink"; 
     category1.namePath = "photo"; 
@@ -78,7 +78,7 @@ class KeywordModel extends KeywordEntries {
  
   } 
  
-  initKeywords() { 
+  void initKeywords() { 
     var keyword1 = new Keyword(keywords.concept); 
     keyword1.word = "hot"; 
     keywords.add(keyword1); 

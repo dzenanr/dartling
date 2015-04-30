@@ -2,7 +2,7 @@ import "package:test/test.dart";
 import "package:dartling/dartling.dart"; 
 import 'default_project.dart';
  
-testDefaultProjectProjects( 
+void testDefaultProjectProjects( 
     DefaultDomain defaultDomain, ProjectModel projectModel, Projects projects) { 
   DomainSession session; 
   group("Testing Default.Project.Project", () { 
@@ -458,7 +458,7 @@ class ProjectReaction implements ActionReactionApi {
   bool reactedOnAdd    = false; 
   bool reactedOnUpdate = false; 
  
-  react(BasicAction action) { 
+  void react(BasicAction action) { 
     if (action is EntitiesAction) { 
       reactedOnAdd = true; 
     } else if (action is EntityAction) { 

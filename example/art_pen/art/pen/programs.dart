@@ -77,7 +77,7 @@ var randomCommandGenList = ['colorRandom',
                             'moveRandom'
                            ];
 
-randomProgram(Pen pen, [int artCount = 4, int commandsCount = 32]) {
+void randomProgram(Pen pen, [int artCount = 4, int commandsCount = 32]) {
   var program = '';
   var commandIndex;
   var command;
@@ -108,7 +108,7 @@ randomProgram(Pen pen, [int artCount = 4, int commandsCount = 32]) {
   pen.interpret(program);
 }
 
-randomExample(Pen pen, {int artCount: 4}) {
+void randomExample(Pen pen, {int artCount: 4}) {
   var commands =
     'colorRandom; '
     'widthRandom; '
@@ -141,7 +141,7 @@ randomExample(Pen pen, {int artCount: 4}) {
   pen.interpret(commands);
 }
 
-demo(Pen pen, int demo) {
+void demo(Pen pen, int demo) {
   switch(demo) {
     case 1:
       demo1(pen);
@@ -235,7 +235,7 @@ List sequence(int count) {
   return s;
 }
 
-demo1(Pen pen) {
+void demo1(Pen pen) {
   pen.erase();
   pen.color = 'red';
   pen.move(45, 80, 1);
@@ -248,7 +248,7 @@ demo1(Pen pen) {
   pen.art(4);
 }
 
-demo2(Pen pen) {
+void demo2(Pen pen) {
   pen.erase();
   pen.color = 'red';
   pen.move(90, 100, 0);
@@ -262,7 +262,7 @@ demo2(Pen pen) {
   pen.art(3);
 }
 
-demo3(Pen pen) {
+void demo3(Pen pen) {
   pen.erase();
   pen.color = 'red';
   pen.move(33, 100, 0);
@@ -276,7 +276,7 @@ demo3(Pen pen) {
   pen.art(6);
 }
 
-demo4(Pen pen) {
+void demo4(Pen pen) {
   pen.erase();
   pen.color = 'red';
   pen.move(33, 100, 2);
@@ -292,7 +292,7 @@ demo4(Pen pen) {
   pen.art(8);
 }
 
-demo5(Pen pen) {
+void demo5(Pen pen) {
   pen.erase();
   pen.color = 'blue';
   pen.left(90);
@@ -331,7 +331,7 @@ demo5(Pen pen) {
   pen.left(90);
 }
 
-demo6(Pen pen) {
+void demo6(Pen pen) {
   var colorList = ['blue', 'gray', 'red', 'yellow'];
   multicolorSquare(var size) {
     for (var color in colorList) {
@@ -351,7 +351,7 @@ demo6(Pen pen) {
   }
 }
 
-demo7(Pen pen) {
+void demo7(Pen pen) {
   f1(var length, var depth) {
     if (depth == 0) {
       pen.forward(length);
@@ -371,7 +371,7 @@ demo7(Pen pen) {
   //f1(500, 4);
 }
 
-demo8(Pen pen) {
+void demo8(Pen pen) {
   f2(var length, var depth) {
     if (depth == 0) {
       pen.move(0, length);
@@ -389,7 +389,7 @@ demo8(Pen pen) {
   f2(240, 4);
 }
 
-demo9(Pen pen) {
+void demo9(Pen pen) {
   tri(num size) {
     pen.forward(size);
     pen.right(120);
@@ -407,7 +407,7 @@ demo9(Pen pen) {
   }
 }
 
-demo10(Pen pen) {
+void demo10(Pen pen) {
   pen.erase();
   var max = 500;
   for (var i = 0; i < max; i++) {
@@ -418,7 +418,7 @@ demo10(Pen pen) {
   }
 }
 
-demo11a(Pen pen) {
+void demo11a(Pen pen) {
   f1() {
     for (var i in [1,2,3,4,5,6]) {
       pen.forward(1);
@@ -464,7 +464,7 @@ demo11a(Pen pen) {
   f3();
 }
 
-demo11(Pen pen) {
+void demo11(Pen pen) {
   f1() {
     for (var i = 0; i < 6; i++) {
       pen.go(1, angle: 1, repeat: 359);
@@ -498,7 +498,7 @@ demo11(Pen pen) {
   f3();
 }
 
-demo12(Pen pen) {
+void demo12(Pen pen) {
   f1() {
     for (var i = 0; i < 4; i++) {
       var j = 1;
@@ -514,7 +514,7 @@ demo12(Pen pen) {
   }
 }
 
-demo13(Pen pen) {
+void demo13(Pen pen) {
   zig(int level) {
     pen.forward(level * 30);
     var l = level - 1;
@@ -533,7 +533,7 @@ demo13(Pen pen) {
   zig(6);
 }
 
-demo14(Pen pen) {
+void demo14(Pen pen) {
   square() {
     pen.move(90, 100, 3);
   }
@@ -546,7 +546,7 @@ demo14(Pen pen) {
   }
 }
 
-demo15(Pen pen) {
+void demo15(Pen pen) {
   star() {
     pen.go(100, angle: 252, repeat: 4);
   }
@@ -559,7 +559,7 @@ demo15(Pen pen) {
   }
 }
 
-demo16(Pen pen) {
+void demo16(Pen pen) {
   var s = sequence(11);
   pen.erase();
   pen.down = false;
@@ -574,7 +574,7 @@ demo16(Pen pen) {
   }
 }
 
-demo17(Pen pen) {
+void demo17(Pen pen) {
   var s = sequence(11);
   pen.erase();
   pen.down = false;
@@ -589,7 +589,7 @@ demo17(Pen pen) {
   }
 }
 
-demo18(Pen pen) {
+void demo18(Pen pen) {
   var s = sequence(10);
   pen.erase();
   pen.down = false;
@@ -607,7 +607,7 @@ demo18(Pen pen) {
   }
 }
 
-demo19(Pen pen) {
+void demo19(Pen pen) {
   var s = sequence(10);
   pen.erase();
   pen.down = false;
@@ -624,7 +624,7 @@ demo19(Pen pen) {
   }
 }
 
-demo20(Pen pen) {
+void demo20(Pen pen) {
   var s = sequence(10);
   pen.erase();
   pen.down = false;
@@ -640,7 +640,7 @@ demo20(Pen pen) {
   }
 }
 
-demo21(Pen pen) {
+void demo21(Pen pen) {
   var s = sequence(10);
   pen.erase();
   pen.down = false;
@@ -655,20 +655,4 @@ demo21(Pen pen) {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

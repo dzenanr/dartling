@@ -11,13 +11,13 @@ abstract class SegmentGen extends ConceptEntity<Segment> {
   }
 
   bool get visible => getAttribute("visible");
-  set visible(bool a) => setAttribute("visible", a);
+  void set visible(bool a) { setAttribute("visible", a); }
 
   String get color => getAttribute("color");
-  set color(String a) => setAttribute("color", a);
+  void set color(String a) { setAttribute("color", a); }
 
   int get width => getAttribute("width");
-  set width(int a) => setAttribute("width", a);
+  void set width(int a) { setAttribute("width", a); }
 
   Lines get lines => getChild("lines");
 

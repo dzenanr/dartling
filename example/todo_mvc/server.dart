@@ -12,7 +12,7 @@ const int PORT = 8080;
 
 Tasks serverTasks;
 
-_integrateDataFromClient(String json) {
+void _integrateDataFromClient(String json) {
   var clientTasks = new Tasks(serverTasks.concept);
   clientTasks.fromJson(json);
   for (var serverTask in serverTasks.toList()) {
@@ -34,7 +34,7 @@ _integrateDataFromClient(String json) {
   }    
 }
 
-start() {
+void start() {
   HttpServer.bind(HOST, PORT)
     .then((server) {
       server.listen((HttpRequest request) {

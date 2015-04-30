@@ -58,11 +58,11 @@ class Todo {
     return _todo;
   }
 
-  remove() {
+  void remove() {
     _todo.remove();
   }
 
-  complete(bool completed) {
+  void complete(bool completed) {
     _completed.checked = completed;
     if (completed) {
       _todo.classes.add('completed');
@@ -71,12 +71,12 @@ class Todo {
     }
   }
 
-  retitle(String newTitle) {
+  void retitle(String newTitle) {
     _title.text = newTitle;
     _todo.classes.remove('editing');
   }
 
-  set visible(bool visible) {
+  void set visible(bool visible) {
     _todo.style.display = visible ? 'block' : 'none';
   }
 

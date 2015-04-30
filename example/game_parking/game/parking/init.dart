@@ -2,12 +2,12 @@ part of game_parking;
 
 // repo/code/specific/game/parking/init.dart
 
-initGameParking(var entries) {
+void initGameParking(var entries) {
   _initBrands(entries);
   _initAreas(entries);
 }
 
-_initBrands(var entries) {
+void _initBrands(var entries) {
   Brand carBrandA = new Brand.withId(entries.brands.concept, 'A');
   carBrandA.length = 2;
   carBrandA.colorName = 'green';
@@ -153,7 +153,7 @@ _initBrands(var entries) {
   entries.brands.add(carBrandX);
 }
 
-_initAreas(var entries) {
+void _initAreas(var entries) {
   Area area1 = new Area.withId(entries.areas.concept, 'beginner');
   entries.areas.add(area1);
   _initParkingsOfBeginnerArea(entries, area1);
@@ -163,7 +163,7 @@ _initAreas(var entries) {
   _initParkingsOfIntermediateArea(entries, area2);
 }
 
-_initParkingsOfBeginnerArea(var entries, Area area) {
+void _initParkingsOfBeginnerArea(var entries, Area area) {
   assert(area != null);
   assert(area.parkings != null);
   assert(entries.parkings != null);
@@ -178,7 +178,7 @@ _initParkingsOfBeginnerArea(var entries, Area area) {
   _initCarsOfParkingTwoOfBeginnerArea(entries, parking2);
 }
 
-_initParkingsOfIntermediateArea(var entries, Area area) {
+void _initParkingsOfIntermediateArea(var entries, Area area) {
   assert(area != null);
   assert(area.parkings != null);
   assert(entries.parkings != null);
@@ -193,7 +193,7 @@ _initParkingsOfIntermediateArea(var entries, Area area) {
   _initCarsOfParkingTwoOfIntermediateArea(entries, parking2);
 }
 
-_initCarsOfParkingOneOfBeginnerArea(var entries, Parking parking) {
+void _initCarsOfParkingOneOfBeginnerArea(var entries, Parking parking) {
   Concept carConcept = entries.getConcept('Car');
   Brand carBrandA = entries.brands.getBrand('A');
   if (carBrandA != null) {

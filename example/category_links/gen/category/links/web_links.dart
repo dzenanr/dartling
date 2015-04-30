@@ -15,28 +15,28 @@ abstract class WebLinkGen extends ConceptEntity<WebLink> {
   } 
  
   Reference get categoryReference => getReference("category"); 
-  set categoryReference(Reference reference) => setReference("category", reference); 
+  void set categoryReference(Reference reference) { setReference("category", reference); }
   
   Category get category => getParent("category"); 
-  set category(Category p) => setParent("category", p); 
+  void set category(Category p) { setParent("category", p); }
   
   String get subject => getAttribute("subject"); 
-  set subject(String a) => setAttribute("subject", a); 
+  void set subject(String a) { setAttribute("subject", a); }
   
   Uri get url => getAttribute("url"); 
-  set url(Uri a) => setAttribute("url", a); 
+  void set url(Uri a) { setAttribute("url", a); }
   
   String get description => getAttribute("description"); 
-  set description(String a) => setAttribute("description", a); 
+  void set description(String a) { setAttribute("description", a); }
   
   DateTime get createdOn => getAttribute("createdOn"); 
-  set createdOn(DateTime a) => setAttribute("createdOn", a); 
+  void set createdOn(DateTime a) { setAttribute("createdOn", a); }
   
   DateTime get updatedOn => getAttribute("updatedOn"); 
-  set updatedOn(DateTime a) => setAttribute("updatedOn", a); 
+  void set updatedOn(DateTime a) { setAttribute("updatedOn", a); }
   
   bool get approved => getAttribute("approved"); 
-  set approved(bool a) => setAttribute("approved", a); 
+  void set approved(bool a) { setAttribute("approved", a); }
   
   WebLink newEntity() => new WebLink(concept); 
   WebLinks newEntities() => new WebLinks(concept); 

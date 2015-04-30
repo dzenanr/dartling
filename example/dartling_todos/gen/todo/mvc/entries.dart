@@ -36,7 +36,7 @@ class MvcEntries extends ModelEntries {
     return null;
   }
 
-  fromJsonToData() {
+  void fromJsonToData() {
     fromJson(todoMvcDataJson);
   }
 

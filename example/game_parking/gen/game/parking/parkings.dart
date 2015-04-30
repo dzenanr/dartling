@@ -19,10 +19,10 @@ abstract class ParkingGen extends ConceptEntity<Parking> {
   } 
  
   Area get area => getParent("area"); 
-  set area(Area p) => setParent("area", p); 
+  void set area(Area p) { setParent("area", p); }
   
   int get number => getAttribute("number"); 
-  set number(int a) => setAttribute("number", a); 
+  void set number(int a) { setAttribute("number", a); }
   
   Cars get cars => getChild("cars"); 
   

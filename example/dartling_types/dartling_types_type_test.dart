@@ -3,7 +3,7 @@ import "package:dartling/dartling.dart";
  
 import 'dartling_types.dart' as dt;
  
-testDartlingTypesTypes( 
+void testDartlingTypesTypes( 
     dt.DartlingDomain dartlingDomain, dt.TypesModel typesModel, dt.Types types) { 
   DomainSession session; 
   group("Testing Dartling.Types.Type", () { 
@@ -487,7 +487,7 @@ class TypeReaction implements ActionReactionApi {
   bool reactedOnAdd    = false; 
   bool reactedOnUpdate = false; 
  
-  react(BasicAction action) { 
+  void react(BasicAction action) { 
     if (action is EntitiesAction) { 
       reactedOnAdd = true; 
     } else if (action is EntityAction) { 

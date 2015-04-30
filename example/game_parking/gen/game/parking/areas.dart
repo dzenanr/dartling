@@ -18,7 +18,7 @@ abstract class AreaGen extends ConceptEntity<Area> {
   } 
  
   String get name => getAttribute("name"); 
-  set name(String a) => setAttribute("name", a); 
+  void set name(String a) { setAttribute("name", a); }
   
   Parkings get parkings => getChild("parkings"); 
   

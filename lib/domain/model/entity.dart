@@ -25,7 +25,7 @@ abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
 
   E copy();
   String toJson();
-  fromJson(String entityJson);
+  void fromJson(String entityJson);
 
 }
 
@@ -361,7 +361,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   }
 
   Reference getReference(String name) => _referenceMap[name];
-  setReference(String name, Reference reference) {
+  void setReference(String name, Reference reference) {
     if (getParent(name) == null) {
       _referenceMap[name] = reference;
     }
@@ -671,7 +671,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   /**
    * Displays (prints) an entity with its attributes, parents and children.
    */
-  display({String prefix: '', bool withOid: true, bool withChildren: true, bool
+  void display({String prefix: '', bool withOid: true, bool withChildren: true, bool
       withInternalChildren: true}) {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
@@ -779,7 +779,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     return entityMap;
   }
 
-  fromJson(String entityJson) {
+  void fromJson(String entityJson) {
     Map<String, Object> entityMap = JSON.decode(entityJson);
     fromJsonMap(entityMap);
   }
@@ -787,7 +787,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   /**
    * Loads data from a json map.
    */
-  fromJsonMap(Map<String, Object> entityMap, [ConceptEntity internalParent]) {
+  void fromJsonMap(Map<String, Object> entityMap, [ConceptEntity internalParent]) {
     int timeStamp;
     try {
       var key = entityMap['oid'];
@@ -865,7 +865,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   /**
    * Loads neighbors from a json map.
    */
-  _neighborsFromJsonMap(Map<String, Object> entityMap, [ConceptEntity
+  void _neighborsFromJsonMap(Map<String, Object> entityMap, [ConceptEntity
       internalParent]) {
     for (Child child in concept.children) {
       if (child.internal) {

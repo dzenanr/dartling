@@ -54,7 +54,7 @@ class TodoApp {
     });
   }
 
-  _load() {
+  void _load() {
     String json = window.localStorage['todos'];
     if (json != null) {
       clientTasks.fromJson(json);
@@ -65,11 +65,11 @@ class TodoApp {
     updateDisplay();
   }
 
-  save() {
+  void save() {
     window.localStorage['todos'] = clientTasks.toJson();
   }
   
-  _integrateDataFromServer(String json) {
+  void _integrateDataFromServer(String json) {
     var serverTasks = new Tasks(clientTasks.concept);
     serverTasks.fromJson(json);
     for (var clientTask in clientTasks.toList()) {
@@ -91,12 +91,12 @@ class TodoApp {
     } 
   }
 
-  possibleErrors() {
+  void possibleErrors() {
     _errors.innerHtml = '<p>${clientTasks.errors.toString()}</p>';
     clientTasks.errors.clear();
   }
 
-  updateDisplay() {
+  void updateDisplay() {
     var display = clientTasks.length == 0 ? 'none' : 'block';
     _main.style.display = display;
     _header.updateDisplay();

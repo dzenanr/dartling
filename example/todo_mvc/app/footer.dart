@@ -26,7 +26,7 @@ class Footer {
     });
   }
 
-  updateFilter() {
+  void updateFilter() {
     switch(window.location.hash) {
       case '#/left':
         _showLeft();
@@ -40,35 +40,35 @@ class Footer {
     }
   }
 
-  _showAll() {
+  void _showAll() {
     _setSelectedFilter(_allElements);
     for (Todo todo in _todos) {
       todo.visible = true;
     }
   }
 
-  _showLeft() {
+  void _showLeft() {
     _setSelectedFilter(_leftElements);
     for (Todo todo in _todos) {
       todo.visible = todo.task.left;
     }
   }
 
-  _showCompleted() {
+  void _showCompleted() {
     _setSelectedFilter(_completedElements);
     for (Todo todo in _todos) {
       todo.visible = todo.task.completed;
     }
   }
 
-  _setSelectedFilter(Element e) {
+  void _setSelectedFilter(Element e) {
     _allElements.classes.remove('selected');
     _leftElements.classes.remove('selected');
     _completedElements.classes.remove('selected');
     e.classes.add('selected');
   }
 
-  updateDisplay() {
+  void updateDisplay() {
     var display = _tasks.length == 0 ? 'none' : 'block';
     _footer.style.display = display;
 

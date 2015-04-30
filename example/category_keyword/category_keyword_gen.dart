@@ -1,10 +1,10 @@
 import 'category_keyword.dart';  
  
-genCode(Repository repository) { 
+void genCode(Repository repository) { 
   repository.gen("category_keyword"); 
 } 
  
-initData(Repository repository) { 
+void initData(Repository repository) { 
    var categoryDomain = repository.getDomainModels("Category"); 
    var keywordModel = categoryDomain.getModelEntries("Keyword"); 
    keywordModel.init(); 

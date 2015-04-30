@@ -2,37 +2,37 @@ part of dartling;
 
 abstract class SourceOfActionReactionApi {
 
-  startActionReaction(ActionReactionApi reaction);
-  cancelActionReaction(ActionReactionApi reaction);
+  void startActionReaction(ActionReactionApi reaction);
+  void cancelActionReaction(ActionReactionApi reaction);
 
-  notifyActionReactions(ActionApi action);
+  void notifyActionReactions(ActionApi action);
 
 }
 
 abstract class SourceOfPastReactionApi {
 
-  startPastReaction(PastReactionApi reaction);
-  cancelPastReaction(PastReactionApi reaction);
+  void startPastReaction(PastReactionApi reaction);
+  void cancelPastReaction(PastReactionApi reaction);
 
-  notifyCannotUndo();
-  notifyCanUndo();
-  notifyCanRedo();
-  notifyCannotRedo();
+  void notifyCannotUndo();
+  void notifyCanUndo();
+  void notifyCanRedo();
+  void notifyCannotRedo();
 
 }
 
 abstract class ActionReactionApi {
 
-  react(ActionApi action);
+  void react(ActionApi action);
 
 }
 
 abstract class PastReactionApi {
 
-  reactCannotUndo();
-  reactCanUndo();
-  reactCanRedo();
-  reactCannotRedo();
+  void reactCannotUndo();
+  void reactCanUndo();
+  void reactCanRedo();
+  void reactCannotRedo();
 
 }
 

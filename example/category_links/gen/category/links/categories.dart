@@ -26,13 +26,13 @@ abstract class CategoryGen extends ConceptEntity<Category> {
   } 
  
   String get name => getAttribute("name"); 
-  set name(String a) => setAttribute("name", a); 
+  void set name(String a) { setAttribute("name", a); }
   
   String get description => getAttribute("description"); 
-  set description(String a) => setAttribute("description", a); 
+  void set description(String a) { setAttribute("description", a); }
   
   bool get approved => getAttribute("approved"); 
-  set approved(bool a) => setAttribute("approved", a); 
+  void set approved(bool a) { setAttribute("approved", a); } 
   
   WebLinks get webLinks => getChild("webLinks"); 
   

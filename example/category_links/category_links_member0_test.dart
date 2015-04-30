@@ -1,7 +1,7 @@
 import "package:test/test.dart";
 import 'category_links.dart';
  
-testCategoryLinksMember( 
+void testCategoryLinksMember( 
     Repository repository, String domainCode, String modelCode) { 
   var domain; 
   var model; 

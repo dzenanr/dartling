@@ -15,16 +15,16 @@ abstract class TagGen extends ConceptEntity<Tag> {
   } 
  
   Reference get keywordReference => getReference("keyword"); 
-  set keywordReference(Reference reference) => setReference("keyword", reference); 
+  void set keywordReference(Reference reference) { setReference("keyword", reference); }
   
   Keyword get keyword => getParent("keyword"); 
-  set keyword(Keyword p) => setParent("keyword", p); 
+  void set keyword(Keyword p) { setParent("keyword", p); }
   
   Reference get categoryReference => getReference("category"); 
-  set categoryReference(Reference reference) => setReference("category", reference); 
+  void set categoryReference(Reference reference) { setReference("category", reference); }
   
   Category get category => getParent("category"); 
-  set category(Category p) => setParent("category", p); 
+  void set category(Category p) { setParent("category", p); }
   
   Tag newEntity() => new Tag(concept); 
   Tags newEntities() => new Tags(concept); 

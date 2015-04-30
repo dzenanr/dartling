@@ -3,8 +3,8 @@ part of dartling;
 abstract class ValidationErrorsApi {
 
   int get length;
-  add(ValidationError error);
-  clear();
+  void add(ValidationError error);
+  void clear();
   List<ValidationError> toList();
 
 }
@@ -26,7 +26,7 @@ class ValidationError {
   /**
    * Displays (prints) an error.
    */
-  display({String prefix:''}) {
+  void display({String prefix:''}) {
     print('${prefix}******************************************');
     print('${prefix}${category}                               ');
     print('${prefix}******************************************');
@@ -49,11 +49,11 @@ class ValidationErrors implements ValidationErrorsApi {
   bool get isEmpty => length == 0;
   Iterator<ValidationError> get iterator => _errorList.iterator;
 
-  add(ValidationError error) {
+  void add(ValidationError error) {
     _errorList.add(error);
   }
 
-  clear() {
+  void clear() {
     _errorList.clear();
   }
 
@@ -73,7 +73,7 @@ class ValidationErrors implements ValidationErrorsApi {
   /**
    * Displays (prints) a title, then errors.
    */
-  display({String title:'Entities', bool withOid:true}) {
+  void display({String title:'Entities', bool withOid:true}) {
     if (title == 'Entities') {
       title = 'Errors';
     }

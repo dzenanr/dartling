@@ -1,10 +1,10 @@
 import 'default_project.dart';
  
-genCode(Repository repository) { 
+void genCode(Repository repository) { 
   repository.gen("default_project"); 
 } 
  
-initData(Repository repository) { 
+void initData(Repository repository) { 
    var defaultDomain = repository.getDomainModels("Default"); 
    var projectModel = defaultDomain.getModelEntries("Project"); 
    projectModel.init(); 

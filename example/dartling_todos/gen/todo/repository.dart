@@ -11,7 +11,7 @@ class TodoRepo extends Repo {
     _initTodoDomain();
   }
 
-  _initTodoDomain() {
+  void _initTodoDomain() {
     var todoDomain = new Domain(todoDomainCode);
     domains.add(todoDomain);
     add(new TodoModels(todoDomain));

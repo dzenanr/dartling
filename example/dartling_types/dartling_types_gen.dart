@@ -1,10 +1,10 @@
 import 'dartling_types.dart';
 
-genCode(Repository repository) { 
+void genCode(Repository repository) { 
   repository.gen("dartling_types"); 
 } 
  
-initData(Repository repository) { 
+void initData(Repository repository) { 
    var dartlingDomain = repository.getDomainModels("Dartling"); 
    var typesModel = dartlingDomain.getModelEntries("Types"); 
    typesModel.init(); 

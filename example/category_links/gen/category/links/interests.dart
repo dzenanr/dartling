@@ -15,19 +15,19 @@ abstract class InterestGen extends ConceptEntity<Interest> {
   } 
  
   Reference get categoryReference => getReference("category"); 
-  set categoryReference(Reference reference) => setReference("category", reference); 
+  void set categoryReference(Reference reference) { setReference("category", reference); }
   
   Category get category => getParent("category"); 
-  set category(Category p) => setParent("category", p); 
+  void set category(Category p) { setParent("category", p); }
   
   Reference get memberReference => getReference("member"); 
-  set memberReference(Reference reference) => setReference("member", reference); 
+  void set memberReference(Reference reference) { setReference("member", reference); }
   
   Member get member => getParent("member"); 
-  set member(Member p) => setParent("member", p); 
+  void set member(Member p) { setParent("member", p); }
   
   String get description => getAttribute("description"); 
-  set description(String a) => setAttribute("description", a); 
+  void set description(String a) { setAttribute("description", a); }
   
   Interest newEntity() => new Interest(concept); 
   Interests newEntities() => new Interests(concept); 

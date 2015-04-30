@@ -17,14 +17,14 @@ String genModel(Model model, String library) {
   sc = '${sc}  ${model.code}Model(Model model) : super(model); \n';
   sc = '${sc} \n';
   for (Concept entryConcept in model.entryConcepts) {
-    sc = '${sc}  fromJsonTo${entryConcept.code}Entry() { \n';
+    sc = '${sc}  void fromJsonTo${entryConcept.code}Entry() { \n';
     sc = '${sc}    fromJsonToEntry(${domain.codeFirstLetterLower}${model.code}'
          '${entryConcept.code}Entry); \n';
     sc = '${sc}  } \n';
     sc = '${sc} \n';
   }
   
-  sc = '${sc}  fromJsonToModel() { \n';
+  sc = '${sc}  void fromJsonToModel() { \n';
   sc = '${sc}    fromJson(${domain.codeFirstLetterLower}${model.code}Model); \n';
   sc = '${sc}  } \n';
   sc = '${sc} \n';
@@ -32,17 +32,17 @@ String genModel(Model model, String library) {
   // ordered by external parent count (from 0 to ...)
   var orderedEntryConcepts = model.orderedEntryConcepts;
 
-  sc = '${sc}  init() { \n';
+  sc = '${sc}  void init() { \n';
   for (Concept entryConcept in orderedEntryConcepts) {
     var Entities = '${entryConcept.codePluralFirstLetterUpper}';
-    sc = '${sc}    init${Entities}(); \n';
+    sc = '${sc}    void init${Entities}(); \n';
   }
   sc = '${sc}  } \n';
   sc = '${sc} \n';
 
   for (Concept entryConcept in model.entryConcepts) {
     var Entities = '${entryConcept.codePluralFirstLetterUpper}';
-    sc = '${sc}  init${Entities}() { \n';
+    sc = '${sc}  void init${Entities}() { \n';
     var entitiesCreated = createInitEntryEntitiesRandomly(entryConcept);
     sc = '${sc}${entitiesCreated}';
     sc = '${sc}  } \n';

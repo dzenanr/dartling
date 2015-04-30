@@ -2,11 +2,11 @@ part of todo_mvc;
 
 // lib/todo/mvc/init.dart
 
-initTodoMvc(var entries) {
+void initTodoMvc(var entries) {
   _initTasks(entries);
 }
 
-_initTasks(var entries) {
+void _initTasks(var entries) {
   Task task1 = new Task(entries.tasks.concept);
   task1.title = 'Design a model with Model Concepts.';
   entries.tasks.add(task1);

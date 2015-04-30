@@ -11,12 +11,12 @@ class Car extends CarGen {
 
   // specific code from here
 
-  set startRow(int a) {
+  void set startRow(int a) {
     super.startRow = a;
     currentRow = a;
   }
 
-  set startColumn(int a) {
+  void set startColumn(int a) {
     super.startColumn = a;
     currentColumn = a;
   }
@@ -84,7 +84,7 @@ class Car extends CarGen {
     return afterCell(row, column) || beforeCell(row, column);
   }
 
-  moveToOrTowardCell(int row, int column) {
+  void moveToOrTowardCell(int row, int column) {
     if (afterCell(row, column)) {
       currentRow = row;
       currentColumn = column;
@@ -105,7 +105,7 @@ class Cars extends CarsGen {
 
   // specific code from here
 
-  deselect() {
+  void deselect() {
     for (Car car in this) {
       car.selected = false;
     }

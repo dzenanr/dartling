@@ -2,7 +2,7 @@ import "package:test/test.dart";
 import "package:dartling/dartling.dart"; 
 import 'category_links.dart'; 
  
-testCategoryLinksMembers( 
+void testCategoryLinksMembers( 
     CategoryDomain categoryDomain, LinksModel linksModel, Members members) { 
   DomainSession session; 
   group("Testing Category.Links.Member", () { 
@@ -513,7 +513,7 @@ class MemberReaction implements ActionReactionApi {
   bool reactedOnAdd    = false; 
   bool reactedOnUpdate = false; 
  
-  react(BasicAction action) { 
+  void react(BasicAction action) { 
     if (action is EntitiesAction) { 
       reactedOnAdd = true; 
     } else if (action is EntityAction) { 

@@ -9,13 +9,13 @@ abstract class CommentGen extends ConceptEntity<Comment> {
   }
  
   String get text => getAttribute("text"); 
-  set text(String a) => setAttribute("text", a); 
+  void set text(String a) { setAttribute("text", a); }
   
   String get source => getAttribute("source"); 
-  set source(String a) => setAttribute("source", a); 
+  void set source(String a) { setAttribute("source", a); }
   
   DateTime get createdOn => getAttribute("createdOn"); 
-  set createdOn(DateTime a) => setAttribute("createdOn", a); 
+  void set createdOn(DateTime a) { setAttribute("createdOn", a); }
   
   Comment newEntity() => new Comment(concept); 
   Comments newEntities() => new Comments(concept); 
