@@ -35,7 +35,7 @@ String genModel(Model model, String library) {
   sc = '${sc}  void init() { \n';
   for (Concept entryConcept in orderedEntryConcepts) {
     var Entities = '${entryConcept.codePluralFirstLetterUpper}';
-    sc = '${sc}    void init${Entities}(); \n';
+    sc = '${sc}    init${Entities}(); \n';
   }
   sc = '${sc}  } \n';
   sc = '${sc} \n';
