@@ -2,6 +2,10 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
+*2.0.2* 2015-05-01
+
++ add void where missing
+
 *2.0.2* 2015-04-30
 
 + gen void where missing

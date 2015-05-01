@@ -2,10 +2,10 @@ part of dartling;
 
 abstract class RepoApi {
 
-  add(DomainModelsApi domainModels);
+  void add(DomainModelsApi domainModels);
   Domains get domains;
   DomainModelsApi getDomainModels(String domainCode);
-  gen(String library, [bool specific=true]);
+  void gen(String library, [bool specific=true]);
 
 }
 
@@ -27,7 +27,7 @@ class Repo {
     _domainModelsMap = new Map<String, DomainModels>();
   }
 
-  add(DomainModels domainModels) {
+  void add(DomainModels domainModels) {
     var domainCode = domainModels.domain.code;
     var models = getDomainModels(domainCode);
     if (models == null) {
@@ -43,7 +43,7 @@ class Repo {
   DomainModels getDomainModels(String domainCode) =>
       _domainModelsMap[domainCode];
   
-  gen(String library, [bool specific=true]) {
+  void gen(String library, [bool specific=true]) {
     title('lib folder');
     subTitle('repository');
     print(genRepository(this, library));
@@ -111,7 +111,7 @@ class Repo {
     }
   }
 
-  title(String title, [String title1='']) {
+  void title(String title, [String title1='']) {
     print('');
     print('==================================================================');
     print('$title                                                            ');
@@ -120,7 +120,7 @@ class Repo {
     print('');
   }
 
-  subTitle(String subTitle) {
+  void subTitle(String subTitle) {
     print('');
     print('-----------------------------------------------------');
     print('$subTitle                                             ');

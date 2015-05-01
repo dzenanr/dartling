@@ -6,10 +6,10 @@ abstract class IdApi implements Comparable {
   int get referenceLength;  int get attributeLength;
   int get length;
   Reference getReference(String code);
-  setReference(String code, Reference reference);
+  void setReference(String code, Reference reference);
 
   Object getAttribute(String code);
-  setAttribute(String code, Object attribute);
+  void setAttribute(String code, Object attribute);
 
 }
 
@@ -42,17 +42,20 @@ class Id implements IdApi {
   int get length => referenceLength + attributeLength;
 
   Reference getReference(String code) => _referenceMap[code];
-  setReference(String code, Reference reference) => 
-      _referenceMap[code] = reference;
+  void setReference(String code, Reference reference) {
+    _referenceMap[code] = reference;
+  }
   
-  setParent(String code, ConceptEntity entity) {
+  void setParent(String code, ConceptEntity entity) {
       Reference reference = new Reference(entity.oid.toString(), 
           entity.concept.code, entity.concept.entryConcept.code);
       setReference(code, reference);
   }  
 
   Object getAttribute(String code) => _attributeMap[code];
-  setAttribute(String code, Object attribute) => _attributeMap[code] = attribute;
+  void setAttribute(String code, Object attribute) { 
+    _attributeMap[code] = attribute;
+  }
 
   int get hashCode => 
     (_concept.hashCode + _referenceMap.hashCode + _attributeMap.hashCode).hashCode;
@@ -259,7 +262,7 @@ class Id implements IdApi {
     return '(${_dropEnd(result.trim(), ',')})';
   }
 
-  display([String title='Id']) {
+  void display([String title='Id']) {
     if (title != '') {
       print('');
       print('======================================');
