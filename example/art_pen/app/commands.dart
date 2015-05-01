@@ -30,5 +30,5 @@ class Commands {
     commandsTextArea = document.querySelector('#commands');
   }
 
-  clear() => commandsTextArea.value = '';
+  void clear() { commandsTextArea.value = ''; }
 }
