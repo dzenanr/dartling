@@ -1,0 +1,3 @@
+C:\Users\ridjanod.FSA-RIDJANOD-2\dart\model\wc\dartling_types\gen.txt
+
+--genall C:\Users\ridjanod.FSA-RIDJANOD-2\dart\model\wc\dartling_types dartling types

@@ -2,7 +2,40 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
-*2.0.0* 2014-10-03
+*2.0.2* 2015-05-01 (Pub)
+
++ add void where missing
+
+*2.0.2* 2015-04-30
+
++ gen void where missing
++ add void where missing
+
+*2.0.1* 2015-04-29 (Pub)
+
++ add random.dart and search.dart in lib/gen
++ improve formatting of generated tests
++ add several examples from projects at GitHub
+
+*2.0.1* 2015-04-25 
+
++ add null check in the Id.compareAttributes method in lib/model/id.dart
++ prepare dartling to use one day mixins in ConceptGen classes, e.g.,
+  abstract class ProjectGen extends Object with ConceptEntity<Project> {
+  abstract class ProjectsGen extends Object with Entities<Project> {
++ update ConceptEntity and Entities in lib/domain/model/entity.dart and entities.dart: 
+  no constructors, add void set concept(Concept concept)
++ update the newEntity and newEntities methods in ModelEntries in lib/domain/model/entries.dart
++ update the example and test folders
+
+*2.0.1* 2015-04-24 
+
++ use new test package
++ update pubspec.yaml: from dev_dependencies to dependencies for test
++ update import in the test folder
++ update lib/gen/dartling_test.dart
+
+*2.0.0* 2014-10-03 (Pub)
 
 + from json to entity: test if there is oid in json
 + integrate entities, addEntities, setEntities, removeEntities

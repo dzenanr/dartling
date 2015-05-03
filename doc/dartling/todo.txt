@@ -1,5 +1,11 @@
 dartling To Do
 
+debug the travel_impressions project
+debug the dartling_dwt_todo_mvc_spirals project
+debug the todo_mysql project on Windows
+debug code generation for more complex models in the ModelConcepts/web/model
+debug the use of mixin in ConceptGen classes
+
 update 2 apps of dartling: category_links and travel_impressions (both with web components)
 
 gen tests for composite ids where singleWhereId and not singleWhereAttributeId

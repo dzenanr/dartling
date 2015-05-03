@@ -2,9 +2,9 @@ part of dartling;
 
 abstract class PastApi implements SourceOfPastReactionApi {
 
-  add(ActionApi action);
+  void add(ActionApi action);
   List<ActionApi> get actions;
-  clear();
+  void clear();
   bool get empty;
   bool get undoLimit;
   bool get redoLimit;
@@ -33,19 +33,19 @@ class Past implements PastApi {
   bool get undoLimit => empty || cursor == 0;
   bool get redoLimit => empty || cursor == _actions.length;
 
-  add(BasicAction action) {
+  void add(BasicAction action) {
     _removeRightOfCursor();
     _actions.add(action);
     _moveCursorForward();
   }
 
-  _removeRightOfCursor() {
+  void _removeRightOfCursor() {
     for (int i = _actions.length - 1; i >= cursor; i--) {
       _actions.removeRange(i, i + 1);
     }
   }
 
-  _notifyUndoRedo() {
+  void _notifyUndoRedo() {
     if (undoLimit) {
       notifyCannotUndo();
     } else {
@@ -58,19 +58,19 @@ class Past implements PastApi {
     }
   }
 
-  _moveCursorForward() {
+  void _moveCursorForward() {
     cursor++;
     _notifyUndoRedo();
   }
 
-  _moveCursorBackward() {
+  void _moveCursorBackward() {
     if (cursor > 0) {
       cursor--;
     }
     _notifyUndoRedo();
   }
 
-  clear() {
+  void clear() {
     cursor = 0;
     _actions.clear();
     _notifyUndoRedo();
@@ -138,36 +138,36 @@ class Past implements PastApi {
     return allRedone;
   }
 
-  startPastReaction(PastReactionApi reaction) => _pastReactions.add(reaction);
-  cancelPastReaction(PastReactionApi reaction) {
+  void startPastReaction(PastReactionApi reaction) { _pastReactions.add(reaction); }
+  void cancelPastReaction(PastReactionApi reaction) {
     _pastReactions.remove(reaction);
   }
 
-  notifyCannotUndo() {
+  void notifyCannotUndo() {
     for (PastReactionApi reaction in _pastReactions) {
       reaction.reactCannotUndo();
     }
   }
 
-  notifyCanUndo() {
+  void notifyCanUndo() {
     for (PastReactionApi reaction in _pastReactions) {
       reaction.reactCanUndo();
     }
   }
 
-  notifyCanRedo() {
+  void notifyCanRedo() {
     for (PastReactionApi reaction in _pastReactions) {
       reaction.reactCanRedo();
     }
   }
 
-  notifyCannotRedo() {
+  void notifyCannotRedo() {
     for (PastReactionApi reaction in _pastReactions) {
       reaction.reactCannotRedo();
     }
   }
 
-  display([String title='Past Actions']) {
+  void display([String title='Past Actions']) {
     print('');
     print('======================================');
     print('$title                                ');

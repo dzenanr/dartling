@@ -37,55 +37,51 @@ abstract class EntitiesApi<E extends EntityApi<E>> implements Iterable<E> {
   bool postRemove(E entity);
   
   String toJson();
-  fromJson(String entitiesJson);
+  void fromJson(String entitiesJson);
   
-  integrate(EntitiesApi<E> fromEntities);
-  integrateAdd(EntitiesApi<E> addEntities);
-  integrateSet(EntitiesApi<E> setEntities);
-  integrateRemove(EntitiesApi<E> removeEntities);
+  void integrate(EntitiesApi<E> fromEntities);
+  void integrateAdd(EntitiesApi<E> addEntities);
+  void integrateSet(EntitiesApi<E> setEntities);
+  void integrateRemove(EntitiesApi<E> removeEntities);
   
 }
 
 class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
 
   Concept _concept;
-  List<E> _entityList;
-  Map<int, E> _oidEntityMap;
-  Map<String, E> _codeEntityMap;
-  Map<String, E> _idEntityMap;
-  Entities<E> _source;
-  ValidationErrors _errors;
+  var _entityList = new List<E>();
+  var _oidEntityMap = new Map<int, E>();
+  var _codeEntityMap = new Map<String, E>();
+  var _idEntityMap = new Map<String, E>();
+  var errors = new ValidationErrors();
+  Entities<E> source;
 
   String minc = '0';
   String maxc = 'N';
-  bool pre = true;
-  bool post = true;
-  bool propagateToSource = true;
-  Random randomGen = new Random();
-
-  Entities() {
-    _entityList = new List<E>();
-    _oidEntityMap = new Map<int, E>();
-    _codeEntityMap = new Map<String, E>();
-    _idEntityMap = new Map<String, E>();
-    _errors = new ValidationErrors();
-
-    pre = false;
-    post = false;
-    propagateToSource = false;
+  bool pre = false;
+  bool post = false;
+  bool propagateToSource = false;
+  var randomGen = new Random();
+  
+  Entities<E> newEntities() {
+    var entities = new Entities();
+    entities.concept = _concept;
+    return entities;
   }
-
-  Entities.of(this._concept) {
-    _entityList = new List<E>();
-    _oidEntityMap = new Map<int, E>();
-    _codeEntityMap = new Map<String, E>();
-    _idEntityMap = new Map<String, E>();
-    _errors = new ValidationErrors();
+  
+  ConceptEntity<E> newEntity() {
+    var conceptEntity = new ConceptEntity();
+    conceptEntity.concept = _concept;
+    return conceptEntity;
   }
-
-  Entities<E> newEntities() => new Entities.of(_concept);
-  ConceptEntity<E> newEntity() => new ConceptEntity.of(_concept);
-
+  
+  Concept get concept => _concept;
+  void set concept(Concept concept) {
+    _concept = concept;
+    pre = true;
+    post = true;
+    propagateToSource = true;
+  }  
 
   E get first => _entityList.first;
   bool get isEmpty => _entityList.isEmpty;
@@ -95,12 +91,6 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   int get length => _entityList.length;
   int get count => length; // for my soul
   E get single => _entityList.single;
-
-  Concept get concept => _concept;
-  Entities<E> get source => _source;
-  ValidationErrors get errors => _errors;
-
-
   bool any(bool f(E entity)) => _entityList.any(f);
 
   bool contains(E entity) {
@@ -136,14 +126,14 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   List<E> get internalList => _entityList;
   // set for Polymer only:
   // entities.internalList = toObservable(entities.internalList);
-  set internalList(List<E> observableList) => _entityList = observableList;
+  void set internalList(List<E> observableList) { _entityList = observableList; }
 
 
   E firstWhereAttribute(String code, Object attribute) {
     var selectionEntities = selectWhereAttribute(code, attribute);
     if (selectionEntities.length > 0) {
       return selectionEntities.first;
-    }
+    }  
     return null;
   }
 
@@ -246,6 +236,9 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
    * the Entity.compareTo method will be used (code if not null, otherwise id).
    */
   Entities<E> order([int compare(E a, E b)]) {
+    if (_concept == null) {
+      throw new ConceptError('Entities.order: concept is not defined.');
+    }
     Entities<E> orderedEntities = newEntities();
     orderedEntities.pre = false;
     orderedEntities.post = false;
@@ -257,11 +250,14 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     orderedEntities.pre = true;
     orderedEntities.post = true;
     orderedEntities.propagateToSource = false;
-    orderedEntities._source = this;
+    orderedEntities.source = this;
     return orderedEntities;
   }
 
   Entities<E> selectWhere(Function f) {
+    if (_concept == null) {
+      throw new ConceptError('Entities.selectWhere: concept is not defined.');
+    }
     Entities<E> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.post = false;
@@ -271,14 +267,14 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     selectedEntities.pre = true;
     selectedEntities.post = true;
     selectedEntities.propagateToSource = true;
-    selectedEntities._source = this;
+    selectedEntities.source = this;
     return selectedEntities;
   }
 
   Entities<E> selectWhereAttribute(String code, Object attribute) {
     if (_concept == null) {
       throw new ConceptError(
-        'Entities.selectByAttribute($code, $attribute): concept is not defined.');
+        'Entities.selectWhereAttribute($code, $attribute): concept is not defined.');
     }
     Entities<E> selectedEntities = newEntities();
     selectedEntities.pre = false;
@@ -296,14 +292,14 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     selectedEntities.pre = true;
     selectedEntities.post = true;
     selectedEntities.propagateToSource = true;
-    selectedEntities._source = this;
+    selectedEntities.source = this;
     return selectedEntities;
   }
 
   Entities<E> selectWhereParent(String code, EntityApi parent) {
     if (_concept == null) {
       throw new ConceptError(
-        'Entities.selectByParent($code, $parent): concept is not defined.');
+        'Entities.selectWhereParent($code, $parent): concept is not defined.');
     }
     Entities<E> selectedEntities = newEntities();
     selectedEntities.pre = false;
@@ -321,11 +317,14 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     selectedEntities.pre = true;
     selectedEntities.post = true;
     selectedEntities.propagateToSource = true;
-    selectedEntities._source = this;
+    selectedEntities.source = this;
     return selectedEntities;
   }
 
   Entities<E> skipFirst(int n) {
+    if (_concept == null) {
+      throw new ConceptError('Entities.skipFirst: concept is not defined.');
+    }
     Entities<E> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.post = false;
@@ -335,11 +334,14 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     selectedEntities.pre = true;
     selectedEntities.post = true;
     selectedEntities.propagateToSource = true;
-    selectedEntities._source = this;
+    selectedEntities.source = this;
     return selectedEntities;
   }
 
   Entities<E> skipFirstWhile(bool f(E entity)) {
+    if (_concept == null) {
+      throw new ConceptError('Entities.skipFirstWhile: concept is not defined.');
+    }
     Entities<E> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.post = false;
@@ -349,11 +351,14 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     selectedEntities.pre = true;
     selectedEntities.post = true;
     selectedEntities.propagateToSource = true;
-    selectedEntities._source = this;
+    selectedEntities.source = this;
     return selectedEntities;
   }
 
   Entities<E> takeFirst(int n) {
+    if (_concept == null) {
+      throw new ConceptError('Entities.takeFirst: concept is not defined.');
+    }
     Entities<E> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.post = false;
@@ -363,11 +368,14 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     selectedEntities.pre = true;
     selectedEntities.post = true;
     selectedEntities.propagateToSource = true;
-    selectedEntities._source = this;
+    selectedEntities.source = this;
     return selectedEntities;
   }
 
   Entities<E> takeFirstWhile(bool f(E entity)) {
+    if (_concept == null) {
+      throw new ConceptError('Entities.takeFirstWhile: concept is not defined.');
+    }
     Entities<E> selectedEntities = newEntities();
     selectedEntities.pre = false;
     selectedEntities.post = false;
@@ -377,7 +385,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     selectedEntities.pre = true;
     selectedEntities.post = true;
     selectedEntities.propagateToSource = true;
-    selectedEntities._source = this;
+    selectedEntities.source = this;
     return selectedEntities;
   }
   
@@ -391,7 +399,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     return entityList;
   }
   
-  fromJson(String entitiesJson) {
+  void fromJson(String entitiesJson) {
     List<Map<String, Object>> entitiesList = JSON.decode(entitiesJson);
     fromJsonList(entitiesList);
   }
@@ -399,7 +407,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   /**
    * Loads entities without validations to this, which must be empty.
    */
-  fromJsonList(List<Map<String, Object>> entitiesList, 
+  void fromJsonList(List<Map<String, Object>> entitiesList, 
                [ConceptEntity internalParent]) {
     if (concept == null) {
       throw new ConceptError('entities concept does not exist.');
@@ -420,7 +428,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     post = beforePost;
   }
 
-  /**
+  /**entity
    * Returns a string that represents this entity by using oid and code.
    */
   String toString() {
@@ -436,7 +444,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     _oidEntityMap.clear();
     _codeEntityMap.clear();
     _idEntityMap.clear();
-    _errors.clear();
+    errors.clear();
   }
 
   /**
@@ -478,7 +486,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
           error.message = '${_concept.codes}.max is $maxc.';
           error.category = 'max cardinality';
 
-          _errors.add(error);
+          errors.add(error);
           result = false;
         }
       } on FormatException catch (e) {
@@ -506,7 +514,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       } else if (a.required && entity.getAttribute(a.code) == null) {
         var error = new ValidationError('required');
         error.message = '${entity.concept.code}.${a.code} attribute is null.';
-        _errors.add(error);
+        errors.add(error);
         result = false;
       }
     }
@@ -514,7 +522,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       if (p.required && entity.getParent(p.code) == null) {
         var error = new ValidationError('required');
         error.message = '${entity.concept.code}.${p.code} parent is null.';
-        _errors.add(error);
+        errors.add(error);
         result = false;
       }
     }
@@ -523,14 +531,14 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     if (entity.code != null && singleWhereCode(entity.code) != null) {
       var error = new ValidationError('unique');
       error.message = '${entity.concept.code}.code is not unique.';
-      _errors.add(error);
+      errors.add(error);
       result = false;
     }
     if (entity.id != null && singleWhereId(entity.id) != null) {
       ValidationError error = new ValidationError('unique');
       error.message =
           '${entity.concept.code}.id ${entity.id.toString()} is not unique.';
-      _errors.add(error);
+      errors.add(error);
       result = false;
     }
 
@@ -541,8 +549,8 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     bool added = false;
     if (preAdd(entity)) {
       var propagated = true;
-      if (_source != null && propagateToSource) {
-        propagated = _source.add(entity);
+      if (source != null && propagateToSource) {
+        propagated = source.add(entity);
       }
       if (propagated) {
         _entityList.add(entity);
@@ -628,7 +636,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
         if (length == minInt) {
           ValidationError error = new ValidationError('min');
           error.message = '${_concept.codes}.min is $minc.';
-          _errors.add(error);
+          errors.add(error);
           result = false;
         }
       } on FormatException catch (e) {
@@ -644,8 +652,8 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     bool removed = false;
     if (preRemove(entity)) {
       var propagated = true;
-      if (_source != null && propagateToSource) {
-        propagated = _source.remove(entity);
+      if (source != null && propagateToSource) {
+        propagated = source.remove(entity);
       }
       if (propagated) {
         if (_entityList.remove(entity)) {
@@ -729,7 +737,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
           var error = new ValidationError('update');
           error.message =
             '${_concept.codes}.update fails to add after update entity.';
-          _errors.add(error);
+          errors.add(error);
         } else {
           throw new UpdateError(
               '${_concept.codes}.update fails to add back before update entity.');
@@ -739,7 +747,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       var error = new ValidationError('update');
       error.message =
         '${_concept.codes}.update fails to remove before update entity.';
-      _errors.add(error);
+      errors.add(error);
     }
     return false;
   }
@@ -784,7 +792,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     return allSet;
   }
   
-  integrate(Entities<E> fromEntities) {
+  void integrate(Entities<E> fromEntities) {
     for (var entity in toList()) {
       var fromEntity = fromEntities.singleWhereOid(entity.oid);
       if (fromEntity == null) {
@@ -804,7 +812,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     } 
   }
   
-  integrateAdd(Entities<E> addEntities) {
+  void integrateAdd(Entities<E> addEntities) {
     for (var addEntity in addEntities) {
       var entity = singleWhereOid(addEntity.oid);
       if (entity == null) {
@@ -813,7 +821,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     } 
   }
   
-  integrateSet(Entities<E> setEntities) {
+  void integrateSet(Entities<E> setEntities) {
     for (var setEntity in setEntities) {
       var entity = singleWhereOid(setEntity.oid);
       if (entity != null) {
@@ -825,7 +833,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     } 
   }
   
-  integrateRemove(Entities<E> removeEntities) {
+  void integrateRemove(Entities<E> removeEntities) {
     for (var removeEntity in removeEntities) {
       var entity = singleWhereOid(removeEntity.oid);
       if (entity != null) {
@@ -837,7 +845,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   /**
   * Displays (prints) a title, then entities.
   */
-  display({String title:'Entities', String prefix:'', bool withOid:true, 
+  void display({String title:'Entities', String prefix:'', bool withOid:true, 
     bool withChildren:true, bool withInternalChildren:true}) {
     var s = prefix;
     if (!_concept.entry || (_concept.entry && _concept.parents.length > 0)) {
@@ -856,19 +864,19 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     }
   }
 
-  displayOidMap() {
+  void displayOidMap() {
     _oidEntityMap.forEach((k,v) {
       print('oid $k: $v');
     });
   }
 
-  displayCodeMap() {
+  void displayCodeMap() {
     _codeEntityMap.forEach((k,v) {
       print('code $k: $v');
     });
   }
 
-  displayIdMap() {
+  void displayIdMap() {
     _idEntityMap.forEach((k,v) {
       print('id $k: $v');
     });

@@ -14,7 +14,7 @@ abstract class ActionApi {
 
 abstract class TransactionApi extends ActionApi {
 
-  add(ActionApi action);
+  void add(ActionApi action);
   PastApi get past;
 
 }
@@ -43,7 +43,7 @@ abstract class BasicAction implements ActionApi {
 
   toString() => 'action: $name; state: $state -- description: $description';
 
-  display({String title: 'BasicAction'}) {
+  void display({String title: 'BasicAction'}) {
     print('');
     print('======================================');
     print('$title                                ');
@@ -274,7 +274,7 @@ class Transaction extends BasicAction implements TransactionApi {
 
   Past get past => _actions;
 
-  add(BasicAction action) {
+  void add(BasicAction action) {
     _actions.add(action);
     action.partOfTransaction = true;
   }
@@ -288,7 +288,7 @@ class Transaction extends BasicAction implements TransactionApi {
         session.past.add(this);
         session.domainModels.notifyActionReactions(this);
       } else {
-        var undone = _actions.undoAll();
+        _actions.undoAll();
       }
     }
     return done;

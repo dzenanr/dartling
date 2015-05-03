@@ -30,7 +30,7 @@ class Attribute extends Property {
     type = sourceConcept.model.domain.getType('String');
   }
   
-  set required(bool req) {
+  void set required(bool req) {
     super.required = req;
     if (req && !sourceConcept.hasId) {
       essential = true;
@@ -38,7 +38,7 @@ class Attribute extends Property {
   }
   
   AttributeType get type => _type;
-  set type(AttributeType attributeType) {
+  void set type(AttributeType attributeType) {
     _type = attributeType;
     if (attributeType != null) {
       length = attributeType.length;
@@ -46,7 +46,7 @@ class Attribute extends Property {
   }
 
   bool get derive => _derive;
-  set derive(bool derive) {
+  void set derive(bool derive) {
     _derive = derive;
     if (_derive) {
       update = false;

@@ -1,7 +1,7 @@
 # ![Alt dartling](https://raw.github.com/dzenanr/dartling/master/resources/dartling.png)
 
 [dartling](http://pub.dartlang.org/packages/dartling) is a model-driven data framework 
-for design and code generation of Dart models.
+for design, code generation and use of Dart models.
 Its open source license is the 3-clause BSD license --
 ["New BSD License" or "Modified BSD License"](http://en.wikipedia.org/wiki/BSD_license).
 
@@ -69,21 +69,19 @@ are EntitiesApi (in lib/domain/model/entities.dart) and EntityApi
 dartling has several examples, all at [dzenanr](https://github.com/dzenanr),
 which show how different web applications may be developed quickly based on a
 domain model generated from the json representation of a graphical model. One
-of them is [art_pen](https://github.com/dzenanr/art_pen)(DArt.Pen), which is
+of them is [art_pen](https://github.com/dzenanr/art_pen) (DArt.Pen), which is
 a version of the Logo programming language for children.
 Other examples are:
 [dartling_examples](https://github.com/dzenanr/dartling_examples) (3 typical models),
 [dartling_tasks](https://github.com/dzenanr/dartling_tasks) (a many-to-many relationship),
 [game_parking](https://github.com/dzenanr/game_parking) (a game based on Rush Hour),
+[travel_impressions](https://github.com/dzenanr/travel_impressions) (with the focus on data modeling or model design),
+[concept_attribute](https://github.com/dzenanr/concept_attribute) (with different categories of test data that can be used in the generation of tests),
 [dartling_todos](https://github.com/dzenanr/dartling_todos) (with action undos),
 [dartling_dwt_todo_mvc_spirals](https://github.com/dzenanr/dartling_dwt_todo_mvc_spirals) (with Dart Web Toolkit),
-[travel_impressions](https://github.com/dzenanr/travel_impressions) (with the focus on modeling),
 [todo_mysql](https://github.com/dzenanr/todo_mysql) (todo client - mysql server),
-[todo_mongodb](https://github.com/dzenanr/todo_mongodb) (todo client - mongodb server).
-
-**Warning**:
-I have run my projects only in the
-[Chrome](https://www.google.com/intl/en/chrome/browser/) browser.
+[todo_mongodb](https://github.com/dzenanr/todo_mongodb) (todo client - mongodb server),
+[dartling_types](https://github.com/dzenanr/dartling_types) (a generic web component done by meta-programming in dartling).
 
 ### Models
 
@@ -119,8 +117,6 @@ The data.dart file in the json folder contains data of the model.
 
 [*Version History*](CHANGELOG.md)
 
-__________
 
-![Alt dartling](https://raw.github.com/dzenanr/dartling/master/resources/dartling5.png) image created by Rafik Benmoussa
 
 

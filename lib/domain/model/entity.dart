@@ -25,19 +25,19 @@ abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
 
   E copy();
   String toJson();
-  fromJson(String entityJson);
+  void fromJson(String entityJson);
 
 }
 
 class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
 
   Concept _concept;
-  ValidationErrors _errors;
-  Oid _oid;
+  var _oid = new Oid();
   String _code;
   DateTime _whenAdded;
   DateTime _whenSet;
   DateTime _whenRemoved;
+  var errors = new ValidationErrors();
 
   Map<String, Object> _attributeMap;
   // cannot use T since a parent is of a different type
@@ -46,26 +46,33 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   Map<String, Entities> _childMap;
   Map<String, Entities> _internalChildMap;
 
-  bool pre = true;
-  bool post = true;
-
-  ConceptEntity() {
-    _errors = new ValidationErrors();
-    _oid = new Oid();
-
-    pre = false;
-    post = false;
+  bool pre = false;
+  bool post = false;
+  
+  ConceptEntity<E> newEntity() {
+    var conceptEntity = new ConceptEntity();
+    conceptEntity.concept = _concept;
+    return conceptEntity;
+  }
+  
+  Entities<E> newEntities() {
+    var entities = new Entities();
+    entities.concept = _concept;
+    return entities;
   }
 
-  ConceptEntity.of(this._concept) {
-    _errors = new ValidationErrors();
-    _oid = new Oid();
+  Concept get concept => _concept;
+  void set concept(Concept concept) {
+    _concept = concept;
     _attributeMap = new Map<String, Object>();
     _referenceMap = new Map<String, Reference>();
     _parentMap = new Map<String, ConceptEntity>();
     _childMap = new Map<String, Entities>();
     _internalChildMap = new Map<String, Entities>();
-
+    
+    pre = true;
+    post = true;
+    
     for (Attribute a in _concept.attributes) {
       if (a.init == null) {
         _attributeMap[a.code] = null;
@@ -118,19 +125,14 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     }
 
     for (Child child in _concept.children) {
-      var childEntities = new Entities.of(child.destinationConcept);
+      var childEntities = new Entities();
+      childEntities.concept = child.destinationConcept;
       _childMap[child.code] = childEntities;
       if (child.internal) {
         _internalChildMap[child.code] = childEntities;
       }
     }
   }
-
-  ConceptEntity<E> newEntity() => new ConceptEntity.of(_concept);
-  Entities<E> newEntities() => new Entities.of(_concept);
-
-  Concept get concept => _concept;
-  ValidationErrors get errors => _errors;
 
   Oid get oid => _oid;
   void set oid(Oid oid) {
@@ -359,7 +361,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   }
 
   Reference getReference(String name) => _referenceMap[name];
-  setReference(String name, Reference reference) {
+  void setReference(String name, Reference reference) {
     if (getParent(name) == null) {
       _referenceMap[name] = reference;
     }
@@ -446,7 +448,6 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       throw new ConceptError('Entity concept is not defined.');
     }
     E entity = newEntity();
-    assert(entity.concept != null);
 
     var beforeUpdateOid = entity.concept.updateOid;
     entity.concept.updateOid = true;
@@ -670,7 +671,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   /**
    * Displays (prints) an entity with its attributes, parents and children.
    */
-  display({String prefix: '', bool withOid: true, bool withChildren: true, bool
+  void display({String prefix: '', bool withOid: true, bool withChildren: true, bool
       withInternalChildren: true}) {
     if (_concept == null) {
       throw new ConceptError('Entity concept is not defined.');
@@ -778,7 +779,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
     return entityMap;
   }
 
-  fromJson(String entityJson) {
+  void fromJson(String entityJson) {
     Map<String, Object> entityMap = JSON.decode(entityJson);
     fromJsonMap(entityMap);
   }
@@ -786,7 +787,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   /**
    * Loads data from a json map.
    */
-  fromJsonMap(Map<String, Object> entityMap, [ConceptEntity internalParent]) {
+  void fromJsonMap(Map<String, Object> entityMap, [ConceptEntity internalParent]) {
     int timeStamp;
     try {
       var key = entityMap['oid'];
@@ -864,7 +865,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   /**
    * Loads neighbors from a json map.
    */
-  _neighborsFromJsonMap(Map<String, Object> entityMap, [ConceptEntity
+  void _neighborsFromJsonMap(Map<String, Object> entityMap, [ConceptEntity
       internalParent]) {
     for (Child child in concept.children) {
       if (child.internal) {

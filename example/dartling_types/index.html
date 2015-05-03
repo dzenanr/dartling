@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  	<meta charset="utf-8"/>
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>mgmt_contacts</title>
+    <link rel="stylesheet" href="css/app.css"/>
+    <link rel="stylesheet" href="css/button.css"/>
+    <link rel="stylesheet" href="css/table.css"/>
+  </head>
+ 
+  <body>         
+    <table id="entities-table" class="entities-table"></table>
+    <table id="entity-table" class="entity-table"></table>
+    <button id="add-button" class="button">Add</button>
+    <button id="update-button" class="button">Edit</button>
+    <button id="remove-button" class="button">Remove</button>
+    <button id="cancel-button" class="button">Cancel</button>
+  
+    <script type="application/dart" src="index.dart"></script>
+    <!-- for this next line to work, your pubspec.yaml file must have a dependency on 'browser' -->
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>

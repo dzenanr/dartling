@@ -6,10 +6,10 @@ abstract class IdApi implements Comparable {
   int get referenceLength;  int get attributeLength;
   int get length;
   Reference getReference(String code);
-  setReference(String code, Reference reference);
+  void setReference(String code, Reference reference);
 
   Object getAttribute(String code);
-  setAttribute(String code, Object attribute);
+  void setAttribute(String code, Object attribute);
 
 }
 
@@ -42,17 +42,20 @@ class Id implements IdApi {
   int get length => referenceLength + attributeLength;
 
   Reference getReference(String code) => _referenceMap[code];
-  setReference(String code, Reference reference) => 
-      _referenceMap[code] = reference;
+  void setReference(String code, Reference reference) {
+    _referenceMap[code] = reference;
+  }
   
-  setParent(String code, ConceptEntity entity) {
+  void setParent(String code, ConceptEntity entity) {
       Reference reference = new Reference(entity.oid.toString(), 
           entity.concept.code, entity.concept.entryConcept.code);
       setReference(code, reference);
   }  
 
   Object getAttribute(String code) => _attributeMap[code];
-  setAttribute(String code, Object attribute) => _attributeMap[code] = attribute;
+  void setAttribute(String code, Object attribute) { 
+    _attributeMap[code] = attribute;
+  }
 
   int get hashCode => 
     (_concept.hashCode + _referenceMap.hashCode + _attributeMap.hashCode).hashCode;
@@ -106,6 +109,7 @@ class Id implements IdApi {
    /**
     * == see:
     * https://www.dartlang.org/docs/dart-up-and-running/contents/ch02.html#op-equality
+    * http://work.j832.com/2014/05/equality-and-dart.html
     *
     * To test whether two objects x and y represent the same thing,
     * use the == operator.
@@ -202,9 +206,11 @@ class Id implements IdApi {
        for (Attribute a in concept.attributes) {
          var value1 = _attributeMap[a.code];
          var value2 = id.getAttribute(a.code);
-         compare = a.type.compare(value1, value2);
-         if (compare != 0) {
-           break;
+         if (value1 != null && value2 != null) {
+           compare = a.type.compare(value1, value2);
+            if (compare != 0) {
+              break;
+            }
          }
        } // for
        return compare;       
@@ -256,7 +262,7 @@ class Id implements IdApi {
     return '(${_dropEnd(result.trim(), ',')})';
   }
 
-  display([String title='Id']) {
+  void display([String title='Id']) {
     if (title != '') {
       print('');
       print('======================================');

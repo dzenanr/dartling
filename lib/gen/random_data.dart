@@ -1,8 +1,8 @@
 part of dartling;
 
-randomBool() => new Random().nextBool();
-randomDouble(num max) => new Random().nextDouble() * max;
-randomInt(int max) => new Random().nextInt(max);
+bool randomBool() => new Random().nextBool();
+double randomDouble(num max) => new Random().nextDouble() * max;
+int randomInt(int max) => new Random().nextInt(max);
 
 num randomNum(int max) {
   var logic = randomBool();
@@ -23,9 +23,9 @@ randomSign() {
   return result;
 }
 
-randomWord() => randomListElement(wordList);
-randomUri() => randomListElement(uriList);
-randomEmail() => randomListElement(emailList);
+String randomWord() => randomListElement(wordList);
+String randomUri() => randomListElement(uriList);
+String randomEmail() => randomListElement(emailList);
 randomListElement(List list) => list[randomInt(list.length - 1)];
 
 var wordList = [

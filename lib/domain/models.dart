@@ -2,7 +2,7 @@ part of dartling;
 
 abstract class DomainModelsApi implements SourceOfActionReactionApi {
 
-  add(ModelEntriesApi modelEntries);
+  void add(ModelEntriesApi modelEntries);
   Domain get domain;
   Model getModel(String modelCode);
   ModelEntriesApi getModelEntries(String modelCode);
@@ -23,7 +23,7 @@ class DomainModels implements DomainModelsApi {
     _actionReactions = new List<ActionReactionApi>();
   }
 
-  add(ModelEntries modelEntries) {
+  void add(ModelEntries modelEntries) {
     var domainCode = modelEntries.model.domain.code;
     if (_domain.code != domainCode) {
       var msg = 'The ${domainCode} domain of the model is different from '
@@ -53,15 +53,16 @@ class DomainModels implements DomainModelsApi {
     return new DomainSession(this);
   }
 
-  startActionReaction(ActionReactionApi reaction) =>
+  void startActionReaction(ActionReactionApi reaction) {
       _actionReactions.add(reaction);
+  }
   
-  cancelActionReaction(ActionReactionApi reaction) {
+  void cancelActionReaction(ActionReactionApi reaction) {
     int index = _actionReactions.indexOf(reaction, 0);
     _actionReactions.removeRange(index, 1);
   }
 
-  notifyActionReactions(BasicAction action) {
+  void notifyActionReactions(BasicAction action) {
     for (ActionReactionApi reaction in _actionReactions) {
       reaction.react(action);
     }

@@ -41,13 +41,15 @@ ModelEntries createModelData(Model model) {
   Entities categories = entries.getEntry('Category');
   assert(categories.length == 0);
 
-  ConceptEntity dartCategory = new ConceptEntity.of(categories.concept);
+  ConceptEntity dartCategory = new ConceptEntity();
+  dartCategory.concept = categories.concept;
   dartCategory.setAttribute('name', 'Dart');
   dartCategory.setAttribute('description', 'Dart Web language.');
   categories.add(dartCategory);
   assert(categories.length == 1);
 
-  ConceptEntity html5Category = new ConceptEntity.of(categories.concept);
+  ConceptEntity html5Category = new ConceptEntity();
+  html5Category.concept = categories.concept;
   html5Category.setAttribute('name', 'HTML5');
   html5Category.setAttribute('description',
     'HTML5 is the ubiquitous platform for the web.');
@@ -57,7 +59,8 @@ ModelEntries createModelData(Model model) {
   Entities dartWebLinks = dartCategory.getChild('webLinks');
   assert(dartWebLinks.length == 0);
 
-  ConceptEntity dartHomeWebLink = new ConceptEntity.of(dartWebLinks.concept);
+  ConceptEntity dartHomeWebLink = new ConceptEntity();
+  dartHomeWebLink.concept = dartWebLinks.concept;
   dartHomeWebLink.setAttribute('subject', 'Dart Home');
   dartHomeWebLink.setAttribute('url', 'http://www.dartlang.org/');
   dartHomeWebLink.setAttribute('description',
@@ -67,7 +70,8 @@ ModelEntries createModelData(Model model) {
   assert(dartWebLinks.length == 1);
   assert(dartHomeWebLink.getParent('category').getAttribute('name') == 'Dart');
 
-  ConceptEntity tryDartWebLink = new ConceptEntity.of(dartWebLinks.concept);
+  ConceptEntity tryDartWebLink = new ConceptEntity();
+  tryDartWebLink.concept = dartWebLinks.concept;
   tryDartWebLink.setAttribute('subject', 'Try Dart');
   tryDartWebLink.setAttribute('url', 'http://try.dartlang.org/');
   tryDartWebLink.setAttribute('description',

@@ -1,7 +1,5 @@
-
+import 'package:test/test.dart';
 import 'package:dartling/dartling.dart';
-
-import 'package:unittest/unittest.dart';
 
 Model createDomainModel() {
   Domain domain = new Domain('CategoryQuestion');
@@ -44,13 +42,15 @@ ModelEntries createModelData(Model model) {
   Entities categories = entries.getEntry('Category');
   assert(categories.length == 0);
 
-  ConceptEntity dartCategory = new ConceptEntity.of(categories.concept);
+  ConceptEntity dartCategory = new ConceptEntity();
+  dartCategory.concept = categories.concept;
   dartCategory.setAttribute('name', 'Dart');
   dartCategory.setAttribute('description', 'Dart Web language.');
   categories.add(dartCategory);
   assert(categories.length == 1);
 
-  ConceptEntity html5Category = new ConceptEntity.of(categories.concept);
+  ConceptEntity html5Category = new ConceptEntity();
+  html5Category.concept = categories.concept;
   html5Category.setAttribute('name', 'HTML5');
   html5Category.setAttribute('description',
     'HTML5 is the ubiquitous platform for the web.');
@@ -59,7 +59,8 @@ ModelEntries createModelData(Model model) {
   Entities dartWebLinks = dartCategory.getChild('webLinks');
   assert(dartWebLinks.length == 0);
 
-  ConceptEntity dartHomeWebLink = new ConceptEntity.of(dartWebLinks.concept);
+  ConceptEntity dartHomeWebLink = new ConceptEntity();
+  dartHomeWebLink.concept = dartWebLinks.concept;
   dartHomeWebLink.setAttribute('subject', 'Dart Home');
   dartHomeWebLink.setAttribute('url', 'http://www.dartlang.org/');
   dartHomeWebLink.setAttribute('description',
@@ -69,7 +70,8 @@ ModelEntries createModelData(Model model) {
   assert(dartWebLinks.length == 1);
   assert(dartHomeWebLink.getParent('category').getAttribute('name') == 'Dart');
 
-  ConceptEntity tryDartWebLink = new ConceptEntity.of(dartWebLinks.concept);
+  ConceptEntity tryDartWebLink = new ConceptEntity();
+  tryDartWebLink.concept = dartWebLinks.concept;
   tryDartWebLink.setAttribute('subject', 'Try Dart');
   tryDartWebLink.setAttribute('url', 'http://try.dartlang.org/');
   tryDartWebLink.setAttribute('description',
@@ -78,13 +80,12 @@ ModelEntries createModelData(Model model) {
   dartWebLinks.add(tryDartWebLink);
   assert(dartWebLinks.length == 2);
   assert(tryDartWebLink.getParent('category').getAttribute('name') == 'Dart');
-
   return entries;
 }
 
-testModelData(Model model) {
+void testModelData(Model model) {
   ModelEntries entries;
-  group('Testing Model Data', () {
+  group('Testing Model Data:', () {
     setUp(() {
       entries = createModelData(model);
       expect(entries, isNotNull);
@@ -100,7 +101,6 @@ testModelData(Model model) {
       var dartCategory = categories.singleWhereId(categoryId);
       expect(dartCategory, isNotNull);
       expect(dartCategory.getAttribute('name'), equals('Dart'));
-
       var dartWebLinks = dartCategory.getChild('webLinks');
       Id dartHomeId = new Id(entries.getConcept('WebLink'));
       dartHomeId.setParent('category', dartCategory);
@@ -126,7 +126,8 @@ testModelData(Model model) {
     test('New Category with Id', () {
       var categories = entries.getEntry('Category');
       var categoryCount = categories.length;
-      var webFrameworkCategory = new ConceptEntity.of(categories.concept);
+      var webFrameworkCategory = new ConceptEntity();
+      webFrameworkCategory.concept = categories.concept;
       webFrameworkCategory.setAttribute('name', 'Web Framework');
       expect(webFrameworkCategory, isNotNull);
       expect(webFrameworkCategory.getChild('webLinks').length, equals(0));
@@ -137,12 +138,12 @@ testModelData(Model model) {
     });
     test('New WebLink No Category Error', () {
       var categories = entries.getEntry('Category');
-      var categoryCount = categories.length;
       var dartCategory = categories.firstWhereAttribute('name', 'Dart');
       expect(dartCategory, isNotNull);
 
       var dartWebLinks = dartCategory.getChild('webLinks');
-      var dartHomeWebLink = new ConceptEntity.of(dartWebLinks.concept);
+      var dartHomeWebLink = new ConceptEntity();
+      dartHomeWebLink.concept = dartWebLinks.concept;
       expect(dartHomeWebLink, isNotNull);
       expect(dartHomeWebLink.getParent('category'), isNull);
 
@@ -159,7 +160,6 @@ testModelData(Model model) {
     });
     test('From Link Model to JSON', () {
       var entryConceptCode = 'Category';
-      var categories = entries.getEntry(entryConceptCode);
       var json = entries.fromEntryToJson(entryConceptCode);
       expect(json, isNotNull);
       entries.displayEntryJson(entryConceptCode);

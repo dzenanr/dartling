@@ -49,7 +49,7 @@ class Concept extends ConceptEntity<Concept> {
     sourceChildren = new Children();
   }
   
-  set code(String code) {
+  void set code(String code) {
     super.code = code;
     if (label == null) {
       label = camelCaseSeparator(code, ' ');

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Todo.Mvc in Dart with dartling</title>
+  <link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+  <section id="todo-app">
+    <header id="header">
+      <button id="redo" class="todo-button">Redo</button>
+      <button id="undo" class="todo-button">Undo</button>
+      <h1>todos</h1>
+      <input id="new-todo" placeholder="What needs to be done?" autofocus>
+    </header>
+    <section id="main">
+      <input id="complete-all" type="checkbox">
+      <ul id="todo-list"></ul>
+    </section>
+    <footer id="footer">
+      <span id="left-count"><strong>0</strong> item left</span>
+      <ul id="filters">
+        <li>
+          <a class="selected" href="#/">All</a>
+        </li>
+        <li>
+          <a href="#/left">Left</a>
+        </li>
+        <li>
+          <a href="#/completed">Completed</a>
+        </li>
+      </ul>
+      <button id="clear-completed" class="todo-button">Clear completed</button>
+    </footer>
+  </section>
+  <footer id="info">
+    <p id="errors"></p>
+    <p>double-click to edit a todo</p>
+    <p>adapted from
+      <a href="https://github.com/MathieuLorber/todomvc">
+        todomvc by Mathieu Lorber</a>
+      for
+      <a href="http://pub.dartlang.org/packages/dartling">
+        dartling
+      </a>
+    </p>
+    <p>part of <a href="http://todomvc.com">TodoMVC</a></p>
+  </footer>
+
+  <script type="application/dart" src="index.dart"></script>
+  <script src="packages/browser/dart.js"></script>
+</body>
+</html>
