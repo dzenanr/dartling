@@ -5,6 +5,10 @@ DB
 https://www.sqlite.org/whentouse.html
 https://news.ycombinator.com/item?id=9353080
 
+Equality
+
+http://work.j832.com/2014/05/equality-and-dart.html
+
 Graphs
 
 http://jdh.hamkins.org/math-for-eight-year-olds/
@@ -17,4 +21,10 @@ http://stackoverflow.com/questions/29565067/inverse-mapping-in-dart
 Memory
 
 http://duartes.org/gustavo/blog/post/anatomy-of-a-program-in-memory/
+http://research.cs.wisc.edu/multifacet/papers/isca13_direct_segment.pdf
+
+XML
+
+https://gist.github.com/StrykerKKD/81dbb287efdfb2a2f5db
+
 
