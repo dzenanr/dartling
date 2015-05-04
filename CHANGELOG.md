@@ -2,6 +2,10 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
+*2.0.3* 2015-05-04 
+
++ use test: ^0.12.0 in pubspec
+
 *2.0.2* 2015-05-01 (Pub)
 
 + add void where missing
