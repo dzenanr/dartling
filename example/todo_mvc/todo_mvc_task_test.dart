@@ -227,7 +227,7 @@ void testTodoMvcTasks(
       var beforeUpdate = randomTask.title; 
       try { 
         randomTask.title = 'heating'; 
-      } on UpdateError catch (e) { 
+      } on UpdateException catch (e) { 
         expect(randomTask.title, equals(beforeUpdate)); 
       } 
     }); 

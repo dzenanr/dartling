@@ -64,11 +64,11 @@ Model fromJsonToModel(String json, Domain domain, String modelCode) {
     Concept concept1 = model.concepts.singleWhereCode(box1Name);
     Concept concept2 = model.concepts.singleWhereCode(box2Name);
     if (concept1 == null) {
-      throw new ConceptError(
+      throw new ConceptException(
         'Line concept is missing for the $box1Name box.');
     }
     if (concept2 == null) {
-      throw new ConceptError(
+      throw new ConceptException(
         'Line concept is missing for the $box2Name box.');
     }
 

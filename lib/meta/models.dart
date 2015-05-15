@@ -61,7 +61,7 @@ class Model extends ConceptEntity<Model> {
       There is an entry concept in your model that has more than 9 external neighbors.
       Inform the dartling authors to increase this restriction.
     """;
-    throw new ConceptError(msg);
+    throw new ConceptException(msg);
   }
 
   int get entryConceptCount => entryConcepts.length;
@@ -70,7 +70,7 @@ class Model extends ConceptEntity<Model> {
   Concept getEntryConcept(String entryConceptCode) {
     Concept concept = concepts.singleWhereCode(entryConceptCode);
     if (!concept.entry) {
-      throw new ConceptError('$entryConceptCode concept is not entry.');
+      throw new ConceptException('$entryConceptCode concept is not entry.');
     }
     return concept;
   }

@@ -218,7 +218,7 @@ void testDefaultProjectProjects(
       var beforeUpdate = randomProject.name; 
       try { 
         randomProject.name = 'deep'; 
-      } on UpdateError catch (e) { 
+      } on UpdateException catch (e) { 
         expect(randomProject.name, equals(beforeUpdate)); 
       } 
     }); 

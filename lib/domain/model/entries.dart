@@ -43,7 +43,7 @@ class ModelEntries implements ModelEntriesApi {
   Entities newEntities(String conceptCode) {
     var concept = getConcept(conceptCode);
     if (concept == null) {
-      throw new ConceptError('${concept.code} concept does not exist.');
+      throw new ConceptException('${concept.code} concept does not exist.');
     }
     if (!concept.entry) {
       var entities = new Entities();
@@ -56,7 +56,7 @@ class ModelEntries implements ModelEntriesApi {
   ConceptEntity newEntity(String conceptCode) {
     var concept = getConcept(conceptCode);
     if (concept == null) {
-      throw new ConceptError('${concept.code} concept does not exist.');
+      throw new ConceptException('${concept.code} concept does not exist.');
     }
     var conceptEntity = new ConceptEntity();
     conceptEntity.concept = concept;
@@ -130,20 +130,20 @@ class ModelEntries implements ModelEntriesApi {
     var modelCode = entryMap['model'];
     var entryConceptCode = entryMap['entry'];
     if (_model.domain.code != domainCode) {
-      throw new CodeError(
+      throw new CodeException(
           'The $domainCode domain does not exist.');
     }
     if (_model.code != modelCode) {
-      throw new CodeError(
+      throw new CodeException(
           'The $modelCode model does not exist.');
     }
     var entryConcept = getConcept(entryConceptCode);
     if (entryConcept == null) {
-      throw new ConceptError('${entryConceptCode} concept does not exist.');
+      throw new ConceptException('${entryConceptCode} concept does not exist.');
     }
     Entities entryEntities = getEntry(entryConceptCode);
     if (entryEntities.length > 0) {
-      throw new JsonError(
+      throw new JsonException(
           '$entryConceptCode entry receiving entities are not empty');
     }
     List<Map<String, Object>> entitiesList = entryMap['entities'];
@@ -161,7 +161,7 @@ class ModelEntries implements ModelEntriesApi {
           var parentEntity = 
               internalSingle(reference.entryConceptCode, reference.oid);
           if (parentEntity == null) {
-            throw new ParentError('Parent not found for the reference: '
+            throw new ParentException('Parent not found for the reference: '
                                   '${reference.toString()}');
           }
           if (entity.getParent(parent.code) == null) {

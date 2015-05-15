@@ -12,7 +12,7 @@ class Reference  {
     try {
       parentTimeStamp = int.parse(parentOidString);   
     } on FormatException catch (e) {
-      throw new TypeError('${parentConceptCode} parent oid is not int: $e');
+      throw new TypeException('${parentConceptCode} parent oid is not int: $e');
     }
     return new Oid.ts(parentTimeStamp); 
   }

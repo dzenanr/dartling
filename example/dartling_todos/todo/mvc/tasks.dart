@@ -29,7 +29,7 @@ class Tasks extends TasksGen {
   Tasks(Concept concept) : super(concept);
 
   // begin: added by hand
-  Tasks get completed => selectWhere((task) => task.completed);
+  Tasks get completed => selectWhere((task) => task.isCompleted);
   Tasks get left => selectWhere((task) => task.left);
 
   bool preAdd(Task task) {

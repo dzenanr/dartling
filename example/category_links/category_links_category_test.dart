@@ -239,7 +239,7 @@ void testCategoryLinksCategories(
       var beforeUpdate = randomCategory.name; 
       try { 
         randomCategory.name = 'void'; 
-      } on UpdateError catch (e) { 
+      } on UpdateException catch (e) { 
         expect(randomCategory.name, equals(beforeUpdate)); 
       } 
     }); 

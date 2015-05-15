@@ -2,6 +2,13 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
+*2.0.3* 2015-05-15
+
++ rename errors.dart into exceptions.dart in lib/domain/model/error
++ before: class DartlingError extends Error
++ now: class DartlingException implements Exception
++ rename other classes in exceptions.dart
+
 *2.0.3* 2015-05-04 
 
 + use test: ^0.12.0 in pubspec

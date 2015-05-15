@@ -33,7 +33,7 @@ class Repo {
     if (models == null) {
       _domainModelsMap[domainCode] = domainModels;
     } else {
-      throw new CodeError(
+      throw new CodeException(
           '$domainCode domain code exists already in the repository.');
     }
   }

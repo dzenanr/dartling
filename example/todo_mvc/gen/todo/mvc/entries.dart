@@ -17,7 +17,7 @@ class MvcEntries extends ModelEntries {
   Entities newEntities(String conceptCode) { 
     var concept = model.concepts.singleWhereCode(conceptCode); 
     if (concept == null) { 
-      throw new ConceptError("${conceptCode} concept does not exist.") ; 
+      throw new ConceptException("${conceptCode} concept does not exist.") ; 
     } 
     if (concept.code == "Task") { 
       return new Tasks(concept); 
@@ -28,7 +28,7 @@ class MvcEntries extends ModelEntries {
   ConceptEntity newEntity(String conceptCode) { 
     var concept = model.concepts.singleWhereCode(conceptCode); 
     if (concept == null) { 
-      throw new ConceptError("${conceptCode} concept does not exist.") ; 
+      throw new ConceptException("${conceptCode} concept does not exist.") ; 
     } 
     if (concept.code == "Task") { 
       return new Task(concept); 

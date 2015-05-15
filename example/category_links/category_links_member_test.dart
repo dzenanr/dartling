@@ -245,7 +245,7 @@ void testCategoryLinksMembers(
       var beforeUpdate = randomMember.email; 
       try { 
         randomMember.email = 'michael@harris.com'; 
-      } on UpdateError catch (e) { 
+      } on UpdateException catch (e) { 
         expect(randomMember.email, equals(beforeUpdate)); 
       } 
     }); 

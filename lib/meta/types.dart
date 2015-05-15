@@ -142,7 +142,7 @@ class AttributeType extends ConceptEntity<AttributeType> {
       compare = value1.toString().compareTo(value2.toString());
     } else {
       String msg = 'cannot compare then order on this type: ${code} type.';
-      throw new OrderError(msg);
+      throw new OrderException(msg);
     }
     return compare;
   }
