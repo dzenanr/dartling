@@ -23,7 +23,7 @@ void testTodoMvcTasks(
       mvcModel.clear(); 
       expect(mvcModel.isEmpty, isTrue); 
       expect(tasks.isEmpty, isTrue); 
-      expect(tasks.errors.isEmpty, isTrue); 
+      expect(tasks.exceptions.isEmpty, isTrue); 
     }); 
  
     test("From model to JSON", () { 
@@ -72,10 +72,10 @@ void testTodoMvcTasks(
       var added = tasks.add(task); 
       expect(added, isFalse); 
       expect(tasks.length, equals(taskCount)); 
-      expect(tasks.errors.length, greaterThan(0)); 
-      expect(tasks.errors.toList()[0].category, equals("required")); 
+      expect(tasks.exceptions.length, greaterThan(0)); 
+      expect(tasks.exceptions.toList()[0].category, equals("required")); 
  
-      tasks.errors.display(title: "Add task required error"); 
+      tasks.exceptions.display(title: "Add task required error"); 
     }); 
  
     test("Add task unique error", () { 
@@ -87,9 +87,9 @@ void testTodoMvcTasks(
       var added = tasks.add(task); 
       expect(added, isFalse); 
       expect(tasks.length, equals(taskCount)); 
-      expect(tasks.errors.length, greaterThan(0)); 
+      expect(tasks.exceptions.length, greaterThan(0)); 
  
-      tasks.errors.display(title: "Add task unique error"); 
+      tasks.exceptions.display(title: "Add task unique error"); 
     }); 
  
     test("Not found task by new oid", () { 

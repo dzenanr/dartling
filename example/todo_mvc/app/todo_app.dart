@@ -92,8 +92,8 @@ class TodoApp {
   }
 
   void possibleErrors() {
-    _errors.innerHtml = '<p>${clientTasks.errors.toString()}</p>';
-    clientTasks.errors.clear();
+    _errors.innerHtml = '<p>${clientTasks.exceptions.toString()}</p>';
+    clientTasks.exceptions.clear();
   }
 
   void updateDisplay() {

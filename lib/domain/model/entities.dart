@@ -4,7 +4,7 @@ part of dartling;
 abstract class EntitiesApi<E extends EntityApi<E>> implements Iterable<E> {
 
   Concept get concept;
-  ValidationErrorsApi get errors;
+  ValidationExceptionsApi get exceptions;
   EntitiesApi<E> get source;
 
   E firstWhereAttribute(String code, Object attribute);
@@ -53,7 +53,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
   var _oidEntityMap = new Map<int, E>();
   var _codeEntityMap = new Map<String, E>();
   var _idEntityMap = new Map<String, E>();
-  var errors = new ValidationErrors();
+  var exceptions = new ValidationExceptions();
   Entities<E> source;
 
   String minc = '0';
@@ -444,7 +444,7 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
     _oidEntityMap.clear();
     _codeEntityMap.clear();
     _idEntityMap.clear();
-    errors.clear();
+    exceptions.clear();
   }
 
   /**
@@ -482,16 +482,16 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       try {
         maxInt = int.parse(maxc);
         if (length == maxInt) {
-          var error = new ValidationError('max');
-          error.message = '${_concept.codes}.max is $maxc.';
-          error.category = 'max cardinality';
+          var exception = new ValidationException('max');
+          exception.message = '${_concept.codes}.max is $maxc.';
+          exception.category = 'max cardinality';
 
-          errors.add(error);
+          exceptions.add(exception);
           result = false;
         }
       } on FormatException catch (e) {
         throw new AddException(
-          'Entities max is neither N nor a positive integer string.');
+          'Entities max is neither N nor a positive integer string: $e');
       }
     }
 
@@ -512,33 +512,33 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
               '${a.code} attribute value cannot be incremented.');
         }
       } else if (a.required && entity.getAttribute(a.code) == null) {
-        var error = new ValidationError('required');
-        error.message = '${entity.concept.code}.${a.code} attribute is null.';
-        errors.add(error);
+        var exception = new ValidationException('required');
+        exception.message = '${entity.concept.code}.${a.code} attribute is null.';
+        exceptions.add(exception);
         result = false;
       }
     }
     for (Parent p in _concept.parents) {
       if (p.required && entity.getParent(p.code) == null) {
-        var error = new ValidationError('required');
-        error.message = '${entity.concept.code}.${p.code} parent is null.';
-        errors.add(error);
+        var exception = new ValidationException('required');
+        exception.message = '${entity.concept.code}.${p.code} parent is null.';
+        exceptions.add(exception);
         result = false;
       }
     }
 
     // uniqueness validation
     if (entity.code != null && singleWhereCode(entity.code) != null) {
-      var error = new ValidationError('unique');
-      error.message = '${entity.concept.code}.code is not unique.';
-      errors.add(error);
+      var exception = new ValidationException('unique');
+      exception.message = '${entity.concept.code}.code is not unique.';
+      exceptions.add(exception);
       result = false;
     }
     if (entity.id != null && singleWhereId(entity.id) != null) {
-      ValidationError error = new ValidationError('unique');
-      error.message =
+      ValidationException exception = new ValidationException('unique');
+      exception.message =
           '${entity.concept.code}.id ${entity.id.toString()} is not unique.';
-      errors.add(error);
+      exceptions.add(exception);
       result = false;
     }
 
@@ -634,14 +634,14 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       try {
         minInt = int.parse(minc);
         if (length == minInt) {
-          ValidationError error = new ValidationError('min');
-          error.message = '${_concept.codes}.min is $minc.';
-          errors.add(error);
+          ValidationException exception = new ValidationException('min');
+          exception.message = '${_concept.codes}.min is $minc.';
+          exceptions.add(exception);
           result = false;
         }
       } on FormatException catch (e) {
         throw new RemoveException(
-          'Entities min is not a positive integer string.');
+          'Entities min is not a positive integer string: $e');
       }
     }
 
@@ -732,22 +732,22 @@ class Entities<E extends ConceptEntity<E>> implements EntitiesApi<E> {
       if (add(afterEntity)) {
         return true;
       } else {
-        print('entities.update: ${errors.toList()}');
+        print('entities.update: ${exceptions.toList()}');
         if (add(beforeEntity)) {
-          var error = new ValidationError('update');
-          error.message =
+          var exception = new ValidationException('update');
+          exception.message =
             '${_concept.codes}.update fails to add after update entity.';
-          errors.add(error);
+          exceptions.add(exception);
         } else {
           throw new UpdateException(
               '${_concept.codes}.update fails to add back before update entity.');
         }
       }
     } else {
-      var error = new ValidationError('update');
-      error.message =
+      var exception = new ValidationException('update');
+      exception.message =
         '${_concept.codes}.update fails to remove before update entity.';
-      errors.add(error);
+      exceptions.add(exception);
     }
     return false;
   }

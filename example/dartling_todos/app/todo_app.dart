@@ -87,8 +87,8 @@ class TodoApp implements ActionReactionApi, PastReactionApi {
   }
 
   void _possibleErrors() {
-    _errors.innerHtml = '<p>${tasks.errors.toString()}</p>';
-    tasks.errors.clear();
+    _errors.innerHtml = '<p>${tasks.exceptions.toString()}</p>';
+    tasks.exceptions.clear();
   }
 
   void _updateFooter() {

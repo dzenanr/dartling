@@ -1,20 +1,20 @@
 part of dartling;
 
-abstract class ValidationErrorsApi {
+abstract class ValidationExceptionsApi {
 
   int get length;
-  void add(ValidationError error);
+  void add(ValidationException exception);
   void clear();
-  List<ValidationError> toList();
+  List<ValidationException> toList();
 
 }
 
-class ValidationError {
+class ValidationException implements Exception {
 
   String category;
   String message;
 
-  ValidationError(this.category);
+  ValidationException(this.category);
 
   /**
    * Returns a string that represents the error.
@@ -24,7 +24,7 @@ class ValidationError {
   }
 
   /**
-   * Displays (prints) an error.
+   * Displays (prints) an exception.
    */
   void display({String prefix:''}) {
     print('${prefix}******************************************');
@@ -37,41 +37,41 @@ class ValidationError {
 
 }
 
-class ValidationErrors implements ValidationErrorsApi {
+class ValidationExceptions implements ValidationExceptionsApi {
 
-  List<ValidationError> _errorList;
+  List<ValidationException> _exceptionList;
 
-  ValidationErrors() {
-    _errorList = new List<ValidationError>();
+  ValidationExceptions() {
+    _exceptionList = new List<ValidationException>();
   }
 
-  int get length => _errorList.length;
+  int get length => _exceptionList.length;
   bool get isEmpty => length == 0;
-  Iterator<ValidationError> get iterator => _errorList.iterator;
+  Iterator<ValidationException> get iterator => _exceptionList.iterator;
 
-  void add(ValidationError error) {
-    _errorList.add(error);
+  void add(ValidationException exception) {
+    _exceptionList.add(exception);
   }
 
   void clear() {
-    _errorList.clear();
+    _exceptionList.clear();
   }
 
-  List<ValidationError> toList() => _errorList.toList();
+  List<ValidationException> toList() => _exceptionList.toList();
 
   /**
-   * Returns a string that represents the errors.
+   * Returns a string that represents the exceptions.
    */
   String toString() {
-    var msgs = '';
-    for (var error in this) {
-      msgs = '${error.toString()} \n${msgs}';
+    var messages = '';
+    for (var exception in this) {
+      messages = '${exception.toString()} \n${messages}';
     }
-    return msgs;
+    return messages;
   }
 
   /**
-   * Displays (prints) a title, then errors.
+   * Displays (prints) a title, then exceptions.
    */
   void display({String title:'Entities', bool withOid:true}) {
     if (title == 'Entities') {
@@ -82,8 +82,8 @@ class ValidationErrors implements ValidationErrorsApi {
     print('$title                                          ');
     print('************************************************');
     print('');
-    for (ValidationError error in _errorList) {
-      error.display(prefix:'*** ');
+    for (ValidationException exception in _exceptionList) {
+      exception.display(prefix:'*** ');
     }
   }
 

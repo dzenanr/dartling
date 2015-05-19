@@ -25,7 +25,7 @@ class Tasks extends TasksGen {
  
   // added after code gen - begin 
 
-  Tasks get completed => selectWhere((task) => task.isCompleted);
+  Tasks get completed => selectWhere((task) => task.completed);
   Tasks get left => selectWhere((task) => task.left);
 
   bool preAdd(Task task) {
@@ -33,10 +33,10 @@ class Tasks extends TasksGen {
     if (validation) {
       validation = task.title.length <= 64;
       if (!validation) {
-        var error = new ValidationError('pre');
+        var error = new ValidationException('pre');
         error.message =
             'The "${task.title}" title should not be longer than 64.';
-        errors.add(error);
+        exceptions.add(error);
       }
     }
     return validation;

@@ -2,6 +2,11 @@
 
 based on [Semantic Versioning](http://semver.org/)
 
+*2.0.3* 2015-05-19
+
++ rename ValidationError into ValidationException in lib/domain/model/error/validations.dart
++ ValidationException implements Exception
+
 *2.0.3* 2015-05-15
 
 + rename errors.dart into exceptions.dart in lib/domain/model/error

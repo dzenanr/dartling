@@ -23,7 +23,7 @@ void testCategoryLinksComments(
       linksModel.clear(); 
       expect(linksModel.isEmpty, isTrue); 
       expect(comments.isEmpty, isTrue); 
-      expect(comments.errors.isEmpty, isTrue); 
+      expect(comments.exceptions.isEmpty, isTrue); 
     }); 
  
     test("From model to JSON", () { 
@@ -72,10 +72,10 @@ void testCategoryLinksComments(
       var added = comments.add(comment); 
       expect(added, isFalse); 
       expect(comments.length, equals(commentCount)); 
-      expect(comments.errors.length, greaterThan(0)); 
-      expect(comments.errors.toList()[0].category, equals("required")); 
+      expect(comments.exceptions.length, greaterThan(0)); 
+      expect(comments.exceptions.toList()[0].category, equals("required")); 
  
-      comments.errors.display(title: "Add comment required error"); 
+      comments.exceptions.display(title: "Add comment required error"); 
     }); 
  
     test("Add comment unique error", () { 

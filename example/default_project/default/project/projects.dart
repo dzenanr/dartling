@@ -33,11 +33,11 @@ class Projects extends ProjectsGen {
     if (validation) {
       validation = project.name.length <= 32;
       if (!validation) {
-        var error = new ValidationError('pre');
+        var error = new ValidationException('pre');
         error.message =
             '${concept.codePlural}.preAdd rejects the "${project.name}" '
             'name that is longer than 32.';
-        errors.add(error);
+        exceptions.add(error);
       }
     }
     return validation;

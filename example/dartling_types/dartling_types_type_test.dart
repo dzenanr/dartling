@@ -24,7 +24,7 @@ void testDartlingTypesTypes(
       typesModel.clear(); 
       expect(typesModel.isEmpty, isTrue); 
       expect(types.isEmpty, isTrue); 
-      expect(types.errors.isEmpty, isTrue); 
+      expect(types.exceptions.isEmpty, isTrue); 
     }); 
  
     test("From model to JSON", () { 
@@ -73,10 +73,10 @@ void testDartlingTypesTypes(
       var added = types.add(type); 
       expect(added, isFalse); 
       expect(types.length, equals(typeCount)); 
-      expect(types.errors.length, greaterThan(0)); 
-      expect(types.errors.toList()[0].category, equals("required")); 
+      expect(types.exceptions.length, greaterThan(0)); 
+      expect(types.exceptions.toList()[0].category, equals("required")); 
  
-      types.errors.display(title: "Add type required error"); 
+      types.exceptions.display(title: "Add type required error"); 
     }); 
  
     test("Add type unique error", () { 

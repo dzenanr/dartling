@@ -23,7 +23,7 @@ void testCategoryLinksQuestions(
       linksModel.clear(); 
       expect(linksModel.isEmpty, isTrue); 
       expect(questions.isEmpty, isTrue); 
-      expect(questions.errors.isEmpty, isTrue); 
+      expect(questions.exceptions.isEmpty, isTrue); 
     }); 
  
     test("From model to JSON", () { 
@@ -72,10 +72,10 @@ void testCategoryLinksQuestions(
       var added = questions.add(question); 
       expect(added, isFalse); 
       expect(questions.length, equals(questionCount)); 
-      expect(questions.errors.length, greaterThan(0)); 
-      expect(questions.errors.toList()[0].category, equals("required")); 
+      expect(questions.exceptions.length, greaterThan(0)); 
+      expect(questions.exceptions.toList()[0].category, equals("required")); 
  
-      questions.errors.display(title: "Add question required error"); 
+      questions.exceptions.display(title: "Add question required error"); 
     }); 
  
     test("Add question unique error", () { 

@@ -61,9 +61,9 @@ void testDefaultProjectProject(
       var added = projects.add(project); 
       expect(added, isFalse); 
       expect(projects.length, equals(projectCount)); 
-      expect(projects.errors.length, greaterThan(0)); 
+      expect(projects.exceptions.length, greaterThan(0)); 
  
-      projects.errors.display(title: "Add project unique error"); 
+      projects.exceptions.display(title: "Add project unique error"); 
     }); 
  
       // Find project by required attribute: 

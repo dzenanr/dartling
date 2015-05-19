@@ -23,7 +23,7 @@ void testDefaultProjectProjects(
       projectModel.clear(); 
       expect(projectModel.isEmpty, isTrue); 
       expect(projects.isEmpty, isTrue); 
-      expect(projects.errors.isEmpty, isTrue); 
+      expect(projects.exceptions.isEmpty, isTrue); 
     }); 
  
     test("From model to JSON", () { 
@@ -78,9 +78,9 @@ void testDefaultProjectProjects(
       var added = projects.add(project); 
       expect(added, isFalse); 
       expect(projects.length, equals(projectCount)); 
-      expect(projects.errors.length, greaterThan(0)); 
+      expect(projects.exceptions.length, greaterThan(0)); 
  
-      projects.errors.display(title: "Add project unique error"); 
+      projects.exceptions.display(title: "Add project unique error"); 
     }); 
  
     test("Not found project by new oid", () { 

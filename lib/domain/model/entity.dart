@@ -3,7 +3,7 @@ part of dartling;
 abstract class EntityApi<E extends EntityApi<E>> implements Comparable {
 
   Concept get concept;
-  ValidationErrorsApi get errors;
+  ValidationExceptionsApi get exceptions;
   Oid get oid;
   IdApi get id;
   String code;
@@ -37,7 +37,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
   DateTime _whenAdded;
   DateTime _whenSet;
   DateTime _whenRemoved;
-  var errors = new ValidationErrors();
+  var exceptions = new ValidationExceptions();
 
   Map<String, Object> _attributeMap;
   // cannot use T since a parent is of a different type
@@ -253,11 +253,6 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
       } else {
         String msg = '${_concept.code}.${attribute.code} is not updateable.';
         throw new UpdateException(msg);
-        /*
-        EntityError error = new EntityError('read-only');
-        error.message = '${_concept.code}.${attribute.code} is not updateable.';
-        _errors.add(error);
-        */
       }
       if (postSetAttribute(name, value)) {
         updated = true;
@@ -913,8 +908,7 @@ class ConceptEntity<E extends ConceptEntity<E>> implements EntityApi {
               entry concept for parent: ${entryConceptCode}            
               ---------------------------------------------
             """;
-            print(msg);
-            //throw new ParentError(msg);
+            throw new ParentException(msg);
           } // else
         } // if
       } // else

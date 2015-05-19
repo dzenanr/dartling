@@ -61,9 +61,9 @@ void testCategoryKeywordKeyword(
       var added = keywords.add(keyword); 
       expect(added, isFalse); 
       expect(keywords.length, equals(keywordCount)); 
-      expect(keywords.errors.length, greaterThan(0)); 
+      expect(keywords.exceptions.length, greaterThan(0)); 
  
-      keywords.errors.display(title: "Add keyword unique error"); 
+      keywords.exceptions.display(title: "Add keyword unique error"); 
     }); 
  
       // Find keyword by required attribute: 

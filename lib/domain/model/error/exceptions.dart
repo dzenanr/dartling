@@ -2,83 +2,83 @@ part of dartling;
 
 class DartlingException implements Exception {
 
-  final String msg;
+  final String message;
 
-  DartlingException(this.msg);
+  DartlingException(this.message);
 
-  toString() => '*** $msg ***';
+  toString() => '*** $message ***';
 
 }
 
 class ActionException extends DartlingException {
 
-  ActionException(String msg) : super(msg);
+  ActionException(String message) : super(message);
 
 }
 
 class AddException extends ActionException {
 
-  AddException(String msg) : super(msg);
+  AddException(String message) : super(message);
 
 }
 
 class CodeException extends DartlingException {
 
-  CodeException(String msg) : super(msg);
+  CodeException(String message) : super(message);
 
 }
 
 class ConceptException extends DartlingException {
 
-  ConceptException(String msg) : super(msg);
+  ConceptException(String message) : super(message);
 
 }
 
 class IdException extends DartlingException {
 
-  IdException(String msg) : super(msg);
+  IdException(String message) : super(message);
 
 }
 
 class JsonException extends DartlingException {
 
-  JsonException(String msg) : super(msg);
+  JsonException(String message) : super(message);
 
 }
 
 class OidException extends DartlingException {
 
-  OidException(String msg) : super(msg);
+  OidException(String message) : super(message);
 
 }
 
 class OrderException extends DartlingException {
 
-  OrderException(String msg) : super(msg);
+  OrderException(String message) : super(message);
 
 }
 
 class ParentException extends DartlingException {
 
-  ParentException(String msg) : super(msg);
+  ParentException(String message) : super(message);
 
 }
 
 class RemoveException extends ActionException {
 
-  RemoveException(String msg) : super(msg);
+  RemoveException(String message) : super(message);
 
 }
 
 class TypeException extends DartlingException {
 
-  TypeException(String msg) : super(msg);
+  TypeException(String message) : super(message);
 
 }
 
 class UpdateException extends ActionException {
 
-  UpdateException(String msg) : super(msg);
+  UpdateException(String message) : super(message);
 
 }
 

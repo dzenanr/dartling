@@ -153,10 +153,10 @@ void testModelData(Model model) {
           'web app engineering with a new language, libraries, and tools.');
       dartCategory.getChild('webLinks').add(dartHomeWebLink);
       expect(dartCategory.getChild('webLinks').length, equals(dartWebLinks.length));
-      expect(dartCategory.getChild('webLinks').errors.length, equals(1));
-      expect(dartCategory.getChild('webLinks').errors.toList()[0].category,
+      expect(dartCategory.getChild('webLinks').exceptions.length, equals(1));
+      expect(dartCategory.getChild('webLinks').exceptions.toList()[0].category,
           equals('required'));
-      dartCategory.getChild('webLinks').errors.display(title:'WebLink Error');
+      dartCategory.getChild('webLinks').exceptions.display(title:'WebLink Error');
     });
     test('From Link Model to JSON', () {
       var entryConceptCode = 'Category';

@@ -196,14 +196,14 @@ class Pen {
           copiedLine.segment = copiedSegment;
           bool addedCopiedLine = copiedSegment.lines.add(copiedLine);
           if(!addedCopiedLine) {
-            copiedSegment.lines.errors.display(title:
+            copiedSegment.lines.exceptions.display(title:
                 'Error: copiedSegment.lines.add(copiedLine);');
           }
           assert(addedCopiedLine);
         }
         bool addedCopiedSegment = copiedSegments.add(copiedSegment);
         if(!addedCopiedSegment) {
-          copiedSegment.lines.errors.display(title:
+          copiedSegment.lines.exceptions.display(title:
               'Error: copiedSegments.add(copiedSegment);');
         }
         assert(addedCopiedSegment);
@@ -219,7 +219,7 @@ class Pen {
         }
         bool addedSegment = segments.add(copiedSegment);
         if(!addedSegment) {
-          copiedSegment.lines.errors.display(title:
+          copiedSegment.lines.exceptions.display(title:
               'Error: segments.add(copiedSegment);');
         }
         assert(addedSegment);
